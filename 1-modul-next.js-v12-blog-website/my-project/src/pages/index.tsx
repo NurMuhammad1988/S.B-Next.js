@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Head from "next/head";
 
 const IndexPage = () => {
@@ -7,7 +8,7 @@ const IndexPage = () => {
                 <title>Nur App</title>
                 <meta name="description" content="SEO uchun juda kerakli joy" />
             </Head>
-            <div>IndexPage</div>
+            <Button>Click</Button>
         </>
     );
 };
