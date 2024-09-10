@@ -1,15 +1,17 @@
 import { Button } from "@mui/material";
 import Head from "next/head";
+import Layout from "src/layout/layout";
 
 const IndexPage = () => {
     return (
-        <>
+        // bu layout.tsx da yozilgan component bu componentni vazifasi buni ichida 
+        <Layout>
             <Head>
                 <title>Nur App</title>
                 <meta name="description" content="SEO uchun juda kerakli joy" />
             </Head>
             <Button>Click</Button>
-        </>
+        </Layout>
     );
 };
 
