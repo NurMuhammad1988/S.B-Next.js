@@ -20,6 +20,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-emotion": "^10.0.0",
+    "react-multi-carousel": "^2.8.5",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {

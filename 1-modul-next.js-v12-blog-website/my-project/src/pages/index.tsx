@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
 import Head from "next/head";
+import { Hero } from "src/components";
 import Layout from "src/layout/layout";
 
 const IndexPage = () => {
@@ -8,9 +8,9 @@ const IndexPage = () => {
         <Layout>
             <Head>
                 <title>Nur App</title>
-                <meta name="description" content="SEO uchun juda kerakli joy" />
+                <meta name="description" content="SEO uchun juda kerakli joy IndexPage sahifasi" />
             </Head>
-            <Button>Click</Button>
+            <Hero/>
         </Layout>
     );
 };
