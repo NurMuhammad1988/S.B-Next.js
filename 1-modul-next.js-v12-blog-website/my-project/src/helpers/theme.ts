@@ -10,9 +10,11 @@ export const roboto = Roboto({
 });
 
 const theme = createTheme({
-    
-    typography:{
-        fontFamily:roboto.style.fontFamily
-    }
-})
-export default theme
+    palette: {
+        mode: "dark",
+    },
+    typography: {
+        fontFamily: roboto.style.fontFamily,
+    },
+});
+export default theme;

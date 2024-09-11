@@ -25,4 +25,3 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {//layoutga tsda san 
 };
 
 export default Layout;
-// 5 chi dars hero 09;43da qoldi carousel rasimlarni to'g'irla

@@ -1,16 +1,29 @@
+import { Box } from "@mui/material";
 import Head from "next/head";
-import { Hero } from "src/components";
+import { Hero, Sidebar,Content } from "src/components";
 import Layout from "src/layout/layout";
 
 const IndexPage = () => {
     return (
-        // bu layout.tsx da yozilgan component bu componentni vazifasi buni ichida 
+        // bu layout.tsx da yozilgan component bu componentni vazifasi buni ichidagi chaqiriladigan componentlar roturga aftamatik tarzda olinadi yani rooter ishlatish shartmas bu Layout component nextda yozilgan SEO
         <Layout>
             <Head>
+                {/* Layoutdagi title */}
                 <title>Nur App</title>
-                <meta name="description" content="SEO uchun juda kerakli joy IndexPage sahifasi" />
+                <meta
+                    name="description"
+                    content="SEO uchun juda kerakli joy IndexPage sahifasi"
+                />
             </Head>
-            <Hero/>
+
+            <Hero />
+
+            <Box sx={{ display: "flex", gap: "20px", padding: "20px" }}>
+                <Sidebar />
+                <Content/>
+            </Box>
+
+
         </Layout>
     );
 };

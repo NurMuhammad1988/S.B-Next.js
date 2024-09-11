@@ -6,6 +6,8 @@ import Image from "next/image";
 import { format } from "date-fns";
 
 const Hero = () => {
+
+    
     return (
         <Box width={"100%"} height={"70vh"} sx={{ backgroundColor: "red" }}>
             <Carousel
@@ -73,7 +75,7 @@ const Hero = () => {
                                         src={item.author.image}
                                     />
                                     
-                                    <Box sx={{padding: { sm:"50px"},}} >
+                                    <Box  >
                                         <Typography>
                                             {item.author.name}
                                         </Typography>
@@ -95,10 +97,11 @@ const Hero = () => {
 export default Hero;
 
 const data = [
+    // bu data huddi serverday hero compoent uchun datalar shu datada nextda image bilan ishlash uchun agar image netda link bian chaqirilsa yoki serverda bo'lsa link bilan chaqirilsa next.config.js filega serverni adresi yozilishi kerak bo'lmasa hato chiaqdi chunki next imageni adresini aniq bilmasa uni formatiga moslashtira olmaydi yani serveriga olib keyin moslashtiradi ham hafsizlik uchun
     {
         image: "https://img.freepik.com/free-vector/seo-ad-banner-template_23-2148789090.jpg?t=st=1726016865~exp=1726020465~hmac=554c54552970da57709135cfa0eec12b950bb14107a5459c2b49d511e0c498c3&w=1060",
         title: "Exerpni SEO uchun nima foydasi bor???",
-        exerp: "Exerpni SEO uchun nima foydasi borligini tushun!!!",
+        exerp: "Exerpni SEO uchun nima foydasi borligini tushunish!!!",
         author: {
             //seo uchun kerak??????????????????????????????????????????????????
             name: "Nur Yorov",
