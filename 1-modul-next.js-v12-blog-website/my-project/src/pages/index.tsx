@@ -1,29 +1,31 @@
 import { Box } from "@mui/material";
 import Head from "next/head";
-import { Hero, Sidebar,Content } from "src/components";
+import { Hero, Sidebar, Content } from "src/components";
 import Layout from "src/layout/layout";
 
 const IndexPage = () => {
     return (
-        // bu layout.tsx da yozilgan component bu componentni vazifasi buni ichidagi chaqiriladigan componentlar roturga aftamatik tarzda olinadi yani rooter ishlatish shartmas bu Layout component nextda yozilgan SEO
+        // bu layout.tsx da yozilgan component bu componentni vazifasi buni ichidagi chaqiriladigan componentlar roturga aftamatik tarzda olinadi yani rooter ishlatish shartmas reactda roter domni nextni o'zi bajaradi. aslida bu Layout component nextda yozilgan funksiya ichida rooter va yana useeffect yana qanadur funksiyalar aslida default holatda layout ichida yozilgan
         <Layout>
             <Head>
+                {/* bu Head tegi next jsni seo uchun chiqarilgan tegi bu title esa asosiy sahifani title bu Head ichiga discription va meta teglarni seoga aloqador hamma teglarni yozib saytni asosiy sahifasini seosini qilish mumkun bu holatda "Next.jsda SEO qilish" asosiy sahifani titeli yani asosiy kalit so'zi  */}
                 {/* Layoutdagi title */}
-                <title>Nur App</title>
+                <title>Next.jsda SEO qilish</title>
+                {/* bu index pages papkani ichida pagesni ichida index papka bo'lsa next.js buni aftamatik tarzda asosiy sahifa qiladi huddi reactdagi app.js failday yani bu asosiy papka hamma marshutlash shu papkadan boshlanadi */}
                 <meta
                     name="description"
+                    // shu joyda qanday teglar qo'yish mumkunligini yahshilab o'rgan
                     content="SEO uchun juda kerakli joy IndexPage sahifasi"
                 />
             </Head>
 
             <Hero />
 
-            <Box sx={{ display: "flex", gap: "20px", padding: "20px" }}>
+            <Box sx={{ display: "flex", gap: "20px", flexDirection:{xs: "column", md:"row"}, padding: "20px" }}>
+
                 <Sidebar />
-                <Content/>
+                <Content />
             </Box>
-
-
         </Layout>
     );
 };

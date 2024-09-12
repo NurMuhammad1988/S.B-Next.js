@@ -16,5 +16,3 @@ export default function createEmotionCache() {
 
     return createCache({ key: "miu-style", insertionPoint });
 }
-
-// 5 chi dars hero componentda qoldi

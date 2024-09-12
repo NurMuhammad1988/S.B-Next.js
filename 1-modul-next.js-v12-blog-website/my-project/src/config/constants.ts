@@ -1,4 +1,5 @@
 export const navItems = [
+    // navbar uchun chaqirilgan material ui ni componentini datasi marshutlangan yani routelarga berilgan adress bo'yicha navbar harakat qiladi
     {
         route:"/",
         label:"Home",
