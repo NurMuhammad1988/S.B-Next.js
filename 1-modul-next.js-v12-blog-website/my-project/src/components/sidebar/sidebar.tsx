@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Fragment } from "react";
 import { format } from "date-fns";
 import { navItems } from "src/config/constants";
+import { SidebarProps } from "./saidbar.props";
 
-const Sidebar = () => {
+const Sidebar = ({latestBlogs}: SidebarProps) => {
     return (
         <Box width={{xs: "100%", md:"30%"}} >
             <Box
@@ -28,8 +29,8 @@ const Sidebar = () => {
                            
                         }}
                     >
-                        {data.map((item) => (
-                            <Box key={item.title} marginTop={"20px"} >
+                        {latestBlogs.map((item) => (
+                            <Box key={item.id} marginTop={"20px"} >
                                 <Box
                                     sx={{
                                         display: "flex",
@@ -38,7 +39,7 @@ const Sidebar = () => {
                                     }}
                                 >
                                     <Image
-                                        src={item.image}
+                                        src={item.image.url}
                                         alt={item.title}
                                         width={100}
                                         height={100}
@@ -66,7 +67,7 @@ const Sidebar = () => {
                                         >
                                             <Avatar
                                                 alt={item.author.name}
-                                                src={item.author.image}
+                                                // src={item.author.avatar.url}
                                             />
 
                                             <Box>
@@ -75,7 +76,7 @@ const Sidebar = () => {
                                                 </Typography>
                                                 <Box sx={{ opacity: "0.6" }}>
                                                     {format(
-                                                        new Date(),
+                                                        new Date(item.createdAt),
                                                         "dd MMM, yyyy"
                                                     )}
                                                     {/* &#x2022; o'qish 4 daqiqa */}
