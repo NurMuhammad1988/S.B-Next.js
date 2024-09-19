@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { navItems } from "src/config/constants";
 import { SidebarProps } from "./saidbar.props";
 
-const Sidebar = ({latestBlogs}: SidebarProps) => {
+const Sidebar = ({latestBlogs, categories}: SidebarProps) => {
     return (
         <Box width={{xs: "100%", md:"30%"}} >
             <Box
@@ -106,8 +106,8 @@ const Sidebar = ({latestBlogs}: SidebarProps) => {
                             marginTop: "20px",
                         }}
                     >
-                        {navItems.map((nav) => (
-                            <Fragment key={nav.route}>
+                        {categories.map((nav) => (
+                            <Fragment key={nav.slug}>
                                 <Button
                                     fullWidth
                                     sx={{
@@ -129,38 +129,39 @@ const Sidebar = ({latestBlogs}: SidebarProps) => {
 };
 export default Sidebar;
 
-const data = [
-    // bu data huddi serverday hero compoent uchun datalar shu datada nextda image bilan ishlash uchun agar image netda link bian chaqirilsa yoki serverda bo'lsa link bilan chaqirilsa next.config.js filega serverni adresi yozilishi kerak bo'lmasa hato chiaqdi chunki next imageni adresini aniq bilmasa uni formatiga moslashtira olmaydi yani serveriga olib keyin moslashtiradi ham hafsizlik uchun
-    {
-        image: "https://img.freepik.com/free-vector/seo-ad-banner-template_23-2148789090.jpg?t=st=1726016865~exp=1726020465~hmac=554c54552970da57709135cfa0eec12b950bb14107a5459c2b49d511e0c498c3&w=1060",
-        title: "Exerpni SEO uchun nima foydasi bor???",
-        exerp: "Exerpni SEO uchun nima foydasi borligini tushunish!!!",
-        author: {
-            //seo uchun kerak??????????????????????????????????????????????????
-            name: "Nur Yorov",
-            image: "https://img.freepik.com/free-photo/writer-work-handsome-young-writer-sitting-table-writing-something-his-sketchpad_155003-5206.jpg?t=st=1726005430~exp=1726009030~hmac=a8a4f750d3ed8c7b8a9f4bd42b85cd2e52eecb1eb635dc27c44eb42b1fcaa5fe&w=1060",
-        },
-    },
-    /////////////////////////////
-    {
-        image: "https://img.freepik.com/free-vector/seo-optimization-landing-page-design_23-2148123548.jpg?t=st=1726016902~exp=1726020502~hmac=3918c1fae7c642276459392cc52f1e19744f71c0d8ff561842df8cda886342a9&w=740",
-        title: "Exerpni SEO uchun foydalari va qanday foydalanish",
-        exerp: "Next.jsda SEO qilish",
-        author: {
-            //seo uchun kerak??????????????????????????????????????????????????
-            name: "Nur Yorov",
-            image: "https://img.freepik.com/free-photo/handsome-young-writer-sitting-table-writing-something-his-sketchpad-home_155003-17078.jpg?t=st=1726005738~exp=1726009338~hmac=78cac2cde30dd0ad8d2af8218dd06a8f8eaed39c26c84674ff9cb701fd10e08c&w=1060",
-        },
-    },
-    //////////////////////////////
-    {
-        image: "https://img.freepik.com/free-vector/seo-optimization-landing-page-design_23-2148123548.jpg?t=st=1726016902~exp=1726020502~hmac=3918c1fae7c642276459392cc52f1e19744f71c0d8ff561842df8cda886342a9&w=740",
-        title: "Exerpni SEO uchun foydalari va qanday foydalanish",
-        exerp: "Next.jsda SEO qilish",
-        author: {
-            //seo uchun kerak??????????????????????????????????????????????????
-            name: "Nur Yorov",
-            image: "https://img.freepik.com/free-vector/seo-optimization-banner_33099-1690.jpg?t=st=1726033643~exp=1726037243~hmac=0d8e0d8363d4ea49a4babc9d32635d2044a48e2c7c49b8e07c65bff636c51319&w=1060",
-        },
-    },
-];
+////bu data hygraph serverdan datalarni olguncha ishlatib turildi
+// const data = [
+//     // bu data huddi serverday hero compoent uchun datalar shu datada nextda image bilan ishlash uchun agar image netda link bian chaqirilsa yoki serverda bo'lsa link bilan chaqirilsa next.config.js filega serverni adresi yozilishi kerak bo'lmasa hato chiaqdi chunki next imageni adresini aniq bilmasa uni formatiga moslashtira olmaydi yani serveriga olib keyin moslashtiradi ham hafsizlik uchun
+//     {
+//         image: "https://img.freepik.com/free-vector/seo-ad-banner-template_23-2148789090.jpg?t=st=1726016865~exp=1726020465~hmac=554c54552970da57709135cfa0eec12b950bb14107a5459c2b49d511e0c498c3&w=1060",
+//         title: "Exerpni SEO uchun nima foydasi bor???",
+//         exerp: "Exerpni SEO uchun nima foydasi borligini tushunish!!!",
+//         author: {
+//             //seo uchun kerak??????????????????????????????????????????????????
+//             name: "Nur Yorov",
+//             image: "https://img.freepik.com/free-photo/writer-work-handsome-young-writer-sitting-table-writing-something-his-sketchpad_155003-5206.jpg?t=st=1726005430~exp=1726009030~hmac=a8a4f750d3ed8c7b8a9f4bd42b85cd2e52eecb1eb635dc27c44eb42b1fcaa5fe&w=1060",
+//         },
+//     },
+//     /////////////////////////////
+//     {
+//         image: "https://img.freepik.com/free-vector/seo-optimization-landing-page-design_23-2148123548.jpg?t=st=1726016902~exp=1726020502~hmac=3918c1fae7c642276459392cc52f1e19744f71c0d8ff561842df8cda886342a9&w=740",
+//         title: "Exerpni SEO uchun foydalari va qanday foydalanish",
+//         exerp: "Next.jsda SEO qilish",
+//         author: {
+//             //seo uchun kerak??????????????????????????????????????????????????
+//             name: "Nur Yorov",
+//             image: "https://img.freepik.com/free-photo/handsome-young-writer-sitting-table-writing-something-his-sketchpad-home_155003-17078.jpg?t=st=1726005738~exp=1726009338~hmac=78cac2cde30dd0ad8d2af8218dd06a8f8eaed39c26c84674ff9cb701fd10e08c&w=1060",
+//         },
+//     },
+//     //////////////////////////////
+//     {
+//         image: "https://img.freepik.com/free-vector/seo-optimization-landing-page-design_23-2148123548.jpg?t=st=1726016902~exp=1726020502~hmac=3918c1fae7c642276459392cc52f1e19744f71c0d8ff561842df8cda886342a9&w=740",
+//         title: "Exerpni SEO uchun foydalari va qanday foydalanish",
+//         exerp: "Next.jsda SEO qilish",
+//         author: {
+//             //seo uchun kerak??????????????????????????????????????????????????
+//             name: "Nur Yorov",
+//             image: "https://img.freepik.com/free-vector/seo-optimization-banner_33099-1690.jpg?t=st=1726033643~exp=1726037243~hmac=0d8e0d8363d4ea49a4babc9d32635d2044a48e2c7c49b8e07c65bff636c51319&w=1060",
+//         },
+//     },
+// ];

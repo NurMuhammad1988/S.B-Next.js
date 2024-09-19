@@ -1,5 +1,6 @@
 import { request, gql } from "graphql-request"; ////hygraphda qilingan serverni ishlatish uchun kerak bo'ladigan librarylar
 import { BlogsType } from "src/interface/blogs.interface";
+import { CategoryType } from "src/interface/catigories.interface";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_HYGRAPH_ENDPOINT as string; //graphqlAPI bu shunchaki constni nomi va process js objecti bilan next jsga hygraphda yozilgan serverni olish uchun ishlatilgan keyni browserdan yani boshqa userlardan yashirish// bu process objectida chaqirilgan keylar browserda ko'rinmaydi himoya uchun yani NEXT_PUBLIC_HYGRAPH_ENDPOINT .env.local fileda yozilgan shu sabab local yani faqat dasturchiga ko'rinadi va bu string ekanliginiham aytib qo'yish kerak chunki loyihada ts bor bo'masa hato chiqadi yani ts buni nim aekanligini tanimasligi mumkun
 
@@ -38,29 +39,41 @@ export const BlogsService = {
 
     async getLatestBlog() {
         const query = gql`
-        query GetLatestBlog {
-            blogs (last: 2) {
-                id
-                slug
-                title
-                createdAt
-                image {
-                    url
-                }
-                author {
-                    name
-                    avatar {
+            query GetLatestBlog {
+                blogs(last: 3) {
+                    id
+                    slug
+                    title
+                    createdAt
+                    image {
                         url
                     }
+                    author {
+                        name
+                        avatar {
+                            url
+                        }
+                    }
                 }
-               
             }
-        }
         `;
 
         const result = await request<{ blogs: BlogsType[] }>(graphqlAPI, query);
         return result.blogs;
-    },  
-};
+    },
 
-11. Integratsiay 09:36 chi minutda qoldi
+    async getCategories() {
+        const query = gql`
+            query GetCategories {
+                categories {
+                    slug
+                    label
+                }
+            }
+        `;
+
+        const result = await request<{ categories: CategoryType[]}>(graphqlAPI, query);
+        return result.categories;
+
+    },
+};
