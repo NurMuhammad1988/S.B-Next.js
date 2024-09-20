@@ -2,11 +2,12 @@ import { Avatar, Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import { format } from "date-fns";
 import { ContentProps } from "./content.props";
+import { calculateEstimatedTimeToRead } from "src/helpers/time.format";
 
 const Content = ({blogs}: ContentProps) => {//serverdan keladigan blogsni distruptatsa bilan chaqirib unga content.props.tsda yozilgan bu content.tsxda ishlatiladigan blogsni qanaqa type ekanligi nima ekanligi aytilgan ContentProps funksiyasi chaqirilgan endi serverdan chaqirilgan blogsni typi content.props.tsda yozilgan ContentTypes funksiyasidagi BlogsType[] shudna content.tsxda confilict bo'maydi chunki typelar aniq
     return (
         <Box width={{xs: "100%", md:"70%"}}>
-            {blogs.map((item) => (
+            {blogs.map((item) => (//bu  blogs hygraph serverdan kelgan blogs map qilinib ichudagi hamma datalar chaqirilib keraklilari ishlatildi yani blogs kelganda butun object keladi 
                 <Box
                     key={item.id}//hygraphdan kelgan id bu key yani hygraphni asosiy idisi yani blogsni idisi
                     sx={{
@@ -58,7 +59,8 @@ const Content = ({blogs}: ContentProps) => {//serverdan keladigan blogsni distru
                                         </Typography>
                                         <Box color={"gray"}>
                                             {format(new Date(item.createdAt), "dd MMM, yyyy")}{" "}
-                                            &#x2022; o'qish 10 daqiqa
+                                            &#x2022; o'qish {calculateEstimatedTimeToRead(item.description.text)} daqiqa
+                                            {/* asosiy content bo'limidagi maqolaalrni nechchi minutda o'qilishini aftamatik tarzda tahminan standart asosida aytadi */}
                                         </Box>
                                     </Box>
                                 </Box>

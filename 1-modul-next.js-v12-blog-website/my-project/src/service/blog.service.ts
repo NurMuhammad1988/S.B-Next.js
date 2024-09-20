@@ -29,6 +29,9 @@ export const BlogsService = {
                         label
                         slug
                     }
+                    description {
+                        text
+                      }
                 }
             }
         `;
@@ -37,7 +40,7 @@ export const BlogsService = {
         return result.blogs; //yani bu funksiya qaytarsin reusult o'zgaruvchini va ichidagi blogsni blogs esa ts uchun qilingan tipizatsa hissoblanadi yani blogsda BlogsType bor
     },
 
-    async getLatestBlog() {
+    async getLatestBlog() {//ohirigi bloglarni chaqirish hygraphdan ohirgi 3 ta blog lates bo'limida turadi//sidebarda ishlatilgan
         const query = gql`
             query GetLatestBlog {
                 blogs(last: 3) {
@@ -48,6 +51,9 @@ export const BlogsService = {
                     image {
                         url
                     }
+                    description {
+                        text
+                      }
                     author {
                         name
                         avatar {
@@ -62,7 +68,14 @@ export const BlogsService = {
         return result.blogs;
     },
 
-    async getCategories() {
+    async getCategories() {//idebarda ishlatilgan
+        //gategories bo'limi uchun ochilgan query yani serverdan datalarni olish hygraphda bu server alohida queryda yozilgan MyQuery nomli  lekin loyihaga hygraphdan object chaqirilganda nomini o'zgartirish mumkun bu holatda GetCategories unda dastur serverdan datani chaqirganda adashib ketmeydimi?? adashmeydi chunki gql buni aniq taniydi agar bu>>> 
+        //  categories
+        // {slug
+        //label} haygraphda mani keyim bor accountda bor bo'lsa bo'ldi shu categoriesni chaqirib keladi gql hygraph uchun mahsus kutubhona
+
+        //graphqlAPI bu holatda mani hygraphda bor accountimda yozilgan serverni keyi bor o'zgaruvchi shu sabab gql bularni taniydi masalan gql o'zi chaqirilgan o'zgaruvchioni parametriga qaraydi va ichida graphqlAPIni ko'radi graphqlAPIni ichiga qareydi ichida o'zi taniydigan hygraphni keyini ko'radi keyni ko'rib shu keyni hygraph serverdan izlaydi va shu key bor objectni ichidagi qiymatlarni masalan bu holatda categoriesni chaqirib keladi
+        
         const query = gql`
             query GetCategories {
                 categories {
@@ -72,8 +85,10 @@ export const BlogsService = {
             }
         `;
 
-        const result = await request<{ categories: CategoryType[]}>(graphqlAPI, query);
+        const result = await request<{ categories: CategoryType[] }>(
+            graphqlAPI,
+            query
+        );
         return result.categories;
-
     },
 };

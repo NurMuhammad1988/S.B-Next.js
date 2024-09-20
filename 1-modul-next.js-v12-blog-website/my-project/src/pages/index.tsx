@@ -39,6 +39,7 @@ const IndexPage = ({blogs, latestBlogs, categories}: HomePageProps) => {
             </Head>
 
             <Hero  blogs={blogs.slice(1,4)}/>
+            {/* heroga umumiy blogsni slice qilib 1 bilan 4 ni orasidagi massivlarni ko'rsatish aytildi yani haygraphdan keladigan datalarni 1 chisi bilan 4 chini orasi chiqadi yani 1,2,3,4 */}
 
             <Box
                 sx={{
@@ -65,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async () =>
     const blogs  = await BlogsService.getAllBlogs()//hygrapg serverdan blogs olindi //getServerSideProps funksiyani asosiy maqsadi shu blogs o'zgaruvchini ishlatish yani BlogsService.getAllBlogs bilan hygrapg serverdan datalarni chaqirish awaitni sababi esa bu async funksiya yani serverdan datalar kechikibroq kelsaham kutib turadi //run qilish
 
     const latestBlogs = await BlogsService.getLatestBlog()//run qilish
-    const categories = await BlogsService.getCategories()
+    const categories = await BlogsService.getCategories()//run qilish
 
 
     return {
@@ -77,8 +78,8 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async () =>
     };
 };
 
-interface HomePageProps {
-  blogs:       BlogsType[];//blogsni typelari
+interface HomePageProps {//bu asosiy indexpage sahifasi uchun typelar yozish interfacesi yani indexpagega props bilan keladigan har qanday datalarni typi aniq bo'lishi kerak bu uchun u datalarga typelar berib typelar berilgan objectlar shu joyga chaqirilib yozib qo'yiladi shunda indexpage biladiki hamma datalarni typi bor va bu to'g'ri typlar shunda hato chiqmaydi
+  blogs:       BlogsType[];//blogsni typelari yani massiv ichida
   latestBlogs: BlogsType[]
   categories: CategoryType[]
 }

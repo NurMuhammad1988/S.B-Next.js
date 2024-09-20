@@ -5,8 +5,9 @@ import Carousel from "react-multi-carousel";
 import Image from "next/image";
 import { format } from "date-fns";
 import { HeroProps } from "./hero.props";
+import { calculateEstimatedTimeToRead } from "src/helpers/time.format";
 
-const Hero = ({blogs}: HeroProps) => {
+const Hero = ({blogs}: HeroProps) => {//blogs distruptatsa qilib chqirilgan bu blogs service papka ichida blogs.service.tsda yozilgan funksiyadan kelepti u funksiyani nomi BlogsService bu funksiya obshi ezport qilingan shu sabab yuqoriga alohida chaqirilmasdan ichidagi qiymati yani blogs distruptatsa qilib chaqirilgan
     return (
         <Box width={"100%"} height={"70vh"} sx={{ backgroundColor: "red" }}>
             <Carousel
@@ -83,7 +84,8 @@ const Hero = ({blogs}: HeroProps) => {
                                         </Typography>
                                         <Box>
                                             {format(new Date(item.createdAt), "dd MMM, yyyy")}{" "}
-                                            &#x2022; o'qish 10 daqiqa
+                                            &#x2022; o'qish {calculateEstimatedTimeToRead(item.description.text)} daqiqa
+                                            {/* calculateEstimatedTimeToRead funksiyasi chaqirildi */}
                                         </Box>
                                     </Box>
                                 </Box>
