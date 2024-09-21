@@ -3,90 +3,116 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { ContentProps } from "./content.props";
 import { calculateEstimatedTimeToRead } from "src/helpers/time.format";
+import { useRouter } from "next/router";
 
-const Content = ({blogs}: ContentProps) => {//serverdan keladigan blogsni distruptatsa bilan chaqirib unga content.props.tsda yozilgan bu content.tsxda ishlatiladigan blogsni qanaqa type ekanligi nima ekanligi aytilgan ContentProps funksiyasi chaqirilgan endi serverdan chaqirilgan blogsni typi content.props.tsda yozilgan ContentTypes funksiyasidagi BlogsType[] shudna content.tsxda confilict bo'maydi chunki typelar aniq
+const Content = ({ blogs }: ContentProps) => {
+    //serverdan keladigan blogsni distruptatsa bilan chaqirib unga content.props.tsda yozilgan bu content.tsxda ishlatiladigan blogsni qanaqa type ekanligi nima ekanligi aytilgan ContentProps funksiyasi chaqirilgan endi serverdan chaqirilgan blogsni typi content.props.tsda yozilgan ContentTypes funksiyasidagi BlogsType[] shudna content.tsxda confilict bo'maydi chunki typelar aniq
+
+    const router = useRouter();
+
+    //nextda kelgan huddi reactdagi router vazifasini bajarib beradigan hook
     return (
-        <Box width={{xs: "100%", md:"70%"}}>
-            {blogs.map((item) => (//bu  blogs hygraph serverdan kelgan blogs map qilinib ichudagi hamma datalar chaqirilib keraklilari ishlatildi yani blogs kelganda butun object keladi 
-                <Box
-                    key={item.id}//hygraphdan kelgan id bu key yani hygraphni asosiy idisi yani blogsni idisi
-                    sx={{
-                        backgroundColor: "rgba(0,0,0, .5)",
-                        padding: "20px",
-                        marginTop: "20px",
-                        borderRadius: "8px",
-                        boxShadow: "0px 8px 16px rgba(255,255,255, .1)",
-                    }}
-                >
-                    <Box position={"relative"} width={"100%"} height={{xs: "30vh", md:"50vh"}}>
-                      {/* shu bozni ichidagi image shu response bilan juda chiroyli bo'lsi rasim 100% response bo'ldi  */}
-                        {/* Image next.jsdan keladigan component hissoblanadi yani saytga qo'yilgan imagelarni aftamatik optimizatsa qilib beradi imagega fill atributi yozilsa ona boxsiga yoki diviga albatta positionlardan birirtasi berilishi kerak va bu imageda seo uchun atributlarni yozsa bo'ladi seo uchun friendly component huddi Head componentiga o'hshab  widt yoki height berilsa positionlar shart emas */}
-                        <Image
-                            src={item.image.url}//hygraphdan kelgan imageni urli
-                            alt={item.title}
-                            fill
-                            style={{ objectFit: "cover", borderRadius: "10px" }}
-                        />
-                        {/* imageni ichidagi altni ichidagi title rasimni titlesi yani seoga kerak keywords yozilsihi kerak bu keyvord map qilinib datadan yani serverdan rasimga title yozilgan joydan keladi datadagi imageni title fileldi keyword bo'lishi kerak */}
-                    </Box>
-                    <Typography variant="h4" marginTop={"30px"}>
-                        {item.title}
-                    </Typography>
-
-                    <Typography variant="body1" color={"gray"}> {item.excerpt} </Typography>
-                    {/* exerp: (snippet) Blogingiz postining oldindan ko'rishi sifatida paydo bo'ladigan qisqa parcha . Ushbu parcha sizning asosiy blog sahifangizda (barcha xabarlaringiz ro'yxatga olingan) havolani Facebook yoki LinkedIn kabi platformalarga ulashganda oldindan ko'rish, ba'zan esa qidiruv natijalarida paydo bo'ladigan ko'rinish sifatida paydo bo'lishi mumkin. */}
-
-                    <Divider sx={{marginTop:"30px"}}/>
-                    {/* Divider huddi htmldagi hr kabi yani pastki chiziqcha */}
-
+        <Box width={{ xs: "100%", md: "70%" }}>
+            {blogs.map(
+                (
+                    item //bu  blogs hygraph serverdan kelgan blogs map qilinib ichudagi hamma datalar chaqirilib keraklilari ishlatildi yani blogs kelganda butun object keladi
+                ) => (
                     <Box
-                                    sx={{
-                                        display: "flex",
-                                        gap: "10px",
-                                        marginTop: "20px",
-                                    }}
-                                >
-                                    <Avatar
-                                        // alt={item.author.name}
-                                        // src={item.author.avatar.url}//hygraphdan avatarni urli kelmadi haygrapg playgrounddaham avatarni urli null bo'b turipti demak kemadi shu sabab ts buni bo'shligi uchun hato chiqaradi shu sabab hygraphda avatarni urili null bo'lib tursaham bu yerdan o'chirib qo'ydim 
-                                    />
-                                    
-                                    
+                        key={item.id} //hygraphdan kelgan id bu key yani hygraphni asosiy idisi yani blogsni idisi
+                        sx={{
+                            backgroundColor: "rgba(0,0,0, .5)",
+                            padding: "20px",
+                            marginTop: "20px",
+                            borderRadius: "8px",
+                            boxShadow: "0px 8px 16px rgba(255,255,255, .1)",
+                            cursor: "pointer",
+                        }}
+                        onClick={() => router.push(`/blog/${item.slug}`)}
+                        //buni next.jsda keladigan Link component bilanham qilasa bo'ladi 13. Detailed blog darsida shu varyantiham tajriba uchun qilib ko'rsatilgan
 
-                                    <Box  >
-                                        <Typography>
-                                            {item.author.name}
-                                        </Typography>
-                                        <Box color={"gray"}>
-                                            {format(new Date(item.createdAt), "dd MMM, yyyy")}{" "}
-                                            &#x2022; o'qish {calculateEstimatedTimeToRead(item.description.text)} daqiqa
-                                            {/* asosiy content bo'limidagi maqolaalrni nechchi minutda o'qilishini aftamatik tarzda tahminan standart asosida aytadi */}
-                                        </Box>
-                                    </Box>
+                        //bu holatda onclik ichida ichiuda userouter chaqirilgan router chaqirilib onclik bo'lganda nima onclik bo'lganda shu box ichidagi content onclik bo'lganda yani shu boxni ichida tssikilga qo'yilgan datalar onclik bo'lganda router ichida userouter ishlatilsin va blog papkani ichiga itemlarni slugini jo'natsin yani bu holatda blog va icghidagi [slug].tsx pages papkani ichida bo'lgani uchun /blog/ <<shundan oldin hech narsa yozilmadi chunki nextda pages ona papka hissoblanadi/// boxni ichida hygraphdan kelgan itemlar map bilan tsikilga qo'yilgan shu sabab bu ona box yani onclick hammasiga contentni hammasiga o'tadi routerni ichidagi useeffect push qiladi qayerga pages ona papkani ichidagi blog papkaga dynamic tarzda itemlarni push qiladi [slug].tsx buni qanday qabul qiladi yani qanday taniydi sababi []<<buni ichida yozilgan falga next aftamatik tarzda slugni chaqiradi va yana bu [slug].tsx blog papkani ichiga yozilgan shu sabab aslida /blog/[slug].tsx/item/ << shu ko'rinishda faqat dyna,ic ketadi va serverdan keladigan slugni titel qiladi masalan http://localhost:3000/blog/hygraphcom-va-nextjs-bilan-blog-sayt-yaratish yokiiiiiiiiiiiiiiiiiiiiiiiiiiiii https://domain/blog/hygraphcom-va-nextjs-bilan-blog-sayt-yaratish //yani [slug].tsx ko'rinmaydi chunki next jsda shunday funksiyalangan//////////endi shu slugga dizayn berib slugni ichini to'ldirish kerak
+                    >
+                        <Box
+                            position={"relative"}
+                            width={"100%"}
+                            height={{ xs: "30vh", md: "50vh" }}
+                        >
+                            {/* shu boxni ichidagi image shu response bilan juda chiroyli bo'ldi rasim 100% response bo'ldi  */}
+                            {/* Image next.jsdan keladigan component hissoblanadi yani saytga qo'yilgan imagelarni aftamatik optimizatsa qilib beradi imagega fill atributi yozilsa ona boxsiga yoki diviga albatta positionlardan birirtasi berilishi kerak va bu imageda seo uchun atributlarni yozsa bo'ladi seo uchun friendly component huddi Head componentiga o'hshab  widt yoki height berilsa positionlar shart emas */}
+                            <Image
+                                src={item.image.url} //hygraphdan kelgan imageni urli
+                                alt={item.title}
+                                fill
+                                style={{
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
+                                }}
+                            />
+                            {/* imageni ichidagi altni ichidagi title rasimni titlesi yani seoga kerak keywords yozilsihi kerak bu keyvord map qilinib datadan yani serverdan rasimga title yozilgan joydan keladi datadagi imageni title fileldi keyword bo'lishi kerak */}
+                        </Box>
+                        <Typography variant="h4" marginTop={"30px"}>
+                            {item.title}
+                        </Typography>
+
+                        <Typography variant="body1" color={"gray"}>
+                            {" "}
+                            {item.excerpt}{" "}
+                        </Typography>
+                        {/* exerp: (snippet) Blogingiz postining oldindan ko'rishi sifatida paydo bo'ladigan qisqa parcha . Ushbu parcha sizning asosiy blog sahifangizda (barcha xabarlaringiz ro'yxatga olingan) havolani Facebook yoki LinkedIn kabi platformalarga ulashganda oldindan ko'rish, ba'zan esa qidiruv natijalarida paydo bo'ladigan ko'rinish sifatida paydo bo'lishi mumkin. */}
+
+                        <Divider sx={{ marginTop: "30px" }} />
+                        {/* Divider huddi htmldagi hr kabi yani pastki chiziqcha */}
+
+                        <Box
+                            sx={{
+                                display: "flex",
+                                gap: "10px",
+                                marginTop: "20px",
+                            }}
+                        >
+                            <Avatar
+                            // alt={item.author.name}
+                            // src={item.author.avatar.url}//hygraphdan avatarni urli kelmadi haygrapg playgrounddaham avatarni urli null bo'b turipti demak kemadi shu sabab ts buni bo'shligi uchun hato chiqaradi shu sabab hygraphda avatarni urili null bo'lib tursaham bu yerdan o'chirib qo'ydim
+                            />
+
+                            <Box>
+                                <Typography>{item.author.name}</Typography>
+                                <Box color={"gray"}>
+                                    {format(
+                                        new Date(item.createdAt),
+                                        "dd MMM, yyyy"
+                                    )}{" "}
+                                    &#x2022; o'qish{" "}
+                                    {calculateEstimatedTimeToRead(
+                                        item.description.text
+                                    )}{" "}
+                                    daqiqa
+                                    {/* asosiy content bo'limidagi maqolaalrni nechchi minutda o'qilishini aftamatik tarzda tahminan standart asosida aytadi yani qancha vaqtda o'qib bo'linishi user uchun qiziq bo'lishi mumkun buham seo uchun yahshi hissoblanadi yani funksiyanallik */}
                                 </Box>
-
-                </Box>
-            ))}
+                            </Box>
+                        </Box>
+                    </Box>
+                )
+            )}
         </Box>
     );
 };
 
 export default Content;
 
-
 // const data = [
-    // bu data huddi serverday hero compoent uchun datalar shu datada nextda image bilan ishlash uchun agar image netda link bian chaqirilsa yoki serverda bo'lsa link bilan chaqirilsa next.config.js filega serverni adresi yozilishi kerak bo'lmasa hato chiaqdi chunki next imageni adresini aniq bilmasa uni formatiga moslashtira olmaydi yani serveriga olib keyin moslashtiradi ham hafsizlik uchun
-    // {
-    //     image: "https://img.freepik.com/free-vector/seo-ad-banner-template_23-2148789090.jpg?t=st=1726016865~exp=1726020465~hmac=554c54552970da57709135cfa0eec12b950bb14107a5459c2b49d511e0c498c3&w=1060",
-    //     title: "Exerpni SEO uchun nima foydasi bor???",
-    //     exerp: "Exerpni SEO uchun nima foydasi borligini tushunish!!!",
-    //     author: {
-    //         //seo uchun kerak??????????????????????????????????????????????????
-    //         name: "Nur Yorov",
-    //         image: "https://img.freepik.com/free-photo/writer-work-handsome-young-writer-sitting-table-writing-something-his-sketchpad_155003-5206.jpg?t=st=1726005430~exp=1726009030~hmac=a8a4f750d3ed8c7b8a9f4bd42b85cd2e52eecb1eb635dc27c44eb42b1fcaa5fe&w=1060",
-    //     },
-    // },
-    /////////////////////////////
+// bu data huddi serverday hero compoent uchun datalar shu datada nextda image bilan ishlash uchun agar image netda link bian chaqirilsa yoki serverda bo'lsa link bilan chaqirilsa next.config.js filega serverni adresi yozilishi kerak bo'lmasa hato chiaqdi chunki next imageni adresini aniq bilmasa uni formatiga moslashtira olmaydi yani serveriga olib keyin moslashtiradi ham hafsizlik uchun
+// {
+//     image: "https://img.freepik.com/free-vector/seo-ad-banner-template_23-2148789090.jpg?t=st=1726016865~exp=1726020465~hmac=554c54552970da57709135cfa0eec12b950bb14107a5459c2b49d511e0c498c3&w=1060",
+//     title: "Exerpni SEO uchun nima foydasi bor???",
+//     exerp: "Exerpni SEO uchun nima foydasi borligini tushunish!!!",
+//     author: {
+//         //seo uchun kerak??????????????????????????????????????????????????
+//         name: "Nur Yorov",
+//         image: "https://img.freepik.com/free-photo/writer-work-handsome-young-writer-sitting-table-writing-something-his-sketchpad_155003-5206.jpg?t=st=1726005430~exp=1726009030~hmac=a8a4f750d3ed8c7b8a9f4bd42b85cd2e52eecb1eb635dc27c44eb42b1fcaa5fe&w=1060",
+//     },
+// },
+/////////////////////////////
 //     {
 //         //bu datadagi image nextda image componenetda chaqirilganda map qilib chaqiriladi va altga shu imageni titlesi yani asosiy kalit so'zi chaqirilishi kerak shu "Exerpni SEO uchun foydalari va qanday foydalanish" imagega seo hissoblanadi
 //         image: "https://img.freepik.com/free-vector/seo-optimization-landing-page-design_23-2148123548.jpg?t=st=1726016902~exp=1726020502~hmac=3918c1fae7c642276459392cc52f1e19744f71c0d8ff561842df8cda886342a9&w=740",

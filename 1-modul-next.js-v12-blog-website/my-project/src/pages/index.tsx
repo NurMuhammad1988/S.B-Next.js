@@ -7,6 +7,7 @@ import { CategoryType} from "src/interface/catigories.interface";
 import Layout from "src/layout/layout";
 import { BlogsService } from "src/service/blog.service";
 
+
 const IndexPage = ({blogs, latestBlogs, categories}: HomePageProps) => {
     //endi next jsni asosiy sahifasi hissoblangan indexPageda props bilan kelgan  qiymatlarida serverdan keladigan datalarni typlelari bor HomePageProps nomli interface bor
     // console.log(props.message);//bu propsdan kelgan message qiymati
