@@ -1,9 +1,10 @@
-export interface BlogsType {//hygraphda yozilgan serverni datalari qanday typda ekanligi alohida papkada yozildi va bu blogs ishlatilgan joyga har bi malumotni typini alohida yozib o'tirmasdan shu blogstypeni chaqirib qo'ysa bo'ldi shunda  blogs ishlatilgan faillarda har bir qiymatga typni alohida yozish kerak bo'lmaydi
+export interface BlogsType {
+    //hygraphda yozilgan serverni datalari qanday typda ekanligi alohida papkada yozildi va bu blogs ishlatilgan joyga har bi malumotni typini alohida yozib o'tirmasdan shu blogstypeni chaqirib qo'ysa bo'ldi shunda  blogs ishlatilgan faillarda har bir qiymatga typni alohida yozish kerak bo'lmaydi
     excerpt: string;
     id: string;
     slug: string;
     title: string;
-    createdAt: Date
+    createdAt: Date;
     image: {
         url: string;
     };
@@ -18,6 +19,7 @@ export interface BlogsType {//hygraphda yozilgan serverni datalari qanday typda 
         slug: string;
     };
     description: {
-        text: string
-      }
+        text: string;
+        html: string;
+    };
 }

@@ -102,6 +102,24 @@ export const BlogsService = {
                     id
                     slug
                     title
+                    createdAt
+                    image {
+                        url
+                    }
+                    author {
+                        name
+                        avatar {
+                            url
+                        }
+                    }
+                    category {
+                        label
+                        slug
+                    }
+                    description {
+                        html
+                        text
+                    }
                 }
             }
         `;
