@@ -7,6 +7,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_HYGRAPH_ENDPOINT as string; //graphql
 export const BlogsService = {
     //constructor
     async getAllBlogs() {
+        //bu server bilan aloqa qialdigan async funksiyalar qo'lda yozilgan metod hissoblanadi yani axipos bilanmas qo'lda get qilinmoqda
         //bu async funksiya chunki hygraph serverdan datalar get qilinetganda kutish bo'masligi kerak yani async funksiyani hech narsani yani o'zidan oldingi funksiyalarni  kutmaydi birinchi ishlaydi//query shunchaki nom yani queryda chaqirilgan gql asosiy ishlaydigan kutubhona
         const query = gql`
             query GetBlogs {
@@ -95,6 +96,7 @@ export const BlogsService = {
     },
 
     async getDetailedBlogs(slug: string) {
+        //getDetailedBlogs haygraph serverda yozilgan file sluglarni qaytaradi yani hygraphda yozilgan maqolalarni slugini qaytaradi ``<<shuni ichidagi gql ichida yozilgan server kodlar hygraphda yozilgan tsda ishlangani uchun slugni qandat type ekanligiham yoizb qo'yilishi shart
         const query = gql`
             query GetDetailedBlog($slug: String) {
                 blog(where: { slug: $slug }) {
@@ -124,16 +126,57 @@ export const BlogsService = {
             }
         `;
 
-
-        const result = await request<{blog:BlogsType[]}>(graphqlAPI, query, {slug})
-        return result.blog
-
+        const result = await request<{ blog: BlogsType[] }>(graphqlAPI, query, {
+            slug,
+        });
+        return result.blog;
     },
+
+    async getDetailedCategoriesBlog(slug: string) {
+        const query = gql`
+            query getGategoriesBlog($slug: String!) {
+                blogs(where: { category: { slug: $slug } }) {
+                   
+                    excerpt
+                    id
+                    slug
+                    title
+                    createdAt
+                    image {
+                        url
+                    }
+                    author {
+                        name
+                        avatar {
+                            url
+                        }
+                    }
+                    category {
+                        label
+                        slug
+                    }
+                    description {
+                        text
+                    }
+
+                }
+            }
+        `;
+
+        const result = await request<{ blogs: BlogsType[] }>(graphqlAPI, query, {slug});
+        return result.blogs;
+    },
+
+    
+
 };
 
-
-
-
+// query MyQuery($slug: String = "mobiles") {
+//  blogs(where: {category: {slug: $slug}}) {
+//  id
+//  title
+//  }
+// }
 
 // query GetDetailedBlog {($slug: String = "hygraphcom-va-nextjs-bilan-blog-sayt-yaratish")
 //     blog(where: {slug: $slug}) {
@@ -152,3 +195,15 @@ export const BlogsService = {
 //       title
 //     }
 //   }
+
+// query GetDetailedBlog($slug: String = "hygraphcom-va-nextjs-bilan-blog-sayt-yaratish") {
+//     blog(where: {slug: $slug}) {
+//         excerpt
+//         id
+//         slug
+//         title
+//         description {
+//           html
+//         }
+//       }
+//     }

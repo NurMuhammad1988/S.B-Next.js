@@ -10,7 +10,7 @@ const Content = ({ blogs }: ContentProps) => {
 
     const router = useRouter();
 
-    //nextda kelgan huddi reactdagi router vazifasini bajarib beradigan hook
+    //nextda kelgan huddi reactdagi router vazifasini bajarib beradigan hook lekin bu hook o'rniga next Linkdanham foydalanish mumkun chunki nextni linkida routeri bor aftamatik ishlaydi
     return (
         <Box width={{ xs: "100%", md: "70%" }}>
             {blogs.map(

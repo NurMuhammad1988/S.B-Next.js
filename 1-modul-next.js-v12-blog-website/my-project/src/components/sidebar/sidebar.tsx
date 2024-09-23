@@ -112,7 +112,7 @@ const Sidebar = ({latestBlogs, categories}: SidebarProps) => {
                     >
                         {categories.map((nav) => (
                             <Fragment key={nav.slug}>
-                                <Button
+                                <Button onClick={() => router.push(`/category/${nav.slug}`)}
                                     fullWidth
                                     sx={{
                                         justifyContent: "flex-start",
