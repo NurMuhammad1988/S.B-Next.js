@@ -17,6 +17,7 @@ import { useState } from "react";
 import { navItems } from "src/config/constants";
 import CloseIcon from "@mui/icons-material/Close";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { useRouter } from "next/router";
 
 interface Props {
     window?: () => Window;
@@ -26,6 +27,8 @@ interface Props {
 
 const Navbar = ({ window }: Props) => {
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const router = useRouter()
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
@@ -106,7 +109,8 @@ const Navbar = ({ window }: Props) => {
 
                     <Box sx={{ display: { xs: "none", sm: "block" } }}>
                         {navItems.map((item) => (
-                            <Button key={item.route} sx={{ color: "#fff" }}>
+                            <Button onClick={() => router.push(item.route)} key={item.route} sx={{ color: "#fff" }}>
+                                {/* constants.tsda yozilgan routlardan yani category bilan  blogni routerlaridan userouter orqali foydalanish yani shu navbar pagedagi yuqoridagi gategoriy va blogs pagega kirish uchun shunda navbar layoutda turgani uchun sayt bo'ylab hamma joyda bo'ladi va navbardagi yuqoridagi category va blogs pagelarham hamma joyda dynamic turadi shunda hamma joyda category va blogs pagelarga bitta click bilan o'tib ketish mumkun shu routerli onchlik sabab */}
                                 {item.label}
                             </Button>
                         ))}

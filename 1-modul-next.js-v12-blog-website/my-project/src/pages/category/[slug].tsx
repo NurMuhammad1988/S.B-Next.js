@@ -11,7 +11,11 @@ const CategoryDetailedPage = ({
     blogs,
     latestBlogs,
     categories,
-}: DetailedCategoriesPageProps) => {
+}: DetailedCategoriesPageProps) => {//categoriylarga bosilganda hygraphdagi categoriylar ichida yozilgan maqolalarga o'tadi masalan mobilega bosilsa hygraphda categoriyasi mobile bo'lgan maqolalarni hammasini bitta sahifaga slug [slug] orqali olib o'tadi
+
+    //14, 15, 16, darslarga comment yozilmadi qaytadan ko'rib comment va vazifalarni bajarish kerak 
+    // 14. Category blogs page va 15. General page va 16. SEO & NProgress darslarini qaytadan ko'rib blog papkani ichidagi hatoni topib kerakli comentlarni yozib categoriylarga moslab har bir categoriyga 3 4 tadan maqola yozib yana 1 ta categoriy qo'shib categoriylarga o'tganda maqolalarni web1 web2 mobile1 mobile2 qilib o'zing uchun tartibli qilib yahshilab tushunvol
+
     return (
         <Layout>
             <Head>

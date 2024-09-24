@@ -132,7 +132,7 @@ export const BlogsService = {
         return result.blog;
     },
 
-    async getDetailedCategoriesBlog(slug: string) {
+    async getDetailedCategoriesBlog(slug: string) {//categoriylarga bosilganda hygraphdagi categoriylar ichida yozilgan maqolalarga o'tadi masalan mobilega bosilsa hygraphda categoriyasi mobile bo'lgan maqolalarni hammasini bitta sahifaga slug [slug] orqali olib o'tadi
         const query = gql`
             query getGategoriesBlog($slug: String!) {
                 blogs(where: { category: { slug: $slug } }) {
