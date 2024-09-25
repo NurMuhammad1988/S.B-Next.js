@@ -14,7 +14,7 @@ const Hero = ({blogs}: HeroProps) => {//blogs distruptatsa qilib chqirilgan bu b
 
 
     return (
-        <Box width={"100%"} height={"70vh"} sx={{ backgroundColor: "red" }}>
+        <Box width={"100%"}  height={"70vh"} sx={{ backgroundColor: "red" }}>
             <Carousel
                 responsive={{
                     mobile: {

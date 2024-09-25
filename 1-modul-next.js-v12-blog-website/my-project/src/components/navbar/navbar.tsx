@@ -18,6 +18,7 @@ import { navItems } from "src/config/constants";
 import CloseIcon from "@mui/icons-material/Close";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 interface Props {
     window?: () => Window;
@@ -37,7 +38,7 @@ const Navbar = ({ window }: Props) => {
         window !== undefined ? () => window().document.body : undefined;
 
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+        <Box  sx={{ textAlign: "center" }}>
             <Box
                 sx={{
                     display: "flex",
@@ -54,17 +55,20 @@ const Navbar = ({ window }: Props) => {
                         gap: "5px",
                     }}
                 >
-                    <AccountBalanceIcon />
-                    <Typography variant="h6">Blog Website Toggle</Typography>
+                   <Image src={"/favicon.svg"} alt={"logo"} width={70} height={50}  />
+                        <Typography  variant="h4" fontFamily={"fantasy"} paddingLeft={"5px"} component="div">
+                            Blog Website Toggle
+                        </Typography>
                 </Box>
-                <CloseIcon />
+                <CloseIcon onClick={handleDrawerToggle} sx={{cursor:"pointer"}}/>
             </Box>
 
             <Divider />
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item.route} disablePadding>
-                        <ListItemButton sx={{ textAlign: "center" }}>
+                        {/* pastdagi onclik mobil versiyaga o'tganda categoriyla va blogs pagelarga bosilganda touter shu sahifalarga oboradi */}
+                        <ListItemButton onClick={() => router.push(item.route)} sx={{ textAlign: "center" }}>
                             <ListItemText primary={item.label} />
                         </ListItemButton>
                     </ListItem>
@@ -74,9 +78,9 @@ const Navbar = ({ window }: Props) => {
     );
 
     return (
-        <Box height={"10vh"} sx={{ display: "flex" }}>
+        <Box height={"9vh"}  sx={{ display: "flex" }}>
             
-            <AppBar sx={{height:"10vh", backgroundColor:"#141414"}} component="nav">
+            <AppBar  sx={{ backgroundColor:"#141414", height:"9vh"}} component="nav">
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -94,15 +98,15 @@ const Navbar = ({ window }: Props) => {
                             alignItems: "center",
                             gap: "5px",
                             flexGrow: 1,
-                            display:{
-                                xs:"none",
-                                 sm: "flex"
-                            }
+                            display:"flex",
+                            cursor:"pointer"
                            
                         }}
+                        onClick={() => router.push("/")}
                     >
-                        <AccountBalanceIcon />
-                        <Typography variant="h6" component="div">
+                        {/* <AccountBalanceIcon /> */}
+                        <Image src={"/favicon.svg"} alt={"logo"} width={70} height={50}  />
+                        <Typography  variant="h4" fontFamily={"fantasy"} paddingLeft={"5px"} component="div">
                             Blog Website Toggle
                         </Typography>
                     </Box>

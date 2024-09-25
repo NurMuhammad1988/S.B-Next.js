@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { CategoryType } from "src/interface/catigories.interface";
 import Layout from "src/layout/layout";
+import SEO from "src/layout/seo/seo";
 import { BlogsService } from "src/service/blog.service";
 
 const CategoryPage = ({ categories }: CategoryPageProps) => {
@@ -10,7 +11,9 @@ const CategoryPage = ({ categories }: CategoryPageProps) => {
     const router = useRouter()
 
     return (
-        <Layout>
+        <SEO metaTitle="Hamma Categorylar"> 
+        {/* yani categiriylar yozilgan categoriylar uchun asosiy sahiga hissoblangan categorypage safifasi uchun meta title yani seo uchun faqat shu categorypage sahifasi uchun qolgan metateglar ese seo page ichidagi seo.tsxda yozilgan SEO funksiyasidan dynamic keladi*/}
+            <Layout>
             <Box
                 width={{ xs: "100%", md: "80%" }} //katta va kichkina ekranlar uchun width
                 marginX={"auto"}
@@ -37,7 +40,8 @@ const CategoryPage = ({ categories }: CategoryPageProps) => {
                 </ButtonGroup>
 
             </Box>
-        </Layout>
+        </Layout></SEO>
+       
     );
 };
 

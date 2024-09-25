@@ -4,10 +4,15 @@ import Layout from "src/layout/layout";
 import { BlogsService } from "src/service/blog.service";
 import { Content } from "src/components";
 import { Box } from "@mui/material";
+import SEO from "src/layout/seo/seo";
 
 const BlogPage = ({ blogs }: BlogPageProps) => {
     return (
-        <Layout>
+
+        <SEO metaTitle="IT haqidagi barcha yangiliklar">
+            {/* bu metatitle saytdagi blogs sahifasi uchun yani faqat bloglarni o'zi yani hammasi joylashadigan page uchun alohida kalit so'z bu IT haqidagi barcha yangiliklar va blogslar uchun esa dynamic har biriga har birini haygraphda yozilgan titlesi chiqadi bu blog papka ichidagi [slug].tsxda yozilgan */}
+
+            <Layout>
             <Box
                 sx={{
                     display: "flex",
@@ -20,6 +25,9 @@ const BlogPage = ({ blogs }: BlogPageProps) => {
                 <Content blogs={blogs} />
             </Box>
         </Layout>
+        </SEO>
+
+        
     );
 };
 

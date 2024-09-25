@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Typography } from "@mui/material";
+import { Box,  Typography } from "@mui/material";
 import { format } from "date-fns"; //hozir 2024 yil bo'sa shu qo'yilgan joyda 27 yilda 27 yilga aftmatik o'zgarib turadi real vaqtni Dta objectdan olib qo'yib turadi shunaqa kutubhona yarn qilib yuklanadi
 import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -15,6 +15,7 @@ const Footer = () => {
                 backgroundColor:"#141414",
                 color: "white",
             }}
+            borderTop={"1px solid rgba(255, 255, 255, .5)"}
         >
             <Typography>
                 © Nur {format(new Date(), "yyyy")} Blog Website. Barcha huquqlar

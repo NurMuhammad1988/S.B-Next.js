@@ -25,27 +25,31 @@ const IndexPage = ({ blogs, latestBlogs, categories }: HomePageProps) => {
     return (
         // bu layout.tsx da yozilgan component bu componentni vazifasi buni ichidagi chaqiriladigan componentlar roturga aftamatik tarzda olinadi yani rooter ishlatish shartmas reactda roter domni nextni o'zi bajaradi. aslida bu Layout component nextda yozilgan funksiya ichida rooter va yana useeffect yana qanadur funksiyalar aslida default holatda layout ichida yozilgan
 
-        <SEO
-            metaTitle="Nur blogs"
-            metaDescription="hamma bloglat IT haqida"
-            author="Nur Yorov"
-            metaKeywords="Nur bloglar"
-        >
+        <SEO>
+            {/*
+            Bu SEO seo papkani ichidagi seo.tsxda yozilgan COMPONENT HISSOBLANADI yani bu SEOda pastdagi metateglar dynamic kelgan  yani hygraphda yozilgan titlelarni blogs ichidan yani BlogsType ichidan olib  kerakli joylarga qo'yadi yani blogs, latestBlogs, categorieslarda yozilgan maqolalarni titellarini dynamic tarzda olib shu asosiy sahifadan boshlab qo'yib boradi            
+
+                <title>{metaTitle}</title>
+                <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+                <meta name="keyword" content={metaKeywords} />
+                <meta name="author" content={author} />
+                <meta name="description" content={metaDescription} /> */}
+
             {/* seo.tsxda yozilgan qiymatlarni hammasi kelmasa hato chiqarkan bu SEO seo qilish uchun dynamic ishlaydigan keywordlarga ega  */}
             <Layout>
-                <Head>
-                    {/* bu Head tegi next jsni seo uchun chiqarilgan tegi bu title esa asosiy sahifani title bu Head ichiga discription va meta teglarni seoga aloqador hamma teglarni yozib saytni asosiy sahifasini seosini qilish mumkun bu holatda "Next.jsda SEO qilish" asosiy sahifani titeli yani asosiy kalit so'zi  */}
-                    {/* sahifa tilini belgialsh bu seo uchun juda muhum */}
+                {/* <Head>
+                    bu Head tegi next jsni seo uchun chiqarilgan tegi bu title esa asosiy sahifani title bu Head ichiga discription va meta teglarni seoga aloqador hamma teglarni yozib saytni asosiy sahifasini seosini qilish mumkun bu holatda "Next.jsda SEO qilish" asosiy sahifani titeli yani asosiy kalit so'zi 
+                    sahifa tilini belgialsh bu seo uchun juda muhum
                     <html lang="uz" />
-                    {/* Layoutdagi title */}
+                    Layoutdagi title
                     <title>Next.jsda SEO qilish</title>
-                    {/* bu index pages papkani ichida pagesni ichida index papka bo'lsa next.js buni aftamatik tarzda asosiy sahifa qiladi huddi reactdagi app.js failday yani bu asosiy papka hamma marshutlash shu papkadan boshlanadi */}
+                    bu index pages papkani ichida pagesni ichida index papka bo'lsa next.js buni aftamatik tarzda asosiy sahifa qiladi huddi reactdagi app.js failday yani bu asosiy papka hamma marshutlash shu papkadan boshlanadi
                     <meta
                         name="description"
                         // shu joyda qanday teglar qo'yish mumkunligini yahshilab o'rgan
                         content="SEO uchun juda kerakli joy IndexPage sahifasi"
                     />
-                </Head>
+                </Head> */}
 
                 <Hero blogs={blogs.slice(1, 4)} />
                 {/* heroga umumiy blogsni slice qilib 1 bilan 4 ni orasidagi massivlarni ko'rsatish aytildi yani haygraphdan keladigan datalarni 1 chisi bilan 4 chini orasi chiqadi yani 1,2,3,4 */}
