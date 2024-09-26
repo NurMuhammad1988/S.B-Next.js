@@ -47,7 +47,9 @@ const DetailedBlogsPage = ({
                     <Box width={{ xs: "100%", md: "70%" }}>
                         <Box
                             sx={{
-                                backgroundColor: "black",
+                                // backgroundColor: "black",
+                                backgroundColor: "white",
+
                                 padding: "20px",
                                 borderRadius: "8px",
                                 boxShadow: "0px 8px 16px rgba(255,255,255, .1)",
@@ -105,6 +107,7 @@ const DetailedBlogsPage = ({
                             <Divider />
 
                             <div
+                                className="allHtml"
                                 style={{ opacity: ".7" }}
                                 dangerouslySetInnerHTML={{
                                     __html: blog.description.html,
@@ -149,5 +152,3 @@ interface DetailedBlogsPageProps {
     latestBlogs: BlogsType[];
     categories: CategoryType[];
 }
-
-

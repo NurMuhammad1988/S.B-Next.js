@@ -147,3 +147,4 @@ const Navbar = ({ window }: Props) => {
 };
 
 export default Navbar;
+

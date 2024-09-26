@@ -96,7 +96,6 @@ export const BlogsService = {
     },
 
     async getDetailedBlogs(slug: string) {
-        //getDetailedBlogs haygraph serverda yozilgan file sluglarni qaytaradi yani hygraphda yozilgan maqolalarni slugini qaytaradi ``<<shuni ichidagi gql ichida yozilgan server kodlar hygraphda yozilgan tsda ishlangani uchun slugni qandat type ekanligiham yoizb qo'yilishi shart
         const query = gql`
             query GetDetailedBlog($slug: String) {
                 blog(where: { slug: $slug }) {
@@ -130,10 +129,11 @@ export const BlogsService = {
             slug,
         });
         return result.blog;
-    },
+    },////getDetailedBlogs haygraph serverda yozilgan file sluglarni qaytaradi yani hygraphda yozilgan maqolalarni slugini qaytaradi ``<<shuni ichidagi gql ichida yozilgan server kodlar hygraphda yozilgan tsda ishlangani uchun slugni qandat type ekanligiham yoizb qo'yilishi shart
 
     async getDetailedCategoriesBlog(slug: string) {//categoriylarga bosilganda hygraphdagi categoriylar ichida yozilgan maqolalarga o'tadi masalan mobilega bosilsa hygraphda categoriyasi mobile bo'lgan maqolalarni hammasini bitta sahifaga slug [slug] orqali olib o'tadi
         const query = gql`
+                  
             query getGategoriesBlog($slug: String!) {
                 blogs(where: { category: { slug: $slug } }) {
                    
