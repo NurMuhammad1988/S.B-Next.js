@@ -8,6 +8,8 @@ import Layout from "src/layout/layout";
 import SEO from "src/layout/seo/seo";
 import { BlogsService } from "src/service/blog.service";
 
+//loyiha yarn dev bilan ishlaydi
+
 const IndexPage = ({ blogs, latestBlogs, categories }: HomePageProps) => {
     //endi next jsni asosiy sahifasi hissoblangan indexPageda props bilan kelgan  qiymatlarida serverdan keladigan datalarni typlelari bor HomePageProps nomli interface bor
     // console.log(props.message);//bu propsdan kelgan message qiymati

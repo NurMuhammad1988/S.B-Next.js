@@ -10,7 +10,7 @@ import theme from "src/helpers/theme";
 import { CssBaseline } from "@mui/material";
 import { useEffect } from "react";
 import { Router } from "next/router";
-
+//bu loyiha next.jsni oages router usulidan foydalanib router qilingan yani router pagelarga qarab bo'ladi
 const clientSideEmotionCache = createEmotionCache();
 
 export interface MyAppProps extends AppProps {
