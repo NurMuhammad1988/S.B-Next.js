@@ -120,6 +120,7 @@ const Sidebar = ({latestBlogs, categories}: SidebarProps) => {
                                     }}
                                 >
                                     {nav.label}
+                                    {/* hygraph serverdagi categoryni labellari */}
                                 </Button>
                                 <Divider />
                             </Fragment>

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { GetServerSideProps } from "next";
-import Head from "next/head";
+// import Head from "next/head";
 import { useRouter } from "next/router";
 import { Content, Sidebar } from "src/components";
 import { BlogsType } from "src/interface/blogs.interface";
@@ -17,7 +17,7 @@ const CategoryDetailedPage = ({
     //categoriylarga bosilganda hygraphdagi categoriylar ichida yozilgan maqolalarga o'tadi masalan mobilega bosilsa hygraphda categoriyasi mobile bo'lgan maqolalarni hammasini bitta sahifaga slug [slug] orqali olib o'tadi
 
     //14, 15, 16, darslarga comment yozilmadi qaytadan ko'rib comment va vazifalarni bajarish kerak
-    // 14. Category blogs page va 15. General page va 16. SEO & NProgress darslarini qaytadan ko'rib blog papkani ichidagi hatoni topib kerakli comentlarni yozib categoriylarga moslab har bir categoriyga 3 4 tadan maqola yozib yana 1 ta categoriy qo'shib categoriylarga o'tganda maqolalarni web1 web2 mobile1 mobile2 qilib o'zing uchun tartibli qilib yahshilab tushunvol
+    // 14. Category blogs page va 15. General page va 16. SEO & NProgress darslarini qaytadan ko'rish
 
     const router = useRouter();
 

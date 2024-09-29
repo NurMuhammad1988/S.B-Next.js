@@ -1,3 +1,4 @@
+
 // import { Head } from "next/document";//bu seo uchun kerak head emas ekan etiborli bo'lish kerak pastdagi seo uchun kerak bo'lgan head hissoblanadi
 import Head from "next/head";//se uchun kerak bo'ladigan head componenti head document bilan adashtirilmasin
 import { SeoProps } from "./seo.props";
@@ -44,3 +45,5 @@ const SEO = ({
 // 16. SEO & NProgress darsi 5 chi minutda qoldi hato bor SEO componentdan keyin hato bosib ketdi
 
 export default SEO;
+
+

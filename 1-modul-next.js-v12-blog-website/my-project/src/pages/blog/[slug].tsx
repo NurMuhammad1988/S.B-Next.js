@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, Typography } from "@mui/material"; //
 import { format } from "date-fns"; //
 import { GetServerSideProps } from "next"; //
-import Head from "next/head"; //
+// import Head from "next/head"; //
 import Image from "next/image"; //
 import { Sidebar } from "src/components"; //
 import { calculateEstimatedTimeToRead } from "src/helpers/time.format"; //
@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 interface DetailedBlogsPageProps {
-    blog: BlogsType[];
+    blog: BlogsType;
     latestBlogs: BlogsType[];
     categories: CategoryType[];
 }

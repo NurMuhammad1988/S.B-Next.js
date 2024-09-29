@@ -125,9 +125,7 @@ export const BlogsService = {
             }
         `;
 
-        const result = await request<{ blog: BlogsType[] }>(graphqlAPI, query, {
-            slug,
-        });
+        const result = await request<{ blog: BlogsType }>(graphqlAPI, query, {slug,});
         return result.blog;
     },////getDetailedBlogs haygraph serverda yozilgan file sluglarni qaytaradi yani hygraphda yozilgan maqolalarni slugini qaytaradi ``<<shuni ichidagi gql ichida yozilgan server kodlar hygraphda yozilgan tsda ishlangani uchun slugni qandat type ekanligiham yoizb qo'yilishi shart
 
