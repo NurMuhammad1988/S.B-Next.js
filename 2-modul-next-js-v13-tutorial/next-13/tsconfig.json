@@ -19,6 +19,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"]
+      // alias @dan keyingi *yulduzcha har qanday narsa manosida 
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

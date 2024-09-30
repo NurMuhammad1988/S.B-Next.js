@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "About page",
+    title: "About page uchun",
     description: "Biz Haqimizda ",
     keywords: "",
     robots: "",
