@@ -131,6 +131,7 @@ export const metadata: Metadata = {
     // robots:""????????????????????? SHU SCHEMA EMASMI SEO UCHUN
 }; // bu seo uchun kerak bo'lgan metadata
 
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -143,6 +144,7 @@ export default function RootLayout({
 
                 <Navbar />
                 {/* bu asosiy layout sahifasi SSR component lekin endi buni childrenlaridan aynan Navbar componenti CSR component va bu Navbar alohida joyda "use client" buyrug'i bilan yozilgan userouterham bu holatda navbarda next navigationdan chaqirib ishlatiladi next routerdanmas  */}
+                {/* asosiy sahifani yani papkalardan tashqarida turgan bu layoutni SSR qilinib qolgan childrenlarni CSR qilinishini qulayliklari shuki user saytga kirganda asosiy sahifa ssrda tayyorlab qo'yilgan bo'ladi lekin shu user kirgandagi bitta yuklanishda qolgan csr sahifalar yani childrenlar huddi react SPA dasturday yuklanib bo'ladi yani user uchun yahshi lekin savol agar CSR qilingan children componentlarga seo qilish metadatalar yozilishi kerak bo'lsa qanday qilinadi bu sahifadagi metadata default titledan tashqari  yani hamma sahifaga bir hil tasir qilayapti */}
 
                 {children}
                 <p>Footer</p>
@@ -150,3 +152,4 @@ export default function RootLayout({
         </html>
     );
 }
+

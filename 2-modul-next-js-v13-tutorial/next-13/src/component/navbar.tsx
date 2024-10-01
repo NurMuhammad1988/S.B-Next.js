@@ -8,6 +8,9 @@ import { useRouter } from "next/navigation";//next navigation bilan next routern
 const Navbar = () => {
     const router = useRouter();
     return (
+
+        
+
         <div className="navbar-1">
             <button onClick={() => router.push("/")}>Bosh sahifa</button>
             <button onClick={() => router.push("/about")}>Men haqimda</button>
