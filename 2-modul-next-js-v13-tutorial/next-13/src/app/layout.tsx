@@ -120,7 +120,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Fira_Code } from "next/font/google";
-import Navbar from "@/component/navbar";//alias yani coponentlarni u pakani ichidagi bu fail yani crs/app/coponents yoki ../../ src/app/component/navbar deb yozib chiqmasdan @global holatda shu sabachka bilan import qilishga yordan beradi alias parametri nextni skachat qilayotganda parametrlarga qo'shilsinmi deb so'reydi shunda yes qilinsa yani alias o'rnatilsa bu alias o'rnatilgan loyihada componentlarni shunday oson yokida qisqaroq marshutlar bilan chaqirish mumkun tsconfig.jsonda nastroyka qilingan 
+import Navbar from "@/component/navbar"; //alias yani coponentlarni u pakani ichidagi bu fail yani crs/app/coponents yoki ../../ src/app/component/navbar deb yozib chiqmasdan @global holatda shu sabachka bilan import qilishga yordan beradi alias parametri nextni skachat qilayotganda parametrlarga qo'shilsinmi deb so'reydi shunda yes qilinsa yani alias o'rnatilsa bu alias o'rnatilgan loyihada componentlarni shunday oson yokida qisqaroq marshutlar bilan chaqirish mumkun tsconfig.jsonda nastroyka qilingan
+import Provider from "./provider";
 
 const fira_code = Fira_Code({ subsets: ["latin"], weight: "400" });
 export const metadata: Metadata = {
@@ -131,7 +132,6 @@ export const metadata: Metadata = {
     // robots:""????????????????????? SHU SCHEMA EMASMI SEO UCHUN
 }; // bu seo uchun kerak bo'lgan metadata
 
-
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -141,15 +141,15 @@ export default function RootLayout({
         <html lang="uz">
             <body className={`${fira_code.className} bodyclass `}>
                 {/* <body className={`${geistSans.variable} ${geistMono.variable}`}> */}
+                <Provider>
+                    <Navbar />
+                    {/* bu asosiy layout sahifasi SSR component lekin endi buni childrenlaridan aynan Navbar componenti CSR component va bu Navbar alohida joyda "use client" buyrug'i bilan yozilgan userouterham bu holatda navbarda next navigationdan chaqirib ishlatiladi next routerdanmas  */}
+                    {/* asosiy sahifani yani papkalardan tashqarida turgan bu layoutni SSR qilinib qolgan childrenlarni CSR qilinishini qulayliklari shuki user saytga kirganda asosiy sahifa ssrda tayyorlab qo'yilgan bo'ladi lekin shu user kirgandagi bitta yuklanishda qolgan csr sahifalar yani childrenlar huddi react SPA dasturday yuklanib bo'ladi yani user uchun yahshi lekin savol agar CSR qilingan children componentlarga seo qilish metadatalar yozilishi kerak bo'lsa qanday qilinadi bu sahifadagi metadata default titledan tashqari  yani hamma sahifaga bir hil tasir qilayapti */}
 
-                <Navbar />
-                {/* bu asosiy layout sahifasi SSR component lekin endi buni childrenlaridan aynan Navbar componenti CSR component va bu Navbar alohida joyda "use client" buyrug'i bilan yozilgan userouterham bu holatda navbarda next navigationdan chaqirib ishlatiladi next routerdanmas  */}
-                {/* asosiy sahifani yani papkalardan tashqarida turgan bu layoutni SSR qilinib qolgan childrenlarni CSR qilinishini qulayliklari shuki user saytga kirganda asosiy sahifa ssrda tayyorlab qo'yilgan bo'ladi lekin shu user kirgandagi bitta yuklanishda qolgan csr sahifalar yani childrenlar huddi react SPA dasturday yuklanib bo'ladi yani user uchun yahshi lekin savol agar CSR qilingan children componentlarga seo qilish metadatalar yozilishi kerak bo'lsa qanday qilinadi bu sahifadagi metadata default titledan tashqari  yani hamma sahifaga bir hil tasir qilayapti */}
-
-                {children}
-                <p>Footer</p>
+                    {children}
+                    <p>Footer</p>
+                </Provider>
             </body>
         </html>
     );
 }
-

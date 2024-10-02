@@ -4,6 +4,7 @@ import { PostType } from "@/interface";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Text from "./text/text";
 
 const Home = () => {
     const [isloading, setIsloading] = useState(true);
@@ -37,6 +38,8 @@ const Home = () => {
                       </div>
                   ))}
             {/* <div>Home from CSR</div> */}
+            <Text text="Bu css modul (darsi) uchun qilingan, text.tsxda h1 ichida dynamic kelgan text "/>
+            {/* text propsdan kelgan */}
         </>
     );
 };

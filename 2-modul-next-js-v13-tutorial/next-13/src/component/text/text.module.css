@@ -1,0 +1,8 @@
+.text{
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+}
+/* module css failda css stylelar global yozib qo'yiladi va jsx js tsx ts faillarga object ichida chaqirilib ishlatiladi shunda hamma classlarga tasir qilmaydi masalan bitta loyihada 2 ta text class bor masalan nextni ichida htmllarda ikkita bir hil klass bor va bu bir hil klassga cssda style berilgan shunda bu style ikkala classgaham tasir qiladi ikkalasidaham ishlaydi lekin bittasi uchun ishlashi kerak bo'lishi mumkun shu sabab css stylelarni default holatda hech qayerga tasir qilmaydigan qilib objectda saqlash kerak kerak bo'lganda esa claslarni yuqoridagi  faillar ichida chaqirib ishlatish mumkun bu uchun text.css emas text.module.css bi holatdagi module kalit so'z objectga chaqirib ishlatish import qilisb ishlatish text.tsx failida ko'rsatilgan */
+
+/* yoki har bir componentga ???.module.css berib har bir componentni o'zini stylelalrini unikal qilib ishlatishxam mumkun shudan classlar nomi bir hil bo'lsaham bir biriga tasir qilmaydi aralashib ketmaydi lekin module cssni compoenetga import qilayotganda marshutga etibir berish kerak aynan shu componentni ona papkasi ichidagi module cssni chaqirish kerak marshutda hato bo'lmasligi kerak */
