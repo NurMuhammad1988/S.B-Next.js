@@ -22,6 +22,6 @@
       // alias @dan keyingi *yulduzcha har qanday narsa manosida 
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/posts/[id]/page.tsx", "next.config.mjs"],
   "exclude": ["node_modules"]
 }

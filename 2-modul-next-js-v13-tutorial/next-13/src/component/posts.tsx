@@ -15,8 +15,7 @@ const Posts: FC<{data: PostType[]}> = ({data}) => {
             <tr key={c.id}>
                 <td>{c.id}</td>
                 <td>
-                    <Link href={`/posts${c.id}`}>{c.title}</Link>
-                    {/* id bor lekin title yo'q   */}
+                    <Link href={`/posts/${c.id}`}>{c.title}</Link>
                 </td>
             </tr>
         ))}
