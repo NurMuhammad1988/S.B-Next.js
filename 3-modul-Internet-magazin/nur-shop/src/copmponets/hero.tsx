@@ -1,4 +1,3 @@
-import React from "react";
 
 const Hero = () => {
     return (
@@ -8,7 +7,7 @@ const Hero = () => {
                     <img
                         className="object-cover object-center rounded"
                         alt="hero"
-                        src="https://dummyimage.com/720x600"
+                        src="next.svg"
                     />
                 </div>
                 <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">

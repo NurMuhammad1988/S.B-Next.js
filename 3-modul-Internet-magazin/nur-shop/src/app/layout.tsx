@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 
+// bu loyihani shabloni asosiy sahifa emas shablon
 
 const montserrat = Montserrat({
      subsets: ["latin"],
@@ -21,6 +22,7 @@ export default function RootLayout({
     return (
         <html lang="uz">
             <body className={montserrat.className}>
+                {/* sahblon return qiladi eng boshida navbarni yani hamma sahifada endi navbar default component bo'ladi keyin esa children yani qolgan hamma componentlarni return qiladi children reactdabor hamma narsa hamma component RootLayoutdan kealdigan hamma narsa*/}
                 <Navbar />
                 {children}
             </body>

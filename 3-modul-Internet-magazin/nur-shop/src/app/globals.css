@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+/* body{
   background: rgba(0, 0, 0, 0.721);
-}
+} */
 
 .logo{
   height: 40px;

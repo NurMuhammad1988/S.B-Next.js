@@ -1,15 +1,28 @@
 "use client";
 
 import { ProductType } from "@/interface";
+// import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
+import CustomImage from "./image";
 
 const Product: FC<{ product: ProductType }> = ({ product }) => {
-    console.log(product); //bu product app papkani ichidagi asosiy sahifa page.tsxda ssrda yozilib serverdan fetch metodi bilan chaqirilgan datalarga ega
+    // console.log(product); //bu product app papkani ichidagi asosiy sahifa page.tsxda ssrda yozilib serverdan fetch metodi bilan chaqirilgan datalarga ega
 
     return (
-        <div className="bg-gray-100 p-6 rounded-lg">
-            <img className="h-40 rounded w-full object-cover object-center mb-6" src="https://dummyimage.com/721x401" alt="content"/>
-            <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
+        <Link href={`/product/${product.id}`} className=" h-96 flex flex-col  p-6 rounded-lg group hover:scale-105 transition-transform ease-out duration-200 border">
+            {/* linkda productni idsi bor click bo'lganda shu idga kiradi */}
+
+            <div className="relative max-h-80 flex-1">
+                <CustomImage product={product} fill/>
+                {/* customimage image tsxda yozilgan next image optimizatsa qilingan   */}
+                {/* next jsda imagega berilishi shart src va alt CustomImage componentda berilgan */}
+                {/* <Image src={product.image} alt={product.title} fill/> */}
+            </div>
+
+
+
+            <h3 className="tracking-widest  text-indigo-500 text-xs font-medium title-font">
                 {product.category}
             </h3>
 
@@ -23,7 +36,7 @@ const Product: FC<{ product: ProductType }> = ({ product }) => {
             <p className="leading-relaxed text-base line-clamp-2">
                 {product.description}
             </p>
-        </div>
+        </Link>
     );
 };
 
