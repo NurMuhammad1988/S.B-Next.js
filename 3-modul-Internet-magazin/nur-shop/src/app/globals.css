@@ -2,15 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body{
+body{
   background: rgba(0, 0, 0, 0.721);
-} */
+}
 
 .logo{
   height: 40px;
 }
 @layer components{
   .button{
+    /* tailwind cssni classlari layerni ichida taulwindga qo'shimcha shunday usulda classlar berish mumkun(stylelar */
     @apply  border px-5 md:px-10 py-2.5 rounded font-semibold transition duration-200 ease-out
   }
 }
