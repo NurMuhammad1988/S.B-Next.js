@@ -17,7 +17,9 @@ const CustomImage: FC<Props> = ({ product, fill }) => {//CustomImagega function 
 
         // usestatega boshlang'ich qiymat true berilgan yani isloadingda true bor agar isloading true bo'lsa classnamedagi loading (imageni hira qiladigan) classlar ishlaydi agar yani loading holatida bo'lsa lekin loading bo'letganini yani serverdan kelish vaqtidagi loadingni isloading funksiya qayerdan biladi???  
 
-        <Image
+        <>
+        {fill ? (
+            <Image
             src={product.image}//hamma image
             alt={product.title}//hamma objectlarni titeli
             fill
@@ -28,6 +30,23 @@ const CustomImage: FC<Props> = ({ product, fill }) => {//CustomImagega function 
             }`}
             onLoadingComplete={() => setisLoading(false)}//onLoadingComplete next jsni funksiyasiloading holati o'tgandan keyin isloadingni true hoatini false qiladi yani serverdan datalar kelgandan keyin loadingni o'chiradi
         />
+        ) : (
+            <Image
+            src={product.image}//hamma image
+            alt={product.title}//hamma objectlarni titeli
+            width={400}
+            height={1000}
+            className={`object-contain duration-700 ease-in-out group-hover: opacity-75 ${
+                isLoading
+                    ? "scale-110 blur-2xl grayscale "
+                    : "scale-100 blur-0 grayscale-0"
+            }`}
+            onLoadingComplete={() => setisLoading(false)}//onLoadingComplete next jsni funksiyasiloading holati o'tgandan keyin isloadingni true hoatini false qiladi yani serverdan datalar kelgandan keyin loadingni o'chiradi
+        />
+        )}
+         
+        </>
+       
     );
 };
 

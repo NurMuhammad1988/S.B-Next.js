@@ -5,8 +5,9 @@ import { ProductType } from "@/interface";
 import { Dialog, DialogPanel } from "@headlessui/react"; //material uiga o'hshagan kutubhona
 import { useParams, useRouter } from "next/navigation"; //joriy URL orqali keladigan marshutni dinamik parametrlarini o'qish imkonini beruvchi client side rendring component hooki
 import { useEffect, useState } from "react";
-import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline"; //bu kutubhona reyting yuldizchalari bilan ishlash uchun npm i @heroicons/react
-import { StarIcon } from "@heroicons/react/24/solid";
+// import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline"; //bu kutubhona reyting yuldizchalari bilan ishlash uchun npm i @heroicons/react
+// import { StarIcon } from "@heroicons/react/24/solid";
+import ReactStars from "react-stars"; //npm i react-stars va npm i --save-dev @types/react-stars bilan typiham chaqiriladi ts bilan ishlangani uchun typiham kerak ekan
 
 const ProductDetailedPage = () => {
     const [loading, setLoading] = useState(false);
@@ -75,9 +76,9 @@ const ProductDetailedPage = () => {
                                             {product?.rating.rate && (
                                                 // roductni ichida rating.va rate bor bo'lsa yani serverdan kelsa
                                                 <div className="flex items-center ml-2 mr-6 ">
-                                                    {/* starlar uchun  StarIcon va StarIconOutline ni  Array object bilan ishlatish */}
+                                                    {/* starlar uchun  StarIcon va StarIconOutline ni  Array object bilan ishlatish buni react stars kutubhonasi bilan osonroq yo'l bilan qaytadan qilindi */}
 
-                                                    {Array.from(
+                                                    {/* {Array.from(
                                                         {
                                                             length: Math.floor(
                                                                 product.rating
@@ -108,8 +109,17 @@ const ProductDetailedPage = () => {
                                                                 className="h-4 w-4 text-yellow-500"
                                                             />
                                                         )
-                                                    )}
-                                                      {/* starlar uchun  StarIcon va StarIconOutline ni  Array object bilan ishlatish*/}
+                                                    )} */}
+
+                                                    {/* starlar uchun  StarIcon va StarIconOutline ni  Array object bilan ishlatish buni react stars kutubhonasi bilan osonroq yo'l bilan qaytadan qilindi */}
+
+                                                    <ReactStars
+                                                        value={
+                                                            product.rating.rate
+                                                        }
+                                                        edit={false}
+                                                    />
+                                                    {/* productlarni yulzuchadagi reytingiga qarab sariq styleberish aftamatik tarzda yuqoridagi uzun Array objecti bilan qilingan ishni bir qator bilan//////////// bu kutubhona reyting yuldizchalari bilan ishlash uchun kutubhonadan kelgan yulduzcha rasimlarni reytingga moslab style berish masalan mahsulotni reytingi 5 bo'lsa beshshala yulduzchaxam sariq bo'ladi agar reyting 3.5 bo'lsa yulduzchalarni uch yarimtasi sariq bo'lib qolgani bo'sh yani oq bo'lib turadi  */}
                                                 </div>
                                             )}
 
@@ -124,16 +134,20 @@ const ProductDetailedPage = () => {
                                         </p>
                                     </div>
 
-<div className="space-y-3 text-sm">
-    <button className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black">
-        Add to bag 
-    </button >
-    <button onClick={()=> window.location.reload()} className="button w-full bg-transparent border-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent">
-        View full details
-    </button>
-    {/* app papkani ichida (.)product papka ichida [id] papka bor [id]papkani ichida page.tsx bor >>>(.)<<bu degani next js App padhodda ichidagi idga kirishdan oldin hodisa ko'rsatadi huddi vanila jsdagiday masalan (.)product/[id]/page.tsx ichida chaqirilgan idni ko'rsatishdan oldi hodisa iladi yani idni ko'rsatishdan oldin nimadur hodisa ilish shart shunda (.)<<bu to'g'ri ishlaydi bu usulda routerlash usuli maqsad user biror bir sahifaga kirish uchun click qilganda hodisa yani modal ko'rsatish bu holatda (.)product papkani ichidagi [id] papkasi dynamic id degani next js shu [id]dan bu [id] papkani ichidagi page.tsxda serverdan keladigan idlar dynamic qilinishini biladi va next jsni dynamic routerlash funksiyasi ishga tushadi yani dynamic routerlash uchun katta funkisiya yozish shart emas next jsni o'zi qilib beradi  va (.)<<bu esa shu dynamic keladigan idlarga kirishdan oldin modal oyna chiqaradi yani user serverdan kelgan idsi bor elementga bosadi router bo'yicha aslida bosilgan elementga kirish kerakedi yani sahifa marshuti o'zgarishi kerak edi lekin bu holatda sahifa butunlay o'zgarmaydi user click qilganda click qilgan sahifasiga kirishdan oldin boshqa modal ko'rsatadi va agar shu modal chiqgandan keyin modaldan boshqa har qanday joyga bosilganda yana asosiy turgan sahifasiga qaytaradi yoki bu holatda View full details buttoniga bosilsa product/[id]/page.tsxga yani hodisali marshutlashga aloqasi yo;q realni shu idga aloqador shu idni detallari bor sahifaga bu holatda product/[id]/page.tsx ichidagi ProductDetailedPage sahifasiga yani dynamic kelgan idlar uchun yaratilgan sahifaga olib kiradi  hullas next js internet magazinlar uchun qulay qilib App padhodda udar routing qilgan dacumentatsa>>>https://nextjs.org/docs/app/building-your-application/routing/intercepting-routes  */}
-</div>
-
+                                    <div className="space-y-3 text-sm">
+                                        <button className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black">
+                                            Add to bag
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                window.location.reload()
+                                            }
+                                            className="button w-full bg-transparent border-blue-600 hover:bg-blue-600 hover:text-white hover:border-transparent"
+                                        >
+                                            View full details
+                                        </button>
+                                        {/* app papkani ichida (.)product papka ichida [id] papka bor [id]papkani ichida page.tsx bor >>>(.)<<bu degani next js App padhodda ichidagi idga kirishdan oldin hodisa ko'rsatadi huddi vanila jsdagiday masalan (.)product/[id]/page.tsx ichida chaqirilgan idni ko'rsatishdan oldi hodisa iladi yani idni ko'rsatishdan oldin nimadur hodisa ilish shart shunda (.)<<bu to'g'ri ishlaydi bu usulda routerlash usuli maqsad user biror bir sahifaga kirish uchun click qilganda hodisa yani modal ko'rsatish bu holatda (.)product papkani ichidagi [id] papkasi dynamic id degani next js shu [id]dan bu [id] papkani ichidagi page.tsxda serverdan keladigan idlar dynamic qilinishini biladi va next jsni dynamic routerlash funksiyasi ishga tushadi yani dynamic routerlash uchun katta funkisiya yozish shart emas next jsni o'zi qilib beradi  va (.)<<bu esa shu dynamic keladigan idlarga kirishdan oldin modal oyna chiqaradi yani user serverdan kelgan idsi bor elementga bosadi router bo'yicha aslida bosilgan elementga kirish kerakedi yani sahifa marshuti o'zgarishi kerak edi lekin bu holatda sahifa butunlay o'zgarmaydi user click qilganda click qilgan sahifasiga kirishdan oldin boshqa modal ko'rsatadi va agar shu modal chiqgandan keyin modaldan boshqa har qanday joyga bosilganda yana asosiy turgan sahifasiga qaytaradi yoki bu holatda View full details buttoniga bosilsa product/[id]/page.tsxga yani hodisali marshutlashga aloqasi yo;q realni shu idga aloqador shu idni detallari bor sahifaga bu holatda product/[id]/page.tsx ichidagi ProductDetailedPage sahifasiga yani dynamic kelgan idlar uchun yaratilgan sahifaga olib kiradi  hullas next js internet magazinlar uchun qulay qilib App padhodda udar routing qilgan dacumentatsa>>>https://nextjs.org/docs/app/building-your-application/routing/intercepting-routes  */}
+                                    </div>
                                 </div>
                             </div>
                         )}
