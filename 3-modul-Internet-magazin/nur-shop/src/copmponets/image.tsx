@@ -41,7 +41,7 @@ const CustomImage: FC<Props> = ({ product, fill }) => {//CustomImagega function 
                     ? "scale-110 blur-2xl grayscale "
                     : "scale-100 blur-0 grayscale-0"
             }`}
-            onLoadingComplete={() => setisLoading(false)}//onLoadingComplete next jsni funksiyasiloading holati o'tgandan keyin isloadingni true hoatini false qiladi yani serverdan datalar kelgandan keyin loadingni o'chiradi
+            onLoadingComplete={() => setisLoading(false)}//onLoadingComplete next jsni funksiyasi loading holati o'tgandan keyin isloadingni true holatini false qiladi yani serverdan datalar kelgandan keyin loadingni o'chiradi
         />
         )}
          
@@ -52,4 +52,3 @@ const CustomImage: FC<Props> = ({ product, fill }) => {//CustomImagega function 
 
 export default CustomImage;
 
-// 31. Image optimization va fetch va asosiy sahifaga Product componenti qanday ishlayotganini tushunib comentga yoz

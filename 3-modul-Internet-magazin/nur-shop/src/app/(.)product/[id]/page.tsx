@@ -19,6 +19,10 @@ const ProductDetailedPage = () => {
 
     const router = useRouter();
 
+    const handleClick = () => {
+        // localStorage.setItem("carts", prod)
+    }
+
     useEffect(() => {
         //// user saytga kirgandan ishlaydi
         async function getData() {
@@ -135,7 +139,7 @@ const ProductDetailedPage = () => {
                                     </div>
 
                                     <div className="space-y-3 text-sm">
-                                        <button className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black">
+                                        <button className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black" onClick={handleClick}>
                                             Add to bag
                                         </button>
                                         <button
