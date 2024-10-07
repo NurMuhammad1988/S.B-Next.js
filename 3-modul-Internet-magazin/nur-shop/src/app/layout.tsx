@@ -2,6 +2,8 @@ import Navbar from "@/copmponets/navbar";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // bu loyihani shabloni asosiy sahifa emas shablon
 
@@ -24,6 +26,7 @@ export default function RootLayout({
             <body className={montserrat.className}>
                 {/* sahblon return qiladi eng boshida navbarni yani hamma sahifada endi navbar default component bo'ladi keyin esa children yani qolgan hamma componentlarni return qiladi children reactdabor hamma narsa hamma component RootLayoutdan kealdigan hamma narsa*/}
                 <Navbar />
+                <ToastContainer/>
                 {children}
             </body>
         </html>

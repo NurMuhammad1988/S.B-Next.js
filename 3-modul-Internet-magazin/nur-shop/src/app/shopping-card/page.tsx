@@ -1,7 +1,7 @@
 
 const ShoppingCard = () => {
   return (
-    <div>ShoppingCard</div>
+    <div className="mt-24 text-red-900">ShoppingCard</div>
   )
 }
 
