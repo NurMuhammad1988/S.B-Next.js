@@ -8,28 +8,24 @@ import { useEffect, useState } from "react";
 import ReactStars from "react-stars";
 
 const ShoppingCard = () => {
-    const [total, setTotal] = useState<number>(0);
+    const [total, setTotal] = useState<number>(0);//reactdan keladigan usestatega typescript bilan ishlaganda typi albattayatilishi kerak
+    //useState - bu komponent haqidagi ma'lumotlar yoki ma'lumotlarni o'z ichiga olish uchun ishlatiladigan o'rnatilgan React ob'ekti . Komponentning holati vaqt o'tishi bilan o'zgarishi mumkin; har doim o'zgarganda, komponent qayta ko'rsatiladi
 
     const [products, setProducts] = useState<ProductType[]>(
-        JSON.parse(localStorage.getItem("carts") as string) || []
+        JSON.parse(localStorage.getItem("carts") as string) || []//yokida pustoy masiv yani agar shopping cardda hech narsa bo'lmasa pustoy massiv turadi
     );
-
-    // const products: ProductType[] =
-    //     JSON.parse(localStorage.getItem("carts") as string) || [];
 
     console.log(products);
 
     const removeProduct = (id: number) => {
-        const updatedCart = products.filter((product) => product.id !== id);
+        const updatedCart = products.filter((product) => product.id !== id);//updatedCartni vazifasi my bag bo'limiga tushgan mahsulotlarni agar kerak bo'lmasa udalit qilish uchun yani bu holatda updatedCart funksiyasi filter metodi bilan agar productni yani serverdannkelgan idga ega peoductni idsi teng bo'lmasa idga yanu removeProduct buttoniga bosilganda id bo'lmasa udalit qiladi localstorgaedagi setitem bilan localstrogedan o'chadi yani faqat manitordanmas butunlay o'chadi serverdan keladigan idga qarab o'chiradi//// 
         localStorage.setItem("carts", JSON.stringify(updatedCart));
         setProducts(updatedCart);
-        //   37. Handle inc & dec 3:05 da qoldi
-        //   36. shopping cart darsidaham server timeout gbo'lib qolgan edi server timeoutdan chiqgandan keyin qaytadan tekshirib 36 chi 37 chi darslarga coment yozish kerak
     };
 
-    const handleIncrement = (id: number) => {
+    const handleIncrement = (id: number) => {//idni nima ekanligini aytiush kerak typescript!!!
         const updatedCart = products.map((product) => {
-            if (product.id === id) {
+            if (product.id === id) {//agar productni idsi teng bo'lsa + belgisi bor peoductdagi idga o'sha productni kopiya qilib sanog'iga quantity: npmli parametr ochib unga quantityni +bir qilamiz yani har bosilganda bitta qo'shib boradi va productni return qiladi va buni local storageda saqlaydi yani setItem qiladi json formatda va bu updatedcardni usestateda saqlaydi usestate esa har safar bunaqa o'zgaruvchi malumotlarsni saqlab har bir userga alohida ko'rsatadi
                 return {
                     ...product,
                     quantity: product.quantity + 1,
@@ -44,8 +40,8 @@ const ShoppingCard = () => {
     };
 
     const handleDecment = (id: number) => {
-        const existProduct = products.find((product) => product.id === id);
-        if (existProduct?.quantity === 1) {
+        const existProduct = products.find((product) => product.id === id);//existProduct o'zgaruvchiga find metodi bilan agar productni idsi - buttondagi id bilan teng bo'lsa va bu id 1 ga teng bo'lsa yani ohiri bo'lsa if else bilan agar existProductda kelgan productsni idsi qattiy 1 ga teng bo'lsa removeProduct funksiyasni ishlatib existProductda kelgan idni udalit qil deyildi yani butunlay klocalstroagedan o'chib ketadi
+        if (existProduct?.quantity === 1) {//yani agar 
             removeProduct(existProduct.id);
         } else {
             const updatedCart = products.map((product) => {
@@ -65,17 +61,17 @@ const ShoppingCard = () => {
     };
 
     useEffect(() => {
-        const total = products.reduce((acc, item) => {
+        const total = products.reduce((acc, item) => {//total o'zgaruvchi bu holatda number chunki usestateda productsni typi number qilingan agar bu total o'zgaruvchini ichida numberga aloqasi yo'q metodlar ishlatilsa hato chiqadi  acc bu holatda oddiy parametr yani 0 va unga itemni yani productslarni prici ko'paytirildi itemni quantittysiga yani hamma itemlarni bhissoblab ohirgi narhni aytadi va har safar bu o'zgaruvchi malumotlarni useeffectdagi settotalda saqlaydi va har safar yangi malumotlarni beradi yani har safar updated bo'lganda
             return acc + item.price * item.quantity;
         }, 0);
 
         setTotal(total);
-    }, [products]); //products update bo'lganda bu usestate ishga tushadi
+    }, [products]); //products update bo'lganda bu usestate ishga tushadi shu sabab useeffectni qaramligiga qo'yildi yani har safar update bo'lganda useeffect ishga tiushib yangi malumotni userga ko'rsatadi
 
     return (
         <>
-            {products.length ? (
-                <div className="h-screen bg-gray-100 pt-20">
+            {products.length ? (//agar my bagda mahuslotlar bor bo'lsa s yani uzunligi bor bo;sa true bo'lsa shu ishlaydi yokida pastidagi sumkaning bo'sh degan textli classlar ishlaydi   
+                <div className="h-full bg-gray-100 pt-20">
                     <h1 className="mb-10 text-center text-2xl font-bold">
                         Cart Items
                     </h1>
@@ -179,8 +175,8 @@ const ShoppingCard = () => {
                                                     }
                                                 >
                                                     <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
                                                         d="M6 18L18 6M6 6l12 12"
                                                     />
                                                 </svg>
@@ -235,16 +231,16 @@ const ShoppingCard = () => {
                         </div>
                     </div>
                 </div>
-            ) : (
+            ) : (//agar shopping cardda mahsulotlar bor bo'lsa yuqoridagi classlar ishga tushadi agar my baggda hech qanday mahsulot bo'lmasa shu commentdan keyingi classlar ishga tushadi
                 <section className="bg-white  ">
                     <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
                         <div className="wf-ull lg:w-1/2">
                             <p className="text-sm font-medium text-blue-500 dark:text-blue-400">
-                                Sizning sumkanuing bo'sh hech narsa
+                                Sizning sumkangiz bo'sh hech narsa
                                 tanlamagansiz
                             </p>
                             <h1 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-red-600 md:text-3xl">
-                                Sumkaning bo'sh!!!
+                                Sumkangiz bo'sh!!!
                             </h1>
                             <h2 className="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-2xl">
                                 Siz hali hech qanday mahsulot tanlamadingiz!
@@ -280,4 +276,3 @@ const ShoppingCard = () => {
 };
 
 export default ShoppingCard;
-

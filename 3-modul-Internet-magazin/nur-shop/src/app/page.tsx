@@ -7,7 +7,7 @@ import { ProductType } from "@/interface";
 //app papkani ichidagi alohida fail bo'lib turadig  an page.tsx  bosh sahifa hissoblanadi
 // bu asosiy sahifa
 
-36, 37, 38, 39 chi darslarga umuman tushuniulmadi va coment yozilmadi shularniqaytadan ko'rib tushunganingni commentga yoz
+// 36, 37, 38, 39 chi darslarga umuman tushuniulmadi va coment yozilmadi shularniqaytadan ko'rib tushunganingni commentga yoz
 
 export default async function Home() {
     const res = await fetch("https://fakestoreapi.com/products");
