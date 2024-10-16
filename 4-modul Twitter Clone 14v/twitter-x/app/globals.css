@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* bu root claslar https://ui.shadcn.com/docs/dark-mode/nextdan kelib o'rnatilgan command """"""""""""""""""""npx shadcn@latest init""""""""""""""""""""""""""
+ */
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -41,7 +44,7 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 0 0% 0%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
