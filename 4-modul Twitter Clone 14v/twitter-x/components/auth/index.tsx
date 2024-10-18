@@ -1,11 +1,24 @@
+"use client"
 import Image from "next/image";
 import Button from "../ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
+import useRegisterModal from "@/hooks/useRegisterModal";
+import { useCallback } from "react";
+import RegisterModal from "../modals/register-modal";
 
 export default function Auth() {
+    const registerModal = useRegisterModal();//useRegisterModal bu qo'lda yozilgan hook hooks papkani ichidagi useRegisterModal.ts faildan kelepti
+
+    const onOpenRegisterModal = useCallback(() => {
+        registerModal.onOpen();//qo'lda yozilgan useRegisterModal hookini onOpen funksiyasi yani statesi chaqirilib ishlatildi qachonki registerModalda chaqirilgan qo'lda yozilgan hookdagi onOpen funksiyasi ishlaganda bu callback ishga tushadi va bu funksiya create account buttonida onclick qilib chaqirilgan shu sabab endi shu create account buttoniga onclik bo'lganda shu onOpenRegisterModal funksiyasi ishga tushadi va ichidagi on openni ishlatadi onopenda esa isopenni true qilish bor yani onopenda false qiymatriga ega isopen state bor onopen shuni true qilib beradi yani modalni ishga true qiladi
+    }, [registerModal]);
+
     return (
         <>
+            <RegisterModal />
+            {/*  RegisterModalni qayerga qo'yishni farqi yo'q asosiysi  return ichiga qo'yilsa bo'lsi  RegisterModal bu component va modals papkani ichidagi register-modal.tsx faildan keletp bu  RegisterModalda */}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-5 md:p-0 items-center h-screen">
                 {/* grid systemdaham responseda birinchi mobile hissoblanadi yani bu holatda mobileda grid-cols-1 md va mddan yuqorida grid-cols-2 bo'ladi*/}
                 <Image
@@ -62,7 +75,8 @@ export default function Auth() {
                                 <p className="mx-4">or</p>
                                 <div className="h-px bg-gray-700 w-1/2" />
                             </div>
-                            <Button label={"Create account"} fullWidth />
+                            <Button label={"Create account"} fullWidth onClick={onOpenRegisterModal} />
+                            {/* onOpenRegisterModal yani Create account buttoniga click bo'lganda shu onOpenRegisterModal calbach functionlik o'zgaruvchi va ichidagi callback ishga tushadi bu calback yani faqat shu buttonga click bo'lganda faqat shu callbach functionlik o'zgaruvchini render qiladi boshqa hech qaysi funksiyani render qilmaydi  */}
 
                             <div className="text-[13px] text-gray-400">
                                 By signing up, you agree to the
