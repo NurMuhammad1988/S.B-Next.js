@@ -11,7 +11,7 @@ export default function Auth() {
     const registerModal = useRegisterModal();//useRegisterModal bu qo'lda yozilgan hook hooks papkani ichidagi useRegisterModal.ts faildan kelepti
 
     const onOpenRegisterModal = useCallback(() => {
-        registerModal.onOpen();//qo'lda yozilgan useRegisterModal hookini onOpen funksiyasi yani statesi chaqirilib ishlatildi qachonki registerModalda chaqirilgan qo'lda yozilgan hookdagi onOpen funksiyasi ishlaganda bu callback ishga tushadi va bu funksiya create account buttonida onclick qilib chaqirilgan shu sabab endi shu create account buttoniga onclik bo'lganda shu onOpenRegisterModal funksiyasi ishga tushadi va ichidagi on openni ishlatadi onopenda esa isopenni true qilish bor yani onopenda false qiymatriga ega isopen state bor onopen shuni true qilib beradi yani modalni ishga true qiladi
+        registerModal.onOpen();//qo'lda yozilgan useRegisterModal hookini onOpen funksiyasi yani statesi chaqirilib ishlatildi qachonki registerModalda chaqirilgan qo'lda yozilgan hookdagi onOpen funksiyasi ishlaganda bu callback ishga tushadi va bu funksiya create account buttonida onclick qilib chaqirilgan shu sabab endi shu create account buttoniga onclik bo'lganda shu onOpenRegisterModal funksiyasi ishga tushadi va ichidagi on openni ishlatadi onopenda esa isopenni true qilish bor yani onopenda true qiymatiga ega isopen state bor onopen shuni ishlatib beradi yani modalni ishlatadi yani click bo'lganda ishlatadi
     }, [registerModal]);
 
     return (

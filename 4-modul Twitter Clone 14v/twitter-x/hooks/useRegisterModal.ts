@@ -13,7 +13,10 @@ interface RegisterModalStore {
 }
 
 const useRegisterModal = create<RegisterModalStore>((set) => ({
-    // bu qiymatlar RegisterModalStore interfaceda kelgani uchun shu uchchala qiymat hamasi chaqirilmasa hato chiqadi chunki RegisterModalStore interfaceda qiymatlar ohirida ? belgisi yo'q yani endi bu qiymatlar hammasi chaqirilishi shart
+
+    //Global state zustand kutubhonasi bilan qilidni va register-modal.tsxda chaqirilgan modal uchun ishlatildi va bu unversal bo'ldi va auth papkani ichidagi index jsda usecallback funksiya ichida ishlatildi
+
+    // bu qiymatlar RegisterModalStore interfaceda kelgani uchun shu uchchala qiymat hamasi chaqirilmasa hato chiqadi chunki RegisterModalStore interfaceda qiymatlar ohirida ? belgisi yo'q yani endi bu qiymatlar hammasi chaqirilishi shart tsni qattiy rejimi
     isOpen: false, // boshlang'ich qiymat huddi react redux darslariday
     onOpen: () => set({ isOpen: true }),// boshlang'ich qiymat bu holatda onOpen qiymatiga set qilib yani o'rnatildi isOpenni true qilindi yani onOpenni boshlang'ich qiymati isOpenni true qilish  
     onClose: () => set({ isOpen: false }),// boshlang'ich qiymat bu holatda onClose qiymatiga set qilib yani o'rnatildi isOpenni false qilindi yani onCloseni boshlang'ich qiymati isOpenni false qilish 
