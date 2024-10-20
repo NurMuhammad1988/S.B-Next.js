@@ -1,5 +1,7 @@
 // modalni ochib yopishga kerak bo'ladigan malumotlar
 
+//bu TypeScript file!!!!
+
 import { create } from "zustand"; //npm i zustand// state managment reduxga o'hshaydi va reduxdan oson providerlarsiz ishlaydi {create} esa zustandni funksiyasi vazifasi
 //Zustand Reduxdan tezroqmi? Redux o'lchami ishlash uchun muhim bo'lgan veb-ilovalar uchun ham tashvish tug'dirishi mumkin. Keng xususiyatlar to'plami tufayli u katta to'plam hajmi bilan birga keladi. Zustand yengil (gzip hajmi 1 KB dan kam) boʻlib, toʻplamingiz hajmini nazorat qilishda yordam beradi, bu esa tezroq yuklash vaqtini va yaxshi ishlashni taʼminlaydi .
 

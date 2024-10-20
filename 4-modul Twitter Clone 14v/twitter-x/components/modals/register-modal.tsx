@@ -1,7 +1,7 @@
 "use client";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import Modal from "../ui/modal";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 
 ////////////////////////////////////////////////???????????????????????????????
 import { useForm } from "react-hook-form";
@@ -18,12 +18,29 @@ import {
 
 import { Input } from "../ui/input";
 import Button from "../ui/button";
+import useLoginModal from "@/hooks/useLoginModal";
+
+1. Auth page
+
+va
+
+2. Autorization modal implement Darslarini qaytadan ko'rib har bir narsani tushunib comment bilan yozib keyingi darsga o'tish kerak!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! atniqsa tsga etibor qarat
 
 export default function RegisterModal() {
     const [step, setStep] = useState(1);
     const [data, setData] = useState({ name: "", email: "" });
 
-    const RegisterModal = useRegisterModal(); //qo'lda yozilgan shaxsiy hook chaqirildi
+  
+
+
+
+    const registerModal = useRegisterModal(); //qo'lda yozilgan shaxsiy hook chaqirildi  
+    const loginModal = useLoginModal()
+
+    const onToggle = useCallback(() => {
+        registerModal.onClose();
+        loginModal.onOpen();
+    }, [loginModal, registerModal]);
 
     const bodyContent =
         step === 1 ? (
@@ -36,7 +53,7 @@ export default function RegisterModal() {
         <div className="text-neutral-400  text-center mb-4 ">
             <p>
                 Already have anaccount?{" "}
-                <span className="text-white cursor-pointer hover:underline">
+                <span className="text-white cursor-pointer hover:underline" onClick={onToggle}>
                     Sign in{" "}
                 </span>
             </p>
@@ -48,8 +65,8 @@ export default function RegisterModal() {
             // title="Create an account"
             body={bodyContent}
             footer={footer}
-            isOpen={RegisterModal.isOpen} //RegisterModal o'zgaruvchida chaqirilgan useRegisterModal nomli qo'lda yozilgan hookni statelari huddi usestatega o'hshaydi yani modal.tsxdagi isOpenga boolean typi berilgan va useRegisterModaldagi isOpenga esa false berilgan yani boshod modal false bo'lib turadi onclose esa modal.tsxda void function qilib berilgan useRegisterModalda esa is openni false qilishi aytilgan state shunda modalni isopen hodisasi ishlaganda useRegisterModaldagi onopen statesi sabab true bo'ladi yani ochiladi va modalni onclose hodisasi ishlaganda useRegisterModalni onclose statesi ishlab isopenni false qiladi
-            onClose={RegisterModal.onClose} //RegisterModal o'zgaruvchida chaqirilgan useRegisterModal nomli qo'lda yozilgan hookni statelari huddi usestatega o'hshaydi
+            isOpen={registerModal.isOpen} //RegisterModal o'zgaruvchida chaqirilgan useRegisterModal nomli qo'lda yozilgan hookni statelari huddi usestatega o'hshaydi yani modal.tsxdagi isOpenga boolean typi berilgan va useRegisterModaldagi isOpenga esa false berilgan yani boshod modal false bo'lib turadi onclose esa modal.tsxda void function qilib berilgan useRegisterModalda esa is openni false qilishi aytilgan state shunda modalni isopen hodisasi ishlaganda useRegisterModaldagi onopen statesi sabab true bo'ladi yani ochiladi va modalni onclose hodisasi ishlaganda useRegisterModalni onclose statesi ishlab isopenni false qiladi
+            onClose={registerModal.onClose} //RegisterModal o'zgaruvchida chaqirilgan useRegisterModal nomli qo'lda yozilgan hookni statelari huddi usestatega o'hshaydi
             step={step} // boshlang'ich qiyamti 1 state
             totalSteps={2}
         />
@@ -84,6 +101,10 @@ function RegisterStep1({
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-4 px-12"
             >
+
+
+
+
                 <FormField
                     control={form.control}
                     name="name"
@@ -137,8 +158,6 @@ function RegisterStep2() {
     function onSubmit(values: z.infer<typeof registerStep2Schema>) {
         console.log(values);
     }
-
-    2. Autorization modal implement darsi 33:25 minutda qoldi
 
     const { isSubmitting } = form.formState;
 

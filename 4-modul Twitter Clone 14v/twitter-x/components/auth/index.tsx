@@ -6,18 +6,29 @@ import { AiFillGithub } from "react-icons/ai";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { useCallback } from "react";
 import RegisterModal from "../modals/register-modal";
+import useLoginModal from "@/hooks/useLoginModal";
+import LoginModal from "../modals/login-modal";
 
 export default function Auth() {
     const registerModal = useRegisterModal();//useRegisterModal bu qo'lda yozilgan hook hooks papkani ichidagi useRegisterModal.ts faildan kelepti
+    const loginModal = useLoginModal()
 
     const onOpenRegisterModal = useCallback(() => {
         registerModal.onOpen();//qo'lda yozilgan useRegisterModal hookini onOpen funksiyasi yani statesi chaqirilib ishlatildi qachonki registerModalda chaqirilgan qo'lda yozilgan hookdagi onOpen funksiyasi ishlaganda bu callback ishga tushadi va bu funksiya create account buttonida onclick qilib chaqirilgan shu sabab endi shu create account buttoniga onclik bo'lganda shu onOpenRegisterModal funksiyasi ishga tushadi va ichidagi on openni ishlatadi onopenda esa isopenni true qilish bor yani onopenda true qiymatiga ega isopen state bor onopen shuni ishlatib beradi yani modalni ishlatadi yani click bo'lganda ishlatadi
     }, [registerModal]);
 
+
+    const onOpenLoginModal = useCallback(() => {
+        loginModal.onOpen();
+    }, [loginModal]);
+
+
     return (
         <>
             <RegisterModal />
             {/*  RegisterModalni qayerga qo'yishni farqi yo'q asosiysi  return ichiga qo'yilsa bo'lsi  RegisterModal bu component va modals papkani ichidagi register-modal.tsx faildan keletp bu  RegisterModalda */}
+
+            <LoginModal/>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-5 md:p-0 items-center h-screen">
                 {/* grid systemdaham responseda birinchi mobile hissoblanadi yani bu holatda mobileda grid-cols-1 md va mddan yuqorida grid-cols-2 bo'ladi*/}
@@ -102,7 +113,7 @@ export default function Auth() {
                         <h3 className="font-medium text-xl mb-4">
                             Already have an account?
                         </h3>
-                        <Button label={"Sign in"} fullWidth outline />
+                        <Button label={"Sign in"} fullWidth outline onClick={onOpenLoginModal} />
                     </div>
                 </div>
             </div>
