@@ -19,23 +19,22 @@ import {
 import { Input } from "../ui/input";
 import Button from "../ui/button";
 import useLoginModal from "@/hooks/useLoginModal";
+import axios from "axios";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
-1. Auth page
+// 1. Auth page
 
-va
+// va
 
-2. Autorization modal implement Darslarini qaytadan ko'rib har bir narsani tushunib comment bilan yozib keyingi darsga o'tish kerak!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! atniqsa tsga etibor qarat
+// 2. Autorization modal implement Darslarini qaytadan ko'rib har bir narsani tushunib comment bilan yozib keyingi darsga o'tish kerak!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! atniqsa tsga etibor qarat
 
 export default function RegisterModal() {
     const [step, setStep] = useState(1);
     const [data, setData] = useState({ name: "", email: "" });
 
-  
-
-
-
-    const registerModal = useRegisterModal(); //qo'lda yozilgan shaxsiy hook chaqirildi  
-    const loginModal = useLoginModal()
+    const registerModal = useRegisterModal(); //qo'lda yozilgan shaxsiy hook chaqirildi
+    const loginModal = useLoginModal();
 
     const onToggle = useCallback(() => {
         registerModal.onClose();
@@ -46,14 +45,17 @@ export default function RegisterModal() {
         step === 1 ? (
             <RegisterStep1 setData={setData} setStep={setStep} />
         ) : (
-            <RegisterStep2 />
+            <RegisterStep2 data={data} />
         ); //bu bodycontent dynamic modalda dynamic tarzda reactelementlarni qabul qiladi va bu holatda modal chaqirilganda bodcontentni qabul qiladi va bu modalni asosiy qismi hissoblanadi va bu asosiy qisimga usestate bilan step nomli bo'sh lekin default qiymati 1 ga teng bo'lgan o'zgaruvchi yaratib uni if elsga qo'yildi yani agar step 1 ga teng bo'lsa (yani bu holatda aniq birga teng) RegisterStep1 funksiyasini ishlat yokida RegisterStep2 funksiyasini ishlat //RegisterStep1 va RegisterStep2 funksiyalari return qiladi shu register-modal.tsx failida yozilgan lekin alohida component faqat bu register-modal.tsx fail ichida ekanligi shu failga aloqador bo'lgani uchun shu joyda va shu joydan export bo'ladi
 
     const footer = (
         <div className="text-neutral-400  text-center mb-4 ">
             <p>
                 Already have anaccount?{" "}
-                <span className="text-white cursor-pointer hover:underline" onClick={onToggle}>
+                <span
+                    className="text-white cursor-pointer hover:underline"
+                    onClick={onToggle}
+                >
                     Sign in{" "}
                 </span>
             </p>
@@ -80,6 +82,8 @@ function RegisterStep1({
     setData: Dispatch<SetStateAction<{ name: string; email: string }>>;
     setStep: Dispatch<SetStateAction<number>>;
 }) {
+    const [error, setError] = useState("");
+
     const form = useForm<z.infer<typeof registerStep1Schema>>({
         resolver: zodResolver(registerStep1Schema),
         defaultValues: {
@@ -88,9 +92,23 @@ function RegisterStep1({
         },
     });
 
-    function onSubmit(values: z.infer<typeof registerStep1Schema>) {
-        setData(values);
-        setStep(2);
+    async function onSubmit(values: z.infer<typeof registerStep1Schema>) {
+        try {
+            const { data } = await axios.post(
+                "/api/auth/register?step=1",
+                values
+            );
+            if (data.success) {
+                setData(values);
+                setStep(2);
+            }
+        } catch (error: any) {
+            if (error.response.data.error) {
+                setError(error.response.data.error);
+            } else {
+                setError("Something went wrong. Please try again later.");
+            }
+        }
     }
 
     const { isSubmitting } = form.formState;
@@ -101,10 +119,13 @@ function RegisterStep1({
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-4 px-12"
             >
-
-
-
-
+                {error && (
+                    <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                )}
                 <FormField
                     control={form.control}
                     name="name"
@@ -146,7 +167,11 @@ function RegisterStep1({
     );
 }
 
-function RegisterStep2() {
+function RegisterStep2({ data }: { data: { name: string; email: string } }) {
+    const [error, setError] = useState(" ");
+
+    const registerModal = useRegisterModal();
+
     const form = useForm<z.infer<typeof registerStep2Schema>>({
         resolver: zodResolver(registerStep2Schema),
         defaultValues: {
@@ -155,8 +180,23 @@ function RegisterStep2() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof registerStep2Schema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof registerStep2Schema>) {
+        try {
+            const { data: response } = await axios.post(
+                "/api/auth/register?step=2",
+                { ...data, ...values }
+            );
+
+            if (response.success) {
+                registerModal.onClose();
+            }
+        } catch (error: any) {
+            if (error.response.data.error) {
+                setError(error.response.data.error);
+            } else {
+                setError("Something went wrong. Please try again later.");
+            }
+        }
     }
 
     const { isSubmitting } = form.formState;
@@ -167,6 +207,14 @@ function RegisterStep2() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-4 px-12"
             >
+                {error && (
+                    <Alert variant="destructive">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertTitle>Error</AlertTitle>
+                        <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                )}
+
                 <FormField
                     control={form.control}
                     name="username"
