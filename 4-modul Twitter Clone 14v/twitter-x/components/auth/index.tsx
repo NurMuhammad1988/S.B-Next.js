@@ -8,11 +8,16 @@ import { useCallback } from "react";
 import RegisterModal from "../modals/register-modal";
 import useLoginModal from "@/hooks/useLoginModal";
 import LoginModal from "../modals/login-modal";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Auth() {
     const registerModal = useRegisterModal(); //useRegisterModal bu qo'lda yozilgan hook hooks papkani ichidagi useRegisterModal.ts faildan kelepti
     const loginModal = useLoginModal();
+
+    const {data} = useSession()
+
+    console.log(data);
+    
 
     const onOpenRegisterModal = useCallback(() => {
         registerModal.onOpen(); //qo'lda yozilgan useRegisterModal hookini onOpen funksiyasi yani statesi chaqirilib ishlatildi qachonki registerModalda chaqirilgan qo'lda yozilgan hookdagi onOpen funksiyasi ishlaganda bu callback ishga tushadi va bu funksiya create account buttonida onclick qilib chaqirilgan shu sabab endi shu create account buttoniga onclik bo'lganda shu onOpenRegisterModal funksiyasi ishga tushadi va ichidagi on openni ishlatadi onopenda esa isopenni true qilish bor yani onopenda true qiymatiga ega isopen state bor onopen shuni ishlatib beradi yani modalni ishlatadi yani click bo'lganda ishlatadi
@@ -57,6 +62,7 @@ export default function Auth() {
                         <h2 className="font-bold text-3xl mb-4">Join today.</h2>
                         <div className="flex flex-col space-y-2">
                             <Button
+                            onClick={() => signIn("google")}
                                 label={
                                     //bu button component ui ichidagi button.tsxda qo'lda yozilgan component hissoblanadi bu button componentda fullWidth secondary qiymatlariham bor bu fullWidth secondary qiymatlarda boolen typi bilan classga aloqador hodislarham yozilgan
                                     <div className="flex gap-2 items-center justify-center">
@@ -70,10 +76,11 @@ export default function Auth() {
                             />
 
                             <Button
+                            onClick={() => signIn("github")}
                                 label={
                                     <div
                                         className="flex gap-2 items-center justify-center"
-                                        onClick={() => signIn("github")}
+                                        
                                     >
                                         <AiFillGithub />
                                         Sign up with Github
