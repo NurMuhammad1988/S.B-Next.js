@@ -1,55 +1,55 @@
-import { AuthOptions } from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
-import { connectToDatabase } from "./mongoose";
-import User from "@/database/user.model";
+// import { AuthOptions } from "next-auth";
+// import GitHubProvider from "next-auth/providers/github";
+// import GoogleProvider from "next-auth/providers/google";
+// import { connectToDatabase } from "./mongoose";
+// import User from "@/database/user.model";
 
-export const authOptions: AuthOptions = {
-    providers: [
-        GitHubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        }),
+// export const authOptions: AuthOptions = {
+//     providers: [
+//         GitHubProvider({
+//             clientId: process.env.GITHUB_CLIENT_ID!,
+//             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+//         }),
 
-        GoogleProvider({
+//         GoogleProvider({
 
-            clientId:process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+//             clientId:process.env.GOOGLE_CLIENT_ID!,
+//             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 
-        })
+//         })
 
-    ],callbacks: {
-        async session({session}: any ){
+//     ],callbacks: {
+//         async session({session}: any ){
 
-            // console.log(session);// github bilan registratsa qilingandauserni github accounti parametrlari keladi
+//             // console.log(session);// github bilan registratsa qilingandauserni github accounti parametrlari keladi
 
-            await connectToDatabase()
+//             await connectToDatabase()
 
-            const isExistingUser = await User.findOne({email: session.user?.email})
+//             const isExistingUser = await User.findOne({email: session.user?.email})
 
-            if(!isExistingUser) {
-                const newUser = await User.create({
+//             if(!isExistingUser) {
+//                 const newUser = await User.create({
 
-                    email: session.user.email,
-                    name: session.user.name,
-                    profileImage: session.user.image
+//                     email: session.user.email,
+//                     name: session.user.name,
+//                     profileImage: session.user.image
 
-                })
+//                 })
 
-                session.currentuser = newUser
-            }
+//                 session.currentuser = newUser
+//             }
 
-            session.currentuser = isExistingUser
+//             session.currentuser = isExistingUser
             
-            return session
+//             return session
 
-        }
-    },
+//         }
+//     },
 
-    debug: process.env.NODE_ENV === "development",
-    session: { strategy: "jwt" },
-    jwt: {
-        secret: process.env.NEXTAUTH_JWT_SECRET!,
-    },
-    secret: process.env.NEXTAUTH_SECRET!,
-};
+//     debug: process.env.NODE_ENV === "development",
+//     session: { strategy: "jwt" },
+//     jwt: {
+//         secret: process.env.NEXTAUTH_JWT_SECRET!,
+//     },
+//     secret: process.env.NEXTAUTH_SECRET!,
+// };
