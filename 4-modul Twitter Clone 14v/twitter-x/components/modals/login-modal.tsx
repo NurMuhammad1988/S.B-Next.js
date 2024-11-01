@@ -18,11 +18,10 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function LoginModal() {
-
-    const [error, setError] = useState("")
-
+    const [error, setError] = useState("");
 
     const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
@@ -40,15 +39,16 @@ export default function LoginModal() {
         },
     });
 
-   async function onSubmit(values: z.infer<typeof loginSchema>) {
-
+    async function onSubmit(values: z.infer<typeof loginSchema>) {
         try {
-            const {data} = await axios.post("/api/auth/login", values)
+            const { data } = await axios.post("/api/auth/login", values);
 
-            if(data.success){
-                loginModal.onClose()
+            if (data.success) {
+
+                signIn("credentials" , values)
+
+                loginModal.onClose();
             }
-
         } catch (error: any) {
             if (error.response.data.error) {
                 setError(error.response.data.error);
@@ -56,7 +56,6 @@ export default function LoginModal() {
                 setError("Something went wrong. Please try again later.");
             }
         }
-
     }
 
     const { isSubmitting } = form.formState;
@@ -67,17 +66,14 @@ export default function LoginModal() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-4 px-12"
             >
-
-
-{error && (
-    // agar error ishlasa chiqadi
+                {error && (
+                    // agar error ishlasa chiqadi
                     <Alert variant="destructive">
                         <AlertCircle className="h-4 w-4" />
                         <AlertTitle>Error</AlertTitle>
                         <AlertDescription>{error}</AlertDescription>
                     </Alert>
                 )}
-
 
                 <FormField
                     control={form.control}

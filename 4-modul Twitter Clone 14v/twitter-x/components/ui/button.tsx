@@ -10,6 +10,7 @@ interface ButtonProps {
     outline?: boolean;
     type?: "button" | "submit";
     onClick?: () => void; //bo'sh yani hech narsa qaytarmaydi faqat ts bo'lgani uchun interface ichida yozildi
+    classNames?: string
 }
 
 export default function Button({
@@ -21,6 +22,7 @@ export default function Button({
     outline,
     secondary,
     type, //button component qayergadur chaqiriib ishlatilganda yoki button bo'ladi yoki submit bo'ladi
+    classNames
 }: ButtonProps) {
     return (
         <button
@@ -37,7 +39,7 @@ export default function Button({
                 large ? "text-xl px-5 py-3" : "text-md px-4 py-3",
                 outline
                     ? "bg-transparent border-slate-600 text-sky-500 hover:bg-slate-800/40"
-                    : ""
+                    : "", classNames
                 // outline true bo'lsa yuqoridagi classlar ishlasin false bo'lsa hech narsa ishlamasin yani bo'sh bo'lsin>>"" va bu button component chaqirilgan joyda outline ishlatilsa truedagi classlar ishlaydi agar chaqirilmasa outline qiymatini hech qaysi classi ishlamaydi
             )}
         >

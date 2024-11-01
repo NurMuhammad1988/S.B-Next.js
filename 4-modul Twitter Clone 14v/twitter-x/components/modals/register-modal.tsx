@@ -22,6 +22,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import axios from "axios";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { signIn } from "next-auth/react";
 
 // 1. Auth page
 
@@ -188,6 +189,12 @@ function RegisterStep2({ data }: { data: { name: string; email: string } }) {
             );
 
             if (response.success) {
+
+                signIn("credentials" , {
+                    email: data.email,
+                    password: values.password
+                })
+
                 registerModal.onClose();
             }
         } catch (error: any) {
