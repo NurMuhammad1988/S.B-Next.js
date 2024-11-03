@@ -3,6 +3,7 @@
 import { IUser } from "@/types";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Button from "../ui/button";
 // import React, { Dispatch, SetStateAction } from 'react'
 
 interface Props {
@@ -41,6 +42,13 @@ const Form = ({ placeholder, user }: Props) => {
                     ></textarea>
 
                     <hr className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 transition" />
+
+                    <Button
+                        label={"Post"}
+                        classNames="px-8"
+                        disabled={isLoading || !body}//agar isloading bo'lsa yokida body false bo'lsa yani textarea bo'sh bo'lsa disabled bo'ladi
+                        onClick={onSubmit}
+                    />
                 </div>
             </div>
         </div>
