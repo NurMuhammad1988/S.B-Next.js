@@ -1,61 +1,61 @@
-import User from "@/database/user.model";
-import { connectToDatabase } from "@/lib/mongoose";
-import { NextResponse } from "next/server";
-import  {hash} from "bcrypt"//npm i bcrypt///typi esa>>>npm i --save-dev @types/bcrypt
+// import User from "@/database/user.model";
+// import { connectToDatabase } from "@/lib/mongoose";
+// import { NextResponse } from "next/server";
+// import  {hash} from "bcrypt"//npm i bcrypt///typi esa>>>npm i --save-dev @types/bcrypt
 
-//api/auth/register
-export async function POST(req: Request) {
-    try {
-        await connectToDatabase();
+// //api/auth/register
+// export async function POST(req: Request) {
+//     try {
+//         await connectToDatabase();
 
-        const { searchParams } = new URL(req.url);
+//         const { searchParams } = new URL(req.url);
 
-        const step = searchParams.get("step");
+//         const step = searchParams.get("step");
 
-        //api/auth/register?step=1
-        if (step === "1") {
-            const { email } = await req.json();
-            const isExistingUser = await User.findOne({ email });
+//         //api/auth/register?step=1
+//         if (step === "1") {
+//             const { email } = await req.json();
+//             const isExistingUser = await User.findOne({ email });
 
-            if (isExistingUser) {
-                return NextResponse.json(
-                    { error: "Email already exists" },
-                    { status: 400 }
-                );
-            }
+//             if (isExistingUser) {
+//                 return NextResponse.json(
+//                     { error: "Email already exists" },
+//                     { status: 400 }
+//                 );
+//             }
 
-            return NextResponse.json({
-                success: true,
-            });
+//             return NextResponse.json({
+//                 success: true,
+//             });
 
              
-        }else if (step === "2"){
-            const {email, username, name, password} = await req.json()
+//         }else if (step === "2"){
+//             const {email, username, name, password} = await req.json()
 
-            const isExistinUsername = await User.findOne({username})
+//             const isExistinUsername = await User.findOne({username})
 
-            if(isExistinUsername){
-                return NextResponse.json(
-                    {error:"Username already exists"},
-                    {status: 400}
-                )
-            }
+//             if(isExistinUsername){
+//                 return NextResponse.json(
+//                     {error:"Username already exists"},
+//                     {status: 400}
+//                 )
+//             }
 
-            const hashedPassword =  await hash (password, 10)
+//             const hashedPassword =  await hash (password, 10)
 
-            const user = await User.create({
-                email,
-                username,
-                name,
-                password:hashedPassword
-            })
+//             const user = await User.create({
+//                 email,
+//                 username,
+//                 name,
+//                 password:hashedPassword
+//             })
 
-            return NextResponse.json({success: true, user})
+//             return NextResponse.json({success: true, user})
 
-        }
-        //api/auth/register?step=2
-    } catch (error) {
-        const result = error as Error;
-        return NextResponse.json({ error: result.message }, { status: 400 });
-    }
-}
+//         }
+//         //api/auth/register?step=2
+//     } catch (error) {
+//         const result = error as Error;
+//         return NextResponse.json({ error: result.message }, { status: 400 });
+//     }
+// }
