@@ -1,5 +1,5 @@
 import User from "@/database/user.model";
-import { connectToDatabase } from "@/lib/mongoose";
+import { connectToDatabase } from "@/lib/mongoose";//aasas
 import { compare } from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 
