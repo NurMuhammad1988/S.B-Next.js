@@ -11,47 +11,74 @@ import axios from "axios";
 interface Props {
     placeholder: string;
     // isComment?: boolean
-    // postId?: string
+
     user: IUser;
-    setPosts: Dispatch<SetStateAction<IPost[]>>
+    setPosts: Dispatch<SetStateAction<IPost[]>>;
+    postId?: string;
+    isComment?: boolean;
     // posts: IPost[]
     // setPosts: Dispatch<SetStateAction<IPost[]>>
 }
 
-// 6. Post form & fetching data === 04:54 da qoldi
-
-const Form = ({ placeholder, user, setPosts }: Props) => {
+const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
     const onSubmit = async () => {
         try {
             setIsLoading(true);
 
-            const { data } = await axios.post("/api/posts", {
-                body,
-                userId: user._id,
-            });
-            // console.log(data);
+            if (isComment) {
+                const { data } = await axios.post("/api/comments", {
+                    body,
+                    userId: user._id,
+                    postId,
+                });
 
-            const newPost = {...data, user}
-            setPosts((prev) => [newPost, ...prev])
-            
+                const newComment = {
+                    ...data,
+                    user,
+                    likes: 0,
+                    hasLiked: false
+                }
+
+                setPosts((prev) => [newComment, ...prev])
+
+            } else {
+                const { data } = await axios.post("/api/posts", {
+                    body,
+                    userId: user._id,
+                });
+                // console.log(data);
+
+                const newPost = {
+                    ...data,
+                    user,
+                    likes: 0,
+                    hasLiked: false,
+                    comments: 0,
+                };
+                setPosts((prev) => [newPost, ...prev]);
+                toast({
+                    title: "Success ",
+                    description: "Post created successfully.",
+                });
+            }
+
             setIsLoading(false);
             setBody("");
-            toast({
-                title: "Success ",
-                description: "Post created successfully.",
-            });
         } catch (error) {
             setIsLoading(false);
 
             toast({
                 title: "Error",
-                description: "Something went wrong. Please try again",
+                description: "Something went wrong. Please try again    ",
                 variant: "destructive",
             });
         }
     };
+
+    7. Post detail 32:23minutda qoldi
 
     return (
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -76,7 +103,7 @@ const Form = ({ placeholder, user, setPosts }: Props) => {
 
                     <div className="mt-4 flex flex-row justify-end">
                         <Button
-                            label={"Post"}
+                            label={isComment ? "Reply" : "Post"}
                             classNames="px-8"
                             disabled={isLoading || !body} //agar isloading bo'lsa yokida body false bo'lsa yani textarea bo'sh bo'lsa disabled bo'ladi
                             onClick={onSubmit}

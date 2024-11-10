@@ -32,7 +32,7 @@ export default function Page() {
     useEffect(() => {
         const getPosts = async () => {
             try {
-                setIsLoading(true);
+                setIsLoading(true); 
                 const { data } = await axios.get("/api/posts?limit=10");
                 setPosts(data);
                 setIsLoading(false);
@@ -46,7 +46,7 @@ export default function Page() {
 
     return (
         <>
-            <Header label="Home" isBack />
+            <Header label="Home"  />
             {isLoading || status === "loading" ? (
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />
@@ -70,50 +70,3 @@ export default function Page() {
     );
 }
 
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
-
-// #7Post detail darsida qoldi post detaildardigacha qilingan darslarni commentlarini halqilin keyin #7Post detail darsidan davom et
