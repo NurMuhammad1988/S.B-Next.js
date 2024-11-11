@@ -1,4 +1,5 @@
 "use client";
+import CommentItem from "@/components/shared/comment-item";
 import Form from "@/components/shared/form";
 import Header from "@/components/shared/header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -47,6 +48,8 @@ const Page = ({ params }: { params: { postId: string } }) => {
         getPost();
         getComments();
     }, []);
+
+    console.log(comments);
 
     return (
         <>
@@ -105,9 +108,25 @@ const Page = ({ params }: { params: { postId: string } }) => {
                         setPosts={setComments}
                         postId={params.postId}
                         isComment
-
-
                     />
+
+                    {isFetchingComment ? (
+                        <div className="flex justify-center items-center h-24">
+                            <Loader2 className="animate-spin text-sky-500" />
+                        </div>
+                    ) : (
+                        comments.map((comment) => (
+                            <CommentItem
+                                comment={comment}
+                                key={comment._id}
+                                user={JSON.parse(
+                                    JSON.stringify(session.currentUser)
+                                )}
+                                setComments={setComments}
+                                comments={comments}
+                            />
+                        ))
+                    )}
                 </>
             )}
         </>

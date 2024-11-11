@@ -59,10 +59,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
                     comments: 0,
                 };
                 setPosts((prev) => [newPost, ...prev]);
-                toast({
-                    title: "Success ",
-                    description: "Post created successfully.",
-                });
+              
             }
 
             setIsLoading(false);
@@ -78,7 +75,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
         }
     };
 
-    7. Post detail 32:23minutda qoldi
+
 
     return (
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
