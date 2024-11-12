@@ -19,6 +19,8 @@ const Page = async ({ params }: { params: { userId: string } }) => {
             <ProfileBio
                 user={JSON.parse(JSON.stringify(user))}
                 userId={JSON.parse(JSON.stringify(session)).currentUser._id}
+
+                8. Profile darsi 23:30 da qoldi
             />
         </>
     );
