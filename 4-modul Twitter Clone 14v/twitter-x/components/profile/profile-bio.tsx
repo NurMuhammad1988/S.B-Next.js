@@ -6,32 +6,56 @@ import { IoLocationSharp } from "react-icons/io5";
 import { formatDistanceToNowStrict } from "date-fns";
 import { BiCalendar } from "react-icons/bi";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const onFollow = async () => {
+    const router = useRouter();
 
+    const onFollow = async () => {
         try {
-            setIsLoading(true)
-            await axios.put("/api/follows", {userId: user._id})
+            setIsLoading(true);
+            await axios.put("/api/follows", { userId: user._id, currentUserId: userId });
+            router.refresh(); //???????????????????????????????????????????
+            setIsLoading(false);
         } catch (error) {
             console.log(error);
-            
+            setIsLoading(false);
         }
-
     };
 
+    const onUnFollow = async () => {
+        try {
+            setIsLoading(true);
+            await axios.delete("/api/follows", { data: { userId: user._id, currentUserId: userId } });
+            router.refresh(); //???????????????????????????????????????????
+            setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false);
+        }
+    };
 
-  
     return (
         <>
             <div className="border-b-[1px] border-neutral-800 pb-4">
                 <div className="flex justify-end p-2">
                     {userId === user._id ? (
                         <Button label={"Edit Profile"} secondary />
+                    ) : user.isFollowing ? (
+                        <Button
+                            label={"Unfollow"}
+                            outline
+                            onClick={onUnFollow}
+                            disabled={isLoading}
+                        />
                     ) : (
-                        <Button label={"Follow"} onClick={onFollow} />
+                        <Button
+                            label={"Follow"}
+                            onClick={onFollow}
+                            disabled={isLoading}
+                        />
                     )}
                 </div>
 

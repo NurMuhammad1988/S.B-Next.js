@@ -32,7 +32,7 @@ export default function Page() {
     useEffect(() => {
         const getPosts = async () => {
             try {
-                setIsLoading(true); 
+                setIsLoading(true);
                 const { data } = await axios.get("/api/posts?limit=10");
                 setPosts(data);
                 setIsLoading(false);
@@ -46,7 +46,7 @@ export default function Page() {
 
     return (
         <>
-            <Header label="Home"  />
+            <Header label="Home" />
             {isLoading || status === "loading" ? (
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />
@@ -59,9 +59,12 @@ export default function Page() {
                         setPosts={setPosts}
                     />
 
-                    {posts.map((post) => (  
-                        <PostItem key={post._id} post={post} user={JSON.parse(JSON.stringify(session.currentUser))}  setPosts={setPosts}
-                        
+                    {posts.map((post) => (
+                        <PostItem
+                            key={post._id}
+                            post={post}
+                            user={JSON.parse(JSON.stringify(session.currentUser))}
+                            setPosts={setPosts}
                         />
                     ))}
                 </>
@@ -69,4 +72,3 @@ export default function Page() {
         </>
     );
 }
-
