@@ -12,7 +12,7 @@ interface Props {
 }
 
 const CoverImageUpload = ({ coverImage, onChange }: Props) => {
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState(coverImage);
 
     const handleChange = useCallback(
         (coverImage: string) => {
@@ -21,7 +21,7 @@ const CoverImageUpload = ({ coverImage, onChange }: Props) => {
         [onChange]
     );
 
-    #9. Edit profile modal 11:57 chi minutda qoldi
+ 
 
     const handleDrop = useCallback(
         (files: any) => {
