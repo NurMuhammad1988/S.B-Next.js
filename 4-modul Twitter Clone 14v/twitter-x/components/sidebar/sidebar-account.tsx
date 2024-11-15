@@ -38,7 +38,7 @@ const SidebarAccount = ({ user }: Props) => {
                                 <p>{user.name}</p>
                                 {user.username ? (
                                     <p className="opacity-40">
-                                        {user.username}
+                                        @{user.username}
                                     </p>
                                 ) : (
                                     <p className="opacity-40">

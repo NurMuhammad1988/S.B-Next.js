@@ -35,7 +35,7 @@ const EditModal = ({ user }: Props) => {
 
         try {
             setIsLoading(true);
-            await axios.put(`/api/users/${user._id}`, {
+            await axios.put(`/api/users/${user._id}?type=updateImage`, {
                 [isProfileImage ? "profileImage" : "coverImage"]: image,
             });
             router.refresh();

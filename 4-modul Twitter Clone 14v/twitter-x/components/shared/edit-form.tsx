@@ -3,19 +3,31 @@
 import { userSchema } from "@/lib/validation";
 import { IUser } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import Button from "../ui/button";
-
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import useEditModal from "@/hooks/useEditModal";
+import { toast } from "@/hooks/use-toast";
 
 interface Props {
     user: IUser;
 }
 
 const EditForm = ({ user }: Props) => {
+    const router = useRouter();
+    const editModal = useEditModal();
+
     const form = useForm<z.infer<typeof userSchema>>({
         resolver: zodResolver(userSchema),
         defaultValues: {
@@ -28,7 +40,27 @@ const EditForm = ({ user }: Props) => {
 
     const { isSubmitting } = form.formState;
 
-    const onSubmit = async (values: z.infer<typeof userSchema>) => {};
+    const onSubmit = async (values: z.infer<typeof userSchema>) => {
+        try {
+            await axios.put(`/api/users/${user._id}?type=updateFields`, values);
+            router.refresh();
+            editModal.onClose();
+        } catch (error: any) {
+            if (error.response.data.error) {
+                return toast({
+                    title: "Error",
+                    description: error.response.data.error,
+                    variant: "destructive",
+                });
+            }else{
+                return toast({
+                    title: "Error",
+                    description: "Something went wrong. Please try again later.",
+                    variant: "destructive",
+                })
+            }
+        }
+    };
 
     return (
         <Form {...form}>
