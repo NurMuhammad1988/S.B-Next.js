@@ -57,21 +57,21 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 
     const getFollowUser = async (userId: string, type: string) => {
         try {
-            setIsFetching(true)
+            setIsFetching(true);
             const { data } = await axios.get(
-                `/api/follows?state=${type}&userId=${userId}`);
-                setIsFetching(false)
-                return data
+                `/api/follows?state=${type}&userId=${userId}`
+            );
+            setIsFetching(false);
+            return data;
         } catch (error) {
             console.log(error);
-            
         }
-    }
+    };
 
     const openFollowModal = async () => {
         try {
             setOpen(true);
-            const  data = await getFollowUser(user._id, "following")
+            const data = await getFollowUser(user._id, "following");
             setFollowing(data);
         } catch (error) {
             console.log(error);
@@ -79,28 +79,25 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     };
 
     const onFollowing = async () => {
+        setState("following");
 
-        setState("following")
-
-        if(following.length === 0) {
-            const  data = await getFollowUser(user._id, "following")
+        if (following.length === 0) {
+            const data = await getFollowUser(user._id, "following");
             setFollowing(data);
         }
-
-    }
+    };
 
     const onFollowers = async () => {
-        setState("followers")
+        setState("followers");
 
-        if(followers.length === 0) {
-            const  data = await getFollowUser(user._id, "followers")
+        if (followers.length === 0) {
+            const data = await getFollowUser(user._id, "followers");
             setFollowers(data);
         }
+    };
 
-    }
+    const onChangeFollowing = async (data: IUser[]) => {};
 
-    const onChangeFollowing = async (userId: string, type: string) => {}
-    10. Follow modal darsi 16:57 da qoldi
     return (
         <>
             <EditModal user={user} />
@@ -196,10 +193,8 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                                 className={cn(
                                     "w-[50%] h-full flex justify-center items-center cursor-pointer font-semibold",
                                     state === "following" &&
-                                         "border-b-[2px] border-sky-500 text-sky-500"
-                                       
+                                        "border-b-[2px] border-sky-500 text-sky-500"
                                 )}
-
                                 onClick={onFollowing}
                             >
                                 Following
@@ -209,11 +204,9 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                                 className={cn(
                                     "w-[50%] h-full flex justify-center items-center cursor-pointer font-semibold",
                                     state === "followers" &&
-                                         "border-b-[2px] border-sky-500 text-sky-500"
-                                       
+                                        "border-b-[2px] border-sky-500 text-sky-500"
                                 )}
                                 onClick={onFollowers}
-
                             >
                                 Followers
                             </div>
@@ -221,7 +214,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 
                         {isFetching ? (
                             <div className="flex justify-center items-center h-24">
-                                <Loader2 className="animate-spin text-sky-500"/>
+                                <Loader2 className="animate-spin text-sky-500" />
                             </div>
                         ) : (
                             <div className="flex flex-col space-y-4">
@@ -230,16 +223,36 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                                         <div className="text-neutral-600 text-center p-6 text-xl">
                                             No Following
                                         </div>
-                                    ) : (   
-                                        following.map((user) => <User user={user} key={user._id} />)
+                                    ) : (
+                                        following.map((user) => (
+                                            <User
+                                                user={user}
+                                                key={user._id}
+                                                isFollow
+                                                following={following}
+                                                onChangeFollowing={
+                                                    onChangeFollowing
+                                                }
+                                            />
+                                        ))
                                     )
                                 ) : followers.length === 0 ? (
-                                        <div className="text-neutral-600 text-center p-6 text-xl">
-                                            No Followers
-                                        </div>
-                                    ) : (   
-                                        followers.map((user) => <User user={user} key={user._id} />)
-                                    )}
+                                    <div className="text-neutral-600 text-center p-6 text-xl">
+                                        No Followers
+                                    </div>
+                                ) : (
+                                    followers.map((user) => (
+                                        <User
+                                            user={user}
+                                            key={user._id}
+                                            isFollow
+                                            following={following}
+                                            onChangeFollowing={
+                                                onChangeFollowing
+                                            }
+                                        />
+                                    ))
+                                )}
                             </div>
                         )}
                     </>
