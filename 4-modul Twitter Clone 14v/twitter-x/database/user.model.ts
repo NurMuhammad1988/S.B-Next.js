@@ -10,10 +10,15 @@ const UserSchema = new mongoose.Schema(
         profileImage: String,
         bio: String,
         location: String,
-        following: [{type:mongoose.Schema.Types.ObjectId, ref: "User"}],
-        followers: [{type:mongoose.Schema.Types.ObjectId, ref: "User"}],
-
-
+        following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+        followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+        hasNewNotifications: Boolean,
+        notifications: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Notification",
+            },
+        ],
     },
     { timestamps: true }
 );

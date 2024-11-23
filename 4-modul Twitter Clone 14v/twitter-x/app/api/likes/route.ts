@@ -1,4 +1,6 @@
+import Notification from "@/database/notification.model";
 import Post from "@/database/post.model";
+import User from "@/database/user.model";
 import { connectToDatabase } from "@/lib/mongoose";
 import { NextResponse } from "next/server";
 
@@ -15,10 +17,17 @@ export async function PUT(req: Request) {
             { new: true }
         );
 
-        return NextResponse.json({success: true})
+        await Notification.create({
+            user: String(post.user),
+            body: "Someone liked your post!",
+        });
 
+        await User.findOneAndUpdate(
+            { _id: String(post.user) },
+            { $set: { hasNewNotifications: true } }
+        );
 
-
+        return NextResponse.json({ success: true });
     } catch (error) {
         const result = error as Error;
         return NextResponse.json({ error: result.message }, { status: 400 });
@@ -38,7 +47,7 @@ export async function DELETE(req: Request) {
             { new: true }
         );
 
-        return NextResponse.json({success: true})
+        return NextResponse.json({ success: true });
     } catch (error) {
         const result = error as Error;
         return NextResponse.json({ error: result.message }, { status: 400 });

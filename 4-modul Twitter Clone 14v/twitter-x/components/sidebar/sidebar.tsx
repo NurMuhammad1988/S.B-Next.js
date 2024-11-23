@@ -9,6 +9,10 @@ import SidebarAccount from "./sidebar-account";
 import { IUser } from "@/types";
 
 const Sidebar = ({ user }: { user: IUser }) => {
+
+    // console.log(user);
+    
+
     const sidebarItems = [
         {
             label: "Home",
@@ -20,6 +24,7 @@ const Sidebar = ({ user }: { user: IUser }) => {
             label: "Notifications",
             path: `/notifications/${user?._id}`,
             icon: Bell,
+            notification: user?.hasNewNotifications,
         },
 
         {
