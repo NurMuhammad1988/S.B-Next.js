@@ -1,5 +1,13 @@
-import useSWR from "swr"
+import fetcher from "@/lib/fetcher";
+import useSWR from "swr";
 
-const useNotifications = () => {}
+const useNotifications = (id: string) => {
+    const { data, isLoading, mutate } = useSWR(
+        `/api/notifications/${id}`,
+        fetcher
+    );
 
-export default useNotifications
+    return { data, isLoading, mutate };
+};
+
+export default useNotifications;

@@ -130,7 +130,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 
                         <span className="text-neutral-500 cursor-pointer hover:underline hidden md:block">
                             {post.user.username
-                                ? `${sliceText(post.user.username, 16)}`
+                                ? `@${sliceText(post.user.username, 16)}`
                                 : sliceText(post.user.email, 16)}
                         </span>
 
