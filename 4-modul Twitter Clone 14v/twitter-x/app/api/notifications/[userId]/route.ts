@@ -31,7 +31,7 @@ export async function DELETE(
         await connectToDatabase();
         const { userId } = route.params;
 
-        await Notification.deleteMany({ user: userId });
+        await Notification.deleteMany({ user: userId }); 
 
         await User.findByIdAndUpdate(userId,
             { $set: { hasNewNotifications: false } },
