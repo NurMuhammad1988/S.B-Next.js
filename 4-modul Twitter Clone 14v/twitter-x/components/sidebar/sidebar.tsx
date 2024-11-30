@@ -7,12 +7,10 @@ import SidebarItem from "./sidebar-item";
 import SidebarPostButton from "./sidebar-post-button";
 import SidebarAccount from "./sidebar-account";
 import { IUser } from "@/types";
+import { MdOutlineExplore } from "react-icons/md";
 
 const Sidebar = ({ user }: { user: IUser }) => {
-
     // console.log(user);
-    
-
     const sidebarItems = [
         {
             label: "Home",
@@ -32,6 +30,14 @@ const Sidebar = ({ user }: { user: IUser }) => {
             path: `/profile/${user?._id}`,
             icon: User,
         },
+
+        {
+            label: "Explore",
+            path: "/explore",
+            icon: MdOutlineExplore
+        }
+
+        
     ];
 
     // sticky left-0 top-0 classlsari chap tarafga yopishib turishi uchun
@@ -51,6 +57,8 @@ const Sidebar = ({ user }: { user: IUser }) => {
                     <Link key={item.path} href={item.path}>
                         <SidebarItem {...item} />
                     </Link>
+                    twitter clone kursi tugadi endi faqat comment qoldi
+                    va shu sidebarItemstemdagi hatoni to'g'irlash kerak
                 ))}
 
                 <SidebarPostButton />

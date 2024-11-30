@@ -20,6 +20,8 @@ const FollowBar = () => {
                         Who to follow
                     </h2>
 
+                    <Link href={"/explore"} >
+
                     <Button
                         secondary
                         outline
@@ -27,6 +29,10 @@ const FollowBar = () => {
                         // bu classNames faqat shu buttonga tegishli qiymat?????????????????????????????????????????????
                         classNames="h-[30px] p-0 w-fit px-3 text-sm"
                     />
+                    </Link>  
+
+
+                    
                 </div>
 
                 {isLoading ? (

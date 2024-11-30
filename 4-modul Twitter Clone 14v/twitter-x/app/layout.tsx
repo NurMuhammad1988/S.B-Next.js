@@ -7,7 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Twitter clone",
-    description: "Twitter clone Samar Badriddinov bilan",
+    description: "Twitter clone Samar Badriddinov bilan Next.js va MongoDB",
+    icons: {icon: " /images/x.svg"}
 };
 
 export default function RootLayout({

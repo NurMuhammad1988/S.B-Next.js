@@ -1,9 +1,11 @@
+"use client";
+
 import { IUser } from "@/types";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import React from "react";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { MoreHorizontal } from "lucide-react";
+import { Loader2, MoreHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface Props {
@@ -11,6 +13,16 @@ interface Props {
 }
 
 const SidebarAccount = ({ user }: Props) => {
+    const { data, status }: any = useSession();
+
+    if (status === "loading")
+        return (
+            <div className="flex items-center justify-center">
+                <Loader2 className="animate-spin text-sky-500" />
+            </div>
+        );
+
+        
     return (
         <>
             {/* Sidebar Account. Mobile */}
@@ -30,15 +42,19 @@ const SidebarAccount = ({ user }: Props) => {
                     <div className="flex justify-between items-center gap-2">
                         <div className="flex gap-2  items-center ">
                             <Avatar>
-                                <AvatarImage src={user.profileImage} />
-                                <AvatarFallback>{user.name[0]}</AvatarFallback>
+                                <AvatarImage
+                                    src={data?.currentUser?.profileImage}
+                                />
+                                <AvatarFallback>
+                                    {data?.currentUser?.name[0]}
+                                </AvatarFallback>
                             </Avatar>
 
                             <div className="flex flex-col items-start text-white">
-                                <p>{user.name}</p>
-                                {user.username ? (
+                                <p>{data?.currentUser?.name}</p>
+                                {data?.currentUser?.username ? (
                                     <p className="opacity-40">
-                                        @{user.username}
+                                        @{data?.currentUser?.username}
                                     </p>
                                 ) : (
                                     <p className="opacity-40">
@@ -57,13 +73,14 @@ const SidebarAccount = ({ user }: Props) => {
                         onClick={() => signOut()}
                     >
                         Log out{" "}
-                        {user.username ? `@${user.username}` : user.username}
+                        {data?.currentUser?.username
+                            ? `@${data?.currentUser?.username}`
+                            : data?.currentUser?.username}
                     </div>
                 </PopoverContent>
             </Popover>
         </>
     );
 };
-
 
 export default SidebarAccount;
