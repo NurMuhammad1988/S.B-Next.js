@@ -38,11 +38,12 @@ export default function Auth() {
                 {/* grid systemdaham responseda birinchi mobile hissoblanadi yani bu holatda mobileda grid-cols-1 md va mddan yuqorida grid-cols-2 bo'ladi*/}
                 <Image
                     src={"/images/x.svg"}
+                    // /images/x.svg deyilganda next js public papkani ichidagi images papkaga boradi
                     alt="X"
                     width={450}
                     height={450}
                     className="justify-self-center hidden md:block"
-                    // tailwidda response qilishda birinchi mobil hissoblanadi masalan bu holatda img mobilda hidden bo'ladi md: da block bo'ladi yani ko'rinadi yani md:da va md: dan yuqorida block bo'ladi
+                    // tailwidda response qilishda birinchi mobil hissoblanadi masalan bu holatda img mobilda hidden bo'ladi md: da block bo'ladi yani ko'rinadi yani md:da va md: dan yuqorida block bo'ladi faqat yani bu md:block yozilgandan oldin doim mobile format turadi shunda hidden mobile HISSOBLANADI YANGI USER YO'QLIGIDA ASOSIY SAHIFADA  SHUNDAY ISHLAYDI
                 />
                 <div className="flex flex-col justify-center md:justify-between gap-6 h-full md:h-[70vh] ">
                     {/*mobileda justify-center md yanu 768pxdan yuqorida md:justify-between birinchi mobile rersponse yani mobileda height full md va mddan yuqorida 70vh */}
@@ -66,12 +67,15 @@ export default function Auth() {
                                 label={
                                     //bu button component ui ichidagi button.tsxda qo'lda yozilgan component hissoblanadi bu button componentda fullWidth secondary qiymatlariham bor bu fullWidth secondary qiymatlarda boolen typi bilan classga aloqador hodislarham yozilgan
                                     <div className="flex gap-2 items-center justify-center">
+                                        {/* bu Button dynamic ui o'zini joyida yozilganda typiga  label: ReactNode | string yozilgan bu degani reactda bor hamma elementni bu label o'z ichiga olishi mumkun shu sabab buttonni ichida div yozilepti reactda esa div jsx bo'lib render qilinadi jsx esa react element hissoblanadi shu sabab ts urushib bermadi */}
                                         <FcGoogle />
-                                        {/* FcGoogle react iconsdan kelepti */}
+                                        {/* FcGoogle react iconsdan kelepti buham react elemet hissoblanadi */}
                                         Sign up with Google
                                     </div>
                                 }
                                 fullWidth
+                                // fullWidth bo'ganda shu Button chaqirilgan ona divdagi razmer ichi nazarda tutiladi chunki bu Button bola element hissoblanadi ona elementdan tashqariga chiqib ketolmaydi  fullWidth qiymati esa button componentda fullWidth ? "w-full" : "w-fit", shu tarzda yani agar true bo'lsa yani chaqirilsa yani shu joyda Button elementi sifatida chaqirilsa va true bo'lsa "w-full" ishlasin yokida "w-fit" ishlasin deb aytib qo'yilgan shu sabab bu button chaqirilgan ona divni razmeridan chiqmasdan shu boolean holatiga amal qiladi yani fullWidth chaqirilsa yuqorodagi classlar ishlaydi
+
                                 secondary
                             />
 
@@ -92,8 +96,12 @@ export default function Auth() {
 
                             <div className="flex items-center justify-center  ">
                                 <div className="h-px bg-gray-700 w-1/2" />
+                                {/* bu div chiziqcha hosil qiladi */}
                                 <p className="mx-4">or</p>
+                                {/* chziqchalar orasida or so'zi turipti */}
                                 <div className="h-px bg-gray-700 w-1/2" />
+                                {/* bu div chiziqcha hosil qiladi */}
+
                             </div>
                             <Button
                                 label={"Create account"}

@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* bu root claslar https://ui.shadcn.com/docs/dark-mode/nextdan kelib o'rnatilgan command """"""""""""""""""""npx shadcn@latest init""""""""""""""""""""""""""
+/* bu root claslar https://ui.shadcn.com/docs/dark-mode/nextdan kelib o'rnatilgan command """"""""""""""""""""npx shadcn@latest init"""""""""""""""""""""""""" 
+
+
+
+
  */
 
 body {
@@ -44,6 +48,7 @@ body {
     --radius: 0.5rem;
   }
   .dark {
+    /* bu ui.shadcn ni dark mode root classlari */
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -79,3 +84,23 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* /* ui.shadcn.com o'zi nima 
+
+Nusxalash va ilovalaringizga joylashtirishingiz mumkin bo'lgan chiroyli ishlab chiqilgan komponentlar. Foydalanish mumkin. Moslashuvchan. Ochiq manba.
+
+Bu komponent kutubxonasi EMAS . Bu ko‘chirib olish va ilovalaringizga joylashtirishingiz mumkin bo‘lgan qayta foydalanish mumkin bo‘lgan komponentlar to‘plamidir.
+
+Komponentlar kutubxonasi emas deganda nimani tushunasiz?
+
+Aytmoqchimanki, siz uni qaramlik sifatida o'rnatmaysiz. U mavjud emas yoki npm orqali tarqatilmaydi.
+
+Sizga kerak bo'lgan komponentlarni tanlang. Koddan nusxa ko'chiring va loyihangizga joylashtiring va ehtiyojlaringizga moslang. Kod sizniki.
+
+O'zingizning komponent kutubxonalaringizni yaratish uchun ma'lumotnoma sifatida foydalaning.
+
+
+YANI BU ui.shadcn COMPONENTLAR EMAS YANI COMPONENTDA DASTURCHI SHU COMPONENTGAQARAM BO'LADI MASALAN COMPONENTNI YARATGAN ODAMLAR COMPONENTNI O'ZGARTIRSA MAN FOYDALANGAN JOYDAHAM O'ZGARIB KETADI YANI NPM BILAN FAQAT SSILKASI CHAQIRILMAYDI NPM BILAN KODLAR JAMLANMASI CHAQIRILIB LOYIHAGA ULAB YANI CHAQIRILIB QO'YILADI HOLOS ui.shadcn DA KODLAR SHUNCHAKI YOZIB QO'YILGAN VA CHAQIRILIB ISHLATILADI CHAQIRILIB ISHLATILGANDAN KEYIN UNI MANDAN BOSHQA ODAM TASHQARIDAN O'ZGARTIRAOLMAYDI YANI ODDIY QILIB AYTGANDA TAYOOR YOZILGAN KOD MURAKKAB FRONTED UCHUN UDAT QILIB TS BILAN YOZILGAN TAYOOR MANGA QARAM KODLAR MANBAYI BUNDA DARK MODE LIGHT MODELARHAM JUDA OSON VA YENGIL ISHLAYDI VA TEKIN SHAXSIY KODDAY GAP
+
+*/ 

@@ -1,4 +1,6 @@
-// next 14 faillar structurasi (root) bu ildiz papka degani yani next js asosiy sahifani shunday izlaydi agar app papkani ichida page.tsx file bo'lmasa next (root)ni ichidan (home)ni ichidan page.tsxni topib asosiy sahifa qiladi next jsda bu ()structura funksiyasi yozilgan
+// next 14 faillar structurasi (root) bu ildiz papka degani yani next js asosiy sahifani shunday izlaydi agar app papkani ichida page.tsx file bo'lmasa next (root)ni ichidan (home)ni ichidan page.tsxni topib asosiy sahifa qiladi next jsda bu ()structura funksiyasi yozilgan 
+
+//bu asosiy sahifa
 "use client";
 import Form from "@/components/shared/form";
 import Header from "@/components/shared/header";
@@ -14,8 +16,8 @@ import { useEffect, useState } from "react";
 // import Auth from "@/components/auth";
 // export default function Page() {
 //     const user = false;
-//     if (!user) {
-//         //agar user yo'q bo'lsa yani false bo'lsa Auth componentga otvoradi lekun user yo'q chunki yuqorida false qilingan shu sabab aftamati tarzda auth pagega jo'natadi
+//     if (!user) {//agar user false bo'lsa aslida if else true bilan ishlaydi ! bu esa trueni false qiladi shu sabab (!user) degani agar user false bo'lsa degani hissoblanadi
+//         //agar user yo'q bo'lsa yani false bo'lsa Auth componentga otvoradi lekun user yo'q chunki yuqorida false qilingan shu sabab aftamatik tarzda auth pagega jo'natadi Auth pageda esa user create qilinmasdan oldin chiqadigan user account ochishi mumkun bo'lgan sahifa bor va u Auth sahifada  auth uchun mongoDBda qilingan modellar bor shu modellar sabab user account create qiloladi agar user haliaccount create qilmagan bo'lsa bu kod userni Auth sahifaga otvoradi
 //         return <Auth />;
 //     }
 

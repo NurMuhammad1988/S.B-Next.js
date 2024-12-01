@@ -34,10 +34,8 @@ const Sidebar = ({ user }: { user: IUser }) => {
         {
             label: "Explore",
             path: "/explore",
-            icon: MdOutlineExplore
-        }
-
-        
+            icon: MdOutlineExplore,
+        },
     ];
 
     // sticky left-0 top-0 classlsari chap tarafga yopishib turishi uchun
@@ -57,8 +55,6 @@ const Sidebar = ({ user }: { user: IUser }) => {
                     <Link key={item.path} href={item.path}>
                         <SidebarItem {...item} />
                     </Link>
-                    twitter clone kursi tugadi endi faqat comment qoldi
-                    va shu sidebarItemstemdagi hatoni to'g'irlash kerak
                 ))}
 
                 <SidebarPostButton />

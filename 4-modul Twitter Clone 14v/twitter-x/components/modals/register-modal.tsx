@@ -24,11 +24,6 @@ import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { signIn } from "next-auth/react";
 
-// 1. Auth page
-
-// va
-
-// 2. Autorization modal implement Darslarini qaytadan ko'rib har bir narsani tushunib comment bilan yozib keyingi darsga o'tish kerak!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! atniqsa tsga etibor qarat
 
 export default function RegisterModal() {
     const [step, setStep] = useState(1);
