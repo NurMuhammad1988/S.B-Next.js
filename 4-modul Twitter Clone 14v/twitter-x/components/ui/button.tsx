@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import React, { ReactNode } from "react";
-//// bu button qo'lda yozikgan ui hissoblanadi buttonda bo'ladigan qiymatlar interfacega olinib typlari yozildi
+//// bu button qo'lda yozilgan ui hissoblanadi buttonda bo'ladigan qiymatlar interfacega olinib typlari yozildi
 interface ButtonProps {
     label: ReactNode | string; //yani label BU yoki react element yoki oddiy string bo'lishiham mumkun yani bu "yoki. (or)" yani hohlasa bittasini ishlatiladi hohlamasa yo'q agar || ikkita bo'lganda yokimas va bo'lardi yani shunda reactnode va string ishlatilishi shart bo'lardi shu sabab bitta | yani 
     secondary?: boolean;
