@@ -10,7 +10,7 @@ export const registerStep1Schema = z.object({
 });
 
 
-2. Autorization modal implement darsi 22:24 da qoldi
+2. Autorization modal implement darsi 22:24 da qoldi shu joyidan
 
 
 export const registerStep2Schema = z.object({
