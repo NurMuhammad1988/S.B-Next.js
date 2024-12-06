@@ -1,5 +1,5 @@
 export interface IUser {
-    createdAt: Date;
+    createdAt: Date;//global date qilindi chunki user created bo'lganda mongodbda global vaqt bilan userni qachin created bo'lgani aytib qo'yilishi kerak
     username: string;
     email: string;
     name: string;
@@ -22,7 +22,7 @@ export interface IPost {
     createdAt: string;
     likes: number
     updatedAt: string;
-    user: IUser;
+    user: IUser;//psotni user yozadi shu sabab userni tanish uchun typlari berib qo'yilishi kerak
     _id: string;
     hasLiked: boolean
 }

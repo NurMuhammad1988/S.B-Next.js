@@ -1,4 +1,4 @@
-//Ilovani marshrutlash tizimidagi har qanday marshrut segmenti uchun tartibni aniqlash uchun biz layout deb nomlangan maxsus fayldan standart React komponentini eksport qilamiz. js. Keyingisi. js sahifa mazmunini yoki ko'rsatish paytida mavjud bo'lishi mumkin bo'lgan har qanday ichki o'rnatilgan tartiblarni o'rash uchun ushbu ildiz tartibidan foydalanadi
+//Ilovani marshrutlash tizimidagi har qanday marshrut segmenti uchun tartibni aniqlash uchun biz layout deb nomlangan maxsus fayldan standart React komponentini eksport qilamiz. js. next. js sahifa mazmunini yoki ko'rsatish paytida mavjud bo'lishi mumkin bo'lgan har qanday ichki o'rnatilgan tartiblarni o'rash uchun ushbu ildiz tartibidan foydalanadi
 
 import { Footer, Navbar } from "src/components";
 import { LayoutProps } from "./layout.props";
