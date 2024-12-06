@@ -19,6 +19,9 @@ import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { signIn } from "next-auth/react";
+//sign in buttoniga bosilganda ishlaydigan component bu componenetda register modal tsxda bo'lgandey serverda data create bo'lishi va kelishi haqida hamma nasa bor yani yangi account yaratish uchun kerak bo'lgan component
+
+/////////////////////user login qilib loyihaga kiretganda shu kodlar ishlaydi va pastdagi jsxdagi button va inputlar ishlaydi
 
 export default function LoginModal() {
     const [error, setError] = useState("");
@@ -41,11 +44,10 @@ export default function LoginModal() {
 
     async function onSubmit(values: z.infer<typeof loginSchema>) {
         try {
-            const { data } = await axios.post("/api/auth/login", values);
+            const { data } = await axios.post("/api/auth/login", values);// yani user login  qiletganda (sigin buttoni bilan ishlayotganda) axios api auth login papka ichidagi route.ts ga so'rov jo'natib parol va email to'g'ribo'lsa shu onsubmit ishga tushib pastdagi jsxda javob qaytaradi
 
-            if (data.success) {
-
-                signIn("credentials" , values)
+            if (data.success) {//data success yani axiosni post metodi success bo'lsa signIn funskiyasi sabab valueslar yani email parollar olinib login modal close bo'lib user loyihaga kiradi signIn nextauthdan keladi  api auth login papka ichidagi route.ts dagi if elselarni javobiga qarab userni kiritadi yoki kiritmaydi kiritmasa catchdagi hato chiqadi agar nextauthda yoki  serverda hato bo'lsa pastdagi error chiqadi yokida faqat userni hatosi bo'lsa api auth login papka ichidagi route.ts dagi errorlar chiqadi
+                signIn("credentials", values); //signIn functioni next-authdan keladi //bu "credentials" auth-options.tsdan kelepti auth-options.tsda CredentialsProvider nomli nextauthni provideri bor bu provider userni githubsiz googlesiz qo'lda ro'yhatdan o'tishi uchun kerak bo'ladigan function "credentials" esa keyi signInda nima ishlatilishi uchun key shu keyga qarab signIn kerakli providerni ishlatadi va user qo'lda kiritadigan email pasword   agar bor bo'lsa  hato qaytaradi yokida userni ro'yhatdan o'tkazadi yani bu signIn "credentials" bilan user kiritayotgan malumotlar solishtirilayapti
 
                 loginModal.onClose();
             }
@@ -130,7 +132,7 @@ export default function LoginModal() {
                     onClick={onToggle}
                 >
                     {" "}
-                    Create an account
+                    Create an accountt
                 </span>
             </p>
         </div>

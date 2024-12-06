@@ -29,7 +29,7 @@ export default function Auth() {
     return (
         <>
             <RegisterModal />
-            {/*  RegisterModalni qayerga qo'yishni farqi yo'q asosiysi  return ichiga qo'yilsa bo'ldi  RegisterModal bu component va modals papkani ichidagi register-modal.tsx faildan keletp bu  RegisterModalda  */}
+            {/*  RegisterModalni qayerga qo'yishni farqi yo'q asosiysi  return ichiga qo'yilsa bo'ldi  RegisterModal bu component va modals papkani ichidagi register-modal.tsx faildan keletp bu  RegisterModalda user account create qilishi yoki appga kirishi uchun hamma datalar yozilgan yani shu return ichida ishlashi kerak */}
 
             <LoginModal />
 
@@ -80,7 +80,7 @@ export default function Auth() {
                             />
 
                             <Button
-                                onClick={() => signIn("github")}
+                                onClick={() => signIn("github")}//bu kod github bilan kirish uchun ruhsat beradi nextauthni funskiyasi "github" texti orqali ishlab agar browswerda cookiesida githubga kirilgan bo'lsa shu accountni jwt tokenlarini olish shu orqali parolsiz loyihaga togridan  togri kirib ketadi googlenikiham huddi shunday ishlaydi bu ishlashi uchun provider.tsda ishlatilishi kerak uanisessionprovider componentga childrenlar o'ralishi kerak
                                 label={
                                     <div className="flex gap-2 items-center justify-center">
                                         <AiFillGithub />
