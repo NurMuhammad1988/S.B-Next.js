@@ -37,6 +37,7 @@ const Layout = async ({ children }: Props) => {
             <div className="flex">
                 <Sidebar
                     user={JSON.parse(JSON.stringify(session.currentUser))}
+                    // sidebar.tsxdagi sidebar-accoun.tsxda chaqirilga serverdan keladigan userni datalarini jsonfailga o'girvoldik
                 />
                 <div className="flex flex-1 border-x-[1px] border-neutral-800 lg:mx-4 ml-1">
                     <div className="w-full">
