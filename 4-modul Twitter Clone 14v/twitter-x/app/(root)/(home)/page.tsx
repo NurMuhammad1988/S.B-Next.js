@@ -48,7 +48,9 @@ export default function Page() {
 
     return (
         <>
+        {/* bu (home) page yani bosh sahifa header jsx ichida birinchi chaqirildi yani eng yuqorida turishi uchun */}
             <Header label="Home" />
+            {/* header shared papkani ichidagi header.tsxdan kelepti labeli dynamic yani faqat string qabul qiladi */}
             {isLoading || status === "loading" ? (
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />

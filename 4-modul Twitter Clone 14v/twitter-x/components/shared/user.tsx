@@ -253,6 +253,7 @@ const User = ({ user }: { user: IUser }) => {
                         {user.username
                             ? `@${sliceText(user.username, 16)}`
                             : sliceText(user.email, 16)}
+                            {/* userni nusername bor bo'lsa usernameni chiqar yoki emailini chiqar sliceText esa shu datalarni26 ta harfdan ko'p bolmasligi uchun  */}
                     </p>
                 </div>
             </div>

@@ -10,7 +10,7 @@ interface ButtonProps {
     outline?: boolean;
     type?: "button" | "submit";//type button yokida submit bo'ladi boshqa narsa bo'lishi mumkunmas faqat shu ikkalasidan biri bo'la oladi bo'lmasa ts hati qaytaradi
     onClick?: () => void; //bo'sh yani hech narsa qaytarmaydi faqat ts bo'lgani uchun interface ichida yozildi bo'lmasa ts hato qaytaradi
-    classNames?: string
+    classNames?: string//bu classnames bu button chaqirilgan joylarda kerak bo'lsa qo'shimcha classlar berish uchun
 }
 
 export default function Button({

@@ -20,6 +20,10 @@ interface Props {
     // setPosts: Dispatch<SetStateAction<IPost[]>>
 }
 
+
+6. Post form & fetching data darsi 02:35da qoldi
+
+
 const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);

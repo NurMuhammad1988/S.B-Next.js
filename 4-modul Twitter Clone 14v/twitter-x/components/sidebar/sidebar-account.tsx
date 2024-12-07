@@ -46,7 +46,7 @@ const SidebarAccount = ({ user }: Props) => {
                     <div className="flex justify-between items-center gap-2">
                         <div className="flex gap-2  items-center ">
                             <Avatar>
-                                {/* Avatar bu agar userni avatari bo'lmasa default oddiy userni namesini bosh harofini default avatar qilib oladigan shadcn uidan keladigan component */}
+                                {/* Avatar bu agar userni avatari bo'lmasa default oddiy userni namesini bosh harofini default avatar qilib oladigan shadcn uidan keladigan component agar user google yoki githubdan kirsa osha accountlardagi imagesini oladi???*/}
                                 <AvatarImage
                                     src={data?.currentUser?.profileImage}
                                 />
@@ -82,6 +82,7 @@ const SidebarAccount = ({ user }: Props) => {
                     >
                         {/* bu joyda faqat desktop versiyaga qilindi chunki yuqorida mobile versiyaga qilinga  log out texti chiqmaydi faqat  RiLogoutCircleLine iconi chiqadi bosganda signout funksiyasi ishlab userni chiqarib tashlaydi desktop versiyada esa PopoverTriggerga click bo'lgandagina PopoverConten ichiga kiradi  */}
                         Log out{" "}
+                        {/* google yoki github account bilan user cretae bo'lganda username bo'lmaydi shu sabab faqat log outni o'zi chiqadi va click qilinsa user chiqib ketadi */}
                         {data?.currentUser?.username
                             ? `@${data?.currentUser?.username}`
                             : data?.currentUser?.username}
