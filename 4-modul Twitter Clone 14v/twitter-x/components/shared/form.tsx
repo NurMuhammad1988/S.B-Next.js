@@ -27,25 +27,25 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const onSubmit = async () => {
+    const onSubmit = async () => {//bu function onsubmit yani inputga post submit qilish functioni bu function async chunki serverga so'rov jo'natadi
         try {
-            setIsLoading(true);
+            setIsLoading(true);//isloadingni boshlang'ich qiymati false shu sabab so'rov jonatilayotganda true qilish kerak yani kutib turish kerak
 
-            if (isComment) {
+            if (isComment) {//agar boolean qiymatiga ega iscommint true bo'lsa axios bilan api papkani ichidagi comments papkani ichidagi route.ts papkaga so'rov jo'natadi so'rov uchun axiosga Sting typli body userni idisi va postni idisi kerak bu datalar pi papkani ichidagi comments papkani ichidagi route.ts ichida aytib qo'yilgab
                 const { data } = await axios.post("/api/comments", {
                     body,
                     userId: user._id,
                     postId,
                 });
 
-                const newComment = {
+                const newComment = {///agar boolean qiymatiga ega iscommint true bo'lsa axios so'rovni bajarishi uchun datani yani axiosni typlarini bu newcomment o'zgaruvchigam copy qilinadi aks holsa tepadagi o'zgaruvchi ishlab bu o'zgaruvchi ishlamay qolishi mumkun  
                     ...data,
                     user,
                     likes: 0,
-                    hasLiked: false
+                    hasLiked: false//lie qilish boshida false bob turadi qachonki shu function ichidagi user ichida kelgan userni idsi bor bo'lib clik qilsagia true bo'ladi
                 }
 
-                setPosts((prev) => [newComment, ...prev])
+                setPosts((prev) => [newComment, ...prev])// interface setPosts: Dispatch<SetStateAction<IPost[]>>; ichidagi ipostdan keladigan bo'sh object
 
             } else {
                 const { data } = await axios.post("/api/posts", {

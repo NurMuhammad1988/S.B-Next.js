@@ -36,7 +36,7 @@ export async function GET(req: Request) {
         const limit = searchParams.get("limit");
 
         const posts = await Post.find({})
-            .populate({
+            .populate({//next js tushunadigan holatda populate qilish 
                 path: "user",
                 model: User,
                 select: "name email profileImage _Id username",

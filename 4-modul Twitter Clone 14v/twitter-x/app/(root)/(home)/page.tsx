@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 /////////////////////////////////////////////////////////////////////
 export default function Page() {
     // const session: any = await getServerSession(authOptions);//server component
+    // bu componentni servermas client component qilinishi sababiserverdan datalar ko'p kelsa server uchun og'irlashib ketmasligi uchun client component bo'lganda yuklash clientni browseri tomonidan bo'ladi
     const { data: session, status }: any = useSession();
     const [isLoading, setIsLoading] = useState(false);
     const [posts, setPosts] = useState<IPost[]>([]);
@@ -52,7 +53,7 @@ export default function Page() {
         {/* bu (home) page yani bosh sahifa header jsx ichida birinchi chaqirildi yani eng yuqorida turishi uchun */}
             <Header label="Home" />
             {/* header shared papkani ichidagi header.tsxdan kelepti labeli dynamic yani faqat string qabul qiladi */}
-            {isLoading || status === "loading" ? (
+            {isLoading || status === "loading" ? (//isloading true bo'lsa va statusi loading bo'ladigan bo'lsa shu loader2ni chiqar yokida pastdagi form componenrtni va postsni map bilan copy qilib PostItemga jo'nat  Form componentda esa userni datalari bor postitemda esa postni datalari bor yabni kim  yozgan like bormi va hakozo
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />
                 </div>
