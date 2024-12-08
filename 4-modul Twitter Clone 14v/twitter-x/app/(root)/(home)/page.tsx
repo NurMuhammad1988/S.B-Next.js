@@ -58,8 +58,8 @@ export default function Page() {
             ) : (
                 <>
                     <Form
-                        placeholder="What's on your mind?"
-                        user={JSON.parse(JSON.stringify(session.currentUser))}
+                        placeholder="What's on your mind?"//bu placeholder form.tsxda txtareani ichida dynamic yozib qo'yilgan faqat string qabul qiladi "What's on your mind?" texti esastring shu sabab hatosisiz ishlepti
+                        user={JSON.parse(JSON.stringify(session.currentUser))}//form.tsxda userga IUser typi berilgan bu iserda mongodbdan keletgan user bor mongodbdan keletgan userni Form tanimeydi shu sabab parse ja stringfy bilan jsonni string qivolindi
                         setPosts={setPosts}
                     />
 

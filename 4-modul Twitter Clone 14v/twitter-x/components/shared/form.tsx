@@ -21,7 +21,6 @@ interface Props {
 }
 
 
-6. Post form & fetching data darsi 02:35da qoldi
 
 
 const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
@@ -85,6 +84,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
             <div className="flex flex-row gap-4">
                 <Avatar>
+                    {/* bu avatar user psot qo'yadigan joyda chiqadigan avatar interfaceda userda iuser borligi uchun mongodbdagi userni avayatarini tanib olepti agar userni profileiamgesikelmasa user.name[0] bilam userni emailini yoki usdernaesini bosh harifini oladi */}
                     <AvatarImage src={user.profileImage} />
 
                     <AvatarFallback>{user.name[0]}</AvatarFallback>

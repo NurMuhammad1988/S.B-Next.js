@@ -22,7 +22,7 @@ export interface IPost {
     createdAt: string;
     likes: number
     updatedAt: string;
-    user: IUser;//psotni user yozadi shu sabab userni tanish uchun typlari berib qo'yilishi kerak
+    user: IUser;//postni user yozadi shu sabab userni tanish uchun typlari berib qo'yilishi kerak
     _id: string;
     hasLiked: boolean
 }
