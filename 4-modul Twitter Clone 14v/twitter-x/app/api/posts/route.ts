@@ -13,9 +13,11 @@ export async function POST(req: Request) {
 
         const { body, userId } = await req.json();
 
+        6. Post form & fetching data 09:35 da qoldi
+
         const post = await Post.create({ body, user: userId });
 
-        return NextResponse.json(post);
+        return NextResponse.json(post);//json format qilib jo'natish
     } catch (error) {
         const result = error as Error;
         return NextResponse.json({ error: result.message }, { status: 400 });
@@ -70,7 +72,7 @@ export async function DELETE(req: Request) {
         await connectToDatabase();
         const { postId, userId } = await req.json();
 
-        await Post.findByIdAndDelete(postId); //darsda findByIdAndRemove funksiyasidan  foydalanildi lekin bu findByIdAndRemove funksiyasi dars qilingan vaqtda moongoesedaeskirgan va o'chirilgan shu sababli findByIdAndDeletedan foydalandim findByIdAndRemove va findByIdAndDeleteni o'rtsida farq bor farqi shuki findByIdAndRemove  o'chirilgan hujjatni qaytaradi findByIdAndDelete esa qaytarmaydi
+        await Post.findByIdAndDelete(postId); 
 
         return NextResponse.json({ message: "Post deleted successfully" });
     } catch (error) {

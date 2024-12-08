@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const CommentSchema = new mongoose.Schema(
     {
         body: String,
-        user: {
+        user: {//qaysi user tomonidan yozilganligi
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
 
-        post: {
+        post: {//qaysi postga comment yozilganligi
             type: mongoose.Schema.Types.ObjectId,
             ref: "Post",
         },

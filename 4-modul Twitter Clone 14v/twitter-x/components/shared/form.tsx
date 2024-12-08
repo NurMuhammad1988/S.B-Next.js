@@ -94,8 +94,8 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
                     <textarea
                         className="disabled:opacity-80 peer resize-none mt-3 w-full bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 text-white h-[50px]"
                         placeholder={placeholder}
-                        disabled={isLoading}
-                        value={body}
+                        disabled={isLoading}//boshlang'ich qiymati false yani disablet bo'lganda loading false bob turadi chunki texareyada hech qanday harakat sodir bo'lmayotgan bo'ladi
+                        value={body}//bu valuedagi bodyda bo'sh massiv bor yani bu form qayerda chaqirib ishlatilsa ichida value chaqirilsa
                         onChange={(e) => setBody(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && onSubmit()}
                     ></textarea>
@@ -104,9 +104,9 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
 
                     <div className="mt-4 flex flex-row justify-end">
                         <Button
-                            label={isComment ? "Reply" : "Post"}
-                            classNames="px-8"
-                            disabled={isLoading || !body} //agar isloading bo'lsa yokida body false bo'lsa yani textarea bo'sh bo'lsa disabled bo'ladi
+                            label={isComment ? "Reply" : "Post"}//iscomment bu boolean typi shu sabab bunga shu joyni o'zida shart qo'yildi agar iscomment true bo'lsa replay yokida post texti chiqsin
+                            classNames="px-8"// button custom ui bu esa ts shu sabab buttonga clasname berib bo'lmaydi chunki typini aytish kerak shu sabab bu buttonga qilingan joyida string qabul qiladi deb clasnames alohioda berib qo'yilgan yani kerak bo'lsa qo'shimcha classlar yozish uchun classlar esa string formatida yozilgan shu sabab hato yo'q
+                            disabled={isLoading || !body} //agar isloading bor bo'lsa yokida body false bo'lsa yani textarea bo'sh bo'lsa disabled bo'ladi
                             onClick={onSubmit}
                         />
                     </div>
