@@ -142,7 +142,7 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
-function toast({ ...props }: Toast) {
+function toast({ ...props }: Toast) {////https://ui.shadcn.com/dan skachat qilingan my own codes fazifasi hatolarni chiroyli qilib qaytarish 
   const id = genId()
 
   const update = (props: ToasterToast) =>

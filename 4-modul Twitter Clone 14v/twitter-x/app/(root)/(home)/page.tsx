@@ -8,7 +8,8 @@ import PostItem from "@/components/shared/post-item";
 import { IPost } from "@/types";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";//useSession() NextAuth-da useSession() React Hook. js mijozi kimdir tizimga kirganligini tekshirishning eng oson usuli . Bu sahifalar/_ilovaga <Provayder> qo'shilsa yaxshi ishlaydi.
+
 import { useEffect, useState } from "react";
 // import { authOptions } from "@/lib/auth-options";//server component
 // import { getServerSession } from "next-auth";//server component

@@ -70,9 +70,9 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
         } catch (error) {
             setIsLoading(false);
 
-            toast({
+            toast({//https://ui.shadcn.com/dan skachat qilingan my own codes fazifasi hatolarni chiroyli qilib qaytaradi buni secces bo'lgandaham ishlatish mumnkun bo'lgan functioniham bor// BU HOLATDA  post.model.ts da yozilgan mongose schemani ishlatadigan posts papkadagi roue,tsda yozilgan user post qilishini taminlaydigan POST function ishlamaganda shu hatoni qaytaradi
                 title: "Error",
-                description: "Something went wrong. Please try again    ",
+                description: "Something went wrong. Please try againNNN    ",
                 variant: "destructive",
             });
         }
