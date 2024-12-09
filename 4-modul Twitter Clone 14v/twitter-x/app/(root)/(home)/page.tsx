@@ -29,17 +29,17 @@ import { useEffect, useState } from "react";
 export default function Page() {
     // const session: any = await getServerSession(authOptions);//server component
     // bu componentni servermas client component qilinishi sababiserverdan datalar ko'p kelsa server uchun og'irlashib ketmasligi uchun client component bo'lganda yuklash clientni browseri tomonidan bo'ladi
-    const { data: session, status }: any = useSession();
+    const { data: session, status }: any = useSession();//NextAuth.js client side rendreingda useSession() React Hook kimdir tizimga kirganligini tekshirishning eng oson usuli hisoblanadi//usesessionda data nomli o'zgaruvchi yaratilib session status nomli qiymatlar berildi va typi any qilindi endi sessionda va statusda usestatus hooki bor
     const [isLoading, setIsLoading] = useState(false);
-    const [posts, setPosts] = useState<IPost[]>([]);
+    const [posts, setPosts] = useState<IPost[]>([]);//endi postsa iPOST BIR IPOSTDA ESA USER YOZGAN Postni typlari va userni id bilan aniqlash bor yani qaysi user yozgan postligini aniqlash bor
 
-    useEffect(() => {
-        const getPosts = async () => {
+    useEffect(() => {//yani asosiy sahifaga userlar kirganda birinchi ishlaydigan function 
+        const getPosts = async () => {//getPosts async chunki so'rov jo'natadi try catch bilan
             try {
-                setIsLoading(true);
-                const { data } = await axios.get("/api/posts?limit=10");
-                setPosts(data);
-                setIsLoading(false);
+                setIsLoading(true);//isloading function boshida false edi endi true qilindi chunki axios ishlagancha loading holati sodir bo'ladi
+                const { data } = await axios.get("/api/posts?limit=10");//axios get qiladi api papkani ichidagi posts papkani ichidagi route.ts ichidan keletgan postlarni query so'rov bilan 10 ta ohirgi postni get qiladi
+                setPosts(data);//va setpostsga datani yani axiosni metodlarini typlari bor datani ichida ipost interface bor setPosts statega qo'yib get qiladi va 
+                setIsLoading(false);//isloadingni false qiladi chunki get qilib bo'indi endi jsxda isloadingda chaqirilgan loader2 false bo'ladi endi loader ishlamaydi chunki get qilibb bo'lindi//setisloading bo'sh edi endi bu ham isloading kabi  false bo'ldi
             } catch (error) {
                 console.log(error);
                 setIsLoading(false);
@@ -53,7 +53,7 @@ export default function Page() {
         {/* bu (home) page yani bosh sahifa header jsx ichida birinchi chaqirildi yani eng yuqorida turishi uchun */}
             <Header label="Home" />
             {/* header shared papkani ichidagi header.tsxdan kelepti labeli dynamic yani faqat string qabul qiladi */}
-            {isLoading || status === "loading" ? (//isloading true bo'lsa va statusi loading bo'ladigan bo'lsa shu loader2ni chiqar yokida pastdagi form componenrtni va postsni map bilan copy qilib PostItemga jo'nat  Form componentda esa userni datalari bor postitemda esa postni datalari bor yabni kim  yozgan like bormi va hakozo
+            {isLoading || status === "loading" ? (//ststusda usesession bor yani user bor yo'qligini tekshirish bor va isloading bor bo'lsa va userni bor yo'qligi loading holatida yani tekshirialyotgan holatda bo'lsa va bular true bo'lsa///////isloading true bo'lsa va statusi loading bo'ladigan bo'lsa shu loader2ni chiqar yokida pastdagi form componenrtni va postsni map bilan copy qilib PostItemga jo'nat  Form componentda esa userni datalari bor postitemda esa postni datalari bor yabni kim  yozgan like bormi va hakozo
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />
                 </div>
