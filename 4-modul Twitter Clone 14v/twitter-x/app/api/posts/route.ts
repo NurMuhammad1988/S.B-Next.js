@@ -28,15 +28,17 @@ export async function GET(req: Request) {
     try {
         await connectToDatabase();
 
-        const { currentUser }: any = await getServerSession(authOptions);
+        const { currentUser }: any = await getServerSession(authOptions);//userni mongodbda bor yoki yo'qligini aniqlash yani get so'rov ishlayotganda shu getServerSession function bilan userni aniqlash
 
         // console.log(session.currentUser);
 
         const { searchParams } = new URL(req.url);
         const limit = searchParams.get("limit");
 
-        const posts = await Post.find({})
-            .populate({//next js tushunadigan holatda populate qilish 
+        const posts = await Post.find({})//bu Post post.model.tsdan chaqirilgan
+            .populate({//Funktsiya ma'lum bir to'plamning hujjatidagi mos yozuvlar maydonlarini boshqa to'plamdagi hujjatlar bilan to'ldirish uchun ishlatiladi yani post.modeldan userni solishtirish uchun pathda"user" ni modelda User modelni selectda esa userni malumotlari bilan//next js tushunadigan holatda populate qilish yani agar bu posts o'zgaruvchi mongooseni find metodi bilan Post.modeldan find metodi bilan userni 
+
+                // populate mongodbdagi user objectni ochib beradi yani idsini oladi shu id sabab qaysui user yozgan post ekanligini frontedga aytiladi
                 path: "user",
                 model: User,
                 select: "name email profileImage _Id username",
@@ -44,7 +46,7 @@ export async function GET(req: Request) {
             .limit(Number(limit))
             .sort({ createdAt: -1 });
 
-        const filteredPosts = posts.map((post) => ({
+        const filteredPosts = posts.map((post) => ({//posts o'zgaruvchida mongooseni populate metodi bilan Postdan find qilingan userni yani userlarni datalari bor bu datalar map qilinib post nomli o'zgaruvchiga solinepti yani endi filteredPosts o'zgaruvchida userni hamma datalalri qilmish qidirmishlari bor yani
             body: post.body,
             createdAt: post.createdAt,
             user: {

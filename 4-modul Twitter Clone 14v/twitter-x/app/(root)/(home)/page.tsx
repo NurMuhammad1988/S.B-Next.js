@@ -24,7 +24,6 @@ import { useEffect, useState } from "react";
 
 //     return <div>Page</div>;
 // }
-
 /////////////////////////////////////////////////////////////////////
 export default function Page() {
     // const session: any = await getServerSession(authOptions);//server component
@@ -54,6 +53,8 @@ export default function Page() {
             <Header label="Home" />
             {/* header shared papkani ichidagi header.tsxdan kelepti labeli dynamic yani faqat string qabul qiladi */}
             {isLoading || status === "loading" ? (//ststusda usesession bor yani user bor yo'qligini tekshirish bor va isloading bor bo'lsa va userni bor yo'qligi loading holatida yani tekshirialyotgan holatda bo'lsa va bular true bo'lsa///////isloading true bo'lsa va statusi loading bo'ladigan bo'lsa shu loader2ni chiqar yokida pastdagi form componenrtni va postsni map bilan copy qilib PostItemga jo'nat  Form componentda esa userni datalari bor postitemda esa postni datalari bor yani posts stateda chaqirilgan ippsotni datalalri bor shu datalar map qilinib get qilindi kim  yozgan like bormi va hakozo
+
+            //isloading shunchaki bo'sh va false qiymatli o'zgaruvchi edi holos bu isloading bilan loader2 yoki false yoki tru qilindi yani yoki ishlaydi yoki ishlamaydi vaziyatga qareydi
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />
                 </div>
@@ -70,7 +71,7 @@ export default function Page() {
                             key={post._id}//map qilingan datalar qanaqadur componentga jo'natilganda key berish kerey shu keydan keyin datalar jo'natiladi masalan bu holatda post._id bu id posts ichiuda chaqirilgan ipostdagi string qiymatli id shunda ((post)) nomli yangi map qilingan o'zgaruvchida endi ipostni idsi bor mapda birinchi parametr object qabul qiladi va bu key sifatida ishlatiladi////Funktsiya birinchiargumentmap() usuli bilan qabul qilinadi. Bu chaqiruvchi massivning har bir elementi uchun kompyuter chaqirishi kerak bo'lgan kodni o'z ichiga olgan talab qilinadigan argument. Shuni yodda tutingki, map() funksiyasi argumenti uchta parametrni qabul qiladi: currentItem , index , va array .
                             post={post}//postitem endi post nomli qiymat qabul qiladi bu qiymatda map qilingan post nomli callback function bor bo'ladi va bu postniham typi postitemda aytilishi kerak shunda ts ururib bermeydi
                             user={JSON.parse(JSON.stringify(session.currentUser))}//postitem endi user nomli qiymat qabul qiladi bu userdagi session usesession bilan userni aniqlab olish ma serverdan keladigan userni malumotlarini js tushadigan json formatdan objectga o'girish
-                            setPosts={setPosts}
+                            setPosts={setPosts}//postitem endi setPosts nomli qiymat qabul iqladi bu qiymatlarni qabul qilishi va typinihamberib qo'yishi shart bomasa ts urushadi postitem qabul qiladigan bu setpostsda arrayda kelgan ipostbor yani user yozadigan postni hamma datalari bor userni idisiham bor
                         />
                     ))}
                 </>
