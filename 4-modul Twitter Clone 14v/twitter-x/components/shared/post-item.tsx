@@ -26,15 +26,16 @@ const PostItem = ({ post, user, setPosts }: Props) => {
     const onDelete = async (e: any) => {
         e.stopPropagation();
         try {
-            setIsLoading(true);//loading axios so'rov jo'natgancha ishlab turishi kerak
+            setIsLoading(true); //loading axios so'rov jo'natgancha ishlab turishi kerak
 
-            await axios.delete(`/api/posts`, {//bu delete local ishlatilepti yani asosiy DELETE functionini ishlatib berepti asosiy delete functoni node.jsdan compdan request bilan kelgan /api/posts/route.ts da yozilgan  bodyga esa data nomli o'zgaruvchi yaratib yani nimani udalit qilishi aytildi yani post._idni udalit qilish aytildi bu post._id esa /api/posts/route.ts da distruptatsa qilib chaqirib olingan va json formatga o'girilgan yani serverda turgan udalit qilinishi kerak bo'lgan idni bor post DELETE global functionga chaqirilishi kerak bo'lmasa global DELETE nimani udalit qilisni topa olmaydi
+            await axios.delete(`/api/posts`, {
+                //bu delete local ishlatilepti yani asosiy DELETE functionini ishlatib berepti asosiy delete functoni node.jsdan compdan request bilan kelgan /api/posts/route.ts da yozilgan  bodyga esa data nomli o'zgaruvchi yaratib yani nimani udalit qilishi aytildi yani post._idni udalit qilish aytildi bu post._id esa /api/posts/route.ts da distruptatsa qilib chaqirib olingan va json formatga o'girilgan yani serverda turgan udalit qilinishi kerak bo'lgan idni bor post DELETE global functionga chaqirilishi kerak bo'lmasa global DELETE nimani udalit qilisni topa olmaydi
                 data: {
                     postId: post._id,
                 },
             });
-            setPosts((prev) => prev.filter((p) => p._id !== post._id));
-            setIsLoading(false);//axios so'rov jo'natib bo'lgandan keyin loading to'htashi kerak
+            setPosts((prev) => prev.filter((p) => p._id !== post._id)); //eskisi olindi idsi bo'yicha udalit qilindi???/// yani setpostsda ipost bor ipostda user va postni detallari bor axios udalit qilganda filter metodiham ishlab agar id_ bor bo'lsa va postdan keletgan idga teng bo'lmasaginabu axios delete so'rovi ishlaydi////Filtrlash usuli callback yani onDelete = async => funktsiyasining qaytish qiymatini mantiqiy sifatida baholaydi . Agar qaytarilgan qiymat haqiqat bo'lsa, massiv elementi saqlanadi. Agar u noto'g'ri bo'lsa, massiv elementi o'chiriladi. shuu sabab !<<bu berildi chunki postni udalit qilish uchun axios ishlaganda  qaytadigan qiymat noto'g'ri bo'lishi kerak shu sabab notogri qilindi
+            setIsLoading(false); //axios so'rov jo'natib bo'lgandan keyin loading to'htashi kerak
         } catch (error) {
             setIsLoading(false);
 
@@ -48,7 +49,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 
     // console.log(post);
 
-    const onLike = async (e: any) => {
+    const onLike = async (e: any) => {//onlike function pastda like buttonidagi iconga berib qo'yilgan yani yureychaga
         e.stopPropagation();
         try {
             setIsLoading(true);
@@ -101,7 +102,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
     };
 
     const goToPost = () => {
-        router.push(`/posts/${post._id}`);//router posts papkani ichidagi nextdan dynamic kelgan postni idisiga qarab shu postni asosiy sahifasiga jo'natadi
+        router.push(`/posts/${post._id}`); //router posts papkani ichidagi nextdan dynamic kelgan postni idisiga qarab shu postni asosiy sahifasiga jo'natadi
     };
 
     const goToProfile = (evt: any) => {
@@ -111,6 +112,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 
     return (
         <div className="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition relative">
+            {/* yuqoridagi divda ohirida relative classi bor bu class pastdagi divda ishlatilgan absalute classi bilan birga ishlatiladi huddi async awaitga o'hshab vazifasi divlarnibir biriga ulash yani endi bu ikkala div bir biriga bog'liq yani onadivda relative bo'lishi kerak bu ona divni ichida qaysidur sivda absalute bor bo'lsa absalute  sof va o'zini o'zi ta'minlaydi. Buni amalga oshirish uchun tashqi omillarga tayanmaydi nimani amalga opshirish uchun isloadingni amalga oshirish uchun tashqi ona divga aloqasi yo'q yani isloading true bo'lsa absalute div alohida ishlaydi yani loader ishlaganda faqat shu abssalute classs berilgan divda ishlaydi bu classlar bo'lmasa loader ishletgan paydi ona divgaham tasir qiladi bu esa yahshimas */}
             {isLoading && ( //isloading true bo'lsa yani serverdan postlar kelguncha loader2 ishlab tursin yokida ishlamasin yani bir tomonlama mantiqiy kod yani ifni o'zi bilan ishlaydi
                 <div className="absolute inset-0 w-full h-full bg-black opacity-50">
                     <div className="flex justify-center  items-center h-full">
@@ -178,7 +180,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
                             {/* postda chaqirilgan aslida ipostda turgan likes number type bo'lgani uchun agar postda lies true bo'lsa likeslarni number bilan ko'rsat yo'q bo'lsa 0 ni ko'rsat yani numberni ko'rsat*/}
                             {/*  */}
                         </div>
-                        {post.user._id === user._id && ( //yani agar psotda keletgangan userni idsi shu AiFillDelete iconni bosayotgan userni idisi bilan bir hil bo'lsa onclik ishlaganda ondelete functionini ishlat  bu && yani faqat bittamaqsadda ishlatiladigan if elseni ko'rinishi
+                        {post.user._id === user._id && ( //bu postni ichidaipost bor shu sabab tanepti va ipostda esa userni idis bor shular teng bo'lsagina bu boolean ishlaydi//yani agar postda keletgan userni idsi shu AiFillDelete iconni bosayotgan userni idisi bilan bir hil bo'lsa onclik ishlaganda ondelete functionini ishlat  bu && yani faqat bitta maqsadda ishlatiladigan if elseni ko'rinishi
                             <div
                                 className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
                                 onClick={onDelete}
