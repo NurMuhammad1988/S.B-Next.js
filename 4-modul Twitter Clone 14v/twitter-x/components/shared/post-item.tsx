@@ -26,15 +26,15 @@ const PostItem = ({ post, user, setPosts }: Props) => {
     const onDelete = async (e: any) => {
         e.stopPropagation();
         try {
-            setIsLoading(true);
+            setIsLoading(true);//loading axios so'rov jo'natgancha ishlab turishi kerak
 
-            await axios.delete(`/api/posts`, {
+            await axios.delete(`/api/posts`, {//bu delete local ishlatilepti yani asosiy DELETE functionini ishlatib berepti asosiy delete functoni node.jsdan compdan request bilan kelgan /api/posts/route.ts da yozilgan  bodyga esa data nomli o'zgaruvchi yaratib yani nimani udalit qilishi aytildi yani post._idni udalit qilish aytildi bu post._id esa /api/posts/route.ts da distruptatsa qilib chaqirib olingan va json formatga o'girilgan yani serverda turgan udalit qilinishi kerak bo'lgan idni bor post DELETE global functionga chaqirilishi kerak bo'lmasa global DELETE nimani udalit qilisni topa olmaydi
                 data: {
                     postId: post._id,
                 },
             });
             setPosts((prev) => prev.filter((p) => p._id !== post._id));
-            setIsLoading(false);
+            setIsLoading(false);//axios so'rov jo'natib bo'lgandan keyin loading to'htashi kerak
         } catch (error) {
             setIsLoading(false);
 
@@ -101,7 +101,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
     };
 
     const goToPost = () => {
-        router.push(`/posts/${post._id}`);
+        router.push(`/posts/${post._id}`);//router posts papkani ichidagi nextdan dynamic kelgan postni idisiga qarab shu postni asosiy sahifasiga jo'natadi
     };
 
     const goToProfile = (evt: any) => {
@@ -111,7 +111,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 
     return (
         <div className="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition relative">
-            {isLoading && ( //isloading true bo'lsa yani serverdan postlar kelguncha loader2 ishlab tursin
+            {isLoading && ( //isloading true bo'lsa yani serverdan postlar kelguncha loader2 ishlab tursin yokida ishlamasin yani bir tomonlama mantiqiy kod yani ifni o'zi bilan ishlaydi
                 <div className="absolute inset-0 w-full h-full bg-black opacity-50">
                     <div className="flex justify-center  items-center h-full">
                         <Loader2 className="animate-spin text-sky-500" />
@@ -122,13 +122,13 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 
             <div
                 className="flex flex-row items-center gap-3 cursor-pointer"
-                onClick={goToPost} //bu ona div yani userlarni postlar serverdan keladigan ona div gotopost esa bu ona divga click bo'lganda ishlaydigan function yuqorida yozilgan vazifasi click bo'lganda yani serverdan chaqirilgan psotga click bo'lganda postni yozgan userni post sahifasiga olib boradi
+                onClick={goToPost} //bu ona div yani userlarni postlar serverdan keladigan ona div gotopost esa bu ona divga click bo'lganda ishlaydigan function yuqorida yozilgan vazifasi click bo'lganda yani serverdan chaqirilgan postga click bo'lganda postni yozgan userni post sahifasiga olib boradi
             >
                 <Avatar onClick={goToProfile}>
                     <AvatarImage src={post.user.profileImage} />
                     <AvatarFallback>{post.user.name[0]}</AvatarFallback>
                 </Avatar>
-                {/*avatarga bosilganda post yozgan userni profile sahifasiga olib boradi lekin nimagadur mongodbdan bolsa kerak juda kech ishlayaptimanimcha server juda kech so'rovga javob berepti lekin loader yo'qligi sabab indamey turipti */}
+                {/*avatarga bosilganda post yozgan userni profile sahifasiga olib boradi lekin nimagadur mongodbdan bolsa kerak juda kech ishlayapti manimcha server juda kech so'rovga javob berepti lekin loader yo'qligi sabab indamey turipti */}
 
                 <div>
                     {/* shu divga loader qo'yish kerak darsda qo'yilmadi lekin kerak mongoodan datalar kelaman degancha hech qanday o'zgarish bo'lmay turipti */}
@@ -184,7 +184,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
                                 onClick={onDelete}
                             >
                                 <AiFillDelete size={20} />
-                            </div>  
+                            </div>
                         )}
                     </div>
                 </div>

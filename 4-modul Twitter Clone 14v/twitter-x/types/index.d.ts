@@ -1,5 +1,5 @@
 export interface IUser {
-    createdAt: Date;//global date qilindi chunki user created bo'lganda mongodbda global vaqt bilan userni qachin created bo'lgani aytib qo'yilishi kerak
+    createdAt: Date;//global date qilindi chunki user created bo'lganda mongodbda global vaqt bilan userni qachon created bo'lgani aytib qo'yilishi kerak
     username: string;
     email: string;
     name: string;

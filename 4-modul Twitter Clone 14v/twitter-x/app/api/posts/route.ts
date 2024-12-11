@@ -1,3 +1,5 @@
+// nima uchun bu sahifaga chaqirilgan modellardani nomi masalan post.modal.ts yani modalni nima uchun qo'shish kerak js tushunishi uchunmi???????????????????????????????????????????
+
 import Post from "@/database/post.model";
 import User from "@/database/user.model";
 import { authOptions } from "@/lib/auth-options";
@@ -5,17 +7,17 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { getServerSession } from "next-auth";// farqli o'laroq , foydalanuvchi tizimga kirganmi yoki yo'qmi (cookie-fayllar mavjudmi yoki yo'qmi) ob'ektni useSession qaytaradi , faqat foydalanuvchi tizimga kirganida ob'ektni qaytaradi (faqat autentifikatsiya qilingan cookie-fayllar mavjud bo'lganda), aks holda>> session get ServerSession session null qaytaradi
 import { NextResponse } from "next/server";//server function
 
-// post create qiish uchun api
+// post create qilish uchun api
 
 export async function POST(req: Request) {//Request //So'rov usulini o'z ichiga oladi ( GET, POST, va hokazo.)//bu reauest node moduldan keladi yani compda o'rnatilgan node.jsni ichidagi jsda yozilgan metod function ichida oziniham metodlari juda ko'p server bilan ishlashga javobgar yani request bu functionga POST katta harif bilan yozilishi kerak shunda compda node.jsda turgan Requestga to'gri boradi u Request function esa o'zini POSTda chaqirilayotganini bilgandan keytin POST yo'nalish bo'yicha metodlarini ishlatish mumkun shu sabab POST katta hariflarda yozilishi shart
     try {
         await connectToDatabase();
 
         const { body, userId } = await req.json();//chaqirilgan itemslar json qib olindi//bu body distruptatsa bilan qayerdan chaqirildi??? bu body typi global String qilingan post modeldan yani post.model.tsda mongoose schema bilan qilingan modeldan Post nomli functionga kiritilib export qilingan shu Post functiondan keldi 
-        //userId esa
+        //userId esa????
 
 
-        const post = await Post.create({ body, user: userId });//bu create metodi mongoosedan keladi mongodbda user post create qilishi uchun kerak bu ishlashi uchun POST functioni connectToDatabase qilib mongodb databazaga ulandi  bu Post pos.modal.tsda onst PostSchema = new mongoose.Schema<<<shu nomli functionda Post nomnli function qilib yani object qilib o'ralib jo'natilgan va bu joyda mongooseni create metodi bilan user typiga global string bo'lgan bodyni olib User modeldan kelayotgan userni idisni user: nomli o'zgaruvchiga olib post create qilepti
+        const post = await Post.create({ body, user: userId });//bu create metodi mongoosedan keladi mongodbda user post create qilishi uchun kerak bu ishlashi uchun POST functioni connectToDatabase qilib mongodb databazaga ulandi  bu Post post.modal.tsda const PostSchema = new mongoose.Schema<<<shu nomli functionda Post nomnli function qilib yani object qilib o'ralib jo'natilgan va bu joyda mongooseni create metodi bilan user typiga global string bo'lgan bodyni olib User modeldan kelayotgan userni idisni user: nomli o'zgaruvchiga olib post create qilepti
 
         return NextResponse.json(post);//json format qilib jo'natish
     } catch (error) {
@@ -36,9 +38,9 @@ export async function GET(req: Request) {
         const limit = searchParams.get("limit");
 
         const posts = await Post.find({})//bu Post post.model.tsdan chaqirilgan
-            .populate({//Funktsiya ma'lum bir to'plamning hujjatidagi mos yozuvlar maydonlarini boshqa to'plamdagi hujjatlar bilan to'ldirish uchun ishlatiladi yani post.modeldan userni solishtirish uchun pathda"user" ni modelda User modelni selectda esa userni malumotlari bilan//next js tushunadigan holatda populate qilish yani agar bu posts o'zgaruvchi mongooseni find metodi bilan Post.modeldan find metodi bilan userni 
+            .populate({//Funktsiya ma'lum bir to'plamning hujjatidagi mos yozuvlar maydonlarini boshqa to'plamdagi hujjatlar bilan to'ldirish uchun ishlatiladi yani post.modeldan userni solishtirish uchun pathda "user" ni modelda User modelni selectda esa userni malumotlari bilan//next js tushunadigan holatda populate qilish yani agar bu posts o'zgaruvchi mongooseni find metodi bilan Post.modeldan find metodi bilan userni 
 
-                // populate mongodbdagi user objectni ochib beradi yani idsini oladi shu id sabab qaysui user yozgan post ekanligini frontedga aytiladi
+                // populate mongodbdagi user objectni ochib beradi yani idsini oladi shu id sabab qaysi user yozgan post ekanligini frontedga aytiladi
                 path: "user",
                 model: User,
                 select: "name email profileImage _Id username",
@@ -46,7 +48,7 @@ export async function GET(req: Request) {
             .limit(Number(limit))
             .sort({ createdAt: -1 });
 
-        const filteredPosts = posts.map((post) => ({//posts o'zgaruvchida mongooseni populate metodi bilan Postdan find qilingan userni yani userlarni datalari bor bu datalar map qilinib post nomli o'zgaruvchiga solinepti yani endi filteredPosts o'zgaruvchida userni hamma datalalri qilmish qidirmishlari bor yani
+        const filteredPosts = posts.map((post) => ({//posts o'zgaruvchida mongooseni populate metodi bilan Postdan find qilingan userni yani userlarni datalari bor bu datalar map qilinib posts nomli o'zgaruvchiga solinepti yani endi filteredPosts o'zgaruvchida userni hamma datalari qilmish qidirmishlari bor likelsari commentslari postlari idilari bilan bor bu GET function shularni get qilib beradi
             body: post.body,
             createdAt: post.createdAt,
             user: {
@@ -69,12 +71,16 @@ export async function GET(req: Request) {
     }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: Request) {//node.jsdan yozilgan function hissoblanadi yani frontenddan delete so'rov kelsa masalan local axiosdan so'rov kelsa ishga tushadigan function qolgan katta hariflar bilan yozilib Request bilan ishlatilgan hamma functionham shunday node.jsda yozilgan hissoblanadi
     try {
         await connectToDatabase();
         const { postId, userId } = await req.json();
+        // node js da frontdan delete so'rov kelsa o'chirsin degan kamandani yaratish axios orqali o'sha kamandani berish kerak 
+        // Post post.modal.tsdan kelepti
+        await Post.findByIdAndDelete(postId); //mongoosedan keletgan findByIdAndDelete bu so'rov bajarilganda shu findByIdAndDelete functioni bilan post idisga qarab udalit qilinadi
 
-        await Post.findByIdAndDelete(postId); 
+
+
 
         return NextResponse.json({ message: "Post deleted successfully" });
     } catch (error) {

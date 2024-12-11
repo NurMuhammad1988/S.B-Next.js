@@ -24,7 +24,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const onSubmit = async () => {
+    const onSubmit = async () => {//yani form componentga submit bo'lganda ishlaydigan function vazifasi post create qilish
         //bu function onsubmit yani inputga post submit qilish functioni bu function async chunki serverga so'rov jo'natadi
         try {
             setIsLoading(true); //isloadingni boshlang'ich qiymati false shu sabab so'rov jonatilayotganda true qilish kerak yani kutib turish kerak
