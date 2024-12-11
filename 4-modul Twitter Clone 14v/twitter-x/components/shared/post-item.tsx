@@ -108,7 +108,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
         evt.stopPropagation();
         router.push(`/profile/${post.user._id}`);
     };
-    6. Post form & fetching data 19:56da hato bor lekin dar 21: 00 gacha qilindi
+
     return (
         <div className="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition relative">
             {isLoading && ( //isloading true bo'lsa yani serverdan postlar kelguncha loader2 ishlab tursin
@@ -121,7 +121,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
             )}
 
             <div
-                className="flex flex-row items-center  gap-3 cursor-pointer"
+                className="flex flex-row items-center gap-3 cursor-pointer"
                 onClick={goToPost} //bu ona div yani userlarni postlar serverdan keladigan ona div gotopost esa bu ona divga click bo'lganda ishlaydigan function yuqorida yozilgan vazifasi click bo'lganda yani serverdan chaqirilgan psotga click bo'lganda postni yozgan userni post sahifasiga olib boradi
             >
                 <Avatar onClick={goToProfile}>
@@ -157,6 +157,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
                     </div>
 
                     <div className="text-white mt-1"> {post.body}</div>
+                    {/* postni bodysi yani postni shaxsan o'zi */}
 
                     <div className="flex flex-row items-center mt-3 gap-10">
                         <div className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
@@ -171,16 +172,19 @@ const PostItem = ({ post, user, setPosts }: Props) => {
                             <FaHeart
                                 size={20}
                                 color={post.hasLiked ? "red" : ""}
+                                // agar ipost chaqirilgan postda hasliked bor bo'lsa rangi qizil yokida o'zinirodnoy rangida qoladi yani hech qanday qiymat berilmeydi
                             />
                             <p>{post.likes || 0}</p>
+                            {/* postda chaqirilgan aslida ipostda turgan likes number type bo'lgani uchun agar postda lies true bo'lsa likeslarni number bilan ko'rsat yo'q bo'lsa 0 ni ko'rsat yani numberni ko'rsat*/}
+                            {/*  */}
                         </div>
-                        {post.user._id === user._id && (
+                        {post.user._id === user._id && ( //yani agar psotda keletgangan userni idsi shu AiFillDelete iconni bosayotgan userni idisi bilan bir hil bo'lsa onclik ishlaganda ondelete functionini ishlat  bu && yani faqat bittamaqsadda ishlatiladigan if elseni ko'rinishi
                             <div
                                 className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
                                 onClick={onDelete}
                             >
                                 <AiFillDelete size={20} />
-                            </div>
+                            </div>  
                         )}
                     </div>
                 </div>
