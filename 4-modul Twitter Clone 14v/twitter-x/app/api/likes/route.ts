@@ -4,7 +4,7 @@ import User from "@/database/user.model";
 import { connectToDatabase } from "@/lib/mongoose";
 import { NextResponse } from "next/server";
 
-export async function PUT(req: Request) {//node.jsdan Request kelaidgan PUT
+export async function PUT(req: Request) {//node.jsdan Request kelaidgan PUT//likesni qo'shadigan function
     try {
         await connectToDatabase();
         const { postId, userId } = await req.json();//serverdan keladigan postni idisni va qaysi user yozgan bo'lsa osha userni idsi distruptatsa bilan chaqirilib json formatga yani js tushunadigan formatga o'girib olindi//reqda nodejsdan keladigan Request global function bor shu functionni json qilib olish
@@ -28,13 +28,14 @@ export async function PUT(req: Request) {//node.jsdan Request kelaidgan PUT
         );
 
         return NextResponse.json({ success: true });
+        // likes qo'shilganda yoki udalit qilinganda shu success: true databasadan kelib logda shu >>>{"success":true} ko'rinishda chiqepti
     } catch (error) {
         const result = error as Error;
         return NextResponse.json({ error: result.message }, { status: 400 });
     }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: Request) {//likesni udalit qiladigan function
     try {
         await connectToDatabase();
         const { postId, userId } = await req.json();

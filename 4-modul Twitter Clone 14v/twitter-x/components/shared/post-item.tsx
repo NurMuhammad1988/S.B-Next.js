@@ -34,7 +34,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
                     postId: post._id,
                 },
             });
-            setPosts((prev) => prev.filter((p) => p._id !== post._id)); //eskisi olindi idsi bo'yicha udalit qilindi???/// yani setpostsda ipost bor ipostda user va postni detallari bor axios udalit qilganda filter metodiham ishlab agar id_ bor bo'lsa va postdan keletgan idga teng bo'lmasaginabu axios delete so'rovi ishlaydi////Filtrlash usuli callback yani onDelete = async => funktsiyasining qaytish qiymatini mantiqiy sifatida baholaydi . Agar qaytarilgan qiymat haqiqat bo'lsa, massiv elementi saqlanadi. Agar u noto'g'ri bo'lsa, massiv elementi o'chiriladi. shuu sabab !<<bu berildi chunki postni udalit qilish uchun axios ishlaganda  qaytadigan qiymat noto'g'ri bo'lishi kerak shu sabab notogri qilindi
+            setPosts((prev) => prev.filter((p) => p._id !== post._id)); //eskisi olindi idsi bo'yicha udalit qilindi???/// yani setpostsda ipost bor ipostda user va postni detallari bor axios udalit qilganda filter metodiham ishlab agar id_ bor bo'lsa va postdan keletgan idga teng bo'lmasagin abu axios delete so'rovi ishlaydi////Filtrlash usuli callback yani onDelete = async => funktsiyasining qaytish qiymatini mantiqiy sifatida baholaydi . Agar qaytarilgan qiymat haqiqat bo'lsa, massiv elementi saqlanadi. Agar u noto'g'ri bo'lsa, massiv elementi o'chiriladi. shuu sabab !<<bu berildi chunki postni udalit qilish uchun axios ishlaganda  qaytadigan qiymat noto'g'ri bo'lishi kerak shu sabab notogri qilindi
             setIsLoading(false); //axios so'rov jo'natib bo'lgandan keyin loading to'htashi kerak
         } catch (error) {
             setIsLoading(false);
@@ -53,34 +53,34 @@ const PostItem = ({ post, user, setPosts }: Props) => {
         e.stopPropagation();
         try {
             setIsLoading(true);
-            if (post.hasLiked) {
+            if (post.hasLiked) {//ipostdan keletgan postda hasliked bor bo'lsa yani pastda heart icondagi default 0 dan yuqori bo'lsa yani bir bo'lsa shu postda kelgan userni idisga tegishli likedni o'chirib tasha  
                 // delete like
                 await axios.delete(`/api/likes`, {
-                    data: {
+                    data: {//bu data axiosni metodlarini typlari bor data yani bu local axios delete function app/api/likes/route.ts fail ichidagi requesdan keletgan DELETE functionni ishlatganda metodlar bor object chaqirilib postId, userId nomli o'zgaruvchilarga postni idisni va userni idisiga qarab shu idlar bor bo'lsa axios delete DELETEni ishlatadi 
                         postId: post._id,
                         userId: user._id,
                     },
                 });
 
-                const updatedPosts = {
+                const updatedPosts = {//bu  updatedPosts function ifni ichida ishlaganda local axios delete function ishlaganda app/api/likes/route.ts dagi DELETE ishlaganda ...postni kopiya qiladi va haslikedni yani booleanni false qiladi va likesni-1 qiladi yani faqat shu postda kelgan userni idsiga aloqador likesni - qiladi shu sabab -1 
                     ...post,
                     hasLiked: false,
                     likes: post.likes - 1,
                 };
 
-                setPosts((prev) =>
+                setPosts((prev) =>//prevda ichida ipost bor setPostsni oldingi yani bu holatdan oldingi holati bor (p)<<bu shunchaki map qilinadigan itemlarni sovolishga o'zgaruvchi shunchaki p deb nomlandi agar yangi o'zgaruvchi p ichidagi _id teng bo'lsa yani setpostsda kelgan ipostni idsi qattiy teng bo'lsa nimaga? postni idsiga yani if ishlaganda idlar to'g'ri kelsa yani onlike chaqirilgan iconga click bo'lganda click qilingan postdagi likeni bosgan userni idisi bilan yana qaytadan bosetgan userni idisi bir hil bo'lsa yani bitta user bo'lsa updatedPosts ishlasin yani like -1 qilinsin yokida p yani eski default holati ishlab turaversin yani bu function likeni user avval bosgan bo'lsa va yana bossa o'chiradi agar bomsmasa default eski holatiday faheart qizil bo'lib turaveradi
                     prev.map((p) => (p._id === post._id ? updatedPosts : p))
                 );
-            } else {
+            } else {//yokida yangi likes qo'shadi yani local axios //app/api/likes/route.ts dagi PUT functionni ishlatib beradigan local axios function local axiosdayozilganda kuchkina harif bilan yoziladi app/api/likes/route.ts da esa     PUT  KATTA HARIF BILAN YOZILGAN bu esa shu out qaysi papkada ishlashi uchun berilgan adress `/api/likes` yani else holatda app/api/likes/route.ts dagi PUT functionn ishga tushuradi
                 await axios.put(`/api/likes`, {
                     postId: post._id,
                     userId: user._id,
                 });
 
                 const updatedPosts = {
-                    ...post,
-                    hasLiked: true,
-                    likes: post.likes + 1,
+                    ...post,//kopiya
+                    hasLiked: true,//boolean
+                    likes: post.likes + 1,//post/likes/lengthi yani uzunligiga qo'shadi
                 };
 
                 setPosts((prev) =>
@@ -169,15 +169,15 @@ const PostItem = ({ post, user, setPosts }: Props) => {
 
                         <div
                             className={`flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500`}
-                            onClick={onLike}
+                            onClick={onLike}//bu onlike function yuqorida yozilgan bu ona divga berildi aslida faheart icongaham bersa bo'lardi faqat {post.likes || 0}ga bosilgandahamm onlike function ishlashi uchun ona divga berilgan faheartga esa color classiga if else bervorildi 
                         >
                             <FaHeart
                                 size={20}
                                 color={post.hasLiked ? "red" : ""}
-                                // agar ipost chaqirilgan postda hasliked bor bo'lsa rangi qizil yokida o'zinirodnoy rangida qoladi yani hech qanday qiymat berilmeydi
+                                // agar ipost chaqirilgan postda hasliked bor bo'lsa rangi qizil yokida o'zin irodnoy rangida qoladi yani hech qanday qiymat berilmeydi
                             />
                             <p>{post.likes || 0}</p>
-                            {/* postda chaqirilgan aslida ipostda turgan likes number type bo'lgani uchun agar postda lies true bo'lsa likeslarni number bilan ko'rsat yo'q bo'lsa 0 ni ko'rsat yani numberni ko'rsat*/}
+                            {/* postda chaqirilgan aslida ipostda turgan likes number type bo'lgani uchun agar postda likes true bo'lsa likeslarni number bilan ko'rsat yo'q bo'lsa 0 ni ko'rsat yani numberni ko'rsat*/}
                             {/*  */}
                         </div>
                         {post.user._id === user._id && ( //bu postni ichidaipost bor shu sabab tanepti va ipostda esa userni idis bor shular teng bo'lsagina bu boolean ishlaydi//yani agar postda keletgan userni idsi shu AiFillDelete iconni bosayotgan userni idisi bilan bir hil bo'lsa onclik ishlaganda ondelete functionini ishlat  bu && yani faqat bitta maqsadda ishlatiladigan if elseni ko'rinishi
