@@ -26,7 +26,7 @@ export async function POST(req: Request) {//Request //So'rov usulini o'z ichiga 
     }
 }
 
-            7. Post detail 09:29da qoldi
+
 export async function GET(req: Request) {
     try {
         await connectToDatabase();
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
 
         // console.log(session.currentUser);
 
-        const { searchParams } = new URL(req.url);
+        const { searchParams } = new URL(req.url);//search params URL dan nodejsdan keladi
         const limit = searchParams.get("limit");
 
         const posts = await Post.find({})//bu Post post.model.tsdan chaqirilgan
@@ -53,29 +53,7 @@ export async function GET(req: Request) {
 
             //bu filteredPosts  callback function posts o'zgaruvchini yani post.model.tsdan keletgan post modelni map qiladi ((post)<<bu map qilinetgan itemlarga nom berish yani o'zgaruvchi desaham bo'ladi filteredPosts postsni ((post)ga map qilib user modeldan userni hamma dalnilarini olib bitta qopga soldi va json qilib nextresponseda jo'natdi//yani bu holatdabody:nomli parametrga post modeldan kelgan postni bodysi solindi user:nomli parametrga user.modeldan keletgan yanipost.modelda chaqirilgani uchun keletgan userni hamma itemlarini sovoldo va hakozo yani bitta joyga sovoldi shu sabab likes comments hasliked hammasi alohida massiv bo'libmasbitta bitta massivda length sabab faqat raqamda keladigan bo'ldi yani serverdan shunday keladi va serverda esa likes aslidamassiv su massivni yani likelar ko'p bolsa har biriga massivochilib serverdan kelsa dastur kop yuklanadi shu sabab har bir likeni hama malumotlari to'liq emas faqat soni keladigan qilindi yani bitta postga 10 ta like bosilsa hamauserni idsi hamma likeni massiv ichida suerniidisi emas likesni: lengthi yani nechta ekanligigina serverdan keladi yani kopmassivmas faqat number ko'rinsida keladi masalan likes: 10 bo'b keladi bu loyihada so'rov tezoq bajariladi kutish qotish kam bo'ladi degani agar shudnay qilinamsa bitta ppostda mingta like bo'lsa server hamma likes egalarini hamma dalnilarini jo'natadi bu holadta sayt og'irlaashib so'rov bajarulguncha vaqt o'tadi bu oddiy userga ko'rinmasaham backenda yuklanish ko'p bo'ladi
 
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
-            7. Post detail 09:29da qoldi
+            
 
             body: post.body,
             createdAt: post.createdAt,
@@ -92,7 +70,6 @@ export async function GET(req: Request) {
             _id: post._id
         }));
 
-            7. Post detail 09:29da qoldi
         return NextResponse.json(filteredPosts);
     } catch (error) {
         const result = error as Error;
