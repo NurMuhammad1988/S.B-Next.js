@@ -21,10 +21,14 @@ interface Props {
 const PostItem = ({ post, user, setPosts }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
 
+
+    // bu faildgai kodlar form.tsxdagi onsubmit sabab ishlaydi  yani formga onsubmit bo'lganda yani event bo'lganda shu post-itemdagi functionlar holatga qarab ishlaydi 
+
     const router = useRouter();
 
-    const onDelete = async (e: any) => {
-        e.stopPropagation();
+    const onDelete = async (e: any) => {//e===event any typi berildi ts uchun
+        e.stopPropagation();// JavaScript-da “stopPropagation” hodisaning DOM (Hujjat obyekti modeli) ierarxiyasi orqali keyingi tarqalishini oldini olish uchun ishlatiladigan usuldir .////HTML DOM-dagi stopPropagation() usuli hodisaning tarqalishini (yoki "ko'pikni") to'xtatish uchun ishlatiladi
+        //JavaScript-da `stopPropagation` DOM (Hujjat obyekti modeli) ierarxiyasi orqali hodisaning keyingi tarqalishini oldini olish uchun ishlatiladigan usuldir . JavaScript-dagi hodisalar ko'pikli yoki yozib olish bosqichidan keyin DOM daraxti bo'ylab yuqoriga yoki pastga o'tadi. Muayyan elementda hodisa sodir bo'lganda, u ushbu elementda ishlov beruvchilarni ishga tushiradi va keyin uning ajdodlari yoki avlodlariga tarqaladi. Hodisa ishlov beruvchisi ichida ` stopPropagation ` ni chaqirish orqali siz hodisaning tarqalishini to'xtatib, uning boshqa elementlarga kirishiga to'sqinlik qilasiz. Bu, ayniqsa, bir nechta elementlar umumiy ajdodga ega bo'lgan stsenariylarda foydali bo'lishi mumkin va siz voqeani faqat ma'lum bir element uchun uning ota-onasi yoki birodar elementlarida bir xil hodisani qo'zg'atmasdan boshqarishni xohlaysiz. Masalan, bosiladigan div ichidagi tugmani ko'rib chiqing. “StopPropagation”siz tugmani bosish divdagi bosish hodisasini ham ishga tushiradi. `StopPropagation` dan foydalanib, siz faqat tugmani bosish hodisasi qayta ishlanishini ta'minlaysiz, bu hodisa nazoratini kuchaytiradi va JavaScript ilovangizda kutilmagan nojo'ya ta'sirlarning oldini oladi.////yani ondelete bosilganda ona divgamas obdelete berilgan iconni ozida bir martta ishlab keyin to'htaydi masalan shu  await axios.delete(`/api/posts` adress bo'yicha ichkariga kirib ketmaydi e.stopPropagation() deyilishi esa shunchaki stopPropagationni parametr sifatida berish uchun
         try {
             setIsLoading(true); //loading axios so'rov jo'natgancha ishlab turishi kerak
 
@@ -50,7 +54,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
     // console.log(post);
 
     const onLike = async (e: any) => {//onlike function pastda like buttonidagi iconga berib qo'yilgan yani yureychaga
-        e.stopPropagation();
+        e.stopPropagation();//likeni bosganda ona divda tryni ichidagi await axios.delete(`/api/likes` adrss bo'yicha kirib ketish bo'lmasligi uchun
         try {
             setIsLoading(true);
             if (post.hasLiked) {//ipostdan keletgan postda hasliked bor bo'lsa yani pastda heart icondagi default 0 dan yuqori bo'lsa yani bir bo'lsa shu postda kelgan userni idisga tegishli likedni o'chirib tasha  
@@ -84,7 +88,7 @@ const PostItem = ({ post, user, setPosts }: Props) => {
                 };
 
                 setPosts((prev) =>
-                    prev.map((p) => (p._id === post._id ? updatedPosts : p))
+                    prev.map((p) => (p._id === post._id ? updatedPosts : p))//eski holati elsedaham huddi yuqoridagi commentdagiday ishlaydi
                 );
             }
 
@@ -102,11 +106,12 @@ const PostItem = ({ post, user, setPosts }: Props) => {
     };
 
     const goToPost = () => {
-        router.push(`/posts/${post._id}`); //router posts papkani ichidagi nextdan dynamic kelgan postni idisiga qarab shu postni asosiy sahifasiga jo'natadi
+        router.push(`/posts/${post._id}`); //router posts papkani ichidagi nextdan dynamic kelgan postni idisiga qarab shu postni asosiy sahifasiga jo'natadi bu function postlar keladigan ona divga berilgan yani to'liq postga olib boradi
     };
 
-    const goToProfile = (evt: any) => {
-        evt.stopPropagation();
+    const goToProfile = (evt: any) => {////evt===event any typi berildi ts uchun
+        evt.stopPropagation();//// JavaScript-da “stopPropagation” hodisaning DOM (Hujjat obyekti modeli) ierarxiyasi orqali keyingi tarqalishini oldini olish uchun ishlatiladigan usuldir .////HTML DOM-dagi stopPropagation() usuli hodisaning tarqalishini (yoki "ko'pikni") to'xtatish uchun ishlatiladi
+        //JavaScript-da `stopPropagation` DOM (Hujjat obyekti modeli) ierarxiyasi orqali hodisaning keyingi tarqalishini oldini olish uchun ishlatiladigan usuldir . JavaScript-dagi hodisalar ko'pikli yoki yozib olish bosqichidan keyin DOM daraxti bo'ylab yuqoriga yoki pastga o'tadi. Muayyan elementda hodisa sodir bo'lganda, u ushbu elementda ishlov beruvchilarni ishga tushiradi va keyin uning ajdodlari yoki avlodlariga tarqaladi. Hodisa ishlov beruvchisi ichida ` stopPropagation ` ni chaqirish orqali siz hodisaning tarqalishini to'xtatib, uning boshqa elementlarga kirishiga to'sqinlik qilasiz. Bu, ayniqsa, bir nechta elementlar umumiy ajdodga ega bo'lgan stsenariylarda foydali bo'lishi mumkin va siz voqeani faqat ma'lum bir element uchun uning ota-onasi yoki birodar elementlarida bir xil hodisani qo'zg'atmasdan boshqarishni xohlaysiz. Masalan, bosiladigan div ichidagi tugmani ko'rib chiqing. “StopPropagation”siz tugmani bosish divdagi bosish hodisasini ham ishga tushiradi. `StopPropagation` dan foydalanib, siz faqat tugmani bosish hodisasi qayta ishlanishini ta'minlaysiz, bu hodisa nazoratini kuchaytiradi va JavaScript ilovangizda kutilmagan nojo'ya ta'sirlarning oldini oladi.////yani ondelete bosilganda ona divgamas obdelete berilgan iconni ozida bir martta ishlab keyin to'htaydi masalan shu  await axios.delete(`/api/posts` adress bo'yicha ichkariga kirib ketmaydi e.stopPropagation() deyilishi esa shunchaki stopPropagationni parametr sifatida berish uchun
         router.push(`/profile/${post.user._id}`);
     };
 

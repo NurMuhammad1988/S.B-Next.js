@@ -59,6 +59,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
                     likes: 0,//setPostsda ipost interface bor va likesga number typi berilgan shu sabab likes distruptatsa bilan chaqirildi va faqat number qabul qiladi
                     hasLiked: false,//ipost interfacedan keladi boolean typi berilgan setPostsga ipost sabab distruptatsa bilan kelgan
                     comments: 0,//ipost interfacedan kelgan  typi number
+                    // likes hasliked commentsga bu joyda berilgan qiymatlar jsxda ishlatilganda ko'rinib turadi masalan likes numberda 0 bob yani default holati 0 bob hsliked boolean SHU SABAB hasliked chaqirilgan jsx ichida yani postitem.jsx ichida classiga {post.likes || 0}<<shu boolean topshiriq berilgan yani postda likes ishlamasa yani yo'q bo'lsa va likes number type bo'lgani uchun 0 qaytaradi yoki likesni lengthini yani uzunligini yani sonini qaytaradi
                 };
                 setPosts((prev) => [newPost, ...prev]);
             }
