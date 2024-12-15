@@ -15,15 +15,16 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
 
         const post = await Post.findById(postId).populate({
             path: "comments",
-            model: Comment,
+            model: Comment,//comment modeldan kelepti
 
-            populate: {
+            populate: {//mongoosedan keletgan populate functionini rodnoy parametri 
                 path: "user",
                 model: User,
                 select: "name email profileImage _id username",
             },
 
-            options: {sort: {likes: -1 } },
+            7. Post detail 23:36 da qoldi
+            options: {sort: {likes: -1 } },//mongoosedan keletgan populate functionini rodnoy parametri
         });
 
         const filteredComments = post.comments.map((item: any) => ({
