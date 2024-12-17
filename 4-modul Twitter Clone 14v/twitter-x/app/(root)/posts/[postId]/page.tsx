@@ -32,17 +32,19 @@ const Page = ({ params }: { params: { postId: string } }) => {
 
     const getComments = async () => {
         try {
-            setIsFetchingComment(true); //setIsFetchingComment stateda false holatida yani boshida false bo'lishi kerak yani pastdagi useeffect ishlasagina serverdan get qilinadi ungacha false bo'lib turadi tru bo'lganda va serverdan get qilingancha jsxda loader2 ishlab turadi
+            setIsFetchingComment(true); //setIsFetchingComment stateda false holatida yani boshida false bo'lishi kerak yani pastdagi useeffect ishlasagina serverdan get qilinadi ungacha false bo'lib turadi true bo'lganda va serverdan get qilingancha jsxda loader2 ishlab turadi
             const { data } = await axios.get(
                 `/api/posts/${params.postId}/comments` ////api/posts/[postId]/comments/route.ts dan keladigan GET function yani bu axios get api/posts/[postId]/comments/route.ts da yozilgan GETni ishlatib beradi
             );
-            setComments(data); //setmonnetsga axios get qilgan datalarni qo'shish
+            setComments(data); //ichida ipost massivga olingan setmonnetsga axios get qilgan datalarni qo'shish
             setIsFetchingComment(false); //loaderni o'chirish
         } catch (error) {
             console.log(error);
             setIsFetchingComment(false);
         }
     };
+
+    
 
     useEffect(() => {
         //qachonki getPost va getComments functionlari ishlaganda yana serverdan postni datlaricommentlar get qilinsagina ishlaydi yokida yo'q
@@ -107,6 +109,7 @@ const Page = ({ params }: { params: { postId: string } }) => {
 
                     <Form
                         // app/(root)/posts/[postId]/page.ts yani shu failda postga bosilgandan keyin datalari va postni o'zi yani bodysnidan keyin orada form bor yani postga comment yozish boshqa user postga comment yozish uchun setPostsga setComment berib qo'yildi setCommentsda esa comment yozgan userni datalari keladi shunda user comment yozsa serverga boradi va comment model sabab serverda qoladi va boshqa user kirganda isFetchingComment ishlab commentlar fetching bo'ladi yngi user esa hohlasa shu fetching bo'lgan commentlargaham comment yozishi mumkun yani form component ichida yozishi mumkun
+                        // shu Formdagi qiymatlar Form componentni o'zida typlari oldindan berib qo'yilgan yani hammasi avvaldan kallada pishitilishi kerak masalan Form component ui hissoblanadi va yaratilayotganda kelajakda qanday qiymatlar qabul qilinishi ancha munchasi oldindan reja qilinib typlari berib qo'yilgan edi ustozni kallasi compyuter!!!
                         placeholder="Post your reply?"
                         user={JSON.parse(JSON.stringify(session.currentUser))}
                         setPosts={setComments}

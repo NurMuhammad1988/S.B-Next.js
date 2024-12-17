@@ -23,7 +23,7 @@ interface Props {
 const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
+    7. Post detail 29:02 da qoldi
     const onSubmit = async () => {//yani form componentga submit bo'lganda ishlaydigan function vazifasi post create qilish
         //bu function onsubmit yani inputga post submit qilish functioni bu function async chunki serverga so'rov jo'natadi
         try {
@@ -102,7 +102,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
 
                     <div className="mt-4 flex flex-row justify-end">
                         <Button
-                            label={isComment ? "Reply" : "Post"} //iscomment bu boolean typi shu sabab bunga shu joyni o'zida shart qo'yildi agar iscomment true bo'lsa replay yokida post texti chiqsin
+                            label={isComment ? "Reply" : "Post"} //iscomment bu boolean typi shu sabab bunga shu joyni o'zida shart qo'yildi agar iscomment true bo'lsa replay yokida post texti chiqsin// shunda bu form chaqirilgan joyda agar iscomment bor bo'lsa replay chiqadi (masalan  app/(root)/posts/[postId]/page.ts failida iscomment chaqirilgan yani u holatda true yani chaqirilgan shunda postga replay qilish bo'ladi yani replay texti ishlaydi)
                             classNames="px-8" // button custom ui bu esa ts shu sabab buttonga clasname berib bo'lmaydi chunki typini aytish kerak shu sabab bu buttonga qilingan joyida string qabul qiladi deb clasnames alohioda berib qo'yilgan yani kerak bo'lsa qo'shimcha classlar yozish uchun classlar esa string formatida yozilgan shu sabab hato yo'q
                             disabled={isLoading || !body} //agar isloading bor bo'lsa yokida body false bo'lsa yani textarea bo'sh bo'lsa disabled bo'ladi
                             onClick={onSubmit}
