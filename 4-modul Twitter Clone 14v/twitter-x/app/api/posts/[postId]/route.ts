@@ -8,7 +8,8 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
         await connectToDatabase();
         const { postId } = route.params;//postni idisini topib olish uchun
 
-        const post = await Post.findById(postId).populate({//posdagi detallar populate qilindi masalan postni yozgan userni idisi va osha userni name email profileimage usernamelari shunday papulate qilib chaqirildi yani endi app/root/posts/postid/page.tsx fail ishlganda yani ichiga kirilganda postni shu datalariham bor bo'ladi
+        //findById() funksiyasi _id maydoni orqali bitta hujjatni topish uchun ishlatiladi . _id maydoni buyruqni yuborishdan oldin Sxema asosida chiqariladi.
+        const post = await Post.findById(postId).populate({//posdagi detallar populate qilindi masalan postni yozgan userni idisi va osha userni name email profileimage usernamelari shunday papulate qilib chaqirildi yani endi app/root/posts/postid/page.tsx fail ishlganda yani ichiga kirilganda postni shu datalariham bor bo'ladi va bu datalarni (postId) ichiga soladi yani findbyid faqat bitta parametr qabul qiladi faqat idga aloqador
             path: "user",
             model: User,//usermodeldan keletgan User yani userni hamma detallari bor shu detallardan keraklilarini selectga sovoldik bu model:User selectdan oldin yozilishi kerak chunki selectga malumotlar shu  Userdan keladi
             select: "name email profileImage _id username",
