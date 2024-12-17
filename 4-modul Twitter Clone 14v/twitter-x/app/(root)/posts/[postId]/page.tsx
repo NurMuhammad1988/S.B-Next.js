@@ -15,13 +15,13 @@ const Page = ({ params }: { params: { postId: string } }) => {
     const { data: session, status }: any = useSession();
     const [isLoading, setIsLoading] = useState(false);
     const [isFetchingComment, setIsFetchingComment] = useState(false);
-    const [post, setPost] = useState<IPost | null>(null);
-    const [comments, setComments] = useState<IPost[]>([]);
+    const [post, setPost] = useState<IPost | null>(null);//boshida null qaytaradi ishlatilganda esa yoki ipostni yokida nullni qaytaradi
+    const [comments, setComments] = useState<IPost[]>([]);//ipostni detallarini alohida massivga yani comments massiviga oladi
 
     const getPost = async () => {
         try {
-            setIsLoading(true);
-            const { data } = await axios.get(`/api/posts/${params.postId}`);
+            setIsLoading(true);//isloadingda jsxda loader2 iconi bor shu iconni ishlatish yoki ishlatmaslik uchun qilingan state
+            const { data } = await axios.get(`/api/posts/${params.postId}`);//api/posts/[postId]/route.ts da yozilgan postni get qiladigan local axios function bu holatdagi params api/posts/[postId]/route.ts da shu ko'rinishda yozilgan>>>> const { postId } = route.params; functionidan kelepti bu {postId} api/posts/[postId]/route.ts da populate qilingan>>>Post.findById(postId).populate yani Post modeldan userni datalarnini yani post yozgan userni qolgan datalarini User modeldan populate qiladi yani ovoladi shunda bu axios get qiladi nimani get qiladi api/posts/[postId]/route.ts da GET functionda post o'zgaruvchida yozilgan mongooseni  findbyid  metodi bilan Post modelga chaqirilgan userni dalnilarini get qiladi ([]<< bu degani nextda dynamic degani yani functiondagi datalarni dynamic qabul qilish yoki yaratish uchun alohida function yozish shartmas []shu ichiuda kelgan papkalardagi faillari yani route.ts bo'lsagina next-13 datalarni dynamic ishlatadi bu nextni qulayliklaridan biri hissoblanadi shunda bu failda api/posts/[postId]/route.ts dan GET functioni bilan userni datalari axios bilan dynamic get qilindi )
             setPost(data);
             setIsLoading(false);
         } catch (error) {
@@ -55,7 +55,7 @@ const Page = ({ params }: { params: { postId: string } }) => {
         <>
             <Header label="Posts" isBack />
 
-            {isLoading || status === "loading" ? (
+            {isLoading ||    status === "loading" ? (
                 <div className="flex justify-center items-center h-24">
                     <Loader2 className="animate-spin text-sky-500" />
                 </div>

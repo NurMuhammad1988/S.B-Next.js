@@ -8,7 +8,7 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
         await connectToDatabase();
         const { postId } = route.params;//postni idisini topib olish uchun
 
-        const post = await Post.findById(postId).populate({//posdagi detalllar populate qilindi masalan postni yozgan userni idisi va osha userni name email profileimage usernamelari shunday papulate qilib chaqirildi yani endi app/root/posts/postid/page.tsx fail ishlganda yani ichiga kirilganda postni shu datalariham bor bo'ladi
+        const post = await Post.findById(postId).populate({//posdagi detallar populate qilindi masalan postni yozgan userni idisi va osha userni name email profileimage usernamelari shunday papulate qilib chaqirildi yani endi app/root/posts/postid/page.tsx fail ishlganda yani ichiga kirilganda postni shu datalariham bor bo'ladi
             path: "user",
             model: User,//usermodeldan keletgan User yani userni hamma detallari bor shu detallardan keraklilarini selectga sovoldik bu model:User selectdan oldin yozilishi kerak chunki selectga malumotlar shu  Userdan keladi
             select: "name email profileImage _id username",

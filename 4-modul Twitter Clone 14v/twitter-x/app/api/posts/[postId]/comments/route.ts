@@ -23,9 +23,12 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
                 select: "name email profileImage _id username",
             },
 
-            7. Post detail 23:36 da qoldi
             options: {sort: {likes: -1 } },//mongoosedan keletgan populate functionini rodnoy parametri
         });
+
+        
+        // 7. Post detail 23:36 da qoldi
+
 
         const filteredComments = post.comments.map((item: any) => ({
             body: item.body,
