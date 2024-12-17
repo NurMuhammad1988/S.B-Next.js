@@ -6,29 +6,26 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, route: { params: { postId: string } }) {
+export async function GET(req: Request, route: { params: { postId: string } }) {//params ichida keladigan postIdni typi nima ekanligi aytib qo'yilishi shart
     try {
         await connectToDatabase();
         const { postId } = route.params;
 
         const { currentUser }: any = await getServerSession(authOptions);
 
-        const post = await Post.findById(postId).populate({
+        const post = await Post.findById(postId).populate({////posdagi detallar populate qilindi masalan postni yozgan userni idisi va osha userni name email profileimage usernamelari shunday papulate qilib chaqirildi yani endi app/root/posts/postid/page.tsx fail ishlganda yani ichiga kirilganda postni shu datalariham bor bo'ladi va bu datalarni (postId) ichiga soladi yani findbyid faqat bitta parametr qabul qiladi faqat idga aloqadoryani bu holatda commentni idsiga aloqador yani commentni yozgan userni idisiga aloqador
             path: "comments",
-            model: Comment,//comment modeldan kelepti
+            model: Comment, //comment modeldan kelepti
 
-            populate: {//mongoosedan keletgan populate functionini rodnoy parametri 
+            populate: {
+                //mongoosedan keletgan populate functionini rodnoy parametri
                 path: "user",
                 model: User,
                 select: "name email profileImage _id username",
             },
 
-            options: {sort: {likes: -1 } },//mongoosedan keletgan populate functionini rodnoy parametri
+            options: { sort: { likes: -1 } }, //mongoosedan keletgan populate functionini rodnoy parametri
         });
-
-        
-        // 7. Post detail 23:36 da qoldi
-
 
         const filteredComments = post.comments.map((item: any) => ({
             body: item.body,

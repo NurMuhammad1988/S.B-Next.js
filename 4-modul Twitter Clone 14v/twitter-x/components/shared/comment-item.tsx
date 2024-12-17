@@ -28,7 +28,7 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
             if (comment.hasLiked) { 
                 await axios.delete(`/api/comments`, {
                     data: {
-                        commentId: comment._id,
+                        commentId: comment._id,//CommentItem map qilib jo'natilgan faildan kelethan key props orqali axios to'g'ri ishlashi uchun data ichida distruptatsabilan chaqirildi
                     },
                 });
                 const updatedComments = comments.map((c) => {
