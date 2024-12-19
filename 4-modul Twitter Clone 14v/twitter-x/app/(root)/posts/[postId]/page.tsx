@@ -114,7 +114,8 @@ const Page = ({ params }: { params: { postId: string } }) => {
                         user={JSON.parse(JSON.stringify(session.currentUser))}
                         setPosts={setComments}
                         postId={params.postId}
-                        isComment
+                        isComment// is comment trueligi uchun endi "Reply" texti chiqadi
+                        
                     />
 
                     {isFetchingComment ? ( //isFetchingComment holati bo'lsa yani serverdan commentga aloqador datalar keletganda shu loader2 iconi ishleydi yokida datalar kelib bo'lsa va bu loader2 ishlashdan to'htasa yani false bo'lsa pastdagi map function ishlab comments o'zgaruvchi ichida get qilingan commentni datalari map qilinib commentitem componentiga jo'natilsin

@@ -13,7 +13,7 @@ const CommentSchema = new mongoose.Schema(
             ref: "Post",
         },
 
-        likes: [
+        likes: [//postga comment yozilganda commentgaham like berish uchun User modeldan like bosadigan userni olish uchun ref bu adress
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User",

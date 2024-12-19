@@ -11,7 +11,7 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
         await connectToDatabase();
         const { postId } = route.params;
 
-        const { currentUser }: any = await getServerSession(authOptions);
+        const { currentUser }: any = await getServerSession(authOptions);//yani joriy user 
 
         const post = await Post.findById(postId).populate({////posdagi detallar populate qilindi masalan postni yozgan userni idisi va osha userni name email profileimage usernamelari shunday papulate qilib chaqirildi yani endi app/root/posts/postid/page.tsx fail ishlganda yani ichiga kirilganda postni shu datalariham bor bo'ladi va bu datalarni (postId) ichiga soladi yani findbyid faqat bitta parametr qabul qiladi faqat idga aloqadoryani bu holatda commentni idsiga aloqador yani commentni yozgan userni idisiga aloqador
             path: "comments",
@@ -26,6 +26,7 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
 
             options: { sort: { likes: -1 } }, //mongoosedan keletgan populate functionini rodnoy parametri
         });
+
 
         const filteredComments = post.comments.map((item: any) => ({
             body: item.body,
