@@ -17,18 +17,22 @@ interface Props {
     comments: IPost[];
 }
 
+                                   
+  //bu CommentItem app/(root)/posts/[postId]/page.tsx da map qilingan //comment user setcomments comments qiymatlari map qilingan va bu qiymatlarham tsda interfaceda typi bilan chaqirilib ishlatilishi kerak 
+  //yani bu tsx failda app/(root)/posts/[postId]/page.tsx da qilingan datalar commentitemda render qilinib uiga beriladigan tsx fail
+
 const CommentItem = ({ comment, user, setComments, comments }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter()
 
-    const onLike = async () => {
+    const onLike = async () => {//comment like
         try {
             setIsLoading(true);
-            if (comment.hasLiked) { 
-                await axios.delete(`/api/comments`, {
+            if (comment.hasLiked) { //commentda ipost bor
+                await axios.delete(`/api/comments`, {//api/comments ichidagi route.tsdagi   DELETE functioniga boradigan so'rov
                     data: {
-                        commentId: comment._id,//CommentItem map qilib jo'natilgan faildan kelethan key props orqali axios to'g'ri ishlashi uchun data ichida distruptatsabilan chaqirildi
+                        commentId: comment._id,//CommentItem map qilib jo'natilgan faildan keletgan key props orqali axios to'g'ri ishlashi uchun data ichida distruptatsa bilan chaqirildi
                     },
                 });
                 const updatedComments = comments.map((c) => {
@@ -45,7 +49,6 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
                 setComments(updatedComments);
             } else {
                 await axios.put("/api/comments", { commentId: comment._id });
-
                 const updatedComments = comments.map((c) => {
                     if (c._id === comment._id) {
                         return {
@@ -67,10 +70,10 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
         }
     };
 
-    const onDelete = async () => {
+    const onDelete = async () => {//comment delete
         try {
             setIsLoading(true); 
-            await axios.delete(`/api/comments/${comment._id}`);
+            await axios.delete(`/api/comments/${comment._id}`);//api/comments/[commentId]/route.tsdagi DELETEga boradigan so'rov
             setComments((prev) => prev.filter((c) => c._id !== comment._id));
             setIsLoading(false);
         } catch (error) {
@@ -81,7 +84,9 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
 
     const goToProfile = (evt: any) => {
         evt.stopPropagation();
-        router.push(`/profile/${user._id}`);
+        // router.push(`/profile/${ user._id}`);//ustozni kodi
+        router.push(`/profile/${comment.user._id}`);//o'zimcha yozgan kodim yuqoridagi kodda yani commentda commentni yozgan userni emailiga yoki usernamesiga bosganda bosetgan userni profiliga KIRIB ketdi bu codda esa osha commenti yozgan userni profiliga kiriladi
+
     };
 
     return (
@@ -93,6 +98,7 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
                     </div>
                 </div>
             )}
+
 
             <div className="flex flex-row items-center gap-3" >
                 <Avatar onClick={goToProfile}>
@@ -120,6 +126,7 @@ const CommentItem = ({ comment, user, setComments, comments }: Props) => {
                                 )}
                         </span>
                     </div>
+                    
 
                     <div className="text-white mt-1">{comment?.body}</div>
 

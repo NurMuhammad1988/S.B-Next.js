@@ -36,11 +36,11 @@ const Page = ({ params }: { params: { postId: string } }) => {
             const { data } = await axios.get(
                 `/api/posts/${params.postId}/comments` ////api/posts/[postId]/comments/route.ts dan keladigan GET function yani bu axios get api/posts/[postId]/comments/route.ts da yozilgan GETni ishlatib beradi
             );
-            setComments(data); //ichida ipost massivga olingan setmonnetsga axios get qilgan datalarni qo'shish
-            setIsFetchingComment(false); //loaderni o'chirish
+            setComments(data); //ichida ipost massivga olingan setCommetsga axios get qilgan datalarni qo'shish
+            setIsFetchingComment(false); //loader2ni o'chirish
         } catch (error) {
             console.log(error);
-            setIsFetchingComment(false);
+            setIsFetchingComment(false);//errordan keyinham loader2 ni o'chirish kerak bo'lmasa error holatidaham aylanib turavoradi
         }
     };
 
@@ -128,8 +128,8 @@ const Page = ({ params }: { params: { postId: string } }) => {
                                 comment //serverdan getComments functionida get qilingan datalar map qilinib  commentItem componentiga jo'natildi
                             ) => (
                                 <CommentItem
-                                    comment={comment} //endi bu comment qiymati commentitem comonentdaham chaqirilib typoi aytib ishlatilishi shart qolgan qiymatlarham shu chunki bu ts
-                                    key={comment._id}
+                                    comment={comment} //endi bu comment qiymati commentitem comonentdaham chaqirilib typi aytib ishlatilishi shart qolgan qiymatlarham shu chunki bu ts
+                                    key={comment._id}//IPSOTDAN OLINGAN ID
                                     user={JSON.parse(
                                         JSON.stringify(session.currentUser) //serverdan keletgan userni json formatga o'girvolish
                                     )}

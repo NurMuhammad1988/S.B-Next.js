@@ -7,7 +7,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function POST(req: Request) {//comment craete qilish
     try {
         await connectToDatabase();
         const { body, postId, userId } = await req.json();
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
             user: userId,
         });
        const post = await Post.findByIdAndUpdate(postId, {
-            $push: { comments: comment._id },
+            $push: { comments: comment._id },//findByIdAndUpdate bilan Postga comment push qilindi yani commentda Comment model bor yani uiga keladigan yangi comment Comment modelga jo'natildi
         });
 
         await Notification.create({
@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 }
 
 
-export async function PUT(req: Request) {
+export async function PUT(req: Request) {//commentni ovolish
     try {
         await connectToDatabase();
         const { currentUser }: any = await getServerSession(authOptions);
@@ -66,14 +66,14 @@ export async function PUT(req: Request) {
     }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: Request) {//comment udalit qilish
     try {
         await connectToDatabase();
         const { currentUser }: any = await getServerSession(authOptions);
         const { commentId } = await req.json();
 
         await Comment.findByIdAndUpdate(commentId, {
-            $pull: { likes: currentUser._id },
+            $pull: { likes: currentUser._id },//pull commentni delete qilish uchun mongooseni findByIdAndUpdate functionini optioni
         });
 
         return NextResponse.json({ message: "Comment liked" });

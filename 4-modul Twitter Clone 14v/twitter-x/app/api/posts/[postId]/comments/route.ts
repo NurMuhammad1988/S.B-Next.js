@@ -24,11 +24,11 @@ export async function GET(req: Request, route: { params: { postId: string } }) {
                 select: "name email profileImage _id username",
             },
 
-            options: { sort: { likes: -1 } }, //mongoosedan keletgan populate functionini rodnoy parametri
+            options: { sort: { likes: -1 } }, //mongoosedan keletgan populate functionini rodnoy parametri//likesi bor commentni tepaga chiqaradi yani findById va populate function ichida yozilganda qo'shimcha optionlar shu populate va findById ichida options ichiga yozilishi kerak yani options shu functionlarni metodi typi hissoblanadi boshqa metodlarni pramoy yozib bo'meydi options qiymatini ichiga yozilsa ishlaydi
         });
 
 
-        const filteredComments = post.comments.map((item: any) => ({
+        const filteredComments = post.comments.map((item: any) => ({//filteredComments commentni dettallari // yani bu holatda yuqoridagi post o'zgaruvchi va ichida kelgan pathdagi commets map qilinib item nomli ichki o'zgaruvchiga olinib filteredComments nextresponse bilan json qilinib jo'natildi
             body: item.body,
             createdAt: item.createdAt,
             user: {

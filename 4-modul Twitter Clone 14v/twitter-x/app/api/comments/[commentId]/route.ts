@@ -11,7 +11,7 @@ export async function DELETE(
 
         const { commentId } = route.params;
 
-        await Comment.findByIdAndDelete(commentId);
+        await Comment.findByIdAndDelete(commentId);//commentni delete qilish
 
         return NextResponse.json({ message: "Comment deleted" });
     } catch (error) {

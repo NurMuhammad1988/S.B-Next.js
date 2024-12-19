@@ -31,7 +31,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
             setIsLoading(true); //isloadingni boshlang'ich qiymati false shu sabab so'rov jonatilayotganda true qilish kerak yani kutib turish kerak
 
             if (isComment) {
-                //agar boolean qiymatiga ega iscomment true bo'lsa axios bilan api papkani ichidagi comments papkani ichidagi route.ts papkaga so'rov jo'natadi so'rov uchun axiosga String typli body userni idisi va postni idisi kerak bu datalar api papkani ichidagi comments papkani ichidagi route.ts ichida aytib qo'yilgan
+                //agar boolean qiymatiga ega iscomment true bo'lsa axios bilan api papkani ichidagi comments papkani ichidagi route.ts papkaga so'rov jo'natadi so'rov uchun axiosga String typli body userni idisi va postni idisi kerak bu datalar api papkani ichidagi comments papkani ichidagi route.ts ichida aytib qo'yilgan//isComment true bo'lsa yani jsx ichidagi "Reply" texti ishlasa yani umuman olganda post bor bo'lsa va ichiga kirilsa shu if ishlaydi
                 const { data } = await axios.post("/api/comments", {//so'rov jo'natish//api/comments/route.ts/post nomli functionni oladi yani GET function ichidan oladi
                     body,//distruptatsa bilan axiosga type aytildi//comments.modelda typi aytilgan body
                     userId: user._id,//postni yozgan userni idisi olinadi
@@ -48,7 +48,7 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
 
                 setPosts((prev) => [newComment, ...prev]); // interface setPosts: Dispatch<SetStateAction<IPost[]>>; ichidagi ipostdan keladigan bo'sh object
             } else {
-                const { data } = await axios.post("/api/posts", {
+                const { data } = await axios.post("/api/posts", {//api/posts/route.tsga so'rov jo'natildi api/posts/route.ts ichida GET functionda filteredPosts o'zgaruvchi bor bu filteredPostsni vazifasi userni comment yozgan userni detallarni olish yani ifdagi so'rovda shu functonlarni ishlatetgan userni  commentlari get qilinadi agar commentlari bo'lmasa bu else so'rovda boshqa userlarni commentlari likeslari get qilinadi detallari bilan 
                     body,
                     userId: user._id,
                 });
@@ -95,8 +95,8 @@ const Form = ({ placeholder, user, setPosts, isComment, postId }: Props) => {
                         placeholder={placeholder}
                         disabled={isLoading} //boshlang'ich qiymati false yani disablet bo'lganda loading false bob turadi chunki texareyada hech qanday harakat sodir bo'lmayotgan bo'ladi
                         value={body} //bu valuedagi bodyda bo'sh massiv bor yani bu form qayerda chaqirib ishlatilsa ichida value chaqirilsa
-                        onChange={(e) => setBody(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && onSubmit()}
+                        onChange={(e) => setBody(e.target.value)}////postga comment yozish uchun kirilganda texareaga bosilganda yani  yozilganda aslida boshida " " yani bo'sh bo'lgan massivga shu texareyaga qilingan eventni yani yozilkgan qo'yilgan narsalarni saqlab turadigan state bu state " " yana faqat string qabul qiladi masalan rasm yoki video yoki gifmas faqat string qabul qiladi
+                        onKeyDown={(e) => e.key === "Enter" && onSubmit()}//postga comment yozish uchun kirilganda texareaga bosilganda yuqoridagionSubmit functioni ishlaydi yani eneterga teng bo'lganda
                     ></textarea>
 
                     <hr className="opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 transition" />
