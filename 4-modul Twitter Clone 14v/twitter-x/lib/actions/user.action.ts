@@ -5,15 +5,14 @@ import { connectToDatabase } from "../mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth-options";
 
-https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations  
-shu ssilkani yahshilab o'qi
+//bu fail actions papkani ichida yozildi user.action.ts bu papka nomi va fail nomi next jsda defaultmi???
 
-8. Profile darsi 4:44 da qoldi
+//next js actions/user.actions.ts fail next js shunda getUserById functionni server tarafda render qilinadi
 
-export async function getUserById(userId: string) {
+export async function getUserById(userId: string) {//default export qilingan
     try {
         await connectToDatabase();
-        const user = await User.findById(userId);
+        const user = await User.findById(userId);//mongoose functioni
 
         const { currentUser }: any = await getServerSession(authOptions);
 
