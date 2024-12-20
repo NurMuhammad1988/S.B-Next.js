@@ -282,8 +282,9 @@ import { Loader2 } from "lucide-react";
 import User from "../shared/user";
 import FollowUser from "../shared/follow-user";
 
+//bu componentham server side rendring component shu sabab eventlar terminaldagina ko'rinadi
+
 const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
-  
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [following, setFollowing] = useState<IUser[]>([]);
@@ -370,6 +371,10 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
             <div className="border-b-[1px] border-neutral-800 pb-4">
                 <div className="flex justify-end p-2">
                     {userId === user._id ? (
+                        //    <ProfileBio
+                        //user={JSON.parse(JSON.stringify(user))}
+                        //userId={JSON.parse(JSON.stringify(session)).currentUser._id}/>//yani userIdda joriy yanbi shu buttonni bosetgan user bor agar rostdan shu user bor bo'lsa yani current  user bo'lsa buttonda label={"Edit profile"}ni chiqar(yani current user bo'lsa) agar yo'q bo'lsa va user.isFollowing qiymati bo'lsa shu buttonda  label={"Unfollow"}ni chiqar yani label={"Unfollow"} chiqgan buttonga click bo'lsa onUnfollow ishlab label={"Unfollow"} chiqadi yani user  unfollow qiladi yoki shu buttonda label={"Follow"} ishlab current user follow qilishi mumkun
+
                         <Button
                             label={"Edit profile"}
                             secondary
