@@ -7,7 +7,7 @@ import { authOptions } from "@/lib/auth-options";
 import { getServerSession } from "next-auth";
 import React from "react";
 
-//server component chni "use client" yozilmagan
+//server component  "use client" yozilmagan
 
 //next 13 da umumiy tushuncha apilar apilarni dynamic qilish[]lar uchun route.ts default ishlatiladi yani defaul nomi shunday yani next tanib olishi uchun shunday nom berilishi shart
 
