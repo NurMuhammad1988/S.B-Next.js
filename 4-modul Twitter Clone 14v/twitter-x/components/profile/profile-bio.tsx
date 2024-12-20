@@ -373,7 +373,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                     {userId === user._id ? (
                         //    <ProfileBio
                         //user={JSON.parse(JSON.stringify(user))}
-                        //userId={JSON.parse(JSON.stringify(session)).currentUser._id}/>//yani userIdda joriy yanbi shu buttonni bosetgan user bor agar rostdan shu user bor bo'lsa yani current  user bo'lsa buttonda label={"Edit profile"}ni chiqar(yani current user bo'lsa) agar yo'q bo'lsa va user.isFollowing qiymati bo'lsa shu buttonda  label={"Unfollow"}ni chiqar yani label={"Unfollow"} chiqgan buttonga click bo'lsa onUnfollow ishlab label={"Unfollow"} chiqadi yani user  unfollow qiladi yoki shu buttonda label={"Follow"} ishlab current user follow qilishi mumkun
+                        //userId={JSON.parse(JSON.stringify(session)).currentUser._id}/>//yani userIdda joriy yanni shu buttonni bosetgan user bor agar rostdan shu user bor bo'lsa yani current  user bo'lsa buttonda label={"Edit profile"}ni chiqar(yani current user bo'lsa) agar yo'q bo'lsa va user.isFollowing qiymati bo'lsa shu buttonda  label={"Unfollow"}ni chiqar yani label={"Unfollow"} chiqgan buttonga click bo'lsa onUnfollow ishlab label={"Unfollow"} chiqadi yani user  unfollow qiladi yoki shu buttonda label={"Follow"} ishlab current user follow qilishi mumkun
 
                         <Button
                             label={"Edit profile"}
@@ -388,6 +388,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                             disabled={isLoading}
                         />
                     ) : (
+                        8. Profile 15 20 da qoldi
                         <Button
                             label={"Follow"}
                             onClick={onFollow}
