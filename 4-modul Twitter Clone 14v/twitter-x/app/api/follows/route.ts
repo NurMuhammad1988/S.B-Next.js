@@ -9,9 +9,9 @@ export async function PUT(req: Request) {
     try {
         await connectToDatabase();
         // const { currentUser }: any = await getServerSession(authOptions);
-        const { userId, currentUserId } = await req.json(); //profiledan keletgan userId
+        const { userId, currentUserId } = await req.json(); //profiledan keletgan userId//yani ro'yhatdan o'tgan userId emas profile bioga kirgan user id yani current usermas currentUserId esa push qilish uchun yani vga push qilish uchun
 
-        await User.findByIdAndUpdate(userId, {
+        await User.findByIdAndUpdate(userId, {//User modeldagi followersga current userni yani joriy userni push qilish yani userIdisiga qarab push qilinadi yani bu PUT functioni profile-bio.tsx failidagi follow buttoniga bosgan userni idisini olib yani mongooseni findByIdAndUpdate functioni orqali userni idisini olib User modeldagi followersga push qiladi yani jo'natadi User modelda esa followersda mongoose.Schema.Types.ObjectId, ref: "User"bor yani schema bilan userni idisni oladi shunda user followerslar qatoriga kiradi followers bo'ladi
             $push: { followers: currentUserId },
         });
 

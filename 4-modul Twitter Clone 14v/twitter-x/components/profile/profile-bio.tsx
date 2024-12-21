@@ -279,12 +279,11 @@ import useEditModal from "@/hooks/useEditModal";
 import Modal from "../ui/modal";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import User from "../shared/user";
 import FollowUser from "../shared/follow-user";
 
 //bu componentham server side rendring component shu sabab eventlar terminaldagina ko'rinadi
 
-const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
+const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hullas IUserni user parametr o'zgaruvchiga sovolindi IUserda esa _id bot shu _idni userIdga pastda sovolindi shu sabab userIdni ichida IUserdan kelgan userni _idsi bor buni typi esa string shu sabab userIdga string typi berildi
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [following, setFollowing] = useState<IUser[]>([]);
@@ -295,7 +294,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     const router = useRouter();
     const editModal = useEditModal();
 
-    const onFollow = async () => {
+    const onFollow = async () => {shu kodda qolgan
         try {
             setIsLoading(true);
             await axios.put("/api/follows", {
@@ -397,20 +396,23 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                 </div>
 
                 <div className="mt-8 px-4">
+
                     <div className="flex flex-col">
                         <p className="text-white text-2xl font-semibold">
                             {user.name}
+                            {/* userni namesi iuserdan kelepti */}
                         </p>
                     </div>
 
                     <p className="text-md text-neutral-500">
                         {user.username ? `@${user.username}` : user.email}
+                        {/* agar usewrni usernamesi bo'lsa oldiga @ qo'yiladi agar bo'lmasa faqat emaili chiqadi */}
                     </p>
 
                     <div className="flex flex-col mt-4">
                         <p className="text-white">{user.bio}</p>
                         <div className="flex gap-4 items-center">
-                            {user.location && (
+                            {user.location && (//userni biosida location bor bo'lsa shu icon IoLocationSharp va classlar ishlasin
                                 <div className="flex flex-row items-center gap-2 mt-4 text-sky-500">
                                     <IoLocationSharp size={24} />
                                     <p>{user.location}</p>
