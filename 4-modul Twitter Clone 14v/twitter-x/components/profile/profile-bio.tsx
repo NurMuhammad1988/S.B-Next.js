@@ -376,23 +376,22 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                         //userId={JSON.parse(JSON.stringify(session)).currentUser._id}/>//yani userIdda joriy yanni shu buttonni bosetgan user bor agar rostdan shu user bor bo'lsa yani current  user bo'lsa buttonda label={"Edit profile"}ni chiqar(yani current user bo'lsa) agar yo'q bo'lsa va user.isFollowing qiymati bo'lsa shu buttonda  label={"Unfollow"}ni chiqar yani label={"Unfollow"} chiqgan buttonga click bo'lsa onUnfollow ishlab label={"Unfollow"} chiqadi yani user  unfollow qiladi yoki shu buttonda label={"Follow"} ishlab current user follow qilishi mumkun
 
                         <Button
-                            label={"Edit profile"}
+                            label={"Edit profile"}//clik qilgan user current user bo'lsa ishlaydi clik qilinganda editModaldan kelgan onOpen ishlaydi//yani userni o'zini profileda ishlaydi
                             secondary
                             onClick={() => editModal.onOpen()}
                         />
                     ) : user.isFollowing ? (
                         <Button
-                            label={"Unfollow"}
+                            label={"Unfollow"}//clik qilgan user current user bo'lsa ishlaydi clik qilinganda user.isFollowing ishlab onUnfollow functionn ishlatadi
                             outline
                             onClick={onUnfollow}
                             disabled={isLoading}
                         />
                     ) : (
-                        8. Profile 15 20 da qoldi
                         <Button
-                            label={"Follow"}
+                            label={"Follow"}//clik qiladigan current user click qilganda onFollow functionga oboradi bu holatda isloading disablet bo'lib turadi yani qotib turadi
                             onClick={onFollow}
-                            disabled={isLoading}
+                            disabled={isLoading}//button componentda boolean qilingan disabled qiymati
                         />
                     )}
                 </div>

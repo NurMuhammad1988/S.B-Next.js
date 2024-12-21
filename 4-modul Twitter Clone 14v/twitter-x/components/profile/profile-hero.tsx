@@ -5,7 +5,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 //ProfileHero component server side rerndring bo'lgani uchun browserda obnavit qilinmasa styllarni yoki boshqa o'zgarishlarni ko'rib bo'lmaydi
 
-// 8. Profile 12: 44 chi minutda qoldi
 
 const ProfileHero = ({ user }: { user: IUser }) => {
     return (
