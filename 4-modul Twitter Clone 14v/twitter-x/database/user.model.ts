@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema(//constructor// mongoose serverdan datala
         location: String,
         following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],//following qilayotgan userni idsi bilan topib olish uchun
         followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],//followers qilayotgan userni idsi bilan topib olish uchun
+        //ref: "User" bu adres yaani qayse modeldan olish kerakligi yatildi
         hasNewNotifications: Boolean,//bu boolean chunki yangilik bor bo'lishixam yo'q bo'lishixam mumkun
         notifications: [//ko'p bo'lishi mumkun shu saba  array ichida chaqirdik
             {

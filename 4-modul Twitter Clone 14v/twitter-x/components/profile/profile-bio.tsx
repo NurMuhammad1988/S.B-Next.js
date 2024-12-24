@@ -294,14 +294,14 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
     const router = useRouter();
     const editModal = useEditModal();
 
-    const onFollow = async () => {shu kodda qolgan
+    const onFollow = async () => {// bu onfolllow function ishlaganda app/api/follows/rote.ts failidagi PUT functionga so'rov jo'natadi va u PUT function user.modelda yozilgan userni follow qiymatida object create qiladi yani userga joriy userdan bosilgan followni qo'shadi yani joriy userni idisini qo'shadi
         try {
             setIsLoading(true);
             await axios.put("/api/follows", {
                 userId: user._id,
                 currentUserId: userId,
             });
-            router.refresh();
+            router.refresh();//follow bosilgandan keyin o'zi aftamatik refresh bo'ladi va unfollow buttoni chiqib turadi agar joriy user hohlasa keyin unfolowni bosib folllow bo'lishni to'htatishi mumkun
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -406,7 +406,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
 
                     <p className="text-md text-neutral-500">
                         {user.username ? `@${user.username}` : user.email}
-                        {/* agar usewrni usernamesi bo'lsa oldiga @ qo'yiladi agar bo'lmasa faqat emaili chiqadi */}
+                        {/* agar useerni usernamesi bo'lsa oldiga @ qo'yiladi agar bo'lmasa faqat emaili chiqadi */}
                     </p>
 
                     <div className="flex flex-col mt-4">
