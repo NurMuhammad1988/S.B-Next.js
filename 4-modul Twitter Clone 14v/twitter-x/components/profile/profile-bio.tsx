@@ -309,7 +309,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
         }
     };
 
-    const onUnfollow = async () => {
+    const onUnfollow = async () => {8. Profile 29:53 da qoldi
         try {
             setIsLoading(true);
             await axios.delete("/api/follows", {
