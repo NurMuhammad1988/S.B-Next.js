@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import PostItem from "./post-item";
 
 interface Props {
-    userId: string;
-    user: IUser;
+    ///app/(root)/profile/[userId]/page.tsx failidan props bilan chaqiriladigan userId bilan user qiymatlarini nima ekanligi shu faildaham aytilishi kerak chunki shu failda ishlatiladi
+    userId: string;//userda keletgan IUser ichidagi useridni typi string
+    user: IUser;///app/(root)/profile/[userId]/page.tsx failida bu user qiymatiga  currentUser parametri berilgan
 }
 
 const PostFeed = ({ userId, user }: Props) => {
