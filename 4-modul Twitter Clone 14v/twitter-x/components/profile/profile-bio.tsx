@@ -298,8 +298,11 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
         try {
             setIsLoading(true);
             await axios.put("/api/follows", {
-                userId: user._id,
-                currentUserId: userId,
+                userId: user._id,//axios get qiladi userId nomli qiymat ichida userni idisni oladi
+                currentUserId: userId,//axios get qiladi currentuserid qiymat ichida userIdni oladi
+                //chunki api/follows/route.ts fail ichidagi  PUT functionda userId User modelda findByIdAndUpdate function bilan chaqirilgan yani ikkala userniham currnet userniham serverda turgan bu holatdagi harakatsiz userniham idlari shu userId ichida kelgan user._idda bor 
+
+                
             });
             router.refresh();//follow bosilgandan keyin o'zi aftamatik refresh bo'ladi va unfollow buttoni chiqib turadi agar joriy user hohlasa keyin unfolowni bosib folllow bo'lishni to'htatishi mumkun
             setIsLoading(false);
@@ -309,7 +312,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
         }
     };
 
-    const onUnfollow = async () => {8. Profile 29:53 da qoldi
+    const onUnfollow = async () => {
         try {
             setIsLoading(true);
             await axios.delete("/api/follows", {
@@ -390,7 +393,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
                         <Button
                             label={"Follow"}//clik qiladigan current user click qilganda onFollow functionga oboradi bu holatda isloading disablet bo'lib turadi yani qotib turadi
                             onClick={onFollow}
-                            disabled={isLoading}//button componentda boolean qilingan disabled qiymati
+                            disabled={isLoading}//button componentda boolean qilingan disabled qiymati vazifasi Fallow holatida turgan buttonga click bo'lganda onFollow function ishlagandan keyin yani  currentuser userga follow qilgandan keyin isloadingdagi false disablet holatiga o'tadi yani onFollowdagi so'rov bajarilgancha disablet yani qotib turadi
                         />
                     )}
                 </div>

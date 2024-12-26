@@ -43,7 +43,7 @@ export async function DELETE(req: Request) {
         const { userId, currentUserId } = await req.json(); //profiledan keletgan userId
 
         await User.findByIdAndUpdate(userId, {
-            $pull: { followers: currentUserId },
+            $pull: { followers: currentUserId },//pullni pushdan farqi pull udalit qiladi pull esa qo'shadi bu degani bu DELETE  functionida kelgan mongoosesini findByIdAndUpdate functionini pull qiymati user modeldagi userni folllowers bo'limiga borib turgan current userni idisni userIddan olib udalit qiladi qachin udalit qiladi profile-bio.tsx faildagi onUnfollow functionidagi axios so'rov bajarilganda onUnfollow functionga click bo'lganda sodir bo'ladi
         });
 
         await User.findByIdAndUpdate(currentUserId, {

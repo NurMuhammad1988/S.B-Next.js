@@ -13,12 +13,12 @@ import React from "react";
 
 //next 13 da umumiy tushuncha  (root) root yani ildiz papaklar uchun va [dynam,ic aidilar uchun] layoutga aloqador faillar uchun page.tsx yokida jsx yoziladi yani shudna next taniydi buni root va yoki ui ekanligini
 
-//bu server rendering (SSR) fail vqa imkon qadar kamroq narsani rendring qilish kerak chunki server qiynalib datalar sekin kelishi mumkun`
+//bu server rendering (SSR) fail va imkon qadar kamroq narsani rendring qilish kerak chunki server qiynalib datalar sekin kelishi mumkun`
 
 const Page = async ({ params }: { params: { userId: string } }) => {
     const session: any = await getServerSession(authOptions);
     const user = await getUserById(params.userId);//lib/actions/user.action.tsdan keletgan function yani server side rendring faildan keletgan function//(params.userId) params bilan shu functiondan chaqirildi
-    console.log(user);//serverda yani faqat terminalda ko'rinadi logda browserda ko'rinmeydi chunki userni next jsni actions papkasi ichida user.actions.tsdagi getUserById functioni bilan chaqirdik bu hafsiz hissoblanadi
+    console.log(user);//serverda yani faqat terminalda ko'rinadi logda browserda ko'rinmeydi chunki userni next jsni actions papkasi ichida user.actions.tsdagi getUserById functioni bilan chaqirdik bu hafsiz hissoblanadi yani browserga hujum bo'lsa browserda userni datalari yo'q bo'ladi hack qilinmeydi
     //yani user contentni ko'rishdan oldim so'rov yuborish shusabab loaderham kerakemas//
 
     return (
