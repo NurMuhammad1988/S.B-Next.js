@@ -11,6 +11,9 @@ interface Props {
     onChange: (profileImage: string) => void;
 }
 
+//userni profileni rasmini o'zgartirish
+
+
 const ProfileImageUpload = ({ onChange, profileImage }: Props) => {
     const [image, setImage] = useState(profileImage);
 

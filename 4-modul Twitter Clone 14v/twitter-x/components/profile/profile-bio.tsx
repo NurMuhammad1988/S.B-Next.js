@@ -382,7 +382,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                         <Button
                             label={"Edit profile"} //clik qilgan user current user bo'lsa ishlaydi clik qilinganda editModaldan kelgan onOpen ishlaydi//yani userni o'zini profileda ishlaydi
                             secondary
-                            onClick={() => editModal.onOpen()}
+                            onClick={() => editModal.onOpen()}//bu holatda edit profile textli buttonga click bo'ganda editModal functionda chaqirilgan useEditModalda zustandda qilingan functionni onOpen functioni ishlaydi va isOpenni true qiladi yani shunda edit-modal.tsx da return qilingan Modal componentda shu holatda chaiqirilgan isOpen={editModal.isOpen} isOpen ishga tushadi va profileni edit qilish componentiga otvoradi buni zustand bajaradi//bu edit profile textli buttonga clik qilinganda onOpen sabab CoverImageUpload va ProfileImageUpload compnentlarga otvoradi//onOpen ichida isOpenni ture qilish bor va bu onOpen edit-modeal.tsxda Model componentda chaqirilgan shunda buttonga click bo'ganda editModal function ichida kelgan useEditModal ichidagi onOpen edit-modal.tsxdagi Model componentda jsx ichida chaqirilgan Model.tsxni ochadi
                         />
                     ) : user.isFollowing ? (
                         <Button

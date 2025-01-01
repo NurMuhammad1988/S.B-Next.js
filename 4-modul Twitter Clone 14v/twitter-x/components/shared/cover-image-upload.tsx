@@ -11,6 +11,8 @@ interface Props {
     onChange: (coverImage: string) => void;
 }
 
+//userni profileni orqa fonidagi rasimini o'zgartirish
+
 const CoverImageUpload = ({ coverImage, onChange }: Props) => {
     const [image, setImage] = useState(coverImage);
 
@@ -20,8 +22,6 @@ const CoverImageUpload = ({ coverImage, onChange }: Props) => {
         },
         [onChange]
     );
-
- 
 
     const handleDrop = useCallback(
         (files: any) => {
