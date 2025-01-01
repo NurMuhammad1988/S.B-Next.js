@@ -370,6 +370,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
     return (
         <>
             <EditModal user={user} />
+            {/* profile-biodda chaqirilgan bu EditModal.tsx bu joyda chaqirilgani sababi jsx ichida bo'lsa bo'ldi yani profile-bio component ishlaganda bu editmodalham ishlaydi yani kerakli joyga kelib turadi */}
             <div className="border-b-[1px] border-neutral-800 pb-4">
                 <div className="flex justify-end p-2">
                     {userId === user._id ? (

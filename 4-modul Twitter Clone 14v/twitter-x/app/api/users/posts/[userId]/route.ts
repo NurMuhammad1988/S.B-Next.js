@@ -5,6 +5,7 @@ import { connectToDatabase } from "@/lib/mongoose";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
+//post-feed.tsxda axios bilan chaqiriladigan GET so'rov api
 export async function GET(req: Request, route: {params: {userId: string}}) {
     try {
         await connectToDatabase();

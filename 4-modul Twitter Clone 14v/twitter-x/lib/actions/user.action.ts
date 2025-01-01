@@ -14,7 +14,7 @@ export async function getUserById(userId: string) {//default export qilingan
         await connectToDatabase();
         const user = await User.findById(userId);//mongoose functioni
 
-        const { currentUser }: any = await getServerSession(authOptions);
+        const { currentUser }: any = await getServerSession(authOptions);//endi currentUserda getServerSession sabab (currentUser._id) userid bor yani currentUserda endi isFollowing qiymatdagi _id bor /yani user o'zgaruvchida user.modeldan findByIdfunctioni bilan userlarni idlari chaqirilgan endi user o'zgaruvchida hamma useridlar bor va shu user o'zgaruvchi filteredUserda isFollowing nomli qiymatda chaqirilib ichiga currentUser nomli parametr berilib _idga yani obshi userlarni idisga teng qilindi endi currentUserda idlar bor
 
         const filteredUser = {
             _id: user._id,
