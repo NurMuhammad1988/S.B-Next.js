@@ -283,7 +283,8 @@ import FollowUser from "../shared/follow-user";
 
 //bu componentham server side rendring component shu sabab eventlar terminaldagina ko'rinadi
 
-const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hullas IUserni user parametr o'zgaruvchiga sovolindi IUserda esa _id bot shu _idni userIdga pastda sovolindi shu sabab userIdni ichida IUserdan kelgan userni _idsi bor buni typi esa string shu sabab userIdga string typi berildi
+const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
+    //hullas IUserni user parametr o'zgaruvchiga sovolindi IUserda esa _id bot shu _idni userIdga pastda sovolindi shu sabab userIdni ichida IUserdan kelgan userni _idsi bor buni typi esa string shu sabab userIdga string typi berildi
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [following, setFollowing] = useState<IUser[]>([]);
@@ -294,17 +295,16 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
     const router = useRouter();
     const editModal = useEditModal();
 
-    const onFollow = async () => {// bu onfolllow function ishlaganda app/api/follows/rote.ts failidagi PUT functionga so'rov jo'natadi va u PUT function user.modelda yozilgan userni follow qiymatida object create qiladi yani userga joriy userdan bosilgan followni qo'shadi yani joriy userni idisini qo'shadi
+    const onFollow = async () => {
+        // bu onfolllow function ishlaganda app/api/follows/rote.ts failidagi PUT functionga so'rov jo'natadi va u PUT function user.modelda yozilgan userni follow qiymatida object create qiladi yani userga joriy userdan bosilgan followni qo'shadi yani joriy userni idisini qo'shadi
         try {
             setIsLoading(true);
             await axios.put("/api/follows", {
-                userId: user._id,//axios get qiladi userId nomli qiymat ichida userni idisni oladi
-                currentUserId: userId,//axios get qiladi currentuserid qiymat ichida userIdni oladi
-                //chunki api/follows/route.ts fail ichidagi  PUT functionda userId User modelda findByIdAndUpdate function bilan chaqirilgan yani ikkala userniham currnet userniham serverda turgan bu holatdagi harakatsiz userniham idlari shu userId ichida kelgan user._idda bor 
-
-                
+                userId: user._id, //axios get qiladi userId nomli qiymat ichida userni idisni oladi
+                currentUserId: userId, //axios get qiladi currentuserid qiymat ichida userIdni oladi
+                //chunki api/follows/route.ts fail ichidagi  PUT functionda userId User modelda findByIdAndUpdate function bilan chaqirilgan yani ikkala userniham currnet userniham serverda turgan bu holatdagi harakatsiz userniham idlari shu userId ichida kelgan user._idda bor
             });
-            router.refresh();//follow bosilgandan keyin o'zi aftamatik refresh bo'ladi va unfollow buttoni chiqib turadi agar joriy user hohlasa keyin unfolowni bosib folllow bo'lishni to'htatishi mumkun
+            router.refresh(); //follow bosilgandan keyin o'zi aftamatik refresh bo'ladi va unfollow buttoni chiqib turadi agar joriy user hohlasa keyin unfolowni bosib folllow bo'lishni to'htatishi mumkun
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -370,6 +370,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
     return (
         <>
             <EditModal user={user} />
+            {/* edit modal endi user qabul qiladi */}
             {/* profile-biodda chaqirilgan bu EditModal.tsx bu joyda chaqirilgani sababi jsx ichida bo'lsa bo'ldi yani profile-bio component ishlaganda bu editmodalham ishlaydi yani kerakli joyga kelib turadi */}
             <div className="border-b-[1px] border-neutral-800 pb-4">
                 <div className="flex justify-end p-2">
@@ -379,28 +380,27 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
                         //userId={JSON.parse(JSON.stringify(session)).currentUser._id}/>//yani userIdda joriy yanni shu buttonni bosetgan user bor agar rostdan shu user bor bo'lsa yani current  user bo'lsa buttonda label={"Edit profile"}ni chiqar(yani current user bo'lsa) agar yo'q bo'lsa va user.isFollowing qiymati bo'lsa shu buttonda  label={"Unfollow"}ni chiqar yani label={"Unfollow"} chiqgan buttonga click bo'lsa onUnfollow ishlab label={"Unfollow"} chiqadi yani user  unfollow qiladi yoki shu buttonda label={"Follow"} ishlab current user follow qilishi mumkun
 
                         <Button
-                            label={"Edit profile"}//clik qilgan user current user bo'lsa ishlaydi clik qilinganda editModaldan kelgan onOpen ishlaydi//yani userni o'zini profileda ishlaydi
+                            label={"Edit profile"} //clik qilgan user current user bo'lsa ishlaydi clik qilinganda editModaldan kelgan onOpen ishlaydi//yani userni o'zini profileda ishlaydi
                             secondary
                             onClick={() => editModal.onOpen()}
                         />
                     ) : user.isFollowing ? (
                         <Button
-                            label={"Unfollow"}//clik qilgan user current user bo'lsa ishlaydi clik qilinganda user.isFollowing ishlab onUnfollow functionn ishlatadi
+                            label={"Unfollow"} //clik qilgan user current user bo'lsa ishlaydi clik qilinganda user.isFollowing ishlab onUnfollow functionn ishlatadi
                             outline
                             onClick={onUnfollow}
                             disabled={isLoading}
                         />
                     ) : (
                         <Button
-                            label={"Follow"}//clik qiladigan current user click qilganda onFollow functionga oboradi bu holatda isloading disablet bo'lib turadi yani qotib turadi
+                            label={"Follow"} //clik qiladigan current user click qilganda onFollow functionga oboradi bu holatda isloading disablet bo'lib turadi yani qotib turadi
                             onClick={onFollow}
-                            disabled={isLoading}//button componentda boolean qilingan disabled qiymati vazifasi Fallow holatida turgan buttonga click bo'lganda onFollow function ishlagandan keyin yani  currentuser userga follow qilgandan keyin isloadingdagi false disablet holatiga o'tadi yani onFollowdagi so'rov bajarilgancha disablet yani qotib turadi
+                            disabled={isLoading} //button componentda boolean qilingan disabled qiymati vazifasi Fallow holatida turgan buttonga click bo'lganda onFollow function ishlagandan keyin yani  currentuser userga follow qilgandan keyin isloadingdagi false disablet holatiga o'tadi yani onFollowdagi so'rov bajarilgancha disablet yani qotib turadi
                         />
                     )}
                 </div>
 
                 <div className="mt-8 px-4">
-
                     <div className="flex flex-col">
                         <p className="text-white text-2xl font-semibold">
                             {user.name}
@@ -416,7 +416,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {//hul
                     <div className="flex flex-col mt-4">
                         <p className="text-white">{user.bio}</p>
                         <div className="flex gap-4 items-center">
-                            {user.location && (//userni biosida location bor bo'lsa shu icon IoLocationSharp va classlar ishlasin
+                            {user.location && ( //userni biosida location bor bo'lsa shu icon IoLocationSharp va classlar ishlasin
                                 <div className="flex flex-row items-center gap-2 mt-4 text-sky-500">
                                     <IoLocationSharp size={24} />
                                     <p>{user.location}</p>
