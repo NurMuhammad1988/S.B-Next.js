@@ -44,7 +44,6 @@ const EditModal = ({ user }: Props) => {
             setIsLoading(false);
         }
     };
-    9. Edit profile modal 19:17 da qoldi
     const bodyContent = //alohida function ichida jsx yozish yani bu holatda tsx
     //Edit profile buttoniga bosilganda isOpen true bo'lib shu component ishga tushadi va birinchi coverimage bilan userimageni edit qilish va EditForm.tsx componenti chiqib user biolarini datalarini edit qilish imkoniyatlari ochib undan keyin   pastdagi ikkinchi jsx yani return ichidagi modal.tsx component ishga tushadi va user hohlasa biolarini o'zgartiradi yoki create qiladi
         (

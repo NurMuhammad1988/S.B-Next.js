@@ -27,7 +27,7 @@ export const loginSchema = z.object({
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const userSchema = z.object({
+export const userSchema = z.object({//bu userSchema edit-form.tsx failida userni biolarni user tomondan o'zgartirish uchun yozilgan yuqoridagi boshqa schemalardagi kommentni o'qi
     name: z.string().min(3),
     username: z.string().min(3),
     bio: z.string().min(3),

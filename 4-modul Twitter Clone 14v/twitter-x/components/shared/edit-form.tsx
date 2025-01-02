@@ -28,15 +28,17 @@ const EditForm = ({ user }: Props) => {
     const router = useRouter();
     const editModal = useEditModal();
 
-    const form = useForm<z.infer<typeof userSchema>>({
+    const form = useForm<z.infer<typeof userSchema>>({//bu userSchema lib papkani ichidagi validation.ts faildidan chaqirb ishlatilepti
         resolver: zodResolver(userSchema),
         defaultValues: {
-            name: user.name || "",
+            name: user.name || "",//agar name bor bosa nameni qo'y yokida ""<< bo'sh string bosin shunda yangi user bu formda o'ziga name craete qilishi mumkun
             username: user.username || "",
-            bio: user.bio || "",
+            bio: user.bio || "",//agar bio bor bo'sa bioni qo'y yo'q bosa"<< bosh tursin
             location: user.location || "",
         },
     });
+
+    9. Edit profile modal 21:58 chi minutda qoldi
 
     const { isSubmitting } = form.formState;
 
