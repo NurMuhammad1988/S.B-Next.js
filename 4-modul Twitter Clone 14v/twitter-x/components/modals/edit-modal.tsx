@@ -25,7 +25,7 @@ const EditModal = ({ user }: Props) => {
 
     useEffect(() => {
         setCoverImage(user.coverImage), setProfileImage(user.profileImage);
-    }, [user]);
+    }, [user]);//qachonki user qiymatida kelgan IUserdan kelgan user bor bo'lsagina  bu useeffect ishga tushadi va setCoverImage state parametrida asli bo'sh string bo'lgan coverImage statega userni yani umumiy shu joriy userni sovoladi //setProfileImageham huddi yuqoridagiday ishlaydi// vabu componentda user kelib useEffect ishlaganda pastdagi ikkala jsx faillar yani bodyContent va returnlar ishga tushadi
 
     const handleImageUpload = async (
         image: string,
@@ -44,8 +44,9 @@ const EditModal = ({ user }: Props) => {
             setIsLoading(false);
         }
     };
-
+    9. Edit profile modal 19:17 da qoldi
     const bodyContent = //alohida function ichida jsx yozish yani bu holatda tsx
+    //Edit profile buttoniga bosilganda isOpen true bo'lib shu component ishga tushadi va birinchi coverimage bilan userimageni edit qilish va EditForm.tsx componenti chiqib user biolarini datalarini edit qilish imkoniyatlari ochib undan keyin   pastdagi ikkinchi jsx yani return ichidagi modal.tsx component ishga tushadi va user hohlasa biolarini o'zgartiradi yoki create qiladi
         (
             <>
                 {isLoading && (
@@ -56,13 +57,13 @@ const EditModal = ({ user }: Props) => {
                 <CoverImageUpload
                     //userni profileni orqa fonidagi rasimini o'zgartirish uchun component
                     coverImage={coverImage}
-                    onChange={(image) => handleImageUpload(image, false)}
+                    onChange={(image) => handleImageUpload(image, false)}//boshida image false bo'ladi
                 />
                 <ProfileImageUpload
                     //userni profileni rasmini o'zgartirish uchun component
 
                     profileImage={profileImage}
-                    onChange={(image) => handleImageUpload(image, true)}
+                    onChange={(image) => handleImageUpload(image, true)}//ProfileImageUploadda tru ekanligini sababi user google yoki githubda account create qilganda agar github yoki google accountini profilimagesi bor bo'lsa shuni qo'yadi 
                 />
 
                 <EditForm user={user} />
@@ -72,7 +73,7 @@ const EditModal = ({ user }: Props) => {
     return (
         <Modal
             body={bodyContent}
-            isOpen={editModal.isOpen}//modalda isOpen qiymati bor va bu boolean qiymat bu boolean qiymat va editModal ichida kelganda boshlang'ich holatda false bob turipti va bu fasle qiymat profile-bio.tsxdagi edit profile buttoniga click bo'lganda truega o'zgaradi yani isOpenni true qilib bu modal compnentni ochadigan buyruq profile-biodagi eidt profile buttonida onOpen functioni bilan buyurilgan//onClosedaham huddi shu faqat bu safar isOpenni false qilib modalni yopadi
+            isOpen={editModal.isOpen} //bu modal componentda isOpen qiymati bor va bu boolean qiymat bu boolean qiymat va editModal ichida kelganda boshlang'ich holatda false bob turipti va bu fasle qiymat profile-bio.tsxdagi edit profile buttoniga click bo'lganda truega o'zgaradi yani isOpenni true qilib bu modal compnentni ochadigan buyruq profile-biodagi eidt profile buttonida onOpen functioni bilan buyurilgan//onClosedaham huddi shu faqat bu safar isOpenni false qilib modalni yopadi va bu modaldagi onClosega X rasmi berilgan yani x ni bosgnada onclose ishlab modalni yopadi
             onClose={editModal.onClose}
             isEditing
         />

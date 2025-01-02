@@ -12,7 +12,7 @@ export async function PUT(req: Request, route: { params: { userId: string } }) {
         const type = searchParams.get("type");
 
         if (type === "updateImage") {
-            await User.findByIdAndUpdate(userId, body, { new: true });
+            await User.findByIdAndUpdate(userId, body, { new: true });//yani bodyda nima bor bo'lsa o'sha o'zgaradi bodyda esa profileimage bor bu so'rov edit-modal.tsxda yozilgan handleImageUpload function ishlaganda bajariladigan PUT so'rov!!!!!!!
 
             return NextResponse.json({ message: "User updated successfully" });
         } else if (type === "updateFields") {
