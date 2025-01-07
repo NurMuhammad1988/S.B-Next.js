@@ -19,7 +19,7 @@ export async function PUT(req: Request) {
             $push: { following: userId },
         });
 
-        await Notification.create({//Notification modelda object yaseydi Notification modelda ref bilan yo'naltirilhan User modelga userIdni va bodyga "Someone followed you!" textinixreate qiladi //bu create mongooseni functioni yani bu PUT function profile bio.tsx failida jsx icida local axios bilan chaqirilib ishlatilganda yani har safar ishlatilganda masalan userId yani currentuserid emas umumiy user.modeldan kelgan userId profile-bio.tsx failida yozilgan onfollow functionni ishlatganda har safar bu create ishlab bodyga "Someone followed you!" textini chiqaradi bodyni typi esa string object 
+        await Notification.create({//Notification modelda object yaseydi Notification modelda ref bilan yo'naltirilhan User modelga userIdni va bodyga "Someone followed you!" textini create qiladi //bu create mongooseni functioni yani bu PUT function profile bio.tsx failida jsx icida local axios bilan chaqirilib ishlatilganda yani har safar ishlatilganda masalan userId yani currentuserid emas umumiy user.modeldan kelgan userId profile-bio.tsx failida yozilgan onfollow functionni ishlatganda har safar bu create ishlab bodyga "Someone followed you!" textini chiqaradi bodyni typi esa string object 
             user: userId,
             body: "Someone followed you!",
         });

@@ -312,10 +312,10 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
         }
     };
 
-    const onUnfollow = async () => {
+    const onUnfollow = async () => {//??????????????????????????????
         try {
             setIsLoading(true);
-            await axios.delete("/api/follows", {
+            await axios.delete("/api/follows", {//yuqoridagi onFollow functionda chaqirilgan axiosda put metodi ishlatldi lekin axiosni typlari bor data ishlatilmadi bu joyda esa data ishlatildi chunki??????????????????????????????
                 data: { userId: user._id, currentUserId: userId },
             });
             router.refresh();
