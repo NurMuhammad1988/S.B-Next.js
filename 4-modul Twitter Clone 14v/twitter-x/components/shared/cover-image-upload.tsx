@@ -6,7 +6,7 @@ import Image from "next/image";
 import { MdEdit } from "react-icons/md";
 import { IoIosCloudDownload } from "react-icons/io";
 
-//edit profile buttoni bosilganda  birinchi shu component chiqadi
+//edit profile buttoni bosilganda  birinchi shu component chiqadi yanicover image orqa fon imagesi
 
 interface Props {
     coverImage: string;
@@ -72,7 +72,7 @@ const CoverImageUpload = ({ coverImage, onChange }: Props) => {
                     <div className="absolute inset-0 flex justify-center items-center">
                         <MdEdit size={24} className="text-white" />
                         {/* qalamcha icon */}
-                        {/* agar user profileimageni o'zgartirmoqchi bo'lsa shu icon irqali o'zgartiradi bu getRootProps chaqirilgan ona divni ichida bo'lgani sababli useDropzone kutubhonsidan kelgan getRootProps functioni sabab ishlayveradi qanday useDropzone kutubhonasi rasim yuklashlar uchun kerak bo'ladigan kutubhona */}
+                        {/* agar user profileimageni o'zgartirmoqchi bo'lsa shu icon orqali o'zgartiradi bu getRootProps chaqirilgan ona divni ichida bo'lgani sababli useDropzone kutubhonsidan kelgan getRootProps functioni sabab ishlayveradi qanday useDropzone kutubhonasi rasim yuklashlar uchun kerak bo'ladigan kutubhona */}
                     </div>
                 </div>
             ) : (

@@ -30,7 +30,8 @@ export default function Modal({
             {/* open va onOpenChange  bu Dialog cpmponenti kodlarida dynamic berib qo'yilgan qiymat yani dialog uchun kerak bo'alidan atanalarga moslab nom berilgan qiymat chaqiri shunday ishlatish mumkun yokida false bo'lib turadi}
             {/* bu modal componentda shadcndan chaqirilgan dialog componentlar chaqirilib ishlatildi va dynamic qiymatlar berildi bu qiymatlar aslida bo'sh faqat typi berib qo'yilgan holos va modals papkani ichidagi register-modal.tsx failiga chaqirilib ishlatildi  */}
             <DialogContent
-                className={cn(
+    
+                className={cn(//bu ui.shadcn ni configi bu cn esa ichida classlarga hodisa ilsa bo'ladigan funksiya va bu idediting boolean agar bu Modal component chaqirilgan joyda isediting qiymati bor bo'lsa  shu >>"h-[80vh] overflow-x-hidden overflow-y-auto" shu scroll ishlaydi
                     "bg-black p-1 ",
                     isEditing && "h-[80vh] overflow-x-hidden overflow-y-auto"
                 )}

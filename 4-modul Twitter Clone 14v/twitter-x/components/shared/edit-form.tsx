@@ -28,23 +28,24 @@ const EditForm = ({ user }: Props) => {
     const router = useRouter();
     const editModal = useEditModal();
 
-    const form = useForm<z.infer<typeof userSchema>>({//bu userSchema lib papkani ichidagi validation.ts faildidan chaqirb ishlatilepti
-        resolver: zodResolver(userSchema),
+    const form = useForm<z.infer<typeof userSchema>>({//bu userSchema lib papkani ichidagi validation.ts faildidan chaqirb ishlatilepti//z bu xoddan keleygan function typida validation.tsdan kelgan userschema bor 
+        resolver: zodResolver(userSchema),//zodni functionlari 
         defaultValues: {
-            name: user.name || "",//agar name bor bosa nameni qo'y yokida ""<< bo'sh string bosin shunda yangi user bu formda o'ziga name craete qilishi mumkun
+            name: user.name || "",//agar name bor bosa nameni qo'y yokida ""<< bo'sh string bosin shunda yangi user bu formda o'ziga name craete qilishi mumkun agar qilmasaham pustoy turadi//masalan google yoki github bilan account create qilgan bo'sa usernamesi bo'lmaydi shu sabab agar bo'lmasa bo'sh string yokida user accountni noldan create qilgandagi qo'ygan usernamesini chiqaradi
             username: user.username || "",
             bio: user.bio || "",//agar bio bor bo'sa bioni qo'y yo'q bosa"<< bosh tursin
             location: user.location || "",
         },
     });
 
-    9. Edit profile modal 21:58 chi minutda qoldi
 
     const { isSubmitting } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof userSchema>) => {
         try {
             await axios.put(`/api/users/${user._id}?type=updateFields`, values);
+        //api/users/[userId]/route.ts failiga boradigan so'rov type=updateFields<<bu qery so'rov agar api/users/[userId]/route.tsga bu so'rov borganda shu type=updateFields qery texti sabab
+
             router.refresh();
             editModal.onClose();
         } catch (error: any) {

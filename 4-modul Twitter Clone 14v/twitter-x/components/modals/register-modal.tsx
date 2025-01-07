@@ -122,7 +122,7 @@ function RegisterStep1({
         }
     }
 
-    const { isSubmitting } = form.formState; //isSubmitting react hook formdan keladi boolean qiymat qaytaradi ichdagi formState esa  isLoading: boolean;disabled: boolean; va yana ko'plab qiymatlarni ts bilanq aytaradi bular RegisterStep1 funksiyani ichida yozilepti yani RegisterStep1 funskiya ishlaganda bu react hook formni typlariham ishlaydi bu typlar react hook formda reactda root papkada ts bilan yozib qo'yilgan
+    const { isSubmitting } = form.formState; //isSubmitting react hook formdan keladi boolean qiymat qaytaradi ichdagi formState esa  isLoading: boolean;disabled: boolean; va yana ko'plab qiymatlarni ts bilan qaytaradi bular RegisterStep1 funksiyani ichida yozilepti yani RegisterStep1 funskiya ishlaganda bu react hook formni typlariham ishlaydi bu typlar react hook formda reactda root papkada ts bilan yozib qo'yilgan
 
     return (
         <Form {...form}>

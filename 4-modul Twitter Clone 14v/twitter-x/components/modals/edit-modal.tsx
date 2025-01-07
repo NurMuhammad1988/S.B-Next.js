@@ -25,7 +25,7 @@ const EditModal = ({ user }: Props) => {
 
     useEffect(() => {
         setCoverImage(user.coverImage), setProfileImage(user.profileImage);
-    }, [user]);//qachonki user qiymatida kelgan IUserdan kelgan user bor bo'lsagina  bu useeffect ishga tushadi va setCoverImage state parametrida asli bo'sh string bo'lgan coverImage statega userni yani umumiy shu joriy userni sovoladi //setProfileImageham huddi yuqoridagiday ishlaydi// vabu componentda user kelib useEffect ishlaganda pastdagi ikkala jsx faillar yani bodyContent va returnlar ishga tushadi
+    }, [user]);//qachonki user qiymatida kelgan IUserdan kelgan user bor bo'lsagina  bu useeffect ishga tushadi va setCoverImage state parametrida asli bo'sh string bo'lgan coverImage statega userni yani umumiy shu joriy userni sovoladi //setProfileImageham huddi yuqoridagiday ishlaydi// va  bu componentda user kelib useEffect ishlaganda pastdagi ikkala jsx faillar yani bodyContent va returnlar ishga tushadi
 
     const handleImageUpload = async (
         image: string,
@@ -35,17 +35,17 @@ const EditModal = ({ user }: Props) => {
 
         try {
             setIsLoading(true);
-            await axios.put(`/api/users/${user._id}?type=updateImage`, {
+            await axios.put(`/api/users/${user._id}?type=updateImage`, {//bu put so'rov borgan api typida agar updateImage texti bo'lmasaham ? shu so'rov sabab hato chiqmaydi //bu umumiy image so'rov coverimagefaham profileimageham ishlaydigan so'rov
                 [isProfileImage ? "profileImage" : "coverImage"]: image,
             });
-            router.refresh();
-            setIsLoading(false);
+            router.refresh();//yuqoridagi so'rov bajarib bo'lingandan keyin faqat shu event sodir bo'lgan qisimgina refresh bo'ladi
+            setIsLoading(false);//loader to'htatiladi
         } catch (error) {
-            setIsLoading(false);
+            setIsLoading(false);//error bo'lsaham loader to'htatiladi
         }
     };
     const bodyContent = //alohida function ichida jsx yozish yani bu holatda tsx
-    //Edit profile buttoniga bosilganda isOpen true bo'lib shu component ishga tushadi va birinchi coverimage bilan userimageni edit qilish va EditForm.tsx componenti chiqib user biolarini datalarini edit qilish imkoniyatlari ochib undan keyin   pastdagi ikkinchi jsx yani return ichidagi modal.tsx component ishga tushadi va user hohlasa biolarini o'zgartiradi yoki create qiladi
+    //Edit profile buttoniga bosilganda isOpen true bo'lib shu component ishga tushadi nima uchun ishga tushadi chunki chunki profile-bio.tsxda jsx ichida boshida <EditModal user={user} /> chaqirilgan yani shu component chaqirilgan bu component ishlaganda esa birinchi shu bodyConten jsx failli function ishga tushasdi  va birinchi coverimage bilan userimageni edit qilish va EditForm.tsx componenti chiqib user biolarini datalarini edit qilish imkoniyatlari ochib undan keyin   pastdagi ikkinchi jsx yani return ichidagi modal.tsx component ishga tushadi va user hohlasa biolarini o'zgartiradi yoki create qiladi
         (
             <>
                 {isLoading && (
@@ -66,6 +66,7 @@ const EditModal = ({ user }: Props) => {
                 />
 
                 <EditForm user={user} />
+                {/* edit modal buttoni bosilgandan keyin shu edit form componenti ishlab turadi yani kerak bo'lsa ishlatiladi yokida yo'q */}
             </>
         );
 
@@ -74,7 +75,7 @@ const EditModal = ({ user }: Props) => {
             body={bodyContent}
             isOpen={editModal.isOpen} //bu modal componentda isOpen qiymati bor va bu boolean qiymat bu boolean qiymat va editModal ichida kelganda boshlang'ich holatda false bob turipti va bu fasle qiymat profile-bio.tsxdagi edit profile buttoniga click bo'lganda truega o'zgaradi yani isOpenni true qilib bu modal compnentni ochadigan buyruq profile-biodagi eidt profile buttonida onOpen functioni bilan buyurilgan//onClosedaham huddi shu faqat bu safar isOpenni false qilib modalni yopadi va bu modaldagi onClosega X rasmi berilgan yani x ni bosgnada onclose ishlab modalni yopadi
             onClose={editModal.onClose}
-            isEditing
+            isEditing //profile bioni o'zgartirishda kerak bo'ladigan scroll
         />
     );
 };

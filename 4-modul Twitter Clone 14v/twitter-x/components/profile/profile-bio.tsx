@@ -371,7 +371,8 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
         <>
             <EditModal user={user} />
             {/* edit modal endi user qabul qiladi */}
-            {/* profile-biodda chaqirilgan bu EditModal.tsx bu joyda chaqirilgani sababi jsx ichida bo'lsa bo'ldi yani profile-bio component ishlaganda bu editmodalham ishlaydi yani kerakli joyga kelib turadi */}
+            {/* profile-bioda chaqirilgan bu EditModal.tsx bu joyda chaqirilgani sababi jsx ichida bo'lsa bo'ldi yani profile-bio component ishlaganda bu editmodalham ishlaydi yani kerakli joyga kelib turadi hohlasa user biolarga ishlov beradi hohlamada Modal.tsxdagi onClose sabab chiqib ketaveradi*/}
+
             <div className="border-b-[1px] border-neutral-800 pb-4">
                 <div className="flex justify-end p-2">
                     {userId === user._id ? (
@@ -382,19 +383,19 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                         <Button
                             label={"Edit profile"} //clik qilgan user current user bo'lsa ishlaydi clik qilinganda editModaldan kelgan onOpen ishlaydi//yani userni o'zini profileda ishlaydi
                             secondary
-                            onClick={() => editModal.onOpen()}//bu holatda edit profile textli buttonga click bo'ganda editModal functionda chaqirilgan useEditModalda zustandda qilingan functionni onOpen functioni ishlaydi va isOpenni true qiladi yani shunda edit-modal.tsx da return qilingan Modal componentda shu holatda chaiqirilgan isOpen={editModal.isOpen} isOpen ishga tushadi va profileni edit qilish componentiga otvoradi buni zustand bajaradi//bu edit profile textli buttonga clik qilinganda onOpen sabab CoverImageUpload va ProfileImageUpload compnentlarga otvoradi//onOpen ichida isOpenni ture qilish bor va bu onOpen edit-modeal.tsxda Model componentda chaqirilgan shunda buttonga click bo'ganda editModal function ichida kelgan useEditModal ichidagi onOpen edit-modal.tsxdagi Model componentda jsx ichida chaqirilgan Model.tsxni ochadi
+                            onClick={() => editModal.onOpen()} //bu holatda edit profile textli buttonga click bo'ganda editModal functionda chaqirilgan useEditModalda zustandda qilingan functionni onOpen functioni ishlaydi va isOpenni true qiladi yani shunda edit-modal.tsx da return qilingan Modal componentda shu holatda chaiqirilgan isOpen={editModal.isOpen} isOpen ishga tushadi va profileni edit qilish componentiga otvoradi buni zustand bajaradi//bu edit profile textli buttonga clik qilinganda onOpen sabab CoverImageUpload va ProfileImageUpload compnentlarga otvoradi//onOpen ichida isOpenni ture qilish bor va bu onOpen edit-modeal.tsxda Model componentda chaqirilgan shunda buttonga click bo'ganda editModal function ichida kelgan useEditModal ichidagi onOpen edit-modal.tsxdagi Model componentda jsx ichida chaqirilgan Model.tsxni ochadi
                         />
-                    ) : user.isFollowing ? (
+                    ) : user.isFollowing ? (// isfollowing user modeldan keltgan boolean typli qiymat agar shu isfollowing true bo'lsa yani bor bo'lsa current user uchun unfolllow buttoni chiqadi click qilinganda onunfollow ishlab current user folllow qilishni to'htatadi
                         <Button
                             label={"Unfollow"} //clik qilgan user current user bo'lsa ishlaydi clik qilinganda user.isFollowing ishlab onUnfollow functionn ishlatadi
                             outline
                             onClick={onUnfollow}
-                            disabled={isLoading}
+                            disabled={isLoading}// current user onunfollow bo'lgandan keyin isloading disablet bo'ladi yani to'htaydi
                         />
                     ) : (
                         <Button
                             label={"Follow"} //clik qiladigan current user click qilganda onFollow functionga oboradi bu holatda isloading disablet bo'lib turadi yani qotib turadi
-                            onClick={onFollow}
+                            onClick={onFollow}//onfoloow ishlab chrrent userni oddiy usermodeldan kelgan userga follow qiladi
                             disabled={isLoading} //button componentda boolean qilingan disabled qiymati vazifasi Fallow holatida turgan buttonga click bo'lganda onFollow function ishlagandan keyin yani  currentuser userga follow qilgandan keyin isloadingdagi false disablet holatiga o'tadi yani onFollowdagi so'rov bajarilgancha disablet yani qotib turadi
                         />
                     )}
@@ -404,7 +405,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                     <div className="flex flex-col">
                         <p className="text-white text-2xl font-semibold">
                             {user.name}
-                            {/* userni namesi iuserdan kelepti */}
+                            {/* userni namesi user modeldan isuerda kelepti */}
                         </p>
                     </div>
 
