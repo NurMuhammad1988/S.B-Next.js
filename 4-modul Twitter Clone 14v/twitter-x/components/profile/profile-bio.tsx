@@ -458,8 +458,8 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 
             {/* FOLLOWING AND FOLLOWERS MODAL */}
             <Modal
-                isOpen={open}
-                onClose={() => setOpen(false)}
+                isOpen={open}// isopen Modal componentda boolean qiymati berilgan open esa state false berilgan yani falseham boolean shu sabab hato yo'q va
+                onClose={() => setOpen(false)}//onClose modal componentda void function qiymati berilga shu sabab har qanday functionni qabul qiladi
                 body={
                     <>
                         <div className="flex flex-row w-full py-3 px-4">
