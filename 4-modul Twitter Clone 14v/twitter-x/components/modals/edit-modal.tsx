@@ -36,7 +36,7 @@ const EditModal = ({ user }: Props) => {
         try {
             setIsLoading(true);
             await axios.put(`/api/users/${user._id}?type=updateImage`, {//bu put so'rov borgan api typida agar updateImage texti bo'lmasaham ? shu so'rov sabab hato chiqmaydi //bu umumiy image so'rov coverimagefaham profileimageham ishlaydigan so'rov
-                [isProfileImage ? "profileImage" : "coverImage"]: image,
+                [isProfileImage ? "profileImage" : "coverImage"]: image,// bu profileImage va coverImagelar props bilan kelgan IUserni qiymatlari??????
             });
             router.refresh();//yuqoridagi so'rov bajarib bo'lingandan keyin faqat shu event sodir bo'lgan qisimgina refresh bo'ladi
             setIsLoading(false);//loader to'htatiladi

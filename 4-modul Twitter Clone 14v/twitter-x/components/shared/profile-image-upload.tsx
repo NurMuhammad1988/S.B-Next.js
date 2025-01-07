@@ -67,6 +67,7 @@ const ProfileImageUpload = ({ onChange, profileImage }: Props) => {
                     />
                     <div className="absolute inset-0 rounded-full flex justify-center items-center ">
                         <MdEdit size={24} className="text-white" />
+                        {/* qalamcha imageni yana o'zgartirish uchun bu qalamcha iconga function yozilmagan chhunki ona divda berilgan dropzoneni  ...getRootProps functionida shunaqa typli icon bor bo'lsa yani html atributlar bor bo'lsa ishlasin deb typida berib qo'yilgan */}
                     </div>
                 </div>
             ) : (
@@ -78,7 +79,7 @@ const ProfileImageUpload = ({ onChange, profileImage }: Props) => {
                             fill
                             style={{ objectFit: "cover", borderRadius: "100%" }}
                             alt="Avatar"
-                            src={"/images/placeholder.png"}
+                            src={"/images/placeholder.png"}//agar profile image yoq bo'lsa shu rasim qo'yiladi ustiga pastdagi qalamcha bilan agar profileimage bor bo'lsa yuqoridafi if truedagi classlar bilan qo'yiladi
                         />
 
                         <div className="absolute inset-0 bg-black/40 rounded-full flex justify-center items-center">
