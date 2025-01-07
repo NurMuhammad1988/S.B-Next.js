@@ -24,27 +24,36 @@ interface Props {
     user: IUser;
 }
 
+//profile-bio.tsx ishlab edit modal buttoni ishlab edit-modal.tsx faili ishlaganda axios sabab serverdan put so'rov ishlaganda if else else if va if hlolatlaridan biri ishlaganda ishlaydigan component!!!!!!!!!!!!!!!
+
 const EditForm = ({ user }: Props) => {
     const router = useRouter();
     const editModal = useEditModal();
 
-    const form = useForm<z.infer<typeof userSchema>>({//bu userSchema lib papkani ichidagi validation.ts faildidan chaqirb ishlatilepti//z bu xoddan keleygan function typida validation.tsdan kelgan userschema bor 
-        resolver: zodResolver(userSchema),//zodni functionlari 
+    const form = useForm<z.infer<typeof userSchema>>({
+        //bu userSchema lib papkani ichidagi validation.ts faildidan chaqirb ishlatilepti//z bu xoddan keleygan function typida validation.tsdan kelgan userschema bor
+        resolver: zodResolver(userSchema), //zodni functionlari
         defaultValues: {
-            name: user.name || "",//agar name bor bosa nameni qo'y yokida ""<< bo'sh string bosin shunda yangi user bu formda o'ziga name craete qilishi mumkun agar qilmasaham pustoy turadi//masalan google yoki github bilan account create qilgan bo'sa usernamesi bo'lmaydi shu sabab agar bo'lmasa bo'sh string yokida user accountni noldan create qilgandagi qo'ygan usernamesini chiqaradi
+            name: user.name || "", //agar name bor bosa nameni qo'y yokida ""<< bo'sh string bosin shunda yangi user bu formda o'ziga name craete qilishi mumkun agar qilmasaham pustoy turadi//masalan google yoki github bilan account create qilgan bo'sa usernamesi bo'lmaydi shu sabab agar bo'lmasa bo'sh string yokida user accountni noldan create qilgandagi qo'ygan usernamesini chiqaradi
             username: user.username || "",
-            bio: user.bio || "",//agar bio bor bo'sa bioni qo'y yo'q bosa"<< bosh tursin
+            bio: user.bio || "", //agar bio bor bo'sa bioni qo'y yo'q bosa"<< bosh tursin
             location: user.location || "",
         },
     });
 
-
     const { isSubmitting } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof userSchema>) => {
+        //profileni forimi bosilganda ishlaydigan onSubmit functioni
         try {
             await axios.put(`/api/users/${user._id}?type=updateFields`, values);
-        //api/users/[userId]/route.ts failiga boradigan so'rov type=updateFields<<bu qery so'rov agar api/users/[userId]/route.tsga bu so'rov borganda shu type=updateFields qery texti sabab
+            //api/users/[userId]/route.ts failiga boradigan so'rov type=updateFields<<bu qery so'rov agar api/users/[userId]/route.tsga bu so'rov borganda shu type=updateFields query texti sabab api/users/[userId]/route.tsdagi PUT function ishga tushadi va shu updateFields texti borligi uchun shunga qarab ishlaydi valuesda zoddan kelgan userschemani datalari bor>>>>
+            // (parameter) values: {
+            //     name: string;
+            //     username: string;
+            //     bio: string;
+            //     location: string;
+            // }
 
             router.refresh();
             editModal.onClose();
@@ -55,17 +64,19 @@ const EditForm = ({ user }: Props) => {
                     description: error.response.data.error,
                     variant: "destructive",
                 });
-            }else{
+            } else {
                 return toast({
                     title: "Error",
-                    description: "Something went wrong. Please try again later.",
+                    description:
+                        "Something went wrong. Please try again later.",
                     variant: "destructive",
-                })
+                });
             }
         }
     };
 
     return (
+        // bu form yani user biolarini shu formlar ichiga yozadi bu formalardagi componentlar ui.shadcn.com dan kelgan shaxisy componentlar
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -129,7 +140,7 @@ const EditForm = ({ user }: Props) => {
                     secondary
                     large
                     fullWidth
-                    disabled={isSubmitting}
+                    disabled={isSubmitting}//shu isSubmitting formlarga kiritilgan yangi datalarni sahranit qiladi va disabletni yoqadi bunga sabab type qiymatidagi submit typi
                 />
             </form>
         </Form>
