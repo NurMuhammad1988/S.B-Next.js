@@ -341,7 +341,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 
     const openFollowModal = async () => {
         try {
-            setOpen(true);
+            setOpen(true);//bu openFollowModal function chaqirilgan divga click bo'lganda boshida false bo'b turgan setopen true bo'ladi va 
             const data = await getFollowUser(user._id, "following");
             setFollowing(data);
         } catch (error) {
@@ -366,6 +366,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
             setFollowers(data);
         }
     };
+
 
     return (
         <>
@@ -456,11 +457,12 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                 </div>
             </div>
 
-            {/* FOLLOWING AND FOLLOWERS MODAL */}
+            {/* FOLLOWING AND FOLLOWERS MODAL yani follows va eollowers textlariga bosilganda chiqadigan modal by modal dynamic yaratib qo'yilgan qiymatlariga esa following va followerslarga aloqador functionlar berib qo'yilsa bo'ldi ishlayveradi */}
+
             <Modal
                 isOpen={open}// isopen Modal componentda boolean qiymati berilgan open esa state false berilgan yani falseham boolean shu sabab hato yo'q va
-                onClose={() => setOpen(false)}//onClose modal componentda void function qiymati berilga shu sabab har qanday functionni qabul qiladi
-                body={
+                onClose={() => setOpen(false)}//onClose modal componentda void function qiymati berilga shu sabab har qanday functionni qabul qiladi//yani onclose bo'lganda yopiladi 
+                body={//body modal componentda react element qiymatiga egan yani hamma jsx va js functionlarni jsx qilingan htmllarni qabul qiladi
                     <>
                         <div className="flex flex-row w-full py-3 px-4">
                             <div

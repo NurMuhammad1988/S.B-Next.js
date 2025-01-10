@@ -57,20 +57,20 @@ export async function DELETE(req: Request) {
     }
 }
 
-export async function GET(req: Request) {
+export async function GET(req: Request) {//bu get so'rov profile-bio.tsx failida getFollowUser, openFollowModal, openFollowModal, onFollowers functionlarida axios bilan chaqirilgan
     try {
-        await connectToDatabase();
-        const { searchParams } = new URL(req.url);
-        const userId = searchParams.get("userId");
-        const state = searchParams.get("state");
+        await connectToDatabase();//databasaga yani serverga ulanish
+        const { searchParams } = new URL(req.url);//node modulsdan keladigan urllar bilan ishleydigan node function
+        const userId = searchParams.get("userId");//nodedan keladigan searchparms bilan userId ovolindi
+        const state = searchParams.get("state");//searchparmas bilan query sorovlarga state key berildi yani endi axios bilan bu get functionga so'rov jo'natilganda shu "state" holatiga qarab bu get function ishlaydi
 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId);//serverdan user modeldan userlar olindi
 
-        if (state === "following") {
-            const following = await User.find({ _id: { $in: user.following } });
+        if (state === "following") {//agar profile-bio.tsx failidagi
+            const following = await User.find({ _id: { $in: user.following } });//bu holatda followinglar jo'natiladi
 
             return NextResponse.json( following );
-        } else if (state === "followers") {
+        } else if (state === "followers") {//yokida followerslar jo'natdiladi
             const followers = await User.find({ _id: { $in: user.followers } });
 
             return NextResponse.json( followers );
