@@ -14,6 +14,7 @@ interface Props {
   setFollowing: React.Dispatch<React.SetStateAction<IUser[]>>;
 }
 
+shu sahifadan boshlab tushunib keyin notifications darsiga o't
 const FollowUser = ({ user, setFollowing }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState<IUser>(user);
