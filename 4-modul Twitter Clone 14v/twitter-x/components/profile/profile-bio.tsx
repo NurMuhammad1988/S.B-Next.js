@@ -290,13 +290,13 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     const [following, setFollowing] = useState<IUser[]>([]);
     const [followers, setFollowers] = useState<IUser[]>([]);
     const [isFetching, setIsFetching] = useState(false);
-    const [state, setState] = useState<"following" | "followers">("following");
+    const [state, setState] = useState<"following" | "followers">("following");//typi ham following yoki followers bo'lishi mumkun bu holatda boshlang'ich qiymati esa following typi//endi shu state sabab agar following bo'lsa bu ishni bajar folllowers bo'lsa bu ishni bajar degan if elselarni bajarish mumkun
 
     const router = useRouter();
     const editModal = useEditModal();
 
     const onFollow = async () => {
-        // bu onfolllow function ishlaganda app/api/follows/rote.ts failidagi PUT functionga so'rov jo'natadi va u PUT function user.modelda yozilgan userni follow qiymatida object create qiladi yani userga joriy userdan bosilgan followni qo'shadi yani joriy userni idisini qo'shadi
+        // bu onfolllow function ishlaganda app/api/follows/rote.ts (api) failidagi  PUT functionga so'rov jo'natadi va u PUT function user.modelda yozilgan userni follow qiymatida object create qiladi yani userga joriy userdan bosilgan followni qo'shadi yani joriy userni idisini qo'shadi
         try {
             setIsLoading(true);
             await axios.put("/api/follows", {
@@ -312,10 +312,11 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
         }
     };
 
-    const onUnfollow = async () => {//??????????????????????????????
+    const onUnfollow = async () => {
         try {
             setIsLoading(true);
-            await axios.delete("/api/follows", {//yuqoridagi onFollow functionda chaqirilgan axiosda put metodi ishlatldi lekin axiosni typlari bor data ishlatilmadi bu joyda esa data ishlatildi chunki??????????????????????????????
+            await axios.delete("/api/follows", {//api/follows/route.ts/DELETE functionga so'rov jo'natadi
+                //yuqoridagi onFollow functionda chaqirilgan axiosda put metodi ishlatldi lekin axiosni typlari bor data ishlatilmadi bu joyda esa data ishlatildi chunki??????????????????????????????
                 data: { userId: user._id, currentUserId: userId },
             });
             router.refresh();
@@ -327,8 +328,9 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     };
 
     const getFollowUser = async (userId: string, type: string) => {
+        //bu function ham followinglarni ham followerslarni Get functiondan bittada if elsega qarab olib beradigan function yani axios get qiletganda querydagi state va dynamic ${type} sabab yani unversal get qiladigan function
         try {
-            setIsFetching(true);
+            setIsFetching(true); //boshida false edi endi true bo'lsi yani bu shunchaki oddiy state vazifasi ichidagi true falselarga qarab if elselarni ishlatib so'rovlarni bajarish bu holatda setIsFetchingni true qilib so'rovni bajarish va false qilib shu so'rovni to'htatish va jsx ichidaham shu true falseligiga qarab amallarni bajarsa bo'ladi masalan agar setIsFetching true bo'lsa bu contentni ko'rsat yokida buni yokida hech narsa bu state shu uchun kerak
             const { data } = await axios.get(
                 `/api/follows?state=${type}&userId=${userId}`
             );
@@ -341,8 +343,10 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 
     const openFollowModal = async () => {
         try {
-            setOpen(true);//bu openFollowModal function chaqirilgan divga click bo'lganda boshida false bo'b turgan setopen true bo'ladi va 
-            const data = await getFollowUser(user._id, "following");
+            setOpen(true); //bu openFollowModal function chaqirilgan divga click bo'lganda boshida false bo'b turgan setopen true bo'ladi va modal ochiladi qaysi modal ochiladi shu faildagi eng pastdagi follow va followerslar uchun dynmaic yozilgan Modal ochiladi boshida esa false edi yani setopenni boshlangichi yani open false edi endi setopenga olinib true qilindi va shu sabab pastdagi modalda berilgan isOpendagi open boshida false edi endi true bo'ldi onClose qilingada esa setOpen false qilinadi yani modal compoenentda onclosega X rasim berilgan shu rasimga bosilganda modal yopiladi shu uchun modaldagi onclosega setopen false qilingan chunki onpen close qilinganda yopilishi kerak
+
+            const data = await getFollowUser(user._id, "following");//getFollowUser unversal function //bu  "following" tepadgi getFollowUser functionni ikkinchi parametri type yani string qabul qiladigan type shunda getFollowUser chaqirilganda endi ikkinchi parametrida faqat string typli qiymatlar qabul qiladi bu holatda esa "following" bu "following" sabab /app/api/follows/route.tsda yozilgan GET functiondagi if elselar ishga tushadi agar stateda "following" bo'lsa serverdan userni  followinglarini oladi "followers" bo'lsa serverdan userni followerslarini oladi
+            //getFollowUserga irinchi parametriga userId string deyilgan shu sabab user._id ni string deb qabul qilepti???
             setFollowing(data);
         } catch (error) {
             console.log(error);
@@ -350,10 +354,10 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     };
 
     const onFollowing = async () => {
-        setState("following");
+        setState("following");//following yoki followers qiymatlaridan biri yanu followingni oldi
 
-        if (following.length === 0) {
-            const data = await getFollowUser(user._id, "following");
+        if (following.length === 0) {//onFollowing function ishlaganda  agar 0 g ateng bo'lsa getFollowUser bilan so'rov jo'natadi////////////////////buni sababi pastdagi following va followers modali ishlaganda following va followerslarga qayta qayta so'rov ketib qolmasligi uchun masalan followingga bosilgan va serverdan datalar kelagan va endi followerdag bosilsa shunda yana followingham qayta ishlamasligi uchun chunki birinchi following bosilgan va datalar kelgan yaniu endi 0 ga tengmas bu ishlameyt tursin endi followersga so'rov jo'natilsin //bo'lmsa har so'rovda ikkala following va followerslarham qayta so;rov jo'natadi
+            const data = await getFollowUser(user._id, "following");//getFollowUser unversal function
             setFollowing(data);
         }
     };
@@ -366,7 +370,6 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
             setFollowers(data);
         }
     };
-
 
     return (
         <>
@@ -386,17 +389,17 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                             secondary
                             onClick={() => editModal.onOpen()} //bu holatda edit profile textli buttonga click bo'ganda editModal functionda chaqirilgan useEditModalda zustandda qilingan functionni onOpen functioni ishlaydi va isOpenni true qiladi yani shunda edit-modal.tsx da return qilingan Modal componentda shu holatda chaiqirilgan isOpen={editModal.isOpen} isOpen ishga tushadi va profileni edit qilish componentiga otvoradi buni zustand bajaradi//bu edit profile textli buttonga clik qilinganda onOpen sabab CoverImageUpload va ProfileImageUpload compnentlarga otvoradi//onOpen ichida isOpenni ture qilish bor va bu onOpen edit-modeal.tsxda Model componentda chaqirilgan shunda buttonga click bo'ganda editModal function ichida kelgan useEditModal ichidagi onOpen edit-modal.tsxdagi Model componentda jsx ichida chaqirilgan Model.tsxni ochadi
                         />
-                    ) : user.isFollowing ? (// isfollowing user modeldan keltgan boolean typli qiymat agar shu isfollowing true bo'lsa yani bor bo'lsa current user uchun unfolllow buttoni chiqadi click qilinganda onunfollow ishlab current user folllow qilishni to'htatadi
+                    ) : user.isFollowing ? ( // isfollowing user modeldan keltgan boolean typli qiymat agar shu isfollowing true bo'lsa yani bor bo'lsa current user uchun unfolllow buttoni chiqadi click qilinganda onunfollow ishlab current user folllow qilishni to'htatadi
                         <Button
                             label={"Unfollow"} //clik qilgan user current user bo'lsa ishlaydi clik qilinganda user.isFollowing ishlab onUnfollow functionn ishlatadi
                             outline
                             onClick={onUnfollow}
-                            disabled={isLoading}// current user onunfollow bo'lgandan keyin isloading disablet bo'ladi yani to'htaydi
+                            disabled={isLoading} // current user onunfollow bo'lgandan keyin isloading disablet bo'ladi yani to'htaydi
                         />
                     ) : (
                         <Button
                             label={"Follow"} //clik qiladigan current user click qilganda onFollow functionga oboradi bu holatda isloading disablet bo'lib turadi yani qotib turadi
-                            onClick={onFollow}//onfoloow ishlab chrrent userni oddiy usermodeldan kelgan userga follow qiladi
+                            onClick={onFollow} //onfoloow ishlab chrrent userni oddiy usermodeldan kelgan userga follow qiladi
                             disabled={isLoading} //button componentda boolean qilingan disabled qiymati vazifasi Fallow holatida turgan buttonga click bo'lganda onFollow function ishlagandan keyin yani  currentuser userga follow qilgandan keyin isloadingdagi false disablet holatiga o'tadi yani onFollowdagi so'rov bajarilgancha disablet yani qotib turadi
                         />
                     )}
@@ -443,6 +446,8 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                             >
                                 <p className="text-white">{user.following}</p>
                                 <p className="text-neutral-500">Following</p>
+                                {/* bu Following texti profile ochilgada ishlaydigani  */}
+
                             </div>
 
                             <div
@@ -451,6 +456,8 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                             >
                                 <p className="text-white">{user.followers}</p>
                                 <p className="text-neutral-500">Followers</p>
+                                {/* bu Followers texti profile ochilgada ishlaydigani  */}
+
                             </div>
                         </div>
                     </div>
@@ -460,9 +467,10 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
             {/* FOLLOWING AND FOLLOWERS MODAL yani follows va eollowers textlariga bosilganda chiqadigan modal by modal dynamic yaratib qo'yilgan qiymatlariga esa following va followerslarga aloqador functionlar berib qo'yilsa bo'ldi ishlayveradi */}
 
             <Modal
-                isOpen={open}// isopen Modal componentda boolean qiymati berilgan open esa state false berilgan yani falseham boolean shu sabab hato yo'q va
-                onClose={() => setOpen(false)}//onClose modal componentda void function qiymati berilga shu sabab har qanday functionni qabul qiladi//yani onclose bo'lganda yopiladi 
-                body={//body modal componentda react element qiymatiga egan yani hamma jsx va js functionlarni jsx qilingan htmllarni qabul qiladi
+                isOpen={open} // isopen Modal componentda boolean qiymati berilgan open esa state false berilgan yani falseham boolean shu sabab hato yo'q va
+                onClose={() => setOpen(false)} //onClose modal componentda void function qiymati berilga shu sabab har qanday functionni qabul qiladi//yani onclose bo'lganda yopiladi
+                body={
+                    //body modal componentda react element qiymatiga egan yani hamma jsx va js functionlarni jsx qilingan htmllarni qabul qiladi
                     <>
                         <div className="flex flex-row w-full py-3 px-4">
                             <div
@@ -474,7 +482,9 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                                 onClick={onFollowing}
                             >
                                 Following
+                                {/* bu Following texti modal ochilganda ishlaydigani  */}
                             </div>
+
                             <div
                                 className={cn(
                                     "w-[50%] h-full flex justify-center items-center cursor-pointer font-semibold",
@@ -484,21 +494,24 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                                 onClick={onFollowers}
                             >
                                 Followers
+                                {/* bu Followers texti modal ochilganda ishlaydigani  */}
+
                             </div>
                         </div>
 
                         {isFetching ? (
                             <div className="flex justify-center items-center h-24">
                                 <Loader2 className="animate-spin text-sky-500" />
+                                {/* following va followerslar serverdan fetching bo'letgan bo'lsa shu loader2 ishlab tursin */}
                             </div>
                         ) : (
                             <div className="flex flex-col space-y-4">
-                                {state === "following" ? (
-                                    following.length === 0 ? (
+                                {state === "following" ? (//agar ststeda following bo'lsa yani so'rowda following texti bo'lsa va following hali kelmagan yani qattiy teng bo'lsa 0 ga followingni map qilib FollowUser coponentiga jo'nat va FollowUser componentni chiqar
+                                    following.length === 0 ? (//bi following state yani ichida fetch qilingan user modeldan idsi sabab kelgan followinglar 0 ga teng bo'lsa  no following textini chiqar
                                         <div className="text-neutral-600 text-center p-6 text-xl">
                                             No following
                                         </div>
-                                    ) : (
+                                    ) : (//yokida followingda datalar fetch qilingan bosa map qilib yani nesxalab FollowUser componentga jo'natib shu componentdan chiqar
                                         following.map((user) => (
                                             <FollowUser
                                                 key={user._id}

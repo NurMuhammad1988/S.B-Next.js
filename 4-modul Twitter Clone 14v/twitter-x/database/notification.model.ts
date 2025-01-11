@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// 11. Notifications darsida qoldi boshidan boshlash kerak
 const NotificationSchema = new mongoose.Schema({
 
     body: String,

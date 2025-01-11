@@ -25,7 +25,7 @@ const FollowUser = ({ user, setFollowing }: Props) => {
   const onFollow = async () => {
     try {
       setIsLoading(true);
-      await axios.put("/api/follows", {
+      await axios.put("/api/follows", {//"/api/follows"<<<<<<<<<<<<<<shunu qatttttttttiq tushuuuuuuuun
         userId: user._id,
         currentUserId: session?.currentUser?._id,
       });
@@ -103,7 +103,7 @@ const FollowUser = ({ user, setFollowing }: Props) => {
       {profile._id !== session?.currentUser?._id ? (
         profile.followers.includes(session?.currentUser?._id) ? (
           <Button
-            label={"Unfollow"}
+            label={"Unfollow"}//bu Unfollow profile-bio.tsdagi model ochilgandan keyin user profiledan keyinda turgan buttondagi Unfollow agar outline qiymati bo'lsa shu qiymatga yozilgan button componentni classlari ishlaydi yani qora rangda bo'lib turadi agar outline qiymati bo'lmsa masalan pastdagi buttonda  outline chaqirilmagan agar outline bo'lmasa follow teexti bilan o'zini default classlari bilan chiqadi
             outline
             classNames="h-[30px] p-0 w-fit px-3 text-sm"
             disabled={isLoading}

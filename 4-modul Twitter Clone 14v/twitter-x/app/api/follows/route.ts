@@ -43,7 +43,7 @@ export async function DELETE(req: Request) {
         const { userId, currentUserId } = await req.json(); //profiledan keletgan userId
 
         await User.findByIdAndUpdate(userId, {
-            $pull: { followers: currentUserId },//pullni pushdan farqi pull udalit qiladi pull esa qo'shadi bu degani bu DELETE  functionida kelgan mongoosesini findByIdAndUpdate functionini pull qiymati user modeldagi userni folllowers bo'limiga borib turgan current userni idisni userIddan olib udalit qiladi qachin udalit qiladi profile-bio.tsx faildagi onUnfollow functionidagi axios so'rov bajarilganda onUnfollow functionga click bo'lganda sodir bo'ladi
+            $pull: { followers: currentUserId },//pullni pushdan farqi pull udalit qiladi pull esa qo'shadi bu degani bu DELETE  functionida kelgan mongoosesini findByIdAndUpdate functionini pull qiymati user modeldagi userni folllowers bo'limiga borib turgan current userni idisni userIddan olib udalit qiladi qachon udalit qiladi profile-bio.tsx faildagi onUnfollow functionidagi axios so'rov bajarilganda yani onUnfollow functionga click bo'lganda sodir bo'ladi
         });
 
         await User.findByIdAndUpdate(currentUserId, {
@@ -66,10 +66,9 @@ export async function GET(req: Request) {//bu get so'rov profile-bio.tsx failida
 
         const user = await User.findById(userId);//serverdan user modeldan userlar olindi
 
-        if (state === "following") {//agar profile-bio.tsx failidagi
-            const following = await User.find({ _id: { $in: user.following } });//bu holatda followinglar jo'natiladi
-
-            return NextResponse.json( following );
+        if (state === "following") {//agar profile-bio.tsx failidagi openFollowModal functionidagi
+            const following = await User.find({ _id: { $in: user.following } });//bu holatda followinglar jo'natiladi find functioni userni _id yordamida topadi $in bu mongooseni metodlaridan biri vazifasi ichidan olish nimani ichidan olish  user modeldan kelgan userni following qiymati ichidagi objectni olish chunki yuqoridagi put functionda userga follow bo'lish yzilgan endi bu get functionda shu folllow bo'lgan userlarni get qilish yani olish yozilepti
+            return NextResponse.json( following );//qaytaradi followingni
         } else if (state === "followers") {//yokida followerslar jo'natdiladi
             const followers = await User.find({ _id: { $in: user.followers } });
 
