@@ -24,7 +24,7 @@ const SidebarItem = ({ icon: Icon, label, notification }: Props) => {
                 <p className="hidden lg:block text-xl text-white"> {label}</p>
                 {notification ? (//bu notification sidebar.tsxdan kelgan path yani sidebar.tsx failidagi pathlarga click bo'lganda masalan notifications textiga click bo'lganda agar notification true bo'lsa yani serverdan notificationslar kelgan bo'lsa shularni pastdagi rasim steylelar bilan uiga ko'rsatadi yokida nullni qaytaradi yani hech narsani
                     <BsDot
-                        className={"text-sky-500 absolute -top-4 left-0"}
+                        className={"text-sky-500 absolute -top-4 left-0"}//bu notifications textida yangilik bo'sa sky rangida chiqib turadigan nuqta
                         size={70}
                     />
                 ) : null}
