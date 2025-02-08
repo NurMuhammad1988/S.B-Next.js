@@ -27,7 +27,7 @@ export default function Modal({
         // bu dialog componentni o'zida juda ko'p classlar bor masalan ochilgan dialogdan boshqa joyga yani windowni boshqa joyiga click bo'lganda dialog yopiladi shu va boshqa ko'plab qulayliklari bor
         //
         <Dialog open={isOpen} onOpenChange={onClose}>
-            {/* open va onOpenChange  bu Dialog componenti kodlarida dynamic berib qo'yilgan qiymat yani dialog uchun kerak bo'ladigan atanalarga moslab nom berilgan qiymat chaqiri shunday ishlatish mumkun yokida false bo'lib turadi}
+            {/* open va onOpenChange  bu Dialog componenti kodlarida dynamic berib qo'yilgan qiymat yani dialog uchun kerak bo'ladigan atamalarga moslab nom berilgan qiymat chaqirib shunday ishlatish mumkun yokida false bo'lib turadi}
             {/* bu modal componentda shadcndan chaqirilgan dialog componentlar chaqirilib ishlatildi va dynamic qiymatlar berildi bu qiymatlar aslida bo'sh faqat typi berib qo'yilgan holos va modals papkani ichidagi register-modal.tsx failiga chaqirilib ishlatildi  */}
             <DialogContent
     

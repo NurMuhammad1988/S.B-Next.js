@@ -343,7 +343,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
 
     const openFollowModal = async () => {
         try {
-            setOpen(true); //bu openFollowModal function chaqirilgan divga click bo'lganda boshida false bo'b turgan setopen true bo'ladi va modal ochiladi qaysi modal ochiladi shu faildagi eng pastdagi follow va followerslar uchun dynmaic yozilgan Modal ochiladi boshida esa false edi yani setopenni boshlangichi yani open false edi endi setopenga olinib true qilindi va shu sabab pastdagi modalda berilgan isOpendagi open boshida false edi endi true bo'ldi onClose qilingada esa setOpen false qilinadi yani modal compoenentda onclosega X rasim berilgan shu rasimga bosilganda modal yopiladi shu uchun modaldagi onclosega setopen false qilingan chunki onpen close qilinganda yopilishi kerak
+            setOpen(true); //bu openFollowModal function chaqirilgan divga click bo'lganda boshida false bo'b turgan setopen true bo'ladi va modal ochiladi qaysi modal ochiladi shu faildagi eng pastdagi follow va followerslar uchun dynmaic yozilgan Modal ochiladi boshida esa false edi yani setopenni boshlangichi yani open false edi endi setopenga olinib true qilindi va shu sabab pastdagi modalda berilgan isOpendagi open boshida false edi endi true bo'ldi onClose qilingada esa setOpen false qilinadi yani modal compoenentda onclosega X rasim berilgan shu rasimga bosilganda modal yopiladi shu uchun modaldagi onclosega setopen false qilingan chunki onopen close qilinganda yopilishi kerak
 
             //bu openFollowModal functioni profile page ochilganda follwing yoki followers textlariga bosilganda ishlaydi yani ikkala textga bosilgandaham ishlab joriy holatda ikkala userniham idisga qarab followinglarni oladi yani current userham amaldagi userniham followinglarini kerakligini sababi followersda 
 
@@ -466,7 +466,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                 </div>
             </div>
 
-            {/* FOLLOWING AND FOLLOWERS MODAL yani follows va eollowers textlariga bosilganda chiqadigan modal by modal dynamic yaratib qo'yilgan qiymatlariga esa following va followerslarga aloqador functionlar berib qo'yilsa bo'ldi ishlayveradi */}
+            {/* FOLLOWING AND FOLLOWERS MODAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! yani follows va followers textlariga bosilganda chiqadigan modal by modal dynamic yaratib qo'yilgan qiymatlariga esa following va followerslarga aloqador functionlar berib qo'yilsa bo'ldi ishlayveradi */}
 
             <Modal
                 isOpen={open} // isopen Modal componentda boolean qiymati berilgan open esa state false berilgan yani falseham boolean shu sabab hato yo'q va
@@ -508,7 +508,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
                             </div>
                         ) : (
                             <div className="flex flex-col space-y-4">
-                                {state === "following" ? (//agar ststeda following bo'lsa yani so'rowda following texti bo'lsa va following hali kelmagan yani qattiy teng bo'lsa 0 ga followingni map qilib FollowUser coponentiga jo'nat va FollowUser componentni chiqar
+                                {state === "following" ? (//agar stateda following bo'lsa yani so'rowda following texti bo'lsa va following hali kelmagan yani qattiy teng bo'lsa 0 ga followingni map qilib FollowUser coponentiga jo'nat va FollowUser componentni chiqar
                                     following.length === 0 ? (//IUser//bu following state yani ichida fetch qilingan user modeldan idsi sabab kelgan followinglar 0 ga teng bo'lsa  no following textini chiqar
                                         <div className="text-neutral-600 text-center p-6 text-xl">
                                             No following
