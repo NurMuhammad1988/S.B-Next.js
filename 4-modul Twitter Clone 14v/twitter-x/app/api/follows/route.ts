@@ -71,7 +71,7 @@ export async function GET(req: Request) {
         const user = await User.findById(userId); //serverdan user modeldan userlar olindi
 
         if (state === "following") {
-            //agar profile-bio.tsx failidagi openFollowModal functionidagi
+            //agar profile-bio.tsx failidagi openFollowModal functionidagi try catch bilan chaqirilgan axiosdagi  getFollowUser functionida following texti bo'sa yani following qattiy teng bo'lsa statega
             const following = await User.find({ _id: { $in: user.following } }); //bu holatda followinglar jo'natiladi find functioni userni _id yordamida topadi $in bu mongooseni metodlaridan biri vazifasi ichidan olish nimani ichidan olish  user modeldan kelgan userni following qiymati ichidagi objectni olish chunki yuqoridagi put functionda userga follow bo'lish yozilgan endi bu get functionda shu folllow bo'lgan userlarni get qilish yani olish yozilepti
             return NextResponse.json(following); //qaytaradi followingni
         } else if (state === "followers") {

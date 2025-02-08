@@ -356,7 +356,7 @@ const ProfileBio = ({ user, userId }: { user: IUser; userId: string }) => {
     };
 
     const onFollowing = async () => {
-        setState("following");//following yoki followers qiymatlaridan biri yanu followingni oldi
+        setState("following");//following yoki followers qiymatlaridan biri yani followingni oldi
 
         if (following.length === 0) {//onFollowing function ishlaganda agar ichida IUser bor following state 0 ga teng bo'lsa getFollowUser bilan so'rov jo'natadi//////////////////// 0 ni buni sababi pastdagi following va followers modali ishlaganda following va followerslarga qayta qayta so'rov ketib qolmasligi uchun masalan followingga bosilgan va serverdan datalar kelgan va endi followersga bosilsa shunda yana followingham qayta ishlamasligi uchun chunki birinchi following bosilgan va datalar kelgan yani endi 0 ga tengmas bu ishlamey tursin endi followersga so'rov jo'natilsin //bo'lmsa har so'rovda ikkala following va followerslarham qayta so'rov jo'natadi
             const data = await getFollowUser(user._id, "following");//getFollowUser unversal function//GET qiladi//agar IUserni followingni hali kelmagan bo'lsa userga idisga qarab following objectiga so'rov jo'natadi

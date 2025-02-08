@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-//Mongus sxemalari - bu sizning hujjatlaringiz qanday ko'rinishini Mongoosega aytishingiz. Mongoose sxemalari TypeScript interfeyslaridan alohida, shuning uchun siz ham hujjat interfeysini, ham sxemani belgilashingiz kerak; yoki sxema ta'rifidan turni avtomatik ravishda aniqlash uchun Mongoose-ga tayaning.
+//Mongus sxemalari - bu sizning hujjatlaringiz qanday ko'rinishini Mongoosega aytishingizdir. Mongoose sxemalari TypeScript interfeyslaridan alohida, shuning uchun siz ham hujjat interfeysini, ham sxemani belgilashingiz kerak; yoki sxema ta'rifidan turni avtomatik ravishda aniqlash uchun Mongoose-ga tayaning.
 
 //bu PostSchema function mongoose kutubhonasi bilan mongodbda user uchun model ochish  uchun kerak masalan bu holatda constructor qilib new qili Schema chaqirildi bu schemada mongooseni schema functioni constructorda yozilgan va chaqirildi  
 const PostSchema = new mongoose.Schema({//PostSchema bu biz bergan nom nimaga bergan nom mongooseni Schema fuctionini chaqirgan constimizga bergan nomimiz holos//new kalit so'zidan foydalanib model sinfidan ob'ektni yaratish yani new mongoose.Schema bilan mongodbda object dynamic tarzda yaratiladi
@@ -22,10 +22,10 @@ const PostSchema = new mongoose.Schema({//PostSchema bu biz bergan nom nimaga be
             ref: "Comment",
         },
     ],
-}, {timestamps: true});//POST LIKES VA COMMENTSLARNI VAQTINI BELGILASH uchun agar false qilinda atcreated time ishlamaydi bu moshqa modellardaham ishlatilgan masalan user modeldaham chunki userniqachin yaratilganini bilish uchun
+}, {timestamps: true});//POST LIKES VA COMMENTSLARNI VAQTINI BELGILASH uchun agar false qilinda atcreated time ishlamaydi bu moshqa modellardaham ishlatilgan masalan user modeldaham chunki userni qachon yaratilganini bilish uchun
 
-//BU MODELLARNI ishlatish uchun hookslar kerak yani shaxsiy hooklar hooks papkani ichida hamma modelalarni i shlatadigan shaxsiy hooklar turipti
+//BU MODELLARNI ishlatish uchun hookslar kerak yani shaxsiy hooklar hooks papkani ichida hamma modelalarni ishlatadigan shaxsiy hooklar turipti
 
 const Post = mongoose.models.Post || mongoose.model("Post", PostSchema)//yani
-export default Post// mongooseni Schema functionini togridan togri export qilib bolmaydi objectga solib export qilish kerak masalan bu holatda Post nomli functionga solib jo'natildi yani doim shjunday tarzda export qilinadi
+export default Post// mongooseni Schema functionini togridan togri export qilib bolmaydi objectga solib export qilish kerak masalan bu holatda Post nomli functionga solib jo'natildi yani doim shunday tarzda export qilinadi
 
