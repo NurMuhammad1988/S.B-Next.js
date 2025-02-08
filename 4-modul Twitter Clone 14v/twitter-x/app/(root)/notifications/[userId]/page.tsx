@@ -10,22 +10,21 @@ import Image from "next/image";
 import { useState } from "react";
 
 const Page = ({ params }: { params: { userId: string } }) => {
-  const [isClearing, setIsClearing] = useState(false)
+    const [isClearing, setIsClearing] = useState(false);
     const { data, isLoading, mutate } = useNotifications(params.userId);
     // console.log(data);
 
     const onClear = async () => {
-      try {
-        setIsClearing(true)
-        await axios.delete(`/api/notifications/${params.userId}`)
-        mutate()
-        setIsClearing(false)
-
-      } catch (error) {
-        console.log(error);
-        setIsClearing(false)
-      }
-    }
+        try {
+            setIsClearing(true);
+            await axios.delete(`/api/notifications/${params.userId}`);
+            mutate();
+            setIsClearing(false);
+        } catch (error) {
+            console.log(error);
+            setIsClearing(false);
+        }
+    };
 
     return (
         <>
@@ -62,7 +61,12 @@ const Page = ({ params }: { params: { userId: string } }) => {
 
                     {data?.length > 0 && (
                         <div className="mt-4 flex justify-center">
-                            <Button outline label={"Clear all"} onClick={onClear} disabled={isClearing} />
+                            <Button
+                                outline
+                                label={"Clear all"}
+                                onClick={onClear}
+                                disabled={isClearing}
+                            />
                         </div>
                     )}
                 </div>

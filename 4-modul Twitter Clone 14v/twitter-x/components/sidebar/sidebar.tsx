@@ -9,21 +9,22 @@ import SidebarAccount from "./sidebar-account";
 import { IUser } from "@/types";
 import { MdOutlineExplore } from "react-icons/md";
 
-
 const Sidebar = ({ user }: { user: IUser }) => {
-    // console.log(user);
+    
+    console.log(user); //hasNewNotifications va notificatsionslarni logda ko'rish
+
     const sidebarItems = [
         {
-            label: "Home",
+            label: "Home",//yani bu holatda Home textiga va home iconiga bosilganda path home pagega olib boradi
             path: "/",
             icon: Home,
         },
 
         {
-            label: "Notifications",
-            path: `/notifications/${user?._id}`,
+            label: "Notifications",//
+            path: `/notifications/${user?._id}`,//(root) ichidagi notifications papkani ichidagi [userId] ichidagi page.tsx ga olib  boradi pastdagi pathlarham shunday .tsx faillarga olib boradi
             icon: Bell,
-            notification: user?.hasNewNotifications,
+            notification: user?.hasNewNotifications,//bu holatda notification iuserdan kelgan user bilan keladi lekin kelmasligiham mumkun gar kelsa hasNewNotifications bilan keladi yani yoki false yoki true bo'ladi
         },
 
         {
@@ -56,7 +57,7 @@ const Sidebar = ({ user }: { user: IUser }) => {
 
                 {sidebarItems.map(
                     (
-                        item //sidebarItems map qilinib yani datalar nusxalanib key link ichida yuqoridagi dynamic pathlar key bilan berilib sidebarItemga jo'natildi sidebarItemni parametridagi ...item bu sidebarItems map qilgan narsalarni copy qilish href shu itemdagi path sabab sidebarItemdagi textlarga bsoilganda o'sha pagelarga o'tadi
+                        item //sidebarItems map qilinib yani datalar nusxalanib key link ichida yuqoridagi dynamic pathlar key bilan berilib sidebarItemga jo'natildi sidebarItemni parametridagi ...item bu sidebarItems map qilgan narsalarni copy qilish href shu itemdagi path sabab sidebarItemdagi textlarga bosilganda o'sha pagelarga o'tadi
                     ) => (
                         <Link key={item.path} href={item.path}>
                             <SidebarItem {...item} />
