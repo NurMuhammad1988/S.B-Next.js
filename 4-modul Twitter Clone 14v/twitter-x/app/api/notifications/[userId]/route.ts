@@ -10,11 +10,11 @@ export async function GET(req: Request, route: { params: { userId: string } }) {
         await connectToDatabase();
         const { userId } = route.params;
 
-        const notifications = await Notification.find({ user: userId }).sort({//bu Notification model yuqorida import qilingan va mongooseni find functioni shu Notification modeldan user object ichida userIdni find qiladi va  
+        const notifications = await Notification.find({ user: userId }).sort({//bu Notification model yuqorida import qilingan va mongooseni find functioni shu Notification modeldan user object ichida userIdni find qiladi va  mongooseni sort metodi bilan umumiy qilib hamma notificationslar -1 qilinadi
             createdAt: -1,
         });
 
-        await User.findByIdAndUpdate(userId, {
+        await User.findByIdAndUpdate(userId, {//yani yangiliklar get qilib bo'lingandan keyin user yangiliklarni ochib ko'rib bo'lgandan keyin hasNewNotifications fasle qilinadi yani yangi notificationslar kelguncha false bo'lib turadi
             $set: { hasNewNotifications: false },
         });
 
