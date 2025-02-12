@@ -26,7 +26,7 @@ const Page = ({ params }: { params: { userId: string } }) => {
         }
     };
 
-    #11. Notifications darsi 14 chi minutda qoldi
+
 
     return (
         <>

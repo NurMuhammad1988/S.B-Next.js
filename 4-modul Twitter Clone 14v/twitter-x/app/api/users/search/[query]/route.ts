@@ -2,7 +2,9 @@ import User from "@/database/user.model";
 import { connectToDatabase } from "@/lib/mongoose";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, route: { params: { query: string } }) {
+// [query]ni next js taniydi va bu>>[]ICHIDA KELGAN QUERYNI BILADIKI SO'ROV EKANLIGINI 
+
+export default async function GET(req: Request, route: { params: { query: string } }) {
     try {
         await connectToDatabase();
         const { query } = route.params;
