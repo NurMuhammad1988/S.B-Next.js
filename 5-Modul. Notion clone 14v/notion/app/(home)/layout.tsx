@@ -2,8 +2,10 @@ import { ChildProps } from "@/types";
 import React from "react";
 import { Navbar } from "./components";
 
+// eng asosiy root sahifa 
+
 const Homelayaot = ({ children }: ChildProps) => {
-    //bu propsdan kelgan type yani children ChildPropsda reactnode qilingan yani jsga aloqador hamma narsani qabul qiladi va hato qaytarmaydi !!!ts!!!
+    //bu propsdan kelgan type yani children ChildPropsda reactnode qilingan yani jsga aloqador hamma narsani qabul qiladi va hato qaytarmaydi !!!ts!!! bu props ataylab eng asosiy sahifaga chaqirildi chunki childrenlarga hammasiga propsdagi type tasir qiladi
     //bu ChildProps index.d.ts failida yozilgan props bu homelayout faili esa sitebar o'rnida hozircha// bu holatda
     return (
         <div className="h-full">

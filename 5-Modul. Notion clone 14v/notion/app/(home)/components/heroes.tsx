@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-// 1. Bosh sahifa 20:28 chi minutda qoldi
+
 export const Heroes = () => {
     return (
         <>
@@ -24,7 +24,8 @@ export const Heroes = () => {
 
             <div className="flex flex-col items-center justify-center max-w-5xl">
                 <div className="flex items-center">
-                    {/* mobileda hidden bo'ladi dekstopda block bo'ladi */}
+                    {/* mobileda hidden bo'ladi dekstopda block bo'ladi ona divga relative classi berilganda height va width aniq berilishi kerak bo'lmasa ona div ichidagi image yoki boshqa elementlar ko'rinmay qoladi!!!!!!!!!!!!!!!! */}
+
                     <div className="relative h-[400px] w-[400px] hidden md:block">
 
                         <Image
