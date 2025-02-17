@@ -1,15 +1,24 @@
+"use client";
 import React from "react";
 import { Logo } from "./logo";
 import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { useScrolled } from "@/hooks/use-scrolled";
+import { cn } from "@/lib/utils";
 
 export const Navbar = () => {
+    const scrolled = useScrolled();
+
+    // console.log(scrolled);
+
     return (
         // tailwinddagi bi fixed classi navbar failini ona diviga berildi fixed bu navbarni bir joyda saqlaydi yaniqimirlamaydi top-0 yani fixeddan keyin berildi bu degani fixedga ishlaydi yani top 0 da navbarni ushlab turadi
-        <div className="z-50 bg-background fixed top-0 flex items-center w-full p-6 justify-between flex-wrap">
+        <div className={cn("z-50 bg-background fixed top-0 flex items-center w-full p-6 justify-between flex-wrap", scrolled && "border-b shadow-sm")}>
             <Logo />
             <div className="flex items-center gap-x-2  ">
-                <Button size={"sm"} variant={"ghost"} >Log in</Button>
+                <Button size={"sm"} variant={"ghost"}>
+                    Log in
+                </Button>
                 <Button size={"sm"}>Get Notion Free</Button>
 
                 <ModeToggle />
