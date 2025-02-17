@@ -4,8 +4,8 @@ import { PricingCard } from "./pricing-card";
 
 export const Pricing = () => {
     return (
-        <div className="max-w-7xl mx-auto container">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-2xl">
+        <div className="max-w-7xl mx-auto container p-1 ">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-2xl ">
                 One tool for your whole company. Free for teams to try.
             </h1>
             <p className="uppercase opacity-70"> TRUSTED BY TEAMS AT </p>
