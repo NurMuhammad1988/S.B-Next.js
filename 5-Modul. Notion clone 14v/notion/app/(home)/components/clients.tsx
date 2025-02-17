@@ -14,14 +14,14 @@ export const Clients = () => {
             </p>
 
             <div className="flex justify-center items-center gap-6 flex-wrap mt-6">
-                {/* bu div ichida clients arrayni ichidagi hamma imagelar bitta nextdan keladigan image componentida render qilindi bu holatda srcga client berildi chunkisrc birinchi parametrn iqabul qiladi idx esa oddiy key yani shu map qaysi copmonentda ishlasa shu componentga shu map metodini keyi berilishi kerak alt esa hamma shu imagelarni seo uchun kerak kalit so'zi google buni nextni image componentida qilingani uchun bittada taniydi va seoni bajaradi */}
+                {/* bu div ichida clients arrayni ichidagi hamma imagelar bitta nextdan keladigan image componentida intrigatsa intrigatsa qilinganda map metodi doim divni ichida bo'lishi kerak??? qilindi bu holatda srcga client berildi chunkisrc birinchi parametrn iqabul qiladi idx esa oddiy key yani shu map qaysi copmonentda ishlasa shu componentga shu map metodini keyi berilishi kerak alt esa hamma shu imagelarni seo uchun kerak kalit so'zi google buni nextni image componentida qilingani uchun bittada taniydi va seoni bajaradi */}
                 {clients.map((client, idx) => (
                     <Image
                         key={idx}
                         src={client}
                         width={50}
                         height={50}
-                        alt="notion haridorlari"
+                        alt="Notion haridorlari"
                     />
                 ))}
             </div>
