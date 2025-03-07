@@ -5,14 +5,14 @@ import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { cn } from "@/lib/utils";
-import { SignInButton } from "@clerk/clerk-react";
+import { SignInButton, UserButton } from "@clerk/clerk-react";
 import { useConvexAuth } from "convex/react";
+import Link from "next/link";
 
 // 2. Avtorizatsiya & Convex darsida qoldi boshidan boshlash kerey va oldin asosiy sahifani 100 foiz response qilish kerak chala joylari yahshi ishlametgan joylari bor mobilega mosla
 
 export const Navbar = () => {
-
-    const {isAuthenticated, isLoading} = useConvexAuth()
+    const { isAuthenticated, isLoading } = useConvexAuth();
     const scrolled = useScrolled(); //hooks papkadan kelgan hook
 
     // console.log(scrolled);
@@ -32,24 +32,33 @@ export const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-x-2  ">
-
                 {!isAuthenticated && !isLoading && (
+                    //isAuthenticated, isLoading bular useConvexAuth dan kelgan qiymatlar vazifasi if else uchun yani agar bu qiymatlar false bo'lsa!!!!! pastdagi buttonlar kontenti chiqadi agar true bo'lsa  pastdagi kontentlar ko'rinmaydi shundan bilish mumkunku user aftorizatsadan o'tgan hissoblanadi
                     <>
-                    <SignInButton mode="modal">
-                    <Button size={"sm"} variant={"ghost"}>
-                        Log in
-                    </Button>
-                </SignInButton>
+                        <SignInButton mode="modal">
+                            <Button size={"sm"} variant={"ghost"}>
+                                Log in
+                            </Button>
+                        </SignInButton>
 
-                <SignInButton mode="modal">
-                    <Button size={"sm"}>Get Notion Free</Button>
-                </SignInButton>
+                        <SignInButton mode="modal">
+                            <Button size={"sm"}>Get Notion Free</Button>
+                        </SignInButton>
                     </>
                 )}
-                
-                
 
-               
+                {isAuthenticated && !isLoading && (
+                    <>
+                        <Button variant={"ghost"} size={"sm"} asChild>
+                            <Link href={"/documents"}>Enter Notion</Link>
+                            {/* user aftorizatsadan o'tgandan keyin chiqadigan button "Enter Notion" */}
+                        </Button>
+                        <UserButton afterSignOutUrl="/"/>
+                        {/* UserButton bu clerk/clerk-react dan chaqirilgan button vazifasi user githubdan yoki */}
+
+                    </>
+                )}
+                {/* agar isAuthenticated true bo'lsa va isLoading false bo'ladigan bo'lsa */}
 
                 <ModeToggle />
                 {/* modetogle components/shared/mode-toggledan chaqirildi darkmode uchun */}
