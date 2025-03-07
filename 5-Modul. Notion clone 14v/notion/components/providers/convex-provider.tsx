@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 import { ChildProps } from "@/types";
 import { ClerkProvider, useAuth } from "@clerk/clerk-react";
 import { ConvexReactClient } from "convex/react";
@@ -16,4 +16,5 @@ export const ConvexClientProvider = ({ children }: ChildProps) => {
             </ConvexProviderWithClerk>
         </ClerkProvider>
     );
+    // 2. Avtorizatsiya & Convexda hato 13:00 da qolgan lekin hato jwt token bilan qandaydur hato sodir bo'lmoqda
 };
