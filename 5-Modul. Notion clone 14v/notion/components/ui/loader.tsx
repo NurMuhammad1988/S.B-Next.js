@@ -20,3 +20,5 @@ const loaderVariants = cva("text-muted-foreground animate-spin", {
 export const Loader = () => {
     return <Loader2 />;
 };
+
+2. Avtorizatsiya & Convex 17: 35 da qoldi va shu 2. Avtorizatsiya & Convex darsini tugatgandan keyin shu darsga aloqador hamma malumotlarga comment yoz yahshilab tushunib ket
