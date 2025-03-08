@@ -1,10 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@clerk/clerk-react";
+import { useConvexAuth } from "convex/react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-
+import { Loader } from "@/components/ui/loader";
 
 export const Heroes = () => {
+    const { isAuthenticated, isLoading } = useConvexAuth();
+
     return (
         <>
             <div className="max-w-3xl space-y-4">
@@ -17,9 +24,32 @@ export const Heroes = () => {
                     happens.
                 </h3>
 
-                <Button>
-                    Get Notion Free <ArrowRight className=" h-4 w-4 ml-2" />{" "}
-                </Button>
+                {isLoading && (
+                    <div className="w-full  flex justify-center items-center">
+                        <Loader size={"lg"} />
+                    </div>
+                )}
+
+                {isAuthenticated && !isLoading && (
+                    <Button asChild>
+                        <Link href={"/documents "}>
+                            Enter Notion{" "}
+                            <ArrowRight className=" h-4 w-4 ml-2" />
+                        </Link>
+                    </Button>
+                )}
+
+                {!isAuthenticated && !isLoading && (
+                    <>
+                        <SignInButton mode="modal">
+                            <Button>
+                                Get Notion Free
+                                <ArrowRight className=" h-4 w-4 ml-2" />
+                                {/* endi bosilgan clerkni modal oynasi chiqadi */}
+                            </Button>
+                        </SignInButton>
+                    </>
+                )}
             </div>
 
             <div className="flex flex-col items-center justify-center max-w-5xl">
@@ -27,7 +57,6 @@ export const Heroes = () => {
                     {/* mobileda hidden bo'ladi dekstopda block bo'ladi ona divga relative classi berilganda height va width aniq berilishi kerak bo'lmasa ona div ichidagi image yoki boshqa elementlar ko'rinmay qoladi!!!!!!!!!!!!!!!! */}
 
                     <div className="relative h-[400px] w-[400px] hidden md:block">
-
                         <Image
                             src={"/men.svg"}
                             alt="Notion loyihasi logosi"

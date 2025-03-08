@@ -1,6 +1,7 @@
 import React from "react";
 import { Loader2 } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 const loaderVariants = cva("text-muted-foreground animate-spin", {
     variants: {
@@ -17,8 +18,12 @@ const loaderVariants = cva("text-muted-foreground animate-spin", {
     }
 });
 
-export const Loader = () => {
-    return <Loader2 />;
+interface LoaderProps extends VariantProps<typeof loaderVariants>{
+
+}
+
+export const Loader = ({size}: LoaderProps) => {
+    return <Loader2 className={cn(loaderVariants({size}))} />;
 };
 
-2. Avtorizatsiya & Convex 17: 35 da qoldi va shu 2. Avtorizatsiya & Convex darsini tugatgandan keyin shu darsga aloqador hamma malumotlarga comment yoz yahshilab tushunib ket
+// 2. Avtorizatsiya & Convex 17: 35 da qoldi va shu 2. Avtorizatsiya & Convex darsini tugatgandan keyin shu darsga aloqador hamma malumotlarga comment yoz yahshilab tushunib ket

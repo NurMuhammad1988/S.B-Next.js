@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { SignInButton, UserButton } from "@clerk/clerk-react";
 import { useConvexAuth } from "convex/react";
 import Link from "next/link";
+import { Loader } from "@/components/ui/loader";
 
 // 2. Avtorizatsiya & Convex darsida qoldi boshidan boshlash kerey va oldin asosiy sahifani 100 foiz response qilish kerak chala joylari yahshi ishlametgan joylari bor mobilega mosla
 
@@ -32,6 +33,9 @@ export const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-x-2  ">
+
+                {isLoading && <Loader  />}
+
                 {!isAuthenticated && !isLoading && (
                     //isAuthenticated, isLoading bular useConvexAuth dan kelgan qiymatlar vazifasi if else uchun yani agar bu qiymatlar false bo'lsa!!!!! pastdagi buttonlar kontenti chiqadi agar true bo'lsa  pastdagi kontentlar ko'rinmaydi shundan bilish mumkunku user aftorizatsadan o'tgan hissoblanadi
                     <>
@@ -53,9 +57,8 @@ export const Navbar = () => {
                             <Link href={"/documents"}>Enter Notion</Link>
                             {/* user aftorizatsadan o'tgandan keyin chiqadigan button "Enter Notion" */}
                         </Button>
-                        <UserButton afterSignOutUrl="/"/>
+                        <UserButton afterSignOutUrl="/" />
                         {/* UserButton bu clerk/clerk-react dan chaqirilgan button vazifasi user githubdan yoki */}
-
                     </>
                 )}
                 {/* agar isAuthenticated true bo'lsa va isLoading false bo'ladigan bo'lsa */}

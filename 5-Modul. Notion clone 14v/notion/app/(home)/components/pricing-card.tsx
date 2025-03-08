@@ -1,5 +1,9 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import {  Check } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
+import { SignInButton } from "@clerk/clerk-react";
+import { useConvexAuth } from "convex/react";
+import { Check } from "lucide-react";
 import React from "react";
 
 interface PricingCradProps {
@@ -15,6 +19,8 @@ export const PricingCard = ({
     options,
     price,
 }: PricingCradProps) => {
+    const { isAuthenticated, isLoading } = useConvexAuth();
+
     return (
         <div
             className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white
@@ -33,18 +39,40 @@ export const PricingCard = ({
                 <span className="text-gray-500 dark:text-gray-400">/month</span>
             </div>
 
-            <Button>Get Started</Button>
+            {isLoading && (
+                <div className="w-full flex justify-center items-center">
+                    <Loader />
+                </div>
+            )}
+
+            {isAuthenticated && !isLoading && <Button>Get Started</Button>}
+
+            {!isAuthenticated && !isLoading && (
+                <SignInButton mode="modal">
+                    <Button>
+                        Log In
+                        {/* user dasturga kirmasa shu log in texti turadi agar kirgan bo'lsa yuqoridagi get started texti turadi */}
+                    </Button>
+                </SignInButton>
+            )}
 
             <ul role="list" className="space-y-4 text-left mt-8">
                 {/* bu holatda split metodi bilan pricing.tsx failidan map qilib chaqirilgan options qiymatini har vergul va bo'sh probeldan keyin qirqishni buyurib qirqilib kelgan string datalarni li ichida yani map qilib stylelar berib yani tepadan pastga qilib oldiga esa iconham qo'yildi    */}
                 {/* split() qatorni pastki qatorlar qatoriga ajratadi va massivni qaytaradi: */}
-                {options.split(", ").map((option) => (//yani bu holatda pricing.tsxdan chaqirilgan options qiymati split bilan o'zgartirilib option qivolindi endi optionda optionsdan kelgan datalarni vergul va probel bor holatdagi uzulgan holati keldi va span ichida option uiga berildi 
-                    <li key={option} className="flex items-center space-x-3">
-                        {/* agar map qilingan datalar jsx ichida ishlatilsa ona divga key berilishi kerak bo'lmasa ona div ichida span optionni nima ekanligini bilmasdi */}
-                        <Check className="flex-shrink-0 w-5 text-green-500 dark:text-green-400" />
-                        <span>{option}</span>
-                    </li>
-                ))}
+                {options.split(", ").map(
+                    (
+                        option //yani bu holatda pricing.tsxdan chaqirilgan options qiymati split bilan o'zgartirilib option qivolindi endi optionda optionsdan kelgan datalarni vergul va probel bor holatdagi uzulgan holati keldi va span ichida option uiga berildi
+                    ) => (
+                        <li
+                            key={option}
+                            className="flex items-center space-x-3"
+                        >
+                            {/* agar map qilingan datalar jsx ichida ishlatilsa ona divga key berilishi kerak bo'lmasa ona div ichida span optionni nima ekanligini bilmasdi */}
+                            <Check className="flex-shrink-0 w-5 text-green-500 dark:text-green-400" />
+                            <span>{option}</span>
+                        </li>
+                    )
+                )}
             </ul>
         </div>
     );
