@@ -29,4 +29,4 @@ export const createDocument = mutation({
 
 3. Sidebar resizing darsida qoldi shundan boshidan boshlash kerak
 
-lekin undan oldi 2. Avtorizatsiya & Convex darsini yahhsilab tushin convex va clerakni nima uchun birlashtirib ishlayothanimzni tushun
+lekin undan oldi 2. Avtorizatsiya & Convex darsini yahhsilab tushin convex va clerakni nima uchun birlashtirib ishlayothanimzni tushunish kerak
