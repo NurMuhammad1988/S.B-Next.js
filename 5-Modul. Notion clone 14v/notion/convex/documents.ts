@@ -1,6 +1,8 @@
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
 
+// 3. Sidebar resizing darsida qoldi shundan boshidan boshlash kerak
+
 export const createDocument = mutation({
     args: {
         title: v.string(),
@@ -27,6 +29,5 @@ export const createDocument = mutation({
     },
 });
 
-3. Sidebar resizing darsida qoldi shundan boshidan boshlash kerak
 
-lekin undan oldi 2. Avtorizatsiya & Convex darsini yahhsilab tushin convex va clerakni nima uchun birlashtirib ishlayothanimzni tushunish kerak
+
