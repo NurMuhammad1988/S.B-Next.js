@@ -19,11 +19,12 @@ export const Navbar = () => {
     // console.log(scrolled);
 
     return (
-        // tailwinddagi bu fixed classi navbar failini ona diviga berildi fixed bu navbarni bir joyda saqlaydi yaniqimirlamaydi top-0 yani fixeddan keyin berildi bu degani fixedga ishlaydi yani top 0 da navbarni ushlab turadi
+        // tailwinddagi bu fixed classi navbar failini ona diviga berildi fixed bu navbarni bir joyda saqlaydi yani qimirlamaydi top-0 yani fixeddan keyin berildi bu degani fixedga ishlaydi yani top 0 da navbarni ushlab turadi
         <div
             className={cn(
                 "z-50 bg-background fixed top-0 flex items-center w-full p-6 justify-between flex-wrap",
                 scrolled && "border-b shadow-sm"
+                // bu scrolled hooks/use-scrolled.tsx failida yozilgan hook vazifasi cn function sabab global windowdagi hozissaga qarab class qo'shish yoki classni olibtashlash yani global windowda scrolled y o'qi bo'yicha yanitepadan pastga ishlasa va bu ishlash 10dan ko'p bo'lsa "border-b shadow-sm" classini qo'shadio agar scrolled hodisasi ishlamasa qo'shmaydi
             )}
         >
             {/* yani agar  scrolled true bo'lsa shadcndan kelgan cn function sabab class qo'shildi "border-b shadow-sm" yani navbar scrolled bo'lganda hero navbar va hero qismi o'rtasida border paydo bo'ladi*/}
