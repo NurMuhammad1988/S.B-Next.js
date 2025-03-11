@@ -10,8 +10,7 @@ import React from "react";
 import { Loader } from "@/components/ui/loader";
 
 export const Heroes = () => {
-    const { isAuthenticated, isLoading } = useConvexAuth();
-
+    const { isAuthenticated, isLoading } = useConvexAuth(); //heros.tsx failidaham user aftorizatsadan o'ta olishi uchun chaqirildi
     return (
         <>
             <div className="max-w-3xl space-y-4">
@@ -24,32 +23,36 @@ export const Heroes = () => {
                     happens.
                 </h3>
 
-                {isLoading && (
+                {isLoading && ( //agar isloading true bo'lsa yani user aftorizatsadan o'tgan bo'lsa va bu o'tganligi haqida serverdan javob kelgancha shu Loader  ishlab turadi
                     <div className="w-full  flex justify-center items-center">
                         <Loader size={"lg"} />
+                        {/* bu Loader ichida loader2 iconi bor va componets/ui/loader.tsx failida varyant bilan  har hil class ulab hohlaganini ishlatsa bo'ladigan qilingan bu holatda lg classidan foydalanildi */}
                     </div>
                 )}
 
-                {isAuthenticated && !isLoading && (
-                    <Button asChild>
-                        <Link href={"/documents "}>
-                            Enter Notion{" "}
-                            <ArrowRight className=" h-4 w-4 ml-2" />
-                        </Link>
-                    </Button>
-                )}
-
-                {!isAuthenticated && !isLoading && (
-                    <>
-                        <SignInButton mode="modal">
-                            <Button>
-                                Get Notion Free
+                {isAuthenticated &&
+                    !isLoading && ( //isAuthenticated true bo'lsa yani user aftorizatsadan o'tgan va serverdan javob kelib bo'lgan bo'lsa va shu sabab isloading false bo'lsa pastdagi button component ishlaydi yani Enter Notion texti chiqadi
+                        <Button asChild>
+                            <Link href={"/documents "}>
+                                Enter Notion{" "}
                                 <ArrowRight className=" h-4 w-4 ml-2" />
-                                {/* endi bosilgan clerkni modal oynasi chiqadi */}
-                            </Button>
-                        </SignInButton>
-                    </>
-                )}
+                            </Link>
+                        </Button>
+                    )}
+
+                {!isAuthenticated &&
+                    !isLoading && ( //isAuthenticated false bo'lsa  va isloadingham false bo'lsa yani so'rovham jo'natilmagan bo'sa yani shunchaki user hali hech narsa qilmagan bo'lsa SignInButton coponenti ichida "Get Notion Free" texti chiqadi
+                        <>
+                            <SignInButton mode="modal">
+                                {/* "Get Notion Free" textiga bosilganda SignInButton qiymati bo'lgan modal ishlaydi aslid abu modal SignInButtonda chaqirilsa SignInButton componentida qayerdadur onclick functioni ishga tushadi yani userni modalga olib chiqadi bularni bari clerkda yozib qo'yilgan shusabab aftorizatsa uchun clerk qulay ko'p kodlari stylelari yozib qo'yilgan  */}
+                                <Button>
+                                    Get Notion Free
+                                    <ArrowRight className=" h-4 w-4 ml-2" />
+                                    {/* endi bosilgan clerkni modal oynasi chiqadi */}
+                                </Button>
+                            </SignInButton>
+                        </>
+                    )}
             </div>
 
             <div className="flex flex-col items-center justify-center max-w-5xl">
@@ -58,7 +61,7 @@ export const Heroes = () => {
 
                     <div className="relative h-[400px] w-[400px] hidden md:block">
                         <Image
-                            src={"/men.svg"}
+                            src={"/men.svg"}//light mode svg
                             alt="Notion loyihasi logosi"
                             // next jsda imagega fill berilganda imageni ona diviga height va witdt aniq berilishi kerak bo'lmasa imageni ochmaydi
                             fill
@@ -67,7 +70,7 @@ export const Heroes = () => {
                         />
 
                         <Image
-                            src={"/men-dark.svg"}
+                            src={"/men-dark.svg"}//dark mode svg
                             alt="Notion loyihasi logosi"
                             fill
                             //  hidden dark:block yani light bo'ganda hidden bo'ladi dark bo'lganda ko'rinadi //ikkinchi dark logo icon bu lightmode ishlaganda hidden bo'ladi lightmode bo'lganini qattan biladi navbardagi modetoggledan biladi modetoggle esa shadcn uidan olib kelingan kodlardir

@@ -20,9 +20,9 @@ export const Pricing = () => {
                             <Image
                                 width={50}
                                 height={50}
-                                key={idx}
-                                alt="Notion haridorlari jamoasi"
-                                src={team}
+                                key={idx} //key yani index mapni ikkinchi parametri
+                                alt="Notion haridorlari jamoasi" // for seo
+                                src={team} // mapni birinchi parametriga doim src beriladi yani
                             />
                         )
                     )}
@@ -36,45 +36,19 @@ export const Pricing = () => {
                                 idx //cards arrayni ichida 3 ta object bor shu sabab PricingCard componentga chaqirilganda ... qilib copy qilindi shunda 3 ta objectni copy qiladi chunki cards massivini ichida 3 ta object bor
                             ) => (
                                 // bu PricingCard faqat shu pricing.tsx component ichida ishlatilgani uchun index.tsdan import qilinmadi chunki asosiy page.tsxda chaqirilmaydi faqat shu component ichida ishlatiladi
-                                // bu PricingCard componentga PricingCard chaqirilib map qilingan ona divdagi classlar tasir qilasi yani maq qilinganda ona dividagi classlarga qaram bo'ladi
-                                <PricingCard {...card} key={idx} />
+                                // bu PricingCard componentga PricingCard chaqirilib map qilinganda ona divdagi classlar tasir qiladi yani map qilinganda ona dividagi classlarga qaram bo'ladi yani masalan bu joyda size 300px qilinib lekin chaqirilgan joyda size 200px bo'lsa 200px ishlaydi kod o'qish tartibi bo'yicha shunday bo'ladiyani tepadan pastga
+                                <PricingCard {...card} key={idx} /> // bu pricing.tsx componenti pricing-card componentiga props orqali export qilindi
                             )
                         )}
                     </div>
                 </div>
             </div>
-            {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold max-w-2xl ">
-                One tool for your whole company. Free for teams to try.
-            </h1>
-            <p className="uppercase opacity-70"> TRUSTED BY TEAMS AT </p>
-
-            <div className="flex gap-4 flex-row flex-wrap mt-4">
-                {teams.map((team, idx) => (//pastdagi teams massividagi client imagelari intrigatsa qilinib bitta div ichida stylelar berilib ishlatildi
-                    <Image
-                        width={50}
-                        height={50}
-                        key={idx}
-                        alt="Notion haridorlari jamoasi"
-                        src={team}
-                    />
-                ))}
-            </div>
-
-            <div className="mt-6">
-                <div className="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
-                    {cards.map((card, idx) => (//cards arrayni ichida 3 ta object bor shu sabab PricingCard componentga chaqirilganda ... qilib copy qilindi shunda 3 ta objectni copy qiladi chunki cards massivini ichida 3 ta object bor
-                        // bu PricingCard faqat shu pricing.tsx component ichida ishlatilgani uchun index.tsdan import qilinmadi chunki asosiy page.tsxda chaqirilmaydi faqat shu component ichida ishlatiladi
-                        // bu PricingCard componentga PricingCard chaqirilib map qilingan ona divdagi classlar tasir qilasi yani maq qilinganda ona dividagi classlarga qaram bo'ladi
-                        <PricingCard {...card} key={idx} />
-
-                    ))}
-                </div>
-            </div> */}
         </div>
     );
 };
 
 const teams = [
+    // teams ichida arrayda iconlar chaqirilgan tozza jsda yozilgan
     "/teams/1.svg",
     "/teams/2.svg",
     "/teams/3.svg",
@@ -83,7 +57,7 @@ const teams = [
 ];
 
 const cards = [
-    {
+    {//bu title subtitle options va price qiymatlari bu fail chaqirilib ishlatigan failda propsda typlari berilishi kerak  chunki bu ts 
         title: "Free",
         subtitle: "For organizing very corner fo your work & life.",
         options:
