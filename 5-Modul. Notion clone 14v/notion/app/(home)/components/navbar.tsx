@@ -60,7 +60,7 @@ export const Navbar = () => {
                                 {/* user aftorizatsadan o'tgandan keyin chiqadigan button "Enter Notion" */}
                             </Button>
                             <UserButton afterSignOutUrl="/" />
-                            {/* UserButton clerkni componenti yani user aftorizatsadan o'tib uiga berilib yuqoridagi if elselar to'liq ishlab bo'lib true bo'lgandan keyin  sayt refresh bo'ladi shu refreshdan keyin saytni asosiy sahifasida "/" yani home pageda qoldirishga shu UserButton buttoni javob beradi */}
+                            {/* UserButton clerkni componenti yani user aftorizatsadan o'tib uiga berilib yuqoridagi if elselar to'liq ishlab bo'lib true bo'lgandan keyin  sayt refresh bo'ladi shu refreshdan keyin saytni asosiy sahifasida "/" yani home pageda qoldirishga va aftorizatsa qilgan userni githubdanmi yoki googgeladanmi qaysidan aftorizatsa qilgan bo'sa shu akkotni rasimlarini ismlarini iu gaolib keladi shu UserButton buttoni javob beradi uyani endi userni rasmi ismi ko'rinadi clerkni bu UserButton componentiga bosib clerkni aftorizatsa qilingan user uchun yaratgan pagesini ko'rish mumnkun agar user sign out qilib chiqib ketsa bu UserButton copmonenti aftamatik false bo'lib qoladi yani yana qaytadan aftorizatsadan o'tish uchun yuqoridagi Log in buttoni chiqib qoladi chunki Log in buttonidagi isAuthenticated qiymati false bo'lib qoladi*/}
                         </>
                     )}
 
