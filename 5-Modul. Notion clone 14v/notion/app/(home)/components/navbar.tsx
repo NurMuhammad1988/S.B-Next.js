@@ -33,6 +33,7 @@ export const Navbar = () => {
 
             <div className="flex items-center gap-x-2  ">
                 {isLoading && <Loader />}
+                {/* Loader bu holatda components va ichida loader2 iconi bor bunga components/ui/loader.tsxda cn bilan har hil varyant classlar berilgan kerak bo'lganda varyant bilan hohlagan stylesini chaqirib ishlatish mumkun///////////// yani agar isloading yani user aftorizatsadan o'tgan bo'lib isloading true bo'lsa Loader ishlaydi yani serverdan true degan javob kelgancha loader ishlab turadi */}
 
                 {!isAuthenticated && !isLoading && (
                     //isAuthenticated, isLoading bular useConvexAuth dan kelgan qiymatlar vazifasi if else uchun yani agar bu qiymatlar false bo'lsa!!!!! pastdagi buttonlar kontenti chiqadi agar true bo'lsa  pastdagi kontentlar ko'rinmaydi shundan bilish mumkunki trueda user aftorizatsadan o'tgan hissoblanadi
