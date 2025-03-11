@@ -10,11 +10,9 @@ import { useConvexAuth } from "convex/react";
 import Link from "next/link";
 import { Loader } from "@/components/ui/loader";
 
-// 2. Avtorizatsiya & Convex darsida qoldi boshidan boshlash kerey va oldin asosiy sahifani 100 foiz response qilish kerak chala joylari yahshi ishlametgan joylari bor mobilega mosla
-
 export const Navbar = () => {
-    const { isAuthenticated, isLoading } = useConvexAuth();
-    const scrolled = useScrolled(); //hooks papkadan kelgan hook
+    const { isAuthenticated, isLoading } = useConvexAuth(); //bu hook clerk kutubhonasidan keladi vazifasi aftorizatsa bo'lgan userni holatga qo'yadi yani aftorizatsa sodir bo'lgan bo'sa true bilan uiga jo'natish agar sodir bo'magann bo'sa false bilan loadingga qo'yish
+    const scrolled = useScrolled(); //hooks papkadan kelgan hook vazifasi global windowdagi holatga qarab hodisa ilish uchun
 
     // console.log(scrolled);
 
@@ -34,13 +32,13 @@ export const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-x-2  ">
-
-                {isLoading && <Loader  />}
+                {isLoading && <Loader />}
 
                 {!isAuthenticated && !isLoading && (
-                    //isAuthenticated, isLoading bular useConvexAuth dan kelgan qiymatlar vazifasi if else uchun yani agar bu qiymatlar false bo'lsa!!!!! pastdagi buttonlar kontenti chiqadi agar true bo'lsa  pastdagi kontentlar ko'rinmaydi shundan bilish mumkunku user aftorizatsadan o'tgan hissoblanadi
+                    //isAuthenticated, isLoading bular useConvexAuth dan kelgan qiymatlar vazifasi if else uchun yani agar bu qiymatlar false bo'lsa!!!!! pastdagi buttonlar kontenti chiqadi agar true bo'lsa  pastdagi kontentlar ko'rinmaydi shundan bilish mumkunki trueda user aftorizatsadan o'tgan hissoblanadi
                     <>
                         <SignInButton mode="modal">
+                            {/* clerkdan keladigan Button component qiymatidagi "modal" bu degani login textiga bosilganda shu "modal" sabab clerkni aftorizatsadan o'tkazadigan modali chiqadi  */}
                             <Button size={"sm"} variant={"ghost"}>
                                 Log in
                             </Button>
@@ -52,17 +50,19 @@ export const Navbar = () => {
                     </>
                 )}
 
-                {isAuthenticated && !isLoading && (
-                    <>
-                        <Button variant={"ghost"} size={"sm"} asChild>
-                            <Link href={"/documents"}>Enter Notion</Link>
-                            {/* user aftorizatsadan o'tgandan keyin chiqadigan button "Enter Notion" */}
-                        </Button>
-                        <UserButton afterSignOutUrl="/" />
-                        {/* UserButton bu clerk/clerk-react dan chaqirilgan button vazifasi user githubdan yoki */}
-                    </>
-                )}
-                {/* agar isAuthenticated true bo'lsa va isLoading false bo'ladigan bo'lsa */}
+                {isAuthenticated &&
+                    !isLoading && ( //isAuthenticated true bo'lsa yani user aftorizatsa qilgan bo'lsa va isloading yani serverdan datani kelishi false bo'lsa yani kelib bo'lgan ture ishlab bo'lgan bo'lsa pastdagi kontentni ko'rsatadi yaniuser kelib bo'ladi va yonida "Enter Notion" Link ichida yani bossa dacument papkaga otvoradi
+                        <>
+                            <Button variant={"ghost"} size={"sm"} asChild>
+                                {/* bu Button comonent o'zimiz yozgan ui "ghost" bu classlarni varyani  */}
+                                <Link href={"/documents"}>Enter Notion</Link>
+                                {/* bu holatdagi "/document" aslida ssilka yani ssahifani ssilkasi */}
+                                {/* user aftorizatsadan o'tgandan keyin chiqadigan button "Enter Notion" */}
+                            </Button>
+                            <UserButton afterSignOutUrl="/" />
+                            {/* UserButton clerkni componenti yani user aftorizatsadan o'tib uiga berilib yuqoridagi if elselar to'liq ishlab bo'lib true bo'lgandan keyin  sayt refresh bo'ladi shu refreshdan keyin saytni asosiy sahifasida "/" yani home pageda qoldirishga shu UserButton buttoni javob beradi */}
+                        </>
+                    )}
 
                 <ModeToggle />
                 {/* modetogle components/shared/mode-toggledan chaqirildi darkmode uchun */}
