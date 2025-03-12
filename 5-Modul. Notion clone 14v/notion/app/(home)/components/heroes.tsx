@@ -31,7 +31,7 @@ export const Heroes = () => {
                 )}
 
                 {isAuthenticated &&
-                    !isLoading && ( //isAuthenticated true bo'lsa yani user aftorizatsadan o'tgan va serverdan javob kelib bo'lgan bo'lsa va shu sabab isloading false bo'lsa pastdagi button component ishlaydi yani Enter Notion texti chiqadi
+                    !isLoading && ( //isAuthenticated true bo'lsa yani user aftorizatsadan o'tgan va serverdan javob kelib bo'lgan bo'lsa va shu sabab isloading false bo'lsa pastdagi button component ishlaydi yani Enter Notion texti chiqadi texta bosganda document nomli sahifaga olib boradi
                         <Button asChild>
                             <Link href={"/documents "}>
                                 Enter Notion{" "}

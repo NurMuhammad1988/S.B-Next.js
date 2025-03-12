@@ -42,4 +42,5 @@ export const createDocument = mutation({
         return document;
     },
 });
-// 3. Sidebar resizing darsida qoldi shundan boshidan boshlash kerak
+
+
