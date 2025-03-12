@@ -17,20 +17,20 @@ export const Sidebar = () => {
         if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(true);
             setIsResetting(true);
-            sidebarRef.current.style.width = "0";
-            navbarRef.current.style.width = "100%";
-            navbarRef.current.style.left = "0";
+            sidebarRef.current.style.width = "0"; //ChevronsLeft iconi bor divni widthini 0 qiladi yani yopadi
+            navbarRef.current.style.width = "100%"; //MenuIcon iconi bor divni widthini 100% qiladi yani ochadi
+            navbarRef.current.style.left = "0"; //MenuIcon iconini chap tomonga 0pxgacha oladi asli kerakmasidi manimcha
         }
     };
 
-    //bu holatda
+   
     const reset = () => {
         if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(false); //collapse function onclick bo'lib setIsCollapsed true bo'lib sidebarni  widthi 0 bo'lib navbarRefni widthi 100% bo'lgandan keyin setIsCollapsed false qilinadi chunki endi pastdagi "240px", "calc(100% - 240)", "240" stylelari ishlashi kerak yani MenuIcon iconi chiqishi kerak
             setIsResetting(true);
-            sidebarRef.current.style.width = "240px";
-            navbarRef.current.style.width = "calc(100% - 240)";
-            navbarRef.current.style.left = "240";
+            sidebarRef.current.style.width = "240px"; //MenuIcon iconiga bosilganda 240px joy ochadi
+            navbarRef.current.style.width = "calc(100% - 240)"; //MenuIcon bosilganda calc bilan navbarref uchun 100% widthdan 240px joy ochadi
+            navbarRef.current.style.left = "240"; //MenuIcon bosilganda joyni chap tomondan ochadi
         }
     };
 
@@ -41,7 +41,7 @@ export const Sidebar = () => {
                     "group/sidebar  h-screen bg-secondary overflow-y-auto relative flex w-60 flex-col z-50",
                     isResetting && "transition-all ease-in  duration-300"
                 )}
-                ref={sidebarRef}
+                ref={sidebarRef}//elementref ishlashi uchun ref jsxda shunday atribut bilan berib qo'yilishi kerak
             >
                 {/* bu ona divdagi group classi bola divgaham yozildi shunda bitta class ikkita divga bir hil ishlaydi masalan pastdagi yetim divda group-hover:opacity-100" classi bor bu degani pastdagi divda cursor tursa hover bo'lib shu classlar ishlaydi yani pastdagi divda opacity 0 bo'lib turgabi group-hover:opacity-100" ga o'zgaradi yani cursor faqat pastdagi yetim divga o'tganda shu group-hover:opacity-100" hover klasslari ishlaydi .....................group/sidebar va  group-hover/sidebar:opacity-100 deb yozilishini sababi esa bu sahifada yana shunaqa grouplar qilinganda hammasi ishlashi uchun masalan groupni o'zi bilan qilsa faqat shu group ishlaydi agar bu groupga nom berilsa (bu holatda sidebar deb nom berildi chunki faqat sidebar uchun kerakli group) har hil nomdagi hamma grouplar ishlaydi */}
 
