@@ -5,11 +5,14 @@ import React, { ElementRef, useRef, useState } from "react";
 
 export const Sidebar = () => {
     const sidebarRef = useRef<ElementRef<"div">>(null);
-    const navbarRef = useRef<ElementRef<"div">>(null);
+    const navbarRef = useRef<ElementRef<"div">>(null); //Elementlar React ilovalarining eng kichik qurilish bloklaridir . Element foydalanuvchi interfeysida nima bo'lishi kerakligini belgilaydi. Element - bu DOM tugunlari nuqtai nazaridan biz nimani ko'rishni xohlayotganimizni tavsiflovchi oddiy ob'ekt. Reaktsiya elementini yaratish DOM elementlariga nisbatan oson. Element JSX yordamida yoki JSXsiz React yordamida yaratilishi mumkin.//yani bu holatda ElementRef objecti bilan div yaratib boshlang'ich qiymati null qilindi
 
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isResetting, setIsResetting] = useState(false);
 
+    //ref uchun eng keng tarqalgan foydalanish holati DOM elementiga kirishdir . Misol uchun, agar siz kiritilgan ma'lumotlarni dasturiy tarzda qaratmoqchi bo'lsangiz, bu qulay. Refni JSX da <div ref={myRef}> kabi ref atributiga o'tkazganingizda, React mos keladigan DOM elementini myRef.current ga joylashtiradi.////////////bu holatda siebarRefga joylashtiradi yani pastdagi ona divga joylashtiradi shunda ona divni collapse functionga chaqirvolib if else holatiga qarab stylelarini o'zgartirish mumkun masalan bu holatda yuqorida stete bilan sidebarRefdagi nul divi collapse functionga chaqirilib qaytadan yaratilib keraklistylelari o'zgartirilayapti yani sidebarRefda chaqirilgan ElementRef ichidagi bo'sh diviga pastdagi ona divni chaqirib collapse functioni bilan faqat kerakli joyiga style o'zgartirishlar kiritayapti bu uchun ElementRef currentga pastdagi divni sovoladi va agar ichida pastdagi divi bor sidebarRef o'zgaruvchini currentida pastdagi div kelgan bo'lsa va huddi shunday  navbarRef o'zgaruvchi ichidagi currentda navbarRef divi kelgan bo'lsa boshida false bo'lgan setIsCollapsed va setIsResetting true qilib sidebarda kelgan yangi divga current bilanqaytadan tyle berildi masalan widthi 0 qilindi va navbarref diviniki esa 100% qilindi va lefti 0 qilindi bu reflardagi currentlarga aynan shu divlar tushishi uchun pastdagi shu divlarga ref={sidebarRef},  ref={navbarRef} deb div atribut bilan berilib qo'yilishi kerak shunda ElementRef qaysi divga borib nusxa olib kelishni biladi (ref yani adress degani) shunda pastdan elementrerf sabab kelgan divlarni stylelari shu holatga o'zgaradi bunga sabab pastdagi divlargdagi berilgan onclickda (iconlarga) collapse va reset functionlari berib qo'yilgan yani ona diviga berilishi kerak!!!
+
+    //elementref sabab pastdan nusxa olingan divdan kelgan setIsResettingda animatsya yani sekin kirib sekin chiqish stylelari bor yani bu holatda setIsResetting boshida false state agar collapse functiondagi if true bo'lsa setIsResettingham true bo'ladi yani style "0", "100%", "0" ga o'zgarganda bu animatsya styleham qo'shiladi shunda chap tomonga sekin kirib sekin chiqadi😏😏😏  endi truega aylangan isResetting esa umumiy ona divlarga if bilan berib qo'yilgan chunki bu isResetting ona div ichidagi evenlarga qarab ishlashi kerak chunkiiconlar ona div ichida
     const collapse = () => {
         if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(true);
@@ -20,9 +23,10 @@ export const Sidebar = () => {
         }
     };
 
+    //bu holatda
     const reset = () => {
         if (sidebarRef.current && navbarRef.current) {
-            setIsCollapsed(false);
+            setIsCollapsed(false); //collapse function onclick bo'lib setIsCollapsed true bo'lib sidebarni  widthi 0 bo'lib navbarRefni widthi 100% bo'lgandan keyin setIsCollapsed false qilinadi chunki endi pastdagi "240px", "calc(100% - 240)", "240" stylelari ishlashi kerak yani MenuIcon iconi chiqishi kerak
             setIsResetting(true);
             sidebarRef.current.style.width = "240px";
             navbarRef.current.style.width = "calc(100% - 240)";
@@ -62,11 +66,11 @@ export const Sidebar = () => {
                 ref={navbarRef}
             >
                 <nav className={cn("bg-transparent px-3 py-2 w-full")}>
-                    {isCollapsed && (
+                    {isCollapsed && ( //agar boshida false qilingan isCollapsed statesi true bo'lsa shu icon ishlaydi va ustiga onclick qilinsa reset functionda berilgan stylelarga o'zgaradi yani qaytadan sidebar qismi chap tomondan chiqib keladi
                         <MenuIcon
                             className="h-6 w-6 text-muted-foreground"
                             role="button"
-                            onClick={reset}
+                            onClick={reset} //menuiconga click bo'lganda ichida elementref bo'lgan reset function ishlab calc bilan 100% holatda turgan  windowdan 240px joyni -minus qilib tashlaydi shunda yuqoridagi collapse functioni berilgan divga joy ochiladi
                         />
                     )}
                 </nav>

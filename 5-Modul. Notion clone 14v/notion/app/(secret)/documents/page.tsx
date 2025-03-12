@@ -2,7 +2,7 @@ import React from 'react'
 
 const DocumentPage = () => {
   return (
-    <div></div>
+    <div>sss</div>
   )
 }
 

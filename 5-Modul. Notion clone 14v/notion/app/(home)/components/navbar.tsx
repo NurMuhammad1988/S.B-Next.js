@@ -57,7 +57,7 @@ export const Navbar = () => {
                             <Button variant={"ghost"} size={"sm"} asChild>
                                 {/* bu Button comonent o'zimiz yozgan ui "ghost" bu classlarni varyani  */}
                                 <Link href={"/documents"}>Enter Notion</Link>
-                                {/* bu holatdagi "/document" aslida ssilka yani ssahifani ssilkasi */}
+                                {/* bu holatdagi "/document" aslida ssilka yani ssahifani ssilkasi bu holatda (secret)/document/page.tsx ga boradi */}
                                 {/* user aftorizatsadan o'tgandan keyin chiqadigan button "Enter Notion" */}
                             </Button>
                             <UserButton afterSignOutUrl="/" />
