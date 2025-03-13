@@ -78,3 +78,5 @@ export const Sidebar = () => {
         </>
     );
 };
+
+3. Sidebar resizing darsi 16:53 da qoldi
