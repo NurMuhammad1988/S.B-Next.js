@@ -1,21 +1,28 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
-import React, { ElementRef, useRef, useState } from "react";
-import {useMediaQuery} from "usehooks-ts"//npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
+import React, { ElementRef, useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "usehooks-ts"; //npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
 
 export const Sidebar = () => {
-
-    const isMobile = useMediaQuery("(max-width: 770px)")//agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
+    const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
-    
 
     const sidebarRef = useRef<ElementRef<"div">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null); //Elementlar React ilovalarining eng kichik qurilish bloklaridir . Element foydalanuvchi interfeysida nima bo'lishi kerakligini belgilaydi. Element - bu DOM tugunlari nuqtai nazaridan biz nimani ko'rishni xohlayotganimizni tavsiflovchi oddiy ob'ekt. Reaktsiya elementini yaratish DOM elementlariga nisbatan oson. Element JSX yordamida yoki JSXsiz React yordamida yaratilishi mumkin.//yani bu holatda ElementRef objecti bilan div yaratib boshlang'ich qiymati null qilindi
     const isResizing = useRef(false);
 
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(isMobile);
     const [isResetting, setIsResetting] = useState(false);
+
+    useEffect(() => {
+        if (isMobile) {
+            //agar isMobile true bo'lsa yani user kirgan qurulma windowi 770pxdan kichkina bo'lsa collapse functionini ishga tushuradi yokida reset functionni ishga tushuradi
+            collapse();
+        } else {
+            reset();
+        }
+    }, [isMobile]);
 
     //ref uchun eng keng tarqalgan foydalanish holati DOM elementiga kirishdir . Misol uchun, agar siz kiritilgan ma'lumotlarni dasturiy tarzda qaratmoqchi bo'lsangiz, bu qulay. Refni JSX da <div ref={myRef}> kabi ref atributiga o'tkazganingizda, React mos keladigan DOM elementini myRef.current ga joylashtiradi.////////////bu holatda siebarRefga joylashtiradi yani pastdagi ona divga joylashtiradi shunda ona divni collapse functionga chaqirvolib if else holatiga qarab stylelarini o'zgartirish mumkun masalan bu holatda yuqorida stete bilan sidebarRefdagi nul divi collapse functionga chaqirilib qaytadan yaratilib keraklistylelari o'zgartirilayapti yani sidebarRefda chaqirilgan ElementRef ichidagi bo'sh diviga pastdagi ona divni chaqirib collapse functioni bilan faqat kerakli joyiga style o'zgartirishlar kiritayapti bu uchun ElementRef currentga pastdagi divni sovoladi va agar ichida pastdagi divi bor sidebarRef o'zgaruvchini currentida pastdagi div kelgan bo'lsa va huddi shunday  navbarRef o'zgaruvchi ichidagi currentda navbarRef divi kelgan bo'lsa boshida false bo'lgan setIsCollapsed va setIsResetting true qilib sidebarda kelgan yangi divga current bilan qaytadan style berildi masalan widthi 0 qilindi va navbarref diviniki esa 100% qilindi va lefti 0 qilindi bu reflardagi currentlarga aynan shu divlar tushishi uchun pastdagi shu divlarga ref={sidebarRef},  ref={navbarRef} deb div atribut bilan berilib qo'yilishi kerak shunda ElementRef qaysi divga borib nusxa olib kelishni biladi (ref yani adress degani) shunda pastdan elementref sabab kelgan divlarni stylelari shu holatga o'zgaradi bunga sabab pastdagi divlargdagi berilgan onclickda (iconlarga) collapse va reset functionlari berib qo'yilgan yani ona diviga berilishi kerak!!!
 
@@ -37,9 +44,12 @@ export const Sidebar = () => {
         if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(false); //collapse function onclick bo'lib setIsCollapsed true bo'lib sidebarni  widthi 0 bo'lib navbarRefni widthi 100% bo'lgandan keyin setIsCollapsed false qilinadi chunki endi pastdagi "240px", "calc(100% - 240)", "240" stylelari ishlashi kerak yani MenuIcon iconi chiqishi kerak
             setIsResetting(true);
-            sidebarRef.current.style.width = "240px"; //MenuIcon iconiga bosilganda 240px joy ochadi
-            navbarRef.current.style.width = "calc(100% - 240)"; //MenuIcon bosilganda calc bilan navbarref uchun 100% widthdan 240px joy ochadi yani ayirib tashaydi
-            navbarRef.current.style.left = "240"; //MenuIcon bosilganda joyni chap tomondan ochadi
+            /////// sidebarRef.current.style.width = "240px"; //MenuIcon iconiga bosilganda 240px joy ochadi
+            sidebarRef.current.style.width = isMobile ? "100%" : "240px"; // agar isMobile true bo'lsa sidebarref bor divni widthni 100 foiz yokida 240px qil
+            /////// navbarRef.current.style.width = "calc(100% - 240)"; //MenuIcon bosilganda calc bilan navbarref uchun 100% widthdan 240px joy ochadi yani ayirib tashaydi
+            navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 240)"; //agar ismobile true bo'lsa navbarref bor divni widthni 0 qil yokida???????????
+            /////// navbarRef.current.style.left = "240"; //MenuIcon bosilganda joyni chap tomondan ochadi
+            navbarRef.current.style.left = isMobile ? "100%" : "240"; //agar ismobile true bo'lsa navbarref bor divni  lefti 100 foiz bo'lsin yani chap tomonga butunlay kirib ketsin yani userni windovi 770pxdan kichkina bo'lsa sidebarni boshidan ko'rinmasligi uchun lekin 770pxdan ortiq bo'lganda sidebar ko'rinib turardi endi esa boshidan  faqat menuicon iconi ko'rinadi holos yani mobiledan kiradigan user uchun qulaylik
             setTimeout(() => setIsResetting(false), 300);
         }
     };
@@ -72,23 +82,30 @@ export const Sidebar = () => {
     const handleMouseUp = () => {
         //mishka qo'yvorilgandan keyin ishga tushadigan hodisa function yani hodisalarni false qilib udalit qiladi
         isResizing.current = false;
-        document.removeEventListener("mousemove", handleMouseMove);//handleMouseMove functioni va addeventlistinerni  mousemove paramaterlarini udalit qilindi
+        document.removeEventListener("mousemove", handleMouseMove); //handleMouseMove functioni va addeventlistinerni  mousemove paramaterlarini udalit qilindi
         document.removeEventListener("mouseup", handleMouseUp);
     };
+
+    
 
     return (
         <>
             <div
                 className={cn(
                     "group/sidebar  h-screen bg-secondary overflow-y-auto relative flex w-60 flex-col z-50",
-                    isResetting && "transition-all ease-in  duration-300"
+                    isResetting && "transition-all ease-in  duration-300",
+                    isMobile && "w-0"
+                    //yani width 770pxdan kam bo'lsa bu sidebarni asosiy ona divini widthi 0 bo'ladi yani ko'rinmay qoladi nima uchun w-0 o'rniga hidden berilmadi?????
                 )}
                 ref={sidebarRef} //elementref ishlashi uchun ref jsxda shunday atribut bilan berib qo'yilishi kerak
             >
                 {/* bu ona divdagi group classi bola divgaham yozildi shunda bitta class ikkita divga bir hil ishlaydi masalan pastdagi yetim divda group-hover:opacity-100" classi bor bu degani pastdagi divda cursor tursa hover bo'lib shu classlar ishlaydi yani pastdagi divda opacity 0 bo'lib turgabi group-hover:opacity-100" ga o'zgaradi yani cursor faqat pastdagi yetim divga o'tganda shu group-hover:opacity-100" hover klasslari ishlaydi .....................group/sidebar va  group-hover/sidebar:opacity-100 deb yozilishini sababi esa bu sahifada yana shunaqa grouplar qilinganda hammasi ishlashi uchun masalan groupni o'zi bilan qilsa faqat shu group ishlaydi agar bu groupga nom berilsa (bu holatda sidebar deb nom berildi chunki faqat sidebar uchun kerakli group) har hil nomdagi hamma grouplar ishlaydi */}
 
                 <div
-                    className="h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition"
+                    className={cn(
+                        "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
+                        isMobile && "opacity-100"
+                    )}
                     role="button"
                     onClick={collapse} //bu div ichidagi ChevronsLeft iconiga click bo'lganda shu function ishlaydi
                 >
@@ -106,7 +123,8 @@ export const Sidebar = () => {
             <div
                 className={cn(
                     "absolute top-0 z-50 left-60 w-[calc(100% - 240px)]",
-                    isResetting && "transition-all ease-in  duration-300"
+                    isResetting && "transition-all ease-in  duration-300",
+                    isMobile && "w-full left-0"
                 )}
                 ref={navbarRef}
             >
