@@ -2,8 +2,14 @@
 import { cn } from "@/lib/utils";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
 import React, { ElementRef, useRef, useState } from "react";
+import {useMediaQuery} from "usehooks-ts"//npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
 
 export const Sidebar = () => {
+
+    const isMobile = useMediaQuery("(max-width: 770px)")//agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
+    // console.log(isMobile);
+    
+
     const sidebarRef = useRef<ElementRef<"div">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null); //Elementlar React ilovalarining eng kichik qurilish bloklaridir . Element foydalanuvchi interfeysida nima bo'lishi kerakligini belgilaydi. Element - bu DOM tugunlari nuqtai nazaridan biz nimani ko'rishni xohlayotganimizni tavsiflovchi oddiy ob'ekt. Reaktsiya elementini yaratish DOM elementlariga nisbatan oson. Element JSX yordamida yoki JSXsiz React yordamida yaratilishi mumkin.//yani bu holatda ElementRef objecti bilan div yaratib boshlang'ich qiymati null qilindi
     const isResizing = useRef(false);
@@ -22,6 +28,7 @@ export const Sidebar = () => {
             sidebarRef.current.style.width = "0"; //ChevronsLeft iconi bor divni widthini 0 qiladi yani yopadi
             navbarRef.current.style.width = "100%"; //MenuIcon iconi bor divni widthini 100% qiladi yani ochadi
             navbarRef.current.style.left = "0"; //MenuIcon iconini chap tomonga 0pxgacha oladi asli kerakmasidi manimcha
+            setTimeout(() => setIsResetting(false), 300); //isResetting && "transition-all ease-in  duration-300" classidagi transitonni false qilish uchun
         }
     };
 
@@ -33,6 +40,7 @@ export const Sidebar = () => {
             sidebarRef.current.style.width = "240px"; //MenuIcon iconiga bosilganda 240px joy ochadi
             navbarRef.current.style.width = "calc(100% - 240)"; //MenuIcon bosilganda calc bilan navbarref uchun 100% widthdan 240px joy ochadi yani ayirib tashaydi
             navbarRef.current.style.left = "240"; //MenuIcon bosilganda joyni chap tomondan ochadi
+            setTimeout(() => setIsResetting(false), 300);
         }
     };
 
@@ -50,9 +58,9 @@ export const Sidebar = () => {
     const handleMouseMove = (event: MouseEvent) => {
         if (!isResizing.current) return; // agar isResizing false bo'lsa hech qanday mouse hodisasi bo'lmasin
         let newWidth = event.clientX; // global let object newWidth ichida hodisa ovoldik yani x o'qi bo'yicha windowni newWidthga ovoldik
+
         if (newWidth < 240) newWidth = 240; //agar newWidth x o'qi bo'yichda 240pxdan kam bo'lsa newWidthni yana 240 qilib qo'yish yani sidebar 240pxdan kam bo'lmasligi kerak agar user hohlasa faqat ko'p bo'lishi kerak
         if (newWidth > 400) newWidth = 400; //yani sidebar 400pxgacha chapga o'sadi undan ko'p emas shunda user sidebarni kamida 240 ko'pi bilan 400pxgacha cho'zaoladi
-
         if (sidebarRef.current && navbarRef.current) {
             // sidebarRef.current && navbarRef.current true bo'lsa yangi hodisalar ilinayapti
             sidebarRef.current.style.width = `${newWidth}px`; //newWidth ni pxlda berish aytib qo'yildi yani bu holatda handleMouseMove functioni ishlaganda
@@ -62,9 +70,9 @@ export const Sidebar = () => {
     };
 
     const handleMouseUp = () => {
-        //mishka qo'yvorilgandan keyin ishga tushadigan hodisa functioni
+        //mishka qo'yvorilgandan keyin ishga tushadigan hodisa function yani hodisalarni false qilib udalit qiladi
         isResizing.current = false;
-        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mousemove", handleMouseMove);//handleMouseMove functioni va addeventlistinerni  mousemove paramaterlarini udalit qilindi
         document.removeEventListener("mouseup", handleMouseUp);
     };
 
@@ -90,7 +98,7 @@ export const Sidebar = () => {
 
                 <div
                     className="absolute right-0 top-0 w-1 h-full cursor-ew-resize bg-primary/10 opacity-0 group-hover/sidebar:opacity-100 transition"
-                    onMouseDown={handleMouseDown}
+                    onMouseDown={handleMouseDown} //onMouseDown reactni qiymati yani mishka bilan ishlash uchunichlatiladi yani function qabul qiladi huddi onclick onchangega o'hshab ishlayidi faqat michkaga tasir qiladi
                 />
                 {/* bu yetim div yani sidebar qismini qolgan asosiy qisimdan ajratish uchun yani tepadan pastga to'g'ri chiziq tortish uchun cursor-ew-resize classi esa shu chiziqga kelganda cursorni chap o'ng tarafgaham strelkali cursor chiqaradi>>> ↔ ↔ ↔ ↔ ↔ <<< yani ekrandagi sidebar va qolgan qismlarni o'lchamini o'zgartirish uchun   */}
             </div>
