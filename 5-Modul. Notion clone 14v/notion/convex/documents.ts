@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 //Mutatsiyalar ma'lumotlar bazasiga ma'lumotlarni kiritadi, yangilaydi va o'chiradi, autentifikatsiyani tekshiradi yoki boshqa biznes mantiqini bajaradi va ixtiyoriy ravishda mijoz ilovasiga javob qaytaradi.
 
@@ -43,4 +43,26 @@ export const createDocument = mutation({
     },
 });
 
+export const getDocuments = query({
+    args: {
+        parentDocument: v.optional(v.id("documents")),
+    },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        if (!identity) {
+            throw Error("Not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        const documents = await ctx.db
+            .query("documents")
+            .filter((q) => q.eq(q.field("isArchived"), false))
+            .order("desc")
+            .collect()
+
+        return documents;
+    },
+});
 

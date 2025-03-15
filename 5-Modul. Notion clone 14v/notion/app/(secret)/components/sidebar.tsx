@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
 import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"; //npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
+import { DocumentList } from "./document-list";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -86,8 +87,6 @@ export const Sidebar = () => {
         document.removeEventListener("mouseup", handleMouseUp);
     };
 
-    
-
     return (
         <>
             <div
@@ -111,6 +110,16 @@ export const Sidebar = () => {
                 >
                     {/* opacity-0 group-hover/sidebar:opacity-100 transition shu classlar sabab cursor faqat sidebarga yani shu ona divga o'tgandagina pastdagi yetim divga o'hshab bu iconham ko'rinadi cursor shu ona div ichida bo'lmaganda bu iconham pastdagi yetimdivday ko'rinmay qoladi yani faqat hover bo'lganda ishlaydi role="button" atributini berilishi sababi bu huddi button rolida vazifasi buttun masalan bu iconga click bo'lganda hodisa sodir qilish uchun */}
                     <ChevronsLeft className="h-6 w-6" />{" "}
+                </div>
+
+
+                <div>
+                    User Profile Item
+                </div>
+
+
+                <div className="mt-4 ">
+                    <DocumentList/>
                 </div>
 
                 <div
