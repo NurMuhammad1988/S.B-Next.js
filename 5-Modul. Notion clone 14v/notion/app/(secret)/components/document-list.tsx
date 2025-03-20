@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
-//convex/document.ts papkada convexda dacument yaratib app/(secret)/documnets/page.tsx failda esa yaratgan userni uiga chaqirib bu failda esa shu documentni o'zini chiqardik
+//convex/document.ts papkada convexda dacument yaratib app/(secret)/documnets/page.tsx failda esa yaratgan userni uiga chaqirib bu failda esa shu documentni o'zini user bilan birga jsxga chiqardik
 
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
@@ -23,13 +23,17 @@ export const DocumentList = ({
     });
 
     // console.log(documents);//create bo'lgan documentni ko'rish logi
-    
 
-    return <>
-    {documents?.map(document => (
-        <div key={document._id}>
-            <Item/>
-        </div>
-    ))}
-    </>
+    return (
+        <>
+            {documents?.map((document) => (//user va user create qiladigan documentni (secret)/components/item.tsx fasiliga props bilan jo'natildi qiymatlarida esa convexdan keladigan Id va label bor idda esa aynan shu user crerate qiladigan documentlarni idisi bor labelda esa document.tsda yozilgan getDocument functiondan keladigan documentni string typli title bor
+                <div key={document._id}>
+                    <Item 
+                      label={document.title}
+                      id={document._id}
+                      />
+                </div>
+            ))}
+        </>
+    );
 };

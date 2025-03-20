@@ -68,4 +68,3 @@ export const getDocuments = query({//bu query convexni functioni vazifasi???/ us
     },
 });
 
-// 4. Create document 11:53 da qoldi
