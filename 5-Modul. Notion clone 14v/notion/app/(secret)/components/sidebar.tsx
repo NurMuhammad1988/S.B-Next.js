@@ -120,6 +120,7 @@ export const Sidebar = () => {
 
                 <div className="mt-4 ">
                     <DocumentList/>
+                    {/* DocumentList component boshqa joyda yozilib bu sidebarga chaqirildi */}
                 </div>
 
                 <div

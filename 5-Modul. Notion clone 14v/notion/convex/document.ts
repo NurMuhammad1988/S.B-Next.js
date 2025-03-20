@@ -30,7 +30,7 @@ export const createDocument = mutation({
             userId,
             isArchived: false,
             isPublished: false,
-            // argsdan hammasi chaqirilmasa hato chiqadi chunki bu ts (lekin optionallar ichidagilar chaqirilmasaham hatosiz ishlaydi chunki bu holatda schemadagi hammanarsa chaqirilmadi lekin shundaham hato chiqmadi
+            // argsdan hammasi chaqirilmasa hato chiqadi chunki bu ts (lekin optionallar ichidagilar chaqirilmasaham hatosiz ishlaydi chunki bu holatda schemadagi hamma narsa chaqirilmadi lekin shundaham hato chiqmadi
         });
 
         //createDocument function ichidagi args qiymati sabab argsni bolasi parentDocument qiymati ichidagi birinchi parametr (v.id("documents") yani id ovolgan documents ssilkasi sabab document nomli o'zgaruvchidagi insert va insert parametridagi alsi idsi bor ssilka "document" sabab convex serverda idisi bor alohida object ochildi va u objectda shu qiymatlar bor>>>title: args.title,
@@ -66,3 +66,4 @@ export const getDocuments = query({
     },
 });
 
+// 4. Create document 11:53 da qoldi
