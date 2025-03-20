@@ -4,6 +4,7 @@ import { v } from "convex/values";
 
 ///////////////////////bu dacuments schema.ts bilan birlashayaptimi??? ha birlasharekan yani schemaga (schema.ts) qarab dacument (documents.ts) convexda yaratiladi
 
+
 export const createDocument = mutation({
     //convexdan keladigan function
     args: {
@@ -23,7 +24,7 @@ export const createDocument = mutation({
 
         const userId = identity.subject; //bu subject userni idsi hissoblanadi user idni convex shunday nomlagan// userId o'zgaruvchi identity o'zgaruvchi ichida getUserIdentity bilan kelgan userni datalarini oladi yani subjectni oladi agar user aftorizatsa qilgan bo'lsa shuni idsiga qarab userni oladi hamma schemadagi datalari bilan oladi
         const document = await ctx.db.insert("documents", {
-            //document o'zgaruvchi ichida args bor ctxni va mutation functionini db yani databasa qiymatini oladi ma insert qilibyani ikkalasini kiritib documents yaratadi qayerga yaratadi convex serverida yaratadi
+            //document o'zgaruvchi ichida args bor ctxni va mutation functionini db yani databasa qiymatini oladi ma insert qili yani ikkalasini kiritib documents yaratadi qayerga yaratadi convex serverida yaratadi
             //dacument create qilish  //birinchi parametrda tableni nomi berilishi kerak bu holatda "documents", ikkinchisida valuelar  berilishi kerak yani pastdagi qiymatlar
             title: args.title,
             parentDocument: args.parentDocument,
@@ -43,24 +44,25 @@ export const createDocument = mutation({
     },
 });
 
-export const getDocuments = query({
+
+export const getDocuments = query({//bu query convexni functioni vazifasi???/ userni crete qilgan documentlarini qayerda yaratish va qaysilarini uiga ko'rsatish va userni aniqlash
     args: {
         parentDocument: v.optional(v.id("documents")),
     },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
 
-        if (!identity) {
+        if (!identity) {//agar user false bo'lsa
             throw Error("Not authenticated");
         }
 
         const userId = identity.subject;
 
         const documents = await ctx.db
-            .query("documents")
-            .filter((q) => q.eq(q.field("isArchived"), false))
-            .order("desc")
-            .collect()
+            .query("documents")//endi user bor createDocument bor endi document yaratilayotganda query so;rov bilan qayerda yaratilishi aytdik yani tableni nomi "documents" query birinchi shu "documents" ga boradi bu "documents" yuqoridagi createDocument functionini args_ida berilgan yani bu query shu createDocumnent/parentDocumentdagi "documents"ga oboradi
+            .filter((q) => q.eq(q.field("isArchived"), false))//yani query "documents" ga borib userni datalarini oladi filter esa userni isArchived qiymatlarini olmaslik kerey masalan eski documentlarini olmaslik kerey shu uchu isArchived false qilib qo'yildi
+            .order("desc")//userni hamma yangi documentlarni chiqarib beradi
+            .collect()//yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi
 
         return documents;
     },
