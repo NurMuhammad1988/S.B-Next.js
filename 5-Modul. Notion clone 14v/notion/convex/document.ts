@@ -60,7 +60,14 @@ export const getDocuments = query({
 
         const documents = await ctx.db
             .query("documents") //endi user bor createDocument bor endi document yaratilayotganda query so;rov bilan qayerda yaratilishi aytdik yani tableni nomi "documents" query birinchi shu "documents" ga boradi bu "documents" yuqoridagi createDocument functionini args_ida berilgan yani bu query shu createDocumnent/parentDocumentdagi "documents"ga oboradi
-            .withIndex("by_user_parent")//userId bilan parentDocument qiymatlari birlashtirildi bu qiymatlarda convexda object bor yani objectlar birlashtirildi sababi userIdiga qarab user yaratadigan documentlarga bola documentlarham qo'shish yani user ona doxument  chida bola documentham yarata olishi kerak bu uchun esa userni idi va bola documentni idis kerak shu uchun bu ikkala qiymat convex/schema.ts failida convexni index metodi bilan "by_user_parent" siislkasida  birlashtirilgan va "by_user_parent" shu ssilka bilan withIndex metodi bilan chaqirib ishlatildi 
+            .withIndex(
+                "by_user_parent", //userId bilan parentDocument qiymatlari birlashtirildi bu qiymatlarda convexda object bor yani objectlar birlashtirildi sababi userIdiga qarab user yaratadigan documentlarga bola documentlarham qo'shish yani user ona document  chida bola documentham yarata olishi kerak bu uchun esa userni idi va bola documentni idis kerak shu uchun bu ikkala qiymat convex/schema.ts failida convexni index metodi bilan "by_user_parent" siislkasida  birlashtirilgan va "by_user_parent" shu ssilka bilan withIndex metodi bilan chaqirib ishlatildi
+                (q) =>
+                    q
+                        .eq("userId", userId)
+                        .eq("parentDocument", args.parentDocument) //agar withIndexda kelgan "by_user_parent" da "userId" bor bo'lsa yani convex/schema.tsda yoratiladigan userId bor bo'lsa shu userni idsi bilan shu faildagi userId o'zgaruvchida kelgan userid bilan birlashtir yani convex ishinch hosil qilishi kerak yani ota document bilan bola documentni bitta useridli user yaratayaptimi yo'qmi shini aniqlash uchun shunda filtir qilindi yani agar schemada birlashtirilgan userid bilan bu faildagi user idni idilari bir hil bo'lsa useridlarni birlashtir yokida yo'q (bu holatda "userId" "by_user_parent" da kelgan user id userId esa shu failda yaratilgan userId o'zgaruvchi )/// huddi shuday "by_user_parent" da kelgan parentDocument teng bo'lsa   shu faildagi args ichidagi parentDocumentga shunda ota documentni va bola documentni bitta user yaratayotganini aniqladi yani shunday bo'lsagina bola document yaratiladi
+            )
+
             .filter((q) => q.eq(q.field("isArchived"), false)) //yani query "documents" ga borib userni datalarini oladi filter esa userni isArchived qiymatlarini olmaslik kerey masalan eski documentlarini olmaslik kerey shu uchu isArchived false qilib qo'yildi
             .order("desc") //userni hamma yangi documentlarni chiqarib beradi
             .collect(); //yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi

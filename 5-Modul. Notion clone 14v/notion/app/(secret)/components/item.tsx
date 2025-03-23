@@ -13,6 +13,7 @@ import { useMutation } from "convex/react";
 import {
     ChevronDown,
     ChevronLeft,
+    ChevronRight,
     MoreHorizontal,
     Plus,
     Trash,
@@ -22,9 +23,12 @@ import React from "react";
 interface ItemProps {
     id?: Id<"documents">;
     label: string; //bu label document-list.tsxdan props bilan jo'natilgan va qiymatiga documents.tsda yozilgan getDocument functionda parentdocument bilan link berilgan convex serverdagi "documents" papkadagi link berilgan yani labelda convex serverdan keladigan documentni string qiymatli objecti bor
+    level?: number;
+    expanded?: boolean;
+    onExpand?: () => void;
 }
 
-export const Item = ({ label, id }: ItemProps) => {
+export const Item = ({ label, id, level, expanded, onExpand }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
 
     const createDocument = useMutation(api.document.createDocument); //convex/document.tsdan kelepti usemutatsion esa bu item.tsx fail uchunham vreatedocument functionni ulab beradi
@@ -42,20 +46,38 @@ export const Item = ({ label, id }: ItemProps) => {
             //createDocumentda convex/document.ts faildan kelgan createDocument functioni qiymatlari bilan keldi agar yuqoridagi false yo'q bo'lsa yani id kelgan bo'lsa createDocument convexda document yaratadi yani  app/(secret)/documents/page.tsx failda "create a blank" buttoni bosilgandan keyin yaratilgan document ichida Plus iconi bor shu Plus iconga click bo'lganda asosiy document ichida yana document yaratiladi yani ona document ichida bola document yaratiladi
             title: "Untitled",
             parentDocument: id, //bola document yaratish uchun masalan asosiy app/(secret)/documents/page.tsx failda bu createDocument chaiqrilganda faqat createDocumentni title qiymati chaqirilgan edi endi esa parentDocument qiymatiham chaiqirildi va bu asosiy onCreateDocument functioni Plus iconi bor divga berib qo'yildi yani shunda "create a blank" buttoniga click bo'lgandan keyin shu item.tsx faili chiqadi va Plus iconiga bosilganda onCreateDocument functioni convex/documents.tsdan chaiqirilgan createDocumentni ikkala qiymatiham ishlab "create a blank" ga bosilganda yaratilgan asosiy document ichida bola document yaratadi
-        });
+        }).then((document)=> {
+            if(!expanded){
+                onExpand?.()
+
+
+            }
+        })
     };
+
+ 
+
+    const handleExpand = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        event.stopPropagation();
+        onExpand?.();
+    };
+
+    const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
     return (
         <div
-            style={{ paddingLeft: "12px" }}
+            style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }} //yani agar ota documentni bolasi bor bo'lsa yani level true bo'lsa yani document-item.tsxda kelgan level + 1 yani true bo'lsa left tomondan paddingni 12 ga ko'paytirib 12px qo'shadi yani
             className="group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium"
         >
             {!!id && (
                 <div
                     className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
                     role="button"
+                    onClick={handleExpand}
                 >
-                    <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground/50" />
+                    <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50" />
                 </div>
             )}
             <span className="truncate">{label}</span>
