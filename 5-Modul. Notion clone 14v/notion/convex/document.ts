@@ -4,7 +4,6 @@ import { v } from "convex/values";
 
 ///////////////////////bu dacuments schema.ts bilan birlashayaptimi??? ha birlasharekan yani schemaga (schema.ts) qarab dacument (documents.ts) convexda yaratiladi
 
-
 export const createDocument = mutation({
     //convexdan keladigan function
     args: {
@@ -44,27 +43,28 @@ export const createDocument = mutation({
     },
 });
 
-
-export const getDocuments = query({//bu query convexni functioni vazifasi???/ userni crete qilgan documentlarini qayerda yaratish va qaysilarini uiga ko'rsatish va userni aniqlash
+export const getDocuments = query({
+    //bu query convexni functioni vazifasi???/ userni crete qilgan documentlarini qayerda yaratish va qaysilarini uiga ko'rsatish va userni aniqlash
     args: {
         parentDocument: v.optional(v.id("documents")),
     },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
 
-        if (!identity) {//agar user false bo'lsa
+        if (!identity) {
+            //agar user false bo'lsa
             throw Error("Not authenticated");
         }
 
         const userId = identity.subject;
 
         const documents = await ctx.db
-            .query("documents")//endi user bor createDocument bor endi document yaratilayotganda query so;rov bilan qayerda yaratilishi aytdik yani tableni nomi "documents" query birinchi shu "documents" ga boradi bu "documents" yuqoridagi createDocument functionini args_ida berilgan yani bu query shu createDocumnent/parentDocumentdagi "documents"ga oboradi
-            .filter((q) => q.eq(q.field("isArchived"), false))//yani query "documents" ga borib userni datalarini oladi filter esa userni isArchived qiymatlarini olmaslik kerey masalan eski documentlarini olmaslik kerey shu uchu isArchived false qilib qo'yildi
-            .order("desc")//userni hamma yangi documentlarni chiqarib beradi
-            .collect()//yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi
+            .query("documents") //endi user bor createDocument bor endi document yaratilayotganda query so;rov bilan qayerda yaratilishi aytdik yani tableni nomi "documents" query birinchi shu "documents" ga boradi bu "documents" yuqoridagi createDocument functionini args_ida berilgan yani bu query shu createDocumnent/parentDocumentdagi "documents"ga oboradi
+            .withIndex("by_user_parent")//userId bilan parentDocument qiymatlari birlashtirildi bu qiymatlarda convexda object bor yani objectlar birlashtirildi sababi userIdiga qarab user yaratadigan documentlarga bola documentlarham qo'shish yani user ona doxument  chida bola documentham yarata olishi kerak bu uchun esa userni idi va bola documentni idis kerak shu uchun bu ikkala qiymat convex/schema.ts failida convexni index metodi bilan "by_user_parent" siislkasida  birlashtirilgan va "by_user_parent" shu ssilka bilan withIndex metodi bilan chaqirib ishlatildi 
+            .filter((q) => q.eq(q.field("isArchived"), false)) //yani query "documents" ga borib userni datalarini oladi filter esa userni isArchived qiymatlarini olmaslik kerey masalan eski documentlarini olmaslik kerey shu uchu isArchived false qilib qo'yildi
+            .order("desc") //userni hamma yangi documentlarni chiqarib beradi
+            .collect(); //yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi
 
         return documents;
     },
 });
-
