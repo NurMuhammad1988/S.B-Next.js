@@ -27,14 +27,17 @@ interface ItemProps {
 export const Item = ({ label, id }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
 
-    const createDocument = useMutation(api.document.createDocument)
+    const createDocument = useMutation(api.document.createDocument)//convex/document.tsdan kelepti usemutatsion esa bu item.tsx fail uchunham vreatedocument functionni ulab beradi
 
-    const onCreateDocument = (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> {
+    const onCreateDocument = (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> {//onCreateDocument function jsx ichida pastda divga berilgan divda Plus iconiga click bo'lganda Plus iconni ona divida turgan bu onCreateDocument function ishlaydi 
 
-        event.stopPropagation()
+        event.stopPropagation()//bitta event sodir bo'lgandan keyin eventni to'htatadi
 
-        if(!id) return
-        createDocument({
+        if(!id) return//agar convex serverda genereted bo'lib keladigan  id yo'q bo'lsa hech narsa qaytarmaydi
+
+
+ 
+        createDocument({//createDocumentda convex/document.ts faildan kelgan createDocument functioni qiymatlari bilan keldi agar yuqoridagi false yo'q bo'lsa yani id kelgan bo'lsa createDocument convexda document yaratadi yani  app/ (secret)/documents/page.tsx failda "create a blank" buttoni bosilgandan keyin yaratilgan document ichida Plus iconi bor shu Plus iconga click bo'lganda asosiy document ichida yana document yaratiladi yani ona document ichida bola document yaratiladi
             title: "Untitled",
             parentDocument:id
         })
@@ -73,7 +76,7 @@ export const Item = ({ label, id }: ItemProps) => {
                                 <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
                             </div>
                         </DropdownMenuTrigger>
-                        {/* DropdownMenuTrigger va DropdownMenuContent shadcn uidan kelgan componentlar bu componentlar ichida ts bila yozilganki DropdownMenuTrigger componentga click bo'lganda  DropdownMenuContent chiqadi bular shadcndan kelgan qaramsiz */}
+                        {/* DropdownMenuTrigger va DropdownMenuContent shadcn uidan kelgan componentlar bu componentlar ichida ts bila yozilganki DropdownMenuTrigger componentga click bo'lganda  DropdownMenuContent chiqadi bular shadcndan kelgan qaramsiz tekin codlar */}
 
                         <DropdownMenuContent
                             className="w-60"
@@ -87,6 +90,8 @@ export const Item = ({ label, id }: ItemProps) => {
                             </DropdownMenuItem>
 
                             <DropdownMenuSeparator />
+                            {/* DropdownMenuSeparator bu huddi hr yani chiziqcha yuqoridagi delete texti bilan last edidted by textni orasini ochib turgan hr */}
+
 
                             <div className="text-xs text-muted-foreground p-2">
                                 Last edited by
@@ -108,4 +113,3 @@ export const Item = ({ label, id }: ItemProps) => {
     );
 };
 
-#4. Create document 22:00 da qoldi
