@@ -27,22 +27,23 @@ interface ItemProps {
 export const Item = ({ label, id }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
 
-    const createDocument = useMutation(api.document.createDocument)//convex/document.tsdan kelepti usemutatsion esa bu item.tsx fail uchunham vreatedocument functionni ulab beradi
+    const createDocument = useMutation(api.document.createDocument); //convex/document.tsdan kelepti usemutatsion esa bu item.tsx fail uchunham vreatedocument functionni ulab beradi
 
-    const onCreateDocument = (event: React.MouseEvent<HTMLDivElement, MouseEvent>)=> {//onCreateDocument function jsx ichida pastda divga berilgan divda Plus iconiga click bo'lganda Plus iconni ona divida turgan bu onCreateDocument function ishlaydi 
+    const onCreateDocument = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        //onCreateDocument function jsx ichida pastda divga berilgan divda Plus iconiga click bo'lganda Plus iconni ona divida turgan bu onCreateDocument function ishlaydi
 
-        event.stopPropagation()//bitta event sodir bo'lgandan keyin eventni to'htatadi
+        event.stopPropagation(); //bitta event sodir bo'lgandan keyin eventni to'htatadi
 
-        if(!id) return//agar convex serverda genereted bo'lib keladigan  id yo'q bo'lsa hech narsa qaytarmaydi
+        if (!id) return; //agar convex serverda genereted bo'lib keladigan  id yo'q bo'lsa hech narsa qaytarmaydi
 
-
- 
-        createDocument({//createDocumentda convex/document.ts faildan kelgan createDocument functioni qiymatlari bilan keldi agar yuqoridagi false yo'q bo'lsa yani id kelgan bo'lsa createDocument convexda document yaratadi yani  app/ (secret)/documents/page.tsx failda "create a blank" buttoni bosilgandan keyin yaratilgan document ichida Plus iconi bor shu Plus iconga click bo'lganda asosiy document ichida yana document yaratiladi yani ona document ichida bola document yaratiladi
+        createDocument({
+            //createDocumentda convex/document.ts faildan kelgan createDocument functioni qiymatlari bilan keldi agar yuqoridagi false yo'q bo'lsa yani id kelgan bo'lsa createDocument convexda document yaratadi yani  app/(secret)/documents/page.tsx failda "create a blank" buttoni bosilgandan keyin yaratilgan document ichida Plus iconi bor shu Plus iconga click bo'lganda asosiy document ichida yana document yaratiladi yani ona document ichida bola document yaratiladi
             title: "Untitled",
-            parentDocument:id
-        })
-
-    }
+            parentDocument: id, //bola document yaratish uchun masalan asosiy app/(secret)/documents/page.tsx failda bu createDocument chaiqrilganda faqat createDocumentni title qiymati chaqirilgan edi endi esa parentDocument qiymatiham chaiqirildi va bu asosiy onCreateDocument functioni Plus iconi bor divga berib qo'yildi yani shunda "create a blank" buttoniga click bo'lgandan keyin shu item.tsx faili chiqadi va Plus iconiga bosilganda onCreateDocument functioni convex/documents.tsdan chaiqirilgan createDocumentni ikkala qiymatiham ishlab "create a blank" ga bosilganda yaratilgan asosiy document ichida bola document yaratadi
+        });
+    };
 
     return (
         <div
@@ -92,7 +93,6 @@ export const Item = ({ label, id }: ItemProps) => {
                             <DropdownMenuSeparator />
                             {/* DropdownMenuSeparator bu huddi hr yani chiziqcha yuqoridagi delete texti bilan last edidted by textni orasini ochib turgan hr */}
 
-
                             <div className="text-xs text-muted-foreground p-2">
                                 Last edited by
                                 {user?.fullName}
@@ -103,7 +103,7 @@ export const Item = ({ label, id }: ItemProps) => {
                     <div
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
                         role={"button"}
-                        onClick={onCreateDocument}
+                        onClick={onCreateDocument} //bu item.tsx faili onCreateDocument Plus iconga berib qo'yildi va bosilganda bola document yaratiladi
                     >
                         <Plus className="h-4 w-4 text-muted-foreground" />{" "}
                     </div>
@@ -112,4 +112,3 @@ export const Item = ({ label, id }: ItemProps) => {
         </div>
     );
 };
-

@@ -10,7 +10,7 @@ export const createDocument = mutation({
     args: {
         //createDocument ichida args qiymatini vazifasi shuki schemadan olinadigan qiymatlarni bitta object ichida jamlab typlarini belgilash
         title: v.string(),
-        parentDocument: v.optional(v.id("documents")), //parentDocument optional yani so'rovda kelmay qolsaham hato qaytarmaydi id userni idisi dacuments esa bu ssilka yani parentDocumentni ikkinchi parametridagi "dacuments" yaratilayotgan dacument yani tableni nomi
+        parentDocument: v.optional(v.id("documents")), //parentDocument optional yani so'rovda kelmay qolsaham hato qaytarmaydi id userni idisi dacuments esa bu ssilka yani parentDocumentni ikkinchi parametridagi "dacuments" yaratilayotgan dacument yani tableni nomi yani bu parentDocument bola document yaratadi va ona document ssilkasiga yani convexda birinchi yaratilgan "document" papkasiga jo'natadi convex esa shu ssilkaga qarab bola documentni yaratadi
     },
 
     handler: async (ctx, args) => {

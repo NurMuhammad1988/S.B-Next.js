@@ -45,7 +45,9 @@ const DocumentPage = () => {
             <Button onClick={onCreateDocument}>
                 <Plus className="h-4 w-4 mr-2" />
                 Create a blank
-                {/* Create a blank buttoniga click bo'lganda onCreateDocument functioni ishlab ichidagi mutatsiya bo'ib kelgan createDocument functoni sabab convexda document yaratiladi yani convex  convex/documents.ts failidagi createDocument functionida aytilgan ishlar bajariladi  */}
+           
+           
+                {/* Create a blank buttoniga click bo'lganda onCreateDocument functioni ishlab ichidagi mutatsiya bo'ib kelgan createDocument functoni sabab convexda document yaratiladi yani convex  convex/documents.ts failidagi createDocument functionida aytilgan ishlar bajariladi va bu Plus iconiham document create bo'lgandan keyin chiqadi va plus iconga click bo'lgandaham  onCreateDocument ishga tushadi va bola document yaratadi yani asosiy yaratilgan ona document ichida bola document yaratadi chunki Plus icon bor ona divga yani buttonga onCreateDocument onclikda berib qo'yilgan onCreateDocumentda faqat title qiymati chaqirilgan item.tsx failida esa  parentDocument:id qiymatiham chaiqirilgan bu  parentDocument:id qiymati  convex/documents.ts failidagi createDocument functionida bola documentyaratish uchun yozib qo'yilgan*/}
             </Button>
         </div>
     );
