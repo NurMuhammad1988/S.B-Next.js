@@ -202,3 +202,5 @@ const ProductDetailedPage = () => {
 };
 
 export default ProductDetailedPage;
+
+// ended
