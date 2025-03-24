@@ -26,9 +26,17 @@ interface ItemProps {
     level?: number; //ota document ichiga bola documentni qo'shish uchun
     expanded?: boolean; //mantiqiy: chunki document-list.tsxdan kelgan bu qiymay false bo'lishixam mumkun yani prev borham yo'qham bo'lishi mumkun
     onExpand?: () => void; //document-item.tsxda yozilgan function shunchaki bo'sh yani endi bu faqilda chaqirilsa shu function togridan togri kelib ishlaydi hato qaytarmaydi
+    onClick?: () => void;
 }
 
-export const Item = ({ label, id, level, expanded, onExpand }: ItemProps) => {
+export const Item = ({
+    label,
+    id,
+    level,
+    expanded,
+    onExpand,
+    onClick,
+}: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
 
     const createDocument = useMutation(api.document.createDocument); //convex/document.tsdan kelepti usemutatsion esa bu item.tsx fail uchunham vreatedocument functionni ulab beradi
@@ -67,7 +75,11 @@ export const Item = ({ label, id, level, expanded, onExpand }: ItemProps) => {
     return (
         <div
             style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }} //yani agar ota documentni bolasi bor bo'lsa yani level true bo'lsa yani document-item.tsxda kelgan level + 1 yani true bo'lsa left tomondan paddingni 12 ga ko'paytirib 12px qo'shadi yani
-            className="group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium"
+            className={
+                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium"
+            }
+            role="button"
+            onClick={onClick}//bu holatda yozilishiga sabab onClick document-item.tsxdan  keletgan avoid fucntion bu jsx ichidaham ishlashi uchun masalan document-item.tsxda chaiqirilgan bu Item componentga click bo'lganda router document idisga qarab ota documentni sahifasiga jo'natadi va shu function bu yerdaham ishlasahi uchun yani masalan document-item.tsxda Item.tsx failiga click bo'lgandaham router ishlaydi va Item.tsx failidaham bola documentga yoki yana asosiy ota doxumentga click bo'lganda ishlaydi shu uchun return ichida asosiy ona div ichida onclick chaqirildi yani onclick ichida aslida onRedirect functioni bor
         >
             {!!id && (
                 <div

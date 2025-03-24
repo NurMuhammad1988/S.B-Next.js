@@ -8,6 +8,7 @@ import { useQuery } from "convex/react";
 import React, { useState } from "react";
 import { Item } from "./item";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface DocumentListProps {
     parentDocumentId?: Id<"documents">; //document idisi// "documents" esa functionni linki convex/document.tsda yozilgan createDocument functionida shu "documents" parentdocumentga parametr sifatida berib qo'yilgan tableni nomi table esa umumiy dacument turadigan umumiy ramka  yani parentdocument convexda document yaratish functionida bor qiymat id esa documentni idsi yani har bir yaratilgan documentni unikal idsi bo'ladi
@@ -20,6 +21,8 @@ export const DocumentList = ({
 }: DocumentListProps) => {
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
+    const router = useRouter()
+
     const onExpand = (documentId: string) => {
         //chevron iconga bosilganda ichidagi bola documentlarni ko'rsatish uchun yozilgan function tsx fail bo'lgani uchun functiongaham chaqiriladigan qiymatlarni typi aytilishi kerak bu holatda documentIdni typi string//yani onExpand functionda yangi documentId nomli qiymat yaratib unga string typini berib qo'ydik va ichida reactni Record qiymati bor Record typi object qabul qiladi yani record sabab yangi object qo'shiladi qanday yangi object qo'shiladi shu objectni o'zini yangisi ichiga yangi qiymat qo'shib yaratiladi record shu uchun kerak va ichida record typi bor setExpendedga reactda prev qiynati chaqirildi bu prev qiymat o'zidan oldingi holatni saqlab eslab qoladi va setExpanded ichuda prevni qayta nusxalab documentIdga massiv qilib solib qo'ydik
         setExpanded((prev) => ({
@@ -28,6 +31,10 @@ export const DocumentList = ({
             [documentId]: !prev[documentId],
         }));
     };
+
+    const onRedirect  = (documentId: string) => {//router bilan ota documentga click bo'lganda /documents/ papkaga yani doxument papkadagi page.tsxga push qildik yani jo'natdik shunda dynamic tarzda convexda yaratilgan ota documentga yani ota documentni convex serverda yatatilgan idisga push qildik
+        router.push(`/documents/${documentId}`)
+    }
 
     const documents = useQuery(api.document.getDocuments, {
         // bu holatda useQuery convex/document.ts failidagi getDocuments functioniga boradi va getDocuments functionidagi parentDocument qiymatiga ichida documentlarga id qo'yadigan convexni Id functionini typi bor parentDocumentIdni solib qo'yadi shunda  endi getDocuments functionini parentDocument qiymatida user yaratadigan documentni idisi bor qiymat (parentDocumentId)bor
@@ -60,6 +67,7 @@ export const DocumentList = ({
                     expanded && "last:block",
                     level === 0 && "hidden"
                 )}
+                
                 style={{
                     paddingLeft: level ? ` ${level * 12 + 25}px` : undefined,
                     // level bor bo'lsa yani boshida 0 ga teng level agar bola document bor bo'lsa + 1 bo'lib shu document-list.tsxda qaytadan render bo'lib keladigan level true bo'lsa ahu >>> ${level * 12 + 25}px class ishlasin yokida undefined bo'lsin
@@ -79,6 +87,7 @@ export const DocumentList = ({
                             level={level}
                             expanded={expanded[document._id]}
                             onExpand={() => onExpand(document._id)}
+                            onClick={() => onRedirect(document._id)}//Itemga click bo'lganda yani bu document-list.tsx failidan turib Item componentga click bo'lganda ichida router bor onRedirect function ishlaydi yani userni ota document idisi bor sahifaga yo'naltirish uchun
                         />
                         {/* bu fail document-list.tsx faili lekin shudaham doxumentlar map qilinib item.tsx failga jo'natilganda document-list.tsxniham map qilib item.tsx failiga jo'natdik yani failnui o'zini ichida shi failni o'zini map qildik endi document-list.tsx props bilan item.tsx ga jo'natilganda  parentDocumentId={document._id} jo'natildi yani birinchi yartilgan doxument idisi va level yani level typi number bunga 1 qo'shildi yani agar ichida getDocuments bor doxuments o'zgaruvchi ichida id bor bo'lsa yani document create qilingan bo'lsa level bilan shu doxumentga bola doxument qo'shadi yani har safar 1 ta doxument qo'shadi */}
 
