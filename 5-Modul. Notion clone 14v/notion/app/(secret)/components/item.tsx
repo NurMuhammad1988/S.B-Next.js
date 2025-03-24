@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 interface ItemProps {
     id?: Id<"documents">;
@@ -27,6 +28,8 @@ interface ItemProps {
     expanded?: boolean; //mantiqiy: chunki document-list.tsxdan kelgan bu qiymay false bo'lishixam mumkun yani prev borham yo'qham bo'lishi mumkun
     onExpand?: () => void; //document-item.tsxda yozilgan function shunchaki bo'sh yani endi bu faqilda chaqirilsa shu function togridan togri kelib ishlaydi hato qaytarmaydi
     onClick?: () => void;
+    active?: boolean;//dynamic keladigan document pagelarga active class berish uchun 
+    documentIcon?: string
 }
 
 export const Item = ({
@@ -36,6 +39,7 @@ export const Item = ({
     expanded,
     onExpand,
     onClick,
+    active
 }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
 
@@ -75,11 +79,12 @@ export const Item = ({
     return (
         <div
             style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }} //yani agar ota documentni bolasi bor bo'lsa yani level true bo'lsa yani document-item.tsxda kelgan level + 1 yani true bo'lsa left tomondan paddingni 12 ga ko'paytirib 12px qo'shadi yani
-            className={
-                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium"
+            className={cn(
+                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", 
+                active && "bg-primary/5 text-primary")//bu active qiymati document-list.tsxda yozilib propsdan jo'natilgan boolean qiymat sidebarni asosiy itemlari bor yani document create qilsa bo'ladigan bu item.tsx failida onda divga chaiqilib cn bilan bollean holatlarga qarab stle berildi yanai agar  bu ona div ichida mishka birorta buttonga (role="button") click qilinsa yani documentlarga bosilganda hover bosilgan joyda qoladi user qaysiu document ichida ekanligini bilish uchun shunda orqa foni va textni rangi o'zgarib qotib ajralib turadi
             }
             role="button"
-            onClick={onClick}//bu holatda yozilishiga sabab onClick document-item.tsxdan  keletgan avoid fucntion bu jsx ichidaham ishlashi uchun masalan document-item.tsxda chaiqirilgan bu Item componentga click bo'lganda router document idisga qarab ota documentni sahifasiga jo'natadi va shu function bu yerdaham ishlasahi uchun yani masalan document-item.tsxda Item.tsx failiga click bo'lgandaham router ishlaydi va Item.tsx failidaham bola documentga yoki yana asosiy ota doxumentga click bo'lganda ishlaydi shu uchun return ichida asosiy ona div ichida onclick chaqirildi yani onclick ichida aslida onRedirect functioni bor
+            onClick={onClick} //bu holatda yozilishiga sabab onClick document-item.tsxdan  keletgan avoid fucntion bu jsx ichidaham ishlashi uchun masalan document-item.tsxda chaiqirilgan bu Item componentga click bo'lganda router document idisga qarab ota documentni sahifasiga jo'natadi va shu function bu yerdaham ishlasahi uchun yani masalan document-item.tsxda Item.tsx failiga click bo'lgandaham router ishlaydi va Item.tsx failidaham bola documentga yoki yana asosiy ota doxumentga click bo'lganda ishlaydi shu uchun return ichida asosiy ona div ichida onclick chaqirildi yani onclick ichida aslida onRedirect functioni bor
         >
             {!!id && (
                 <div
