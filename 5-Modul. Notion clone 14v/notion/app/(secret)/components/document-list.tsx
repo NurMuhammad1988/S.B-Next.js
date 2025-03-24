@@ -36,6 +36,22 @@ export const DocumentList = ({
 
     // console.log(documents);//create bo'lgan documentni ko'rish logi
 
+    if (documents === undefined) {
+        return (
+            <>
+                <Item.Skeleton level={level} />
+                {/* bu loader item.tsx failida alohida function ichida yozilganshu sabab Item componentni alohida functioni sifatida Item.Skeleton qilib chaqirildi yani item.tsx ni aynan shu functioni alohida chaqirib olindi */}
+                {/* bu skeleton shadcn uidan kelgan loader component bu holatda agar document undefined bo'lsa shu loader undefined aniq bo'lguncha yoki serverdan documentlar kelguncha ishlab turadi levelni qo'yilganligi sababi shuku bola documentlar shu levelda + 1 bilan keladi yani levelda keladigan itemlargaham bu loader ishlaydi  */}
+                {level === 0 && ( //agar levelda + 1 bilan keladigan doxumentlar nol bo'lsa yani sorov bajarilgandan keyinha nolligicha qolsa shu nolni ko'rsatish uchunham loader bir ishlaydi
+                    <>
+                        <Item.Skeleton level={level} />
+                        <Item.Skeleton level={level} />
+                    </>
+                )}
+            </>
+        );
+    }
+
     return (
         <>
             <p
@@ -46,12 +62,13 @@ export const DocumentList = ({
                 )}
                 style={{
                     paddingLeft: level ? ` ${level * 12 + 25}px` : undefined,
+                    // level bor bo'lsa yani boshida 0 ga teng level agar bola document bor bo'lsa + 1 bo'lib shu document-list.tsxda qaytadan render bo'lib keladigan level true bo'lsa ahu >>> ${level * 12 + 25}px class ishlasin yokida undefined bo'lsin
                 }}
             >
                 No documents found.
                 {/* agar ota documentni bolasi bo'lmasa shu text ishlaydi yani bu holatda p ichida classda default holatda hidden classi berildi yani bola document bo'lsa hech qanday "No documents found." texti chiqmeydi agar expanded true bo'lsa yani ichida prev bilan nusxa qilingan eskiholati bor bo'lsa yani bola document bor bo'lsa yani expanded state ichida boladoxument bor bo'lsa yani true bo'lsa ohirgi block lasy block ishlab bu fragment (ona div) ichidagi ohirgi element block bo'ladiyani hiddendan chiqadi yanibu fragment ichidagi ohirgi div blockidagi docemtns map qilingan bloch ishlaydi */}
             </p>
-            {documents?.map(
+            {documents.map(
                 (
                     document //user va user create qiladigan documentni (secret)/components/item.tsx fasiliga props bilan jo'natildi qiymatlarida esa convexdan keladigan Id va label bor idda esa aynan shu user crerate qiladigan documentlarni idisi bor labelda esa document.tsda yozilgan getDocument functiondan keladigan documentni string typli titlesi bor
                 ) => (

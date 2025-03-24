@@ -17,6 +17,7 @@ import {
     Plus,
     Trash,
 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
 interface ItemProps {
@@ -133,3 +134,16 @@ export const Item = ({ label, id, level, expanded, onExpand }: ItemProps) => {
     );
 };
 
+Item.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
+    // Item.Skeleton Item functiondan tashqairda alohida yozildi yani endi Skeleton component Item function ishlagandagina ishlaydi yani Item functionga qaram hissoblanadi /// bu skeleton loader component shadcn uidan kelgan
+    return (
+        <div
+            style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }}
+            className="flex gap-x-2 py-[3px]"
+        >
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-4 w-[30%]" />
+            {/* widthni 30 foiz berilishini sababi skeleton copmonentdagi loader chiqganda ekranni to'liq emas faqat 30 foizini egallaydi yani styleda berilgan sizeni 30 foizni egallaydi shunda sidebardan tashqariga chiqib ketmaydi yoki eniga hamma joyini egallab olmaydi */}
+        </div>
+    );
+};
