@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { Item } from "./item";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
+import { Trash } from "lucide-react";
 
 interface DocumentListProps {
     parentDocumentId?: Id<"documents">; //document idisi// "documents" esa functionni linki convex/document.tsda yozilgan createDocument functionida shu "documents" parentdocumentga parametr sifatida berib qo'yilgan tableni nomi table esa umumiy dacument turadigan umumiy ramka  yani parentdocument convexda document yaratish functionida bor qiymat id esa documentni idsi yani har bir yaratilgan documentni unikal idsi bo'ladi
@@ -93,7 +94,8 @@ export const DocumentList = ({
                             onClick={() => onRedirect(document._id)} //Itemga click bo'lganda yani bu document-list.tsx failidan turib Item componentga click bo'lganda ichida router bor onRedirect function ishlaydi yani userni ota document idisi bor sahifaga yo'naltirish uchun
                             active={params.documentId === document._id} // documentId bu holatda routerda (secret)/[documentsId]/page.tsx ga jo'natilgan va shu dynamic yaratilgan (secret)/[documentsId]/page.tsx teng bo'lsa serverdagi document va documentni idisiga bu boolean qiymat active nomi ostida props bilan Item.tsx failga jo'natildi shund aitem.tsxda ona divda chaqirilgan cn function ichidagi classlar  ishlab (secret)/[documentsId]/page.tsx da chiqgan documentni ustiga bosilganda hover active bo'lib turadi bu function shu serverdan dynamic tarzda keladigan doxumentni idisi bor bo'lsa ishlaydi//schemada id bor
                             
-                            documentIcon={document.icon}//schemada icon bor//   
+                            documentIcon={document.icon}//schemada icon bor// 
+                            // icon={Trash}  
 
                             //bu fail document-list.tsx faili lekin shudaham documentlar map qilinib item.tsx failga jo'natilganda document-list.tsxniham map qilib item.tsx failiga jo'natdik yani failnui o'zini ichida shi failni o'zini map qildik endi document-list.tsx props bilan item.tsx ga jo'natilganda  parentDocumentId={document._id} jo'natildi yani birinchi yartilgan doxument idisi va level yani level typi number bunga 1 qo'shildi yani agar ichida getDocuments bor doxuments o'zgaruvchi ichida id bor bo'lsa yani document create qilingan bo'lsa level bilan shu doxumentga bola doxument qo'shadi yani har safar 1 ta doxument qo'shadi
                         />

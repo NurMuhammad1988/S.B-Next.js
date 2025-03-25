@@ -1,9 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, SearchIcon, Settings } from "lucide-react";
 import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"; //npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
 import { DocumentList } from "./document-list";
+import { Item } from "./item";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -114,7 +115,11 @@ export const Sidebar = () => {
 
 
                 <div>
-                    User Profile Item
+                   <Item label="Search" icon={SearchIcon} />
+                   <Item label="Settings" icon={Settings} />
+                   <Item label="New document" icon={Plus} />
+
+                   {/* bu Item app/(secret)/components/item.tsx failidan chaqirilgan shunda item.tsxdagi yaratiladigan doxumentlar childlari bilan sidebarda ishlaydi */}
                 </div>
 
 

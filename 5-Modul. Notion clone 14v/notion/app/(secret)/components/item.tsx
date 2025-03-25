@@ -13,6 +13,7 @@ import { useMutation } from "convex/react";
 import {
     ChevronDown,
     ChevronRight,
+    LucideIcon,
     MoreHorizontal,
     Plus,
     Trash,
@@ -28,9 +29,12 @@ interface ItemProps {
     expanded?: boolean; //mantiqiy: chunki document-list.tsxdan kelgan bu qiymay false bo'lishixam mumkun yani prev borham yo'qham bo'lishi mumkun
     onExpand?: () => void; //document-item.tsxda yozilgan function shunchaki bo'sh yani endi bu faqilda chaqirilsa shu function togridan togri kelib ishlaydi hato qaytarmaydi
     onClick?: () => void;
-    active?: boolean;//dynamic keladigan document pagelarga active class berish uchun 
-    documentIcon?: string
+    active?: boolean; //dynamic keladigan document pagelarga active class berish uchun
+    documentIcon?: string;
+    icon?: LucideIcon;
 }
+
+//bu Item.tsx functionnalari bilan ishlashi uchun sidebar.tsx failida chaiqilib qiymatlariga kerakli typlar berilib ishlatilishi kerak 
 
 export const Item = ({
     label,
@@ -39,7 +43,9 @@ export const Item = ({
     expanded,
     onExpand,
     onClick,
-    active
+    active,
+    documentIcon,
+    icon: Icon,
 }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
 
@@ -79,9 +85,11 @@ export const Item = ({
     return (
         <div
             style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }} //yani agar ota documentni bolasi bor bo'lsa yani level true bo'lsa yani document-item.tsxda kelgan level + 1 yani true bo'lsa left tomondan paddingni 12 ga ko'paytirib 12px qo'shadi yani
-            className={cn(
-                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium", 
-                active && "bg-primary/5 text-primary")//bu active qiymati document-list.tsxda yozilib propsdan jo'natilgan boolean qiymat sidebarni asosiy itemlari bor yani document create qilsa bo'ladigan bu item.tsx failida onda divga chaiqilib cn bilan bollean holatlarga qarab stle berildi yanai agar  bu ona div ichida mishka birorta buttonga (role="button") click qilinsa yani documentlarga bosilganda hover bosilgan joyda qoladi user qaysiu document ichida ekanligini bilish uchun shunda orqa foni va textni rangi o'zgarib qotib ajralib turadi
+            className={
+                cn(
+                    "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
+                    active && "bg-primary/5 text-primary"
+                ) //bu active qiymati document-list.tsxda yozilib propsdan jo'natilgan boolean qiymat sidebarni asosiy itemlari bor yani document create qilsa bo'ladigan bu item.tsx failida onda divga chaiqilib cn bilan bollean holatlarga qarab stle berildi yanai agar  bu ona div ichida mishka birorta buttonga (role="button") click qilinsa yani documentlarga bosilganda hover bosilgan joyda qoladi user qaysiu document ichida ekanligini bilish uchun shunda orqa foni va textni rangi o'zgarib qotib ajralib turadi
             }
             role="button"
             onClick={onClick} //bu holatda yozilishiga sabab onClick document-item.tsxdan  keletgan avoid fucntion bu jsx ichidaham ishlashi uchun masalan document-item.tsxda chaiqirilgan bu Item componentga click bo'lganda router document idisga qarab ota documentni sahifasiga jo'natadi va shu function bu yerdaham ishlasahi uchun yani masalan document-item.tsxda Item.tsx failiga click bo'lgandaham router ishlaydi va Item.tsx failidaham bola documentga yoki yana asosiy ota doxumentga click bo'lganda ishlaydi shu uchun return ichida asosiy ona div ichida onclick chaqirildi yani onclick ichida aslida onRedirect functioni bor
@@ -96,6 +104,15 @@ export const Item = ({
                     {/* ChevronIcon bu iconmas bu o'zgaruvchi va ichida ikkita iconga mantiqiy vazifa berilgan afar expanded true bo'lsa yani bola document bor bo'lsa icon ChevronDownga o'zgaradi fasle bolsa ChevronRightga o'zgaradi yani doim chevronrightda turadi bosilganda va expanded true bo'lsagina chevrondownga o'zgaradi */}
                 </div>
             )}
+
+            {documentIcon ? (
+                <div className="shrink-0 mr-2 text-[18px]">{documentIcon}</div>
+            ) : (
+                Icon && (
+                    <Icon className="shrink-0  h-[18px] w-[18px] mr-2 text-muted-foreground" />
+                )
+            )}
+
             <span className="truncate">{label}</span>
 
             {!!id && ( //agar document id qattiyan bo'lmasa yani user hali document create qilmagan bo'lsa
