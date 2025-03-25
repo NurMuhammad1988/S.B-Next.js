@@ -1,14 +1,26 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, SearchIcon, Settings } from "lucide-react";
+import {
+    ChevronsLeft,
+    MenuIcon,
+    Plus,
+    Search,
+    SearchIcon,
+    Settings,
+} from "lucide-react";
 import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"; //npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
 import { DocumentList } from "./document-list";
 import { Item } from "./item";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { UserBox } from "./user-box";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
+
+    const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
     const sidebarRef = useRef<ElementRef<"div">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null); //Elementlar React ilovalarining eng kichik qurilish bloklaridir . Element foydalanuvchi interfeysida nima bo'lishi kerakligini belgilaydi. Element - bu DOM tugunlari nuqtai nazaridan biz nimani ko'rishni xohlayotganimizni tavsiflovchi oddiy ob'ekt. Reaktsiya elementini yaratish DOM elementlariga nisbatan oson. Element JSX yordamida yoki JSXsiz React yordamida yaratilishi mumkin.//yani bu holatda ElementRef objecti bilan div yaratib boshlang'ich qiymati null qilindi
@@ -88,6 +100,12 @@ export const Sidebar = () => {
         document.removeEventListener("mouseup", handleMouseUp);
     };
 
+    const onCreateDocument = () => {
+        createDocument({
+            title: "Untitled",
+        });
+    };
+
     return (
         <>
             <div
@@ -113,19 +131,32 @@ export const Sidebar = () => {
                     <ChevronsLeft className="h-6 w-6" />{" "}
                 </div>
 
-
                 <div>
-                   <Item label="Search" icon={SearchIcon} />
-                   <Item label="Settings" icon={Settings} />
-                   <Item label="New document" icon={Plus} />
+                    <UserBox/>
+                    {/* usebox.tsx failda userni avatari va boshqa narsalari bor sidebar.tsxda shularham ko'rinishi kerak bu userbox eng birinchi chaqirilgani uchun userni avatari sahifada eng tepada turipti */}
+                    <Item label="Search" icon={Search} />
+                    {/* item.tsxda bu labelga iconga onclickga nima ekanligi aytib qo'yilgan shu sabab hatosiz ishlaydi */}
+                    <Item label="Settings" icon={Settings} />
+                    <Item
+                        label="New document"
+                        icon={Plus}
+                        onClick={onCreateDocument}
+                    />
+                    {/* onclickda chaqirilgan yuqorida yozilgan onCreateDocument functionida /convex/document.ts da yozilgan document create qiladigan createDocument functioni bor endi bu sidebar.tsx failidaham qaytadan chaqirilgan item.tsx componentida yozilgan icon qiymatida kelgan lucideni Plus iconiga click bo'lgandaham ota document create bo'ladi
+                     */}
 
-                   {/* bu Item app/(secret)/components/item.tsx failidan chaqirilgan shunda item.tsxdagi yaratiladigan doxumentlar childlari bilan sidebarda ishlaydi */}
+                    {/* bu Item app/(secret)/components/item.tsx failidan chaqirilgan shunda item.tsxdagi yaratiladigan documentlar childlari bilan sidebarda ishlaydi */}
                 </div>
 
-
                 <div className="mt-4 ">
-                    <DocumentList/>
-                    {/* DocumentList component boshqa joyda yozilib bu sidebarga chaqirildi */}
+                    <DocumentList />
+                    {/* DocumentList component boshqa joyda yozilib bu sidebarga chaqirildi bu component bola document yaratish va uni ota doxumentga ulash yangi id bilan dynamic holda yaratish va dynamic [documentId] sahifasiga otvorish uchun kerak shunda sidebarda yuqorida sanab o'tilgan functionallar ishlaydi */}
+                    <Item
+                        onClick={onCreateDocument}
+                        icon={Plus}
+                        label="Add a page"
+                    />
+                    {/* item bu joydaham qo'shilishiga sabab sidebarda pastdaham Plus iconiga bosib yangi ota document va bola document yaratish uchun bu holatda bu failda document create qiladigan convex document.tsdan keladigan createDocument asosiy ota documentni yaratadi DocumentListda ichida keladigan getDocumentsda esa boa documentlarniham yaratadigan functonlar bor (level + 1)!!!!!!!!! */}
                 </div>
 
                 <div

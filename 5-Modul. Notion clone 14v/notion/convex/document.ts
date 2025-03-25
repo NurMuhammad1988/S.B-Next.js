@@ -4,6 +4,8 @@ import { v } from "convex/values";
 
 ///////////////////////bu dacuments schema.ts bilan birlashayaptimi??? ha birlasharekan yani schemaga (schema.ts) qarab dacument (documents.ts) convexda yaratiladi
 
+
+
 export const createDocument = mutation({
     //convexdan keladigan function
     args: {
