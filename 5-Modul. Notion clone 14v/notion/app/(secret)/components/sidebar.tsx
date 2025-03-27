@@ -4,9 +4,11 @@ import {
     ChevronsLeft,
     MenuIcon,
     Plus,
+    Rocket,
     Search,
     SearchIcon,
     Settings,
+    Trash,
 } from "lucide-react";
 import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"; //npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
@@ -15,9 +17,16 @@ import { Item } from "./item";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserBox } from "./user-box";
+import { Progress } from "@/components/ui/progress";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import TrashBox from "./trash-box";
 
 export const Sidebar = () => {
-    const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil styleberish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
+    const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
 
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
@@ -106,6 +115,8 @@ export const Sidebar = () => {
         });
     };
 
+    const arr = [1];
+
     return (
         <>
             <div
@@ -132,7 +143,7 @@ export const Sidebar = () => {
                 </div>
 
                 <div>
-                    <UserBox/>
+                    <UserBox />
                     {/* usebox.tsx failda userni avatari va boshqa narsalari bor sidebar.tsxda shularham ko'rinishi kerak bu userbox eng birinchi chaqirilgani uchun userni avatari sahifada eng tepada turipti */}
                     <Item label="Search" icon={Search} />
                     {/* item.tsxda bu labelga iconga onclickga nima ekanligi aytib qo'yilgan shu sabab hatosiz ishlaydi */}
@@ -157,6 +168,18 @@ export const Sidebar = () => {
                         label="Add a page"
                     />
                     {/* item bu joydaham qo'shilishiga sabab sidebarda pastdaham Plus iconiga bosib yangi ota document va bola document yaratish uchun bu holatda bu failda document create qiladigan convex document.tsdan keladigan createDocument asosiy ota documentni yaratadi DocumentListda ichida keladigan getDocumentsda esa boa documentlarniham yaratadigan functonlar bor (level + 1)!!!!!!!!! */}
+
+                    <Popover>
+                        <PopoverTrigger className="w-full mt-4">
+
+                    <Item label="Trash" icon={Trash} />
+
+
+                        </PopoverTrigger>
+                        <PopoverContent className="p-0 w-72" side={isMobile ? "bottom" : "right"}>
+                            <TrashBox/>
+                        </PopoverContent>
+                    </Popover>
                 </div>
 
                 <div
@@ -164,6 +187,21 @@ export const Sidebar = () => {
                     onMouseDown={handleMouseDown} //onMouseDown reactni qiymati yani mishka bilan ishlash uchunichlatiladi yani function qabul qiladi huddi onclick onchangega o'hshab ishlayidi faqat michkaga tasir qiladi
                 />
                 {/* bu yetim div yani sidebar qismini qolgan asosiy qisimdan ajratish uchun yani tepadan pastga to'g'ri chiziq tortish uchun cursor-ew-resize classi esa shu chiziqga kelganda cursorni chap o'ng tarafgaham strelkali cursor chiqaradi>>> ↔ ↔ ↔ ↔ ↔ <<< yani ekrandagi sidebar va qolgan qismlarni o'lchamini o'zgartirish uchun   */}
+
+                <div className="absolute bottom-0 px-2 bg-white/50 dark:bg-black/50 py-4 w-full">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-1 text-[13px]">
+                            <Rocket />
+                            <p className="opacity-70 font-bold">Free plan</p>
+                        </div>
+
+                        <p className="text-[13px] opacity-70">{arr.length}/3</p>
+                    </div>
+                    <Progress
+                        value={arr.length >= 3 ? 100 : arr.length * 33.33}
+                        className="mt-2"
+                    />
+                </div>
             </div>
 
             <div
