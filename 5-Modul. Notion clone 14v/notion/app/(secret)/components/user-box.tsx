@@ -1,11 +1,14 @@
 "use client";
+//bu page user document createga kirganda userni doxumentlari va hakozolari ko'rinib turadigan page yani userbox hamma narsasi shu joyda
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useUser } from "@clerk/clerk-react";
+import { SignOutButton, useUser } from "@clerk/clerk-react";
 import { ChevronsLeftRight } from "lucide-react";
 import React from "react";
 
@@ -40,6 +43,7 @@ export const UserBox = () => {
                 forceMount
             >
                 <div className="flex flex-col space-y-4 p-2">
+                    {/* userni datalari bor div */}
                     <p className="text-xs font-medium leading-none text-muted-foreground">
                         {user?.emailAddresses[0].emailAddress}
                     </p>
@@ -52,20 +56,27 @@ export const UserBox = () => {
                         </div>
 
                         <div className="space-y-1">
-
                             <p className="text-sm line-clamp-1">
-
                                 {user?.fullName}&apos;s Notion
-
                             </p>
-
                         </div>
-
-
                     </div>
-
                 </div>
+
+                <DropdownMenuSeparator />
+                {/* DropdownMenuSeparator bu huddi hr yani chiziqcha yuqoridagi delete texti bilan last edidted by textni orasini ochib turgan hr */}
+          
+
+
+            <DropdownMenuItem asChild className="w-full cursor-pointer text-muted-foreground">
+                <SignOutButton>
+                    {/* bu  SignOutButton clerkni componenti bunga bosilgandan clerk userni dasturdan chiqarvoradi*/}
+                    Log Out
+                </SignOutButton>
+            </DropdownMenuItem>
+
             </DropdownMenuContent>
+
         </DropdownMenu>
     );
 };
