@@ -4,8 +4,6 @@ import { v } from "convex/values";
 
 ///////////////////////bu dacuments schema.ts bilan birlashayaptimi??? ha birlasharekan yani schemaga (schema.ts) qarab dacument (documents.ts) convexda yaratiladi
 
-
-
 export const createDocument = mutation({
     //convexdan keladigan function
     args: {
@@ -15,8 +13,8 @@ export const createDocument = mutation({
     },
 
     handler: async (ctx, args) => {
-        //handler mutation functionni qiymati yani async function parametridagi ctx bu argsni sovolish uchun karopka
-        const identity = await ctx.auth.getUserIdentity(); //identity nomli o'zgaruvchi ichida await bilan ichida args bor ctx mutation functionni auth qiymati bilan userni indificatsiyanisi yani hamma datalarini oladi qayerdan oladi clerk orqali schemaga kelib tushgan datalardan oladi
+        //handler mutation functionni qiymati yani async function parametridagi ctx bu argsni sovolish uchun karopka va hamma narsaga shu handler javobgar bu handler convexniasosiy functioni desaham bo'laadi ctx va args sabab.......
+        const identity = await ctx.auth.getUserIdentity(); //identity nomli o'zgaruvchi ichida await bilan ichida args bor ctx mutation functionni auth qiymati bilan userni indificatsiyanisi yani hamma datalarini oladi qayerdan oladi clerk orqali schemaga kelib tushgan userlarni datalardan oladi
 
         if (!identity) {
             //agar identitiy false bo'lsa error ishlab "Not authenticated" texti chiqadi
@@ -25,7 +23,7 @@ export const createDocument = mutation({
 
         const userId = identity.subject; //bu subject userni idsi hissoblanadi user idni convex shunday nomlagan// userId o'zgaruvchi identity o'zgaruvchi ichida getUserIdentity bilan kelgan userni datalarini oladi yani subjectni oladi agar user aftorizatsa qilgan bo'lsa shuni idsiga qarab userni oladi hamma schemadagi datalari bilan oladi
         const document = await ctx.db.insert("documents", {
-            //document o'zgaruvchi ichida args bor ctxni va mutation functionini db yani databasa qiymatini oladi ma insert qili yani ikkalasini kiritib documents yaratadi qayerga yaratadi convex serverida yaratadi
+            //document o'zgaruvchi ichida args bor ctxni va mutation functionini db yani databasa qiymatini oladi ma insert qilib yani ikkalasini kiritib documents yaratadi qayerga yaratadi convex serverida yaratadi
             //dacument create qilish  //birinchi parametrda tableni nomi berilishi kerak bu holatda "documents", ikkinchisida valuelar  berilishi kerak yani pastdagi qiymatlar
             title: args.title,
             parentDocument: args.parentDocument,
@@ -35,7 +33,7 @@ export const createDocument = mutation({
             // argsdan hammasi chaqirilmasa hato chiqadi chunki bu ts (lekin optionallar ichidagilar chaqirilmasaham hatosiz ishlaydi chunki bu holatda schemadagi hamma narsa chaqirilmadi lekin shundaham hato chiqmadi
         });
 
-        //createDocument function ichidagi args qiymati sabab argsni bolasi parentDocument qiymati ichidagi birinchi parametr (v.id("documents") yani id ovolgan documents ssilkasi sabab document nomli o'zgaruvchidagi insert va insert parametridagi alsi idsi bor ssilka "document" sabab convex serverda idisi bor alohida object ochildi va u objectda shu qiymatlar bor>>>title: args.title,
+        //createDocument function ichidagi args qiymati sabab argsni bolasi parentDocument qiymati ichidagi birinchi parametr (v.id("documents") yani id ovolgan documents ssilkasi sabab document nomli o'zgaruvchidagi insert va insert parametridagi alsi idsi bor ssilka "document" sabab convex serverda idisi bor alohida object ochildi va u objectda shu qiymatlar bor// yanaham to'g'rirog'i bu "documents" app/(secret)/documents/page.tsxga boradi yani osha sahifada document yaratadi vac convexdaham huddi shu nomli papkadaham document yaratadi//>>>title: args.title,
         //parentDocument: args.parentDocument,
         // userId,
         //isArchived: false,
@@ -75,5 +73,39 @@ export const getDocuments = query({
             .collect(); //yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi
 
         return documents;
+    },
+});
+
+export const archive = mutation({
+    //bu archive function (secret)/components/item.tsx failida chaqirilib ishlatildi
+    args: {
+        id: v.id("documents"),
+    },
+    handler: async (ctx, args) => {
+        const identitiy = await ctx.auth.getUserIdentity();
+
+        if (!identitiy) {
+            throw new Error("Not authenticated");
+        }
+
+        const userId = identitiy.subject;
+
+        const existingDocument = await ctx.db.get(args.id); //convexni get metodi// yani bu archive functioni ishlaganda (args.id) sabab aynan kerakli documentni idisini oladi yani asosan app/(secret)/documents/page.tsx va item.tsx va boshqa sahifalarda ishlatilgan shu sahifalardagi createDocument functioni ishlagan joyda yani user bor joyda user yaratgan documentnidisiga qarab aynan o'sha documentni oladi
+
+        if (!existingDocument) {
+            //agar ichida bosilgan documentni idisi yo'q bo'lsa  yani existingDocumentda ishlatilgan get metodi documentni idisni topolmasa shu if ishlaydi
+            throw new Error("Not found");
+        }
+
+        if (existingDocument.userId !== userId) {
+            //agar ichida tanlangan documenti idisi va userId teng bo'lmasa haqiqiy yani eventni sodir qilayotgan useIdga yani documentni yaratgan userdan boshqa user bo'lsa shu if  ishlaydi
+            throw new Error("Unauthorized");
+        }
+
+        const document = await ctx.db.patch(args.id, {
+            isArchived: true,//convexni patch metodi bu holatda document o'zgaruvchi ichida createDocument functionda false qilingan aslida default holati convex serverda false bo'lib turgan isarchived qiymatini truega aylantirish patch metodi avaldan bor qiymatlarni holatini o'zgartirishda ishlatilaadi >>>patch metodi convexdagi functionlarga Yangi maydonlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi . //bu isArchived boshida createDocument functionda false edi chunki bu qiymatlar convex serverda default bo'lib turadi query so'rovlar bilan har bir userni holati o'zgartirilishi mumkun bo'lmasa doim shunday holatda turadi masalan hamma yangi userda objectda qiymatlar shunday holatda default bo'b turadi shu sabab birinchi convexda createDocument function bilan yaratilgan documentda bu isarchived false edi endi bu archive function ishlaganda true qilindi chunki endi yaratilgan documentda archive papkasi ochiladi yani user o'zi yaratgan documentlarni agar hohlasa va archive functiondagi shartlarga to'g'ri kelsa archive papkaga tushuradi yani document udalit bo'lishdan oldin archive qiladi keyinarchivedan udalit qilinadi
+        });
+
+        return document;
     },
 });

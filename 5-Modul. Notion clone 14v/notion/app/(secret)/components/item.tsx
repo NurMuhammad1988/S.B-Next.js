@@ -21,6 +21,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface ItemProps {
     id?: Id<"documents">;
@@ -34,7 +36,7 @@ interface ItemProps {
     icon?: LucideIcon;
 }
 
-//bu Item.tsx functionnalari bilan ishlashi uchun sidebar.tsx failida chaiqilib qiymatlariga kerakli typlar berilib ishlatilishi kerak 
+//bu Item.tsx functionnalari bilan ishlashi uchun sidebar.tsx failida chaiqilib qiymatlariga kerakli typlar berilib ishlatilishi kerak
 
 export const Item = ({
     label,
@@ -48,8 +50,23 @@ export const Item = ({
     icon: Icon,
 }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
+    const router = useRouter();
 
     const createDocument = useMutation(api.document.createDocument); //convex/document.tsdan kelepti usemutatsion esa bu item.tsx fail uchunham vreatedocument functionni ulab beradi
+    const archive = useMutation(api.document.archive); ////convex/document.tsdan keletgan archive functioni bu holatda convex/document.tsdan kelgan archive function shu>>> api.document.archive//archive functionda convexni patch metodi bilan agar user idsi bor bo'lsa va document create qilgan bo'lsa shu create qilgan documentini idisiga qarab convexni get metodi bilan chaqirivolib isarchive qiymatini true qilib qo'yishni bajaradi
+
+    const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.stopPropagation();
+        if (!id) return; //agar id yo'q bo'lsa shunchaki shu sahifani o'zini return qiladi
+
+        const promise = archive({ id }).then(() => router.push("/documents")); //document archive qilingandan keyin userni asosiy "/documents" papkasiga push qiladi yani app/(secret)/documents/page.tsx failiga router bilan jo'natadi yani document archived qilingandan keyin userni chiqarib qo'yadi
+
+        toast.promise(promise, {
+            loading: "Archiving document...",
+            success: "Archived document!",
+            error: "Failed to archive document.",
+        });
+    };
 
     const onCreateDocument = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -140,7 +157,8 @@ export const Item = ({
                             side="right"
                             forceMount
                         >
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={onArchive}>
+                                {/* delete function ishlaganda document delete bo'meydi faqat arhiv papkag atashab turiladi keyin user documentni udalit qilish niyati qattiy bo'lsa keyin arhivdanham udalit qilish mumkun */}
                                 <Trash className="h-4 w-4 mr-2" />
                                 Delete
                             </DropdownMenuItem>

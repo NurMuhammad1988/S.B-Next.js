@@ -24,12 +24,15 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import TrashBox from "./trash-box";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
-
+    const router = useRouter();
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
+
 
     const sidebarRef = useRef<ElementRef<"div">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null); //Elementlar React ilovalarining eng kichik qurilish bloklaridir . Element foydalanuvchi interfeysida nima bo'lishi kerakligini belgilaydi. Element - bu DOM tugunlari nuqtai nazaridan biz nimani ko'rishni xohlayotganimizni tavsiflovchi oddiy ob'ekt. Reaktsiya elementini yaratish DOM elementlariga nisbatan oson. Element JSX yordamida yoki JSXsiz React yordamida yaratilishi mumkin.//yani bu holatda ElementRef objecti bilan div yaratib boshlang'ich qiymati null qilindi
@@ -110,8 +113,15 @@ export const Sidebar = () => {
     };
 
     const onCreateDocument = () => {
-        createDocument({
+        //bu holatda onCreateDocument functionda convexda document create qilish uchun yozilgan createDocument functioni chaqirilib qiymatlaridagi typi v.string berilgan title parametriga stringda  "Untitled" texti berib qo'yildi va bu onCreateDocument functioni "Create a blank" texti bor buttonga onclick bilanberib qo'yildi yani endi shu buttonga click bo'lganda shu onCreateDocument functioni ishlab  createDocument functionda yozilgan convexda dacument cretae qilish ishlaydi yani document create bo'ladi
+        const promise = createDocument({
             title: "Untitled",
+        }).then((docId) => router.push(`/documents/${docId}`)); //createDocument convexda ishlab document create bo'lsa shu router sabab userni /documents/ papkaga olib boradi
+        toast.promise(promise, {
+            //bu holatda createDocumentda useMutation bo'lib convexda yaratilgan document promise o'zgaruvchi ichida createDocument functioon chaqirilib promise metodi bilan yaratilgan sonner kutubhonsidan kelgan toast copmonentdagi loading success error qiymatlariga hodisalar yuklandi masalan bu holatda createDocument document yaratadi va promise esa shu documentga hodisa beradi push esa  craete bo'lgan yangi document bor joyga yani documents ichida dynamic yaratilgan idli documentga navigatsa qiladi
+            loading: "Creating a new document...",
+            success: "Created a new document", //huddiki promise metodidagi relolve
+            error: "Failed to create a new document", //hudiki promise metodidagi reject
         });
     };
 
@@ -175,7 +185,7 @@ export const Sidebar = () => {
                         </PopoverTrigger>
                         <PopoverContent
                             className="p-0 w-72"
-                            side={isMobile ? "bottom" : "right"}//agar mobile versiyada bo'lsa bottom clasi ishlasin yokida o'ng tomondan chiqsin
+                            side={isMobile ? "bottom" : "right"} //agar mobile versiyada bo'lsa bottom clasi ishlasin yokida o'ng tomondan chiqsin
                         >
                             <TrashBox />
                         </PopoverContent>
