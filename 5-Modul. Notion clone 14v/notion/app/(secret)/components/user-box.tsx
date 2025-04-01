@@ -18,6 +18,7 @@ export const UserBox = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
+                {/* bu aschild sabab DropdownMenuTriggerga yoki ChevronsLeftRightga onclik bilan event functin berilmasaham ChevronsLeftRightga bosilganda userni qolgan datalari chiqayapti chunki bu ChevronsLeftRight va DropdownMenuTriggerga shadcn ui dan kelgan tayyor componentlar ichida oncliklai bor shu uchun aschild qiymati berilganda bu DropdownMenuTrigger bilan  ChevronsLeftRight DropdownMenuTrigger componentdagiaschild sabab bog'lanayapti  */}
                 <div
                     role="button"
                     className="flex items-center text-sm p-3 w-full hover:bg-primary/5"
@@ -70,7 +71,7 @@ export const UserBox = () => {
 
             <DropdownMenuItem asChild className="w-full cursor-pointer text-muted-foreground">
                 <SignOutButton>
-                    {/* bu  SignOutButton clerkni componenti bunga bosilgandan clerk userni dasturdan chiqarvoradi*/}
+                    {/* bu  SignOutButton clerkni componenti bunga bosilgandan clerk userni agar user bor bo'lsa dasturdan chiqarvoradi*/}
                     Log Out
                 </SignOutButton>
             </DropdownMenuItem>
@@ -80,4 +81,4 @@ export const UserBox = () => {
         </DropdownMenu>
     );
 };
-// 5. Items 23: 40
+

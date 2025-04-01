@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
+import { Toaster } from 'sonner';//npm i sonner
 
 //bu asosiy app papka ichidagi layout fail  yani root fail
 const inter = Inter({ subsets: ["latin"] });
@@ -31,6 +32,7 @@ export default function RootLayout({
                         disableTransitionOnChange
                         storageKey="notion-theme"
                     >
+                        <Toaster position="top-center"/>
                         {children}
                     </ThemeProvider>
                 </ConvexClientProvider>
