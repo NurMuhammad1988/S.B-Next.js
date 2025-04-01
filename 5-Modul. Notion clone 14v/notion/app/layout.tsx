@@ -33,6 +33,7 @@ export default function RootLayout({
                         storageKey="notion-theme"
                     >
                         <Toaster position="top-center"/>
+                        {/* document create bo'lganda chiqadigan kutubhonadan kelgan component bu component (secret)/documents/page.tsxda ishlatilgan lekin osha joyda ishlashi uchun bu toaster asosiy sahifada chaqirilishi kerak top-senter o'rniga boshqa holatlarniham o'rnatsa bo'ladi */}
                         {children}
                     </ThemeProvider>
                 </ConvexClientProvider>

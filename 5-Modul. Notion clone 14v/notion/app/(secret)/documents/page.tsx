@@ -21,7 +21,10 @@ const DocumentPage = () => {
             title: "Untitled",
         }).then((docId) => router.push(`/documents/${docId}`)); //createDocument convexda ishlab document create bo'lsa shu router sabab userni /documents/ papkaga olib boradi
         toast.promise(promise, {
-            loading: "Creating a new blank",
+            //bu holatda createDocumentda useMutation bo'lib convexda yaratilgan document promise o'zgaruvchi ichida createDocument functioon chaqirilib promise metodi bilan yaratilgan sonner kutubhonsidan kelgan toast copmonentdagi loading success error qiymatlariga hodisalar yuklandi masalan bu holatda createDocument document yaratadi va promise esa shu documentga hodisa beradi push esa  craete bo'lgan yangi document bor joyga yani documents ichida dynamic yaratilgan idli documentga navigatsa qiladi
+            loading: "Creating a new blank...",
+            success: "Created a new blank",//huddiki promise metodidagi relolve
+            error: "Failed to create a new blank"//hudiki promise metodidagi reject
         });
     };
 
