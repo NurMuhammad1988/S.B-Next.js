@@ -103,9 +103,32 @@ export const archive = mutation({
         }
 
         const document = await ctx.db.patch(args.id, {
-            isArchived: true,//convexni patch metodi bu holatda document o'zgaruvchi ichida createDocument functionda false qilingan aslida default holati convex serverda false bo'lib turgan isarchived qiymatini truega aylantirish patch metodi avaldan bor qiymatlarni holatini o'zgartirishda ishlatilaadi >>>patch metodi convexdagi functionlarga Yangi maydonlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi . //bu isArchived boshida createDocument functionda false edi chunki bu qiymatlar convex serverda default bo'lib turadi query so'rovlar bilan har bir userni holati o'zgartirilishi mumkun bo'lmasa doim shunday holatda turadi masalan hamma yangi userda objectda qiymatlar shunday holatda default bo'b turadi shu sabab birinchi convexda createDocument function bilan yaratilgan documentda bu isarchived false edi endi bu archive function ishlaganda true qilindi chunki endi yaratilgan documentda archive papkasi ochiladi yani user o'zi yaratgan documentlarni agar hohlasa va archive functiondagi shartlarga to'g'ri kelsa archive papkaga tushuradi yani document udalit bo'lishdan oldin archive qiladi keyinarchivedan udalit qilinadi
+            isArchived: true, //convexni patch metodi bu holatda document o'zgaruvchi ichida createDocument functionda false qilingan aslida default holati convex serverda false bo'lib turgan isarchived qiymatini truega aylantirish patch metodi avaldan bor qiymatlarni holatini o'zgartirishda ishlatilaadi >>>patch metodi convexdagi functionlarga Yangi maydonlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi . //bu isArchived boshida createDocument functionda false edi chunki bu qiymatlar convex serverda default bo'lib turadi query so'rovlar bilan har bir userni holati o'zgartirilishi mumkun, bo'lmasa doim shunday holatda turadi masalan hamma yangi userda objectda qiymatlar shunday holatda default bo'b turadi shu sabab birinchi convexda createDocument function bilan yaratilgan documentda bu isarchived false edi endi bu archive function ishlaganda true qilindi chunki endi yaratilgan documentda archive papkasi ochiladi yani user o'zi yaratgan documentlarni agar hohlasa va archive functiondagi shartlarga to'g'ri kelsa archive papkaga tushuradi yani document udalit bo'lishdan oldin archive qiladi keyin archivedan udalit qilinadi
         });
 
         return document;
     },
 });
+
+
+export const getTrashDocuments = query({
+    handler: async (ctx) =>{
+        const identity = await ctx.auth.getUserIdentity()
+
+        if(!identity){
+            throw new Error ("Not authenticaded")
+        }
+
+        const userId = identity.subject
+
+        const documents = await ctx.db
+            .query("documents") 
+            .withIndex(
+                "by_user", q => q.eq("userId", userId)//bu holatda   withIndex bilan userIddagi archive true bo'lgan documentlarni qaytarib beradi yani bu holatda withIndex convexda turgan userni idisiga yani userIdga qarab pastdagi filter metodi bilan isarchiveda true bo'lgan documentlarni beradi va bu olingan documentlar udalit qilinadi
+            )
+
+            .filter((q) => q.eq(q.field("isArchived"), true)) 
+            .order("desc") 
+            .collect(); 
+    }
+})

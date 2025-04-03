@@ -151,6 +151,8 @@ export const Item = ({
                         </DropdownMenuTrigger>
                         {/* DropdownMenuTrigger va DropdownMenuContent shadcn uidan kelgan componentlar bu componentlar ichida ts bila yozilganki DropdownMenuTrigger componentga click bo'lganda  DropdownMenuContent chiqadi bular shadcndan kelgan qaramsiz tekin codlar */}
 
+
+
                         <DropdownMenuContent
                             className="w-60"
                             align="start"
@@ -199,3 +201,4 @@ Item.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
         </div>
     );
 };
+
