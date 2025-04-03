@@ -110,25 +110,27 @@ export const archive = mutation({
     },
 });
 
-
 export const getTrashDocuments = query({
-    handler: async (ctx) =>{
-        const identity = await ctx.auth.getUserIdentity()
+    handler: async (ctx) => {
+        const identity = await ctx.auth.getUserIdentity();
 
-        if(!identity){
-            throw new Error ("Not authenticaded")
+        if (!identity) {
+            throw new Error("Not authenticaded");
         }
 
-        const userId = identity.subject
+        const userId = identity.subject;
 
         const documents = await ctx.db
-            .query("documents") 
+            .query("documents")
             .withIndex(
-                "by_user", q => q.eq("userId", userId)//bu holatda   withIndex bilan userIddagi archive true bo'lgan documentlarni qaytarib beradi yani bu holatda withIndex convexda turgan userni idisiga yani userIdga qarab pastdagi filter metodi bilan isarchiveda true bo'lgan documentlarni beradi va bu olingan documentlar udalit qilinadi
+                "by_user",
+                (q) => q.eq("userId", userId) //bu holatda   withIndex bilan userIddagi archive true bo'lgan documentlarni qaytarib beradi yani bu holatda withIndex convexda turgan userni idisiga yani userIdga qarab pastdagi filter metodi bilan isarchiveda true bo'lgan documentlarni beradi va bu olingan documentlar udalit qilinadi yani schema.tsdagi by_user indexi bilan bog'langan userId bu function ichida kelgan aynan shu userni idisi ekanligini aniqlash uchun userIdga tenglashtirildi shunda bu functionni ishlatetgan userni idisi bo'lsagina va shu idida archive objectida true qilingan documentlar bor bo'lsagina bu function ishlaydi
             )
 
-            .filter((q) => q.eq(q.field("isArchived"), true)) 
-            .order("desc") 
-            .collect(); 
-    }
-})
+            .filter((q) => q.eq(q.field("isArchived"), true))
+            .order("desc")
+            .collect();
+
+        return documents;
+    },
+});

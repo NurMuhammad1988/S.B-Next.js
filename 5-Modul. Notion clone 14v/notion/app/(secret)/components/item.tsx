@@ -59,7 +59,7 @@ export const Item = ({
         event.stopPropagation();
         if (!id) return; //agar id yo'q bo'lsa shunchaki shu sahifani o'zini return qiladi
 
-        const promise = archive({ id }).then(() => router.push("/documents")); //document archive qilingandan keyin userni asosiy "/documents" papkasiga push qiladi yani app/(secret)/documents/page.tsx failiga router bilan jo'natadi yani document archived qilingandan keyin userni chiqarib qo'yadi
+        const promise = archive({ id }).then(() => router.push("/documents")); //document archive qilingandan keyin userni asosiy "/documents" papkasiga push qiladi yani app/(secret)/documents/page.tsx failiga router bilan jo'natadi yani document archived qilingandan keyin userni dynamic yaratilgan sahifadan  chiqarib qo'yadi// bu holatda promise o'zgaruvchini nomi = archive esa convex/document.tsdan keletgan archive functioni
 
         toast.promise(promise, {
             loading: "Archiving document...",
@@ -82,7 +82,7 @@ export const Item = ({
             title: "Untitled",
             parentDocument: id, //bola document yaratish uchun masalan asosiy app/(secret)/documents/page.tsx failda bu createDocument chaiqrilganda faqat createDocumentni title qiymati chaqirilgan edi endi esa parentDocument qiymatiham chaiqirildi va bu asosiy onCreateDocument functioni Plus iconi bor divga berib qo'yildi yani shunda "create a blank" buttoniga click bo'lgandan keyin shu item.tsx faili chiqadi va Plus iconiga bosilganda onCreateDocument functioni convex/documents.tsdan chaiqirilgan createDocumentni ikkala qiymatiham ishlab "create a blank" ga bosilganda yaratilgan asosiy document ichida bola document yaratadi
         }).then((document) => {
-            //yani agar createDocumentda document titlesi va parentDocumenti yani bolasi bilan bor bo'lsa shu documentni then metodi bilan chaqirib u documentga agar typi boolean bo'lgan expanded qiymati false bo'lsa  onExpand function ishlasin deyildi  onExpand functionda esa objectbi avvalgi holatini saqlash bor yani agar expanded false bo'lsa yani yo'q bo'lsa  onExpand avvalgidsini berib turadi
+            //yani agar createDocumentda document titlesi va parentDocumenti yani bolasi bilan bor bo'lsa shu documentni then metodi bilan chaqirib u documentga agar typi boolean bo'lgan expanded qiymati false bo'lsa  onExpand function ishlasin deyildi  onExpand functionda esa objectni avvalgi holatini saqlash bor yani agar expanded false bo'lsa yani yo'q bo'lsa  onExpand avvalg idsini berib turadi
 
             if (!expanded) {
                 onExpand?.();
@@ -151,8 +151,6 @@ export const Item = ({
                         </DropdownMenuTrigger>
                         {/* DropdownMenuTrigger va DropdownMenuContent shadcn uidan kelgan componentlar bu componentlar ichida ts bila yozilganki DropdownMenuTrigger componentga click bo'lganda  DropdownMenuContent chiqadi bular shadcndan kelgan qaramsiz tekin codlar */}
 
-
-
                         <DropdownMenuContent
                             className="w-60"
                             align="start"
@@ -160,8 +158,9 @@ export const Item = ({
                             forceMount
                         >
                             <DropdownMenuItem onClick={onArchive}>
-                                {/* delete function ishlaganda document delete bo'meydi faqat arhiv papkag atashab turiladi keyin user documentni udalit qilish niyati qattiy bo'lsa keyin arhivdanham udalit qilish mumkun */}
+                                {/* delete function ishlaganda document delete bo'meydi faqat arhiv papkaga tashab turiladi keyin user documentni udalit qilish niyati qattiy bo'lsa keyin arhivdanham udalit qilish mumkun */}
                                 <Trash className="h-4 w-4 mr-2" />
+                                {/* Trash icon  bu holatda MoreHorizontal iconiga yani 3 ta nuqtaga bosilganda chiqadi bunga sabab MoreHorizontal iconini ona compoenti hissoblangan DropdownMenuTrigger componentdagi asChild qiymati sabab va trash iconga bosilganda onArchive functioni ishlab documentni archied papkaga tushuradi yani convexdagi archivedga tushuradi va onArchive functiondagi toast.promise hodisalari convexdan kelgan javobga qarab ishlaydi */}
                                 Delete
                             </DropdownMenuItem>
 
@@ -169,7 +168,7 @@ export const Item = ({
                             {/* DropdownMenuSeparator bu huddi hr yani chiziqcha yuqoridagi delete texti bilan last edidted by textni orasini ochib turgan hr */}
 
                             <div className="text-xs text-muted-foreground p-2">
-                                Last edited by
+                                Last edited by {""}
                                 {user?.fullName}
                             </div>
                         </DropdownMenuContent>
@@ -201,4 +200,3 @@ Item.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
         </div>
     );
 };
-
