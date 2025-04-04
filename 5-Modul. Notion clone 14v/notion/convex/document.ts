@@ -1,3 +1,4 @@
+import { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 //Mutatsiyalar ma'lumotlar bazasiga ma'lumotlarni kiritadi, yangilaydi va o'chiradi, autentifikatsiyani tekshiradi yoki boshqa biznes mantiqini bajaradi va ixtiyoriy ravishda mijoz ilovasiga javob qaytaradi.
@@ -101,6 +102,27 @@ export const archive = mutation({
             //agar ichida tanlangan documenti idisi va userId teng bo'lmasa haqiqiy yani eventni sodir qilayotgan useIdga yani documentni yaratgan userdan boshqa user bo'lsa shu if  ishlaydi
             throw new Error("Unauthorized");
         }
+
+        const archivedChildren = async (documentId: Id<"documents">) => {
+            const childrens = await ctx.db
+                .query("documents")
+                .withIndex(
+                    "by_user_parent",
+                    (
+                        q //"by_user_parent" schema.tsxda
+                    ) => q.eq("userId", userId).eq("parentDocument", documentId) //bu functionni uida ishlatetgan userni aniqlash uchun "userId", teng bo'lsa userId ga va shu user yaratgan documentni ota documentni idisi "parentDocument",documentId teng bo'sa shu documentni idisga
+                )
+                .collect(); //bir biriga bog'lash
+
+            for (const child of childrens) {
+                //js for sikl metodi yani bu holatda child nomli o'zgaruvchi yaratib uni  shu archivedChildren functionichidagi childrens o'zgaruvchiga bog'lab olindi yani childrens o'zgaruvchidagi hamma holat bog'lab olindi va bu for faqat true holatdagina ishlaydi yani agar rostdan shu holat>>>("userId", userId).eq("parentDocument", documentId) true bo'lsa shu holatdagi documentlardagi isArchivedlarni ture qiladi yani bittada hammasini true qiladi yani convex documentdagi(scheme.ts) isArchive qiymatini true qiladi
+                await ctx.db.patch(child._id, {
+                    isArchived: true,
+                });
+
+                archivedChildren(child._id); //documentni bolasini bolasini bolasiniham archived qilish uchun sikl ichidaham archivedChildrenni o'ziham ishlatildi yani archived qiladi
+            }
+        };
 
         const document = await ctx.db.patch(args.id, {
             isArchived: true, //convexni patch metodi bu holatda document o'zgaruvchi ichida createDocument functionda false qilingan aslida default holati convex serverda false bo'lib turgan isarchived qiymatini truega aylantirish patch metodi avaldan bor qiymatlarni holatini o'zgartirishda ishlatilaadi >>>patch metodi convexdagi functionlarga Yangi maydonlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi . //bu isArchived boshida createDocument functionda false edi chunki bu qiymatlar convex serverda default bo'lib turadi query so'rovlar bilan har bir userni holati o'zgartirilishi mumkun, bo'lmasa doim shunday holatda turadi masalan hamma yangi userda objectda qiymatlar shunday holatda default bo'b turadi shu sabab birinchi convexda createDocument function bilan yaratilgan documentda bu isarchived false edi endi bu archive function ishlaganda true qilindi chunki endi yaratilgan documentda archive papkasi ochiladi yani user o'zi yaratgan documentlarni agar hohlasa va archive functiondagi shartlarga to'g'ri kelsa archive papkaga tushuradi yani document udalit bo'lishdan oldin archive qiladi keyin archivedan udalit qilinadi

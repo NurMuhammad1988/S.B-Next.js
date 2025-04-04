@@ -160,7 +160,7 @@ export const Item = ({
                             <DropdownMenuItem onClick={onArchive}>
                                 {/* delete function ishlaganda document delete bo'meydi faqat arhiv papkaga tashab turiladi keyin user documentni udalit qilish niyati qattiy bo'lsa keyin arhivdanham udalit qilish mumkun */}
                                 <Trash className="h-4 w-4 mr-2" />
-                                {/* Trash icon  bu holatda MoreHorizontal iconiga yani 3 ta nuqtaga bosilganda chiqadi bunga sabab MoreHorizontal iconini ona compoenti hissoblangan DropdownMenuTrigger componentdagi asChild qiymati sabab va trash iconga bosilganda onArchive functioni ishlab documentni archied papkaga tushuradi yani convexdagi archivedga tushuradi va onArchive functiondagi toast.promise hodisalari convexdan kelgan javobga qarab ishlaydi */}
+                                {/* Trash icon  bu holatda MoreHorizontal iconiga yani 3 ta nuqtaga bosilganda chiqadi bunga sabab MoreHorizontal iconini ona compoenti hissoblangan DropdownMenuTrigger componentdagi asChild qiymati sabab va trash iconga bosilganda onArchive functioni ishlab documentni archived papkaga tushuradi yani convexdagi archivedga tushuradi va onArchive functiondagi toast.promise hodisalari convexdan kelgan javobga qarab ishlaydi va */}
                                 Delete
                             </DropdownMenuItem>
 

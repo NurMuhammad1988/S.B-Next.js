@@ -33,7 +33,6 @@ export const Sidebar = () => {
     const router = useRouter();
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
-
     const sidebarRef = useRef<ElementRef<"div">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null); //Elementlar React ilovalarining eng kichik qurilish bloklaridir . Element foydalanuvchi interfeysida nima bo'lishi kerakligini belgilaydi. Element - bu DOM tugunlari nuqtai nazaridan biz nimani ko'rishni xohlayotganimizni tavsiflovchi oddiy ob'ekt. Reaktsiya elementini yaratish DOM elementlariga nisbatan oson. Element JSX yordamida yoki JSXsiz React yordamida yaratilishi mumkin.//yani bu holatda ElementRef objecti bilan div yaratib boshlang'ich qiymati null qilindi
     const isResizing = useRef(false);
@@ -177,7 +176,7 @@ export const Sidebar = () => {
                         icon={Plus}
                         label="Add a page"
                     />
-                    {/* item bu joydaham qo'shilishiga sabab sidebarda pastdaham Plus iconiga bosib yangi ota document va bola document yaratish uchun bu holatda bu failda document create qiladigan convex document.tsdan keladigan createDocument asosiy ota documentni yaratadi DocumentListda ichida keladigan getDocumentsda esa boa documentlarniham yaratadigan functonlar bor (level + 1)!!!!!!!!! */}
+                    {/* item bu joydaham qo'shilishiga sabab sidebarda pastdaham Plus iconiga bosib yangi ota document va bola document yaratish uchun bu holatda bu failda document create qiladigan convex document.tsdan keladigan createDocument asosiy ota documentni yaratadi DocumentListda ichida keladigan getDocumentsda esa bor documentlarniham yaratadigan functonlar bor (level + 1)!!!!!!!!! */}
 
                     <Popover>
                         <PopoverTrigger className="w-full mt-4">
@@ -188,6 +187,7 @@ export const Sidebar = () => {
                             side={isMobile ? "bottom" : "right"} //agar mobile versiyada bo'lsa bottom clasi ishlasin yokida o'ng tomondan chiqsin
                         >
                             <TrashBox />
+                            {/* trashbox aynan shu popover component chida chaqirildi chunki faqat shu trash  iconga click bo'lganda ishlashi kerak trashbox componentda esa documentni yoki archivedan chiqarish yoki butunlay udalit qilish imkoniyati bor*/}
                         </PopoverContent>
                     </Popover>
                 </div>
