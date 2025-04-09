@@ -6,7 +6,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { Search, Trash, Undo } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 const TrashBox = () => {
@@ -14,6 +14,7 @@ const TrashBox = () => {
 
     const documents = useQuery(api.document.getTrashDocuments); //convex/document.ts/getTrashDocuments functionni convexda chaqirilishi
     const remove = useMutation(api.document.remove); //convex/document.ts/remove functioni
+    const [search, setSearch] = useState("");
 
     if (documents === undefined) {
         //agar documents o'zgaruvchida chaqirilgan getTrashDocuments function teng bo'lsa undefinedga pastdagi loader chiqadi lg classi bilan
@@ -24,12 +25,21 @@ const TrashBox = () => {
         );
     }
 
-    const onRemove = (documentId: Id<"documents">) => {//bu function ConfirmModal component ichida chaqirilgan documentId: bu oddiy nom Id<"documents"> esa documenti idisi va ssilkasi
+    const filtredDocuments = documents.filter((document) => {
+        //filtredDocuments ni ichida documents yani ichida useQuery(api.document.getTrashDocuments) bor documents o'zgaruvchi bor shu sabab endi  filtredDocumentsda //convex/document.ts/getTrashDocuments dagi getTrashDocuments function bor yani convexdagi trash papkaga tushgan documentlarni oladi bu filtredDocuments map qilinib bu trash-box.tsx fail bilan birga sidebar.tsx failiga props bilan jo'natilgan
+
+        return document.title.toLowerCase().includes(search.toLowerCase()); // documentsni document nomli parametr o'zgaruvchi ichidagi documentga solib documentsi titelini search bo'sh state massivga solib kichkina harifli qiladi va setSearchga natijani solib jsx ichidagi inputga soladi
+    });
+
+    const onRemove = (documentId: Id<"documents">) => {
+        //bu function ConfirmModal component ichida chaqirilgan documentId: bu oddiy nom Id<"documents"> esa documenti idisi va ssilkasi
         //documenti idisini bildirish uchun
+        //bu holatda onRemove function pastdagi Trash iconga click bo'lganda ishlaydi documentId: Id<"documents"> sabab click qiletgan user shu remove qilinetgan postlarni create qilgan user bo'lsagina ishlaydi bu onRemove ichida yaratilgan promise o'zgaruvchi ichida convex/document.ts da yozilgan remove functioni chaqirilgan va click bo'lganda pastdagi toastdagi holatlardan biri vaziyatga qarab ishlaydi
 
-        const promise = remove({ id: documentId });////convex/document.ts/remove functonni promise nomli o'zgaruvchida chaqirilishi
+        const promise = remove({ id: documentId }); ////convex/document.ts/remove functonni promise nomli o'zgaruvchida chaqirilishi
 
-        toast.promise(promise, {//toast sooner nomli kutubhonadan kelgan toaster
+        toast.promise(promise, {
+            //toast sooner nomli kutubhonadan kelgan toaster
             loading: "Removing document...",
             success: "Removed document!",
             error: "Failed to remove document",
@@ -43,17 +53,20 @@ const TrashBox = () => {
                 <Input
                     className="h-7 px-2 focus-visible:ring-transparent bg-secondary"
                     placeholder="Filter by page title ..."
+                    value={search} //bu serach statedan keladigan massiv yani filtredDocumentsda datalar filter qilinib shu bo'sh searchga solingan va inputga value qilib berilgan va inputga onchange bo'lganda setSearch searchdan kelgan valelarni oladi va input classlari bilan userga beradi
+                    onChange={(e) => setSearch(e.target.value)} //ochange bo'lganda yani massiv ichida o'zgarish sodir bo'lganda setSearchga shu o'zgarishni soladi va shu inputgaberilgan classlar bilan uiga chiqaradi
                 />
             </div>
-            {/*  bu page sidebarda chaqirilgan udalit qlingan documentlar saqlanadigan joy  */}
+            {/*  bu page sidebarda chaqirilgan udalit qilingan documentlar saqlanadigan joy  */}
             <div className="mt-2 px-1 pb-1">
+                {/* agar yuqoridagi inputdagi value ishlamasa bu p tegidagi text ishlaydi */}
                 <p className="hidden last:block text-xs text-center text-muted-foreground pb-2">
                     No documents in trash
                 </p>
 
-                {documents.map(
+                {filtredDocuments.map(
                     (
-                        document //documnets bu convex/document.ts/getTrashDocumentsdan keladigan datalar parametrda esa umumiy document bor yani shu loyihadagi umumiy document bor bu key uchun va ichidagi idilarni olish uchun bu holatda faqat title olindi yani documentni titeli va titledan keyin 2 ta icon qo'yildi
+                        document //filtredDocuments bu convex/document.ts/getTrashDocumentsdan keladigan datalar jsni filter metodi bilan filter qilingan holatda parametrda esa umumiy document bor yani shu loyihadagi umumiy document bor bu key uchun va ichidagi idilarni olish uchun bu holatda faqat title olindi yani documentni titeli va titledan keyin 2 ta icon qo'yildi va shu titlega qarab filtredDocuments documentlarni search qiladi
                     ) => (
                         <div
                             key={document._id}
@@ -93,3 +106,5 @@ const TrashBox = () => {
 };
 
 export default TrashBox;
+
+// 6. Document manage 30:41 da qoldi
