@@ -103,7 +103,8 @@ export const archive = mutation({
             throw new Error("Unauthorized");
         }
 
-        const archivedChildren = async (documentId: Id<"documents">) => {//ona documentni delete qilganda bolla documentrham udalit bo'lishi uchun yaratilgan function yani archive function ichida yaratilgan function
+        const archivedChildren = async (documentId: Id<"documents">) => {
+            //ona documentni delete qilganda bolla documentrham udalit bo'lishi uchun yaratilgan function yani archive function ichida yaratilgan function
             const childrens = await ctx.db
                 .query("documents")
                 .withIndex(
@@ -124,13 +125,12 @@ export const archive = mutation({
             }
         };
 
-        // 6. Document manage 20:41 da qoldi
-
-        const document = await ctx.db.patch(args.id, {//args.id, sabab aynan qaysi user va user yaratgan aynan qaysi documentni idisi olindi
+        const document = await ctx.db.patch(args.id, {
+            //args.id, sabab aynan qaysi user va user yaratgan aynan qaysi documentni idisi olindi
             isArchived: true, //convexni patch metodi bu holatda document o'zgaruvchi ichida createDocument functionda false qilingan aslida default holati convex serverda false bo'lib turgan isarchived qiymatini truega aylantirish patch metodi avaldan bor qiymatlarni holatini o'zgartirishda ishlatilaadi >>>patch metodi convexdagi functionlarga Yangi maydonlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi . //bu isArchived boshida createDocument functionda false edi chunki bu qiymatlar convex serverda default bo'lib turadi query so'rovlar bilan har bir userni holati o'zgartirilishi mumkun, bo'lmasa doim shunday holatda turadi masalan hamma yangi userda objectda qiymatlar shunday holatda default bo'b turadi shu sabab birinchi convexda createDocument function bilan yaratilgan documentda bu isarchived false edi endi bu archive function ishlaganda true qilindi chunki endi yaratilgan documentda archive papkasi ochiladi yani user o'zi yaratgan documentlarni agar hohlasa va archive functiondagi shartlarga to'g'ri kelsa archive papkaga tushuradi yani document udalit bo'lishdan oldin archive qiladi keyin archivedan udalit qilinadi
         });
 
-        archivedChildren(args.id)//functionni to'lig'icha ishlatish
+        archivedChildren(args.id); //functionni to'lig'icha ishlatish
 
         return document;
     },
@@ -158,5 +158,34 @@ export const getTrashDocuments = query({
             .collect();
 
         return documents;
+    },
+});
+
+export const remove = mutation({
+    //getTrashDocuments functionda trashboxga tashlangan documentlarni trashboxdan to'liq udali qilish uchun yozilgan function
+    args: { id: v.id("documents") }, //ssilka!!! yani id nomli o'zgaruvchiga documentni idisi convexdagi "documents" papkadan olinadi
+
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        if (!identity) {
+            throw new Error("Not authenticaded");
+        }
+
+        const userId = identity.subject; //user keldi
+
+        const existingDocument = await ctx.db.get(args.id); //agar user va documentlarni idsi bor bo'lsa get qiladi
+
+        if (!existingDocument) {
+            throw new Error("Not found");
+        }
+
+        if (existingDocument.userId !== userId) {
+            throw new Error("Unauthorized");
+        }
+
+        const document = await ctx.db.delete(args.id); //convexni delete metodi args o'zgaruvchida kelgan idilarga qarab documentlarni delete qiladi
+
+        return document;
     },
 });

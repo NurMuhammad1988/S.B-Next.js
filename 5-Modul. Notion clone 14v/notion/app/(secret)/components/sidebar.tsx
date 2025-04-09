@@ -187,7 +187,7 @@ export const Sidebar = () => {
                             side={isMobile ? "bottom" : "right"} //agar mobile versiyada bo'lsa bottom clasi ishlasin yokida o'ng tomondan chiqsin
                         >
                             <TrashBox />
-                            {/* trashbox aynan shu popover component chida chaqirildi chunki faqat shu trash  iconga click bo'lganda ishlashi kerak trashbox componentda esa documentni yoki archivedan chiqarish yoki butunlay udalit qilish imkoniyati bor*/}
+                            {/* trashbox aynan shu popover component ichida chaqirildi chunki faqat shu trash  iconga click bo'lganda ishlashi kerak trashbox componentda esa documentni yoki archivedan chiqarish yoki butunlay udalit qilish imkoniyati bor*/}
                         </PopoverContent>
                     </Popover>
                 </div>

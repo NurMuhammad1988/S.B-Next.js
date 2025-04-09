@@ -1,15 +1,19 @@
+import ConfirmModal from "@/components/modals/confirm-modal";
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
 import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
+import { useMutation, useQuery } from "convex/react";
 import { Search, Trash, Undo } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 
 const TrashBox = () => {
     const router = useRouter();
 
     const documents = useQuery(api.document.getTrashDocuments); //convex/document.ts/getTrashDocuments functionni convexda chaqirilishi
+    const remove = useMutation(api.document.remove); //convex/document.ts/remove functioni
 
     if (documents === undefined) {
         //agar documents o'zgaruvchida chaqirilgan getTrashDocuments function teng bo'lsa undefinedga pastdagi loader chiqadi lg classi bilan
@@ -19,6 +23,18 @@ const TrashBox = () => {
             </div>
         );
     }
+
+    const onRemove = (documentId: Id<"documents">) => {//bu function ConfirmModal component ichida chaqirilgan documentId: bu oddiy nom Id<"documents"> esa documenti idisi va ssilkasi
+        //documenti idisini bildirish uchun
+
+        const promise = remove({ id: documentId });////convex/document.ts/remove functonni promise nomli o'zgaruvchida chaqirilishi
+
+        toast.promise(promise, {//toast sooner nomli kutubhonadan kelgan toaster
+            loading: "Removing document...",
+            success: "Removed document!",
+            error: "Failed to remove document",
+        });
+    };
 
     return (
         <div className="text-sm">
@@ -37,7 +53,7 @@ const TrashBox = () => {
 
                 {documents.map(
                     (
-                        document //documnets bu convex/document.ts/getTrashDocumentsdan keladigan datalar parametrda esa umumiy document bor yani shu loyihadagi umumiy document bor bu key uchun va ichidagi idilarni olish uchun bu holatda faqat title olindi yani documentni titeli
+                        document //documnets bu convex/document.ts/getTrashDocumentsdan keladigan datalar parametrda esa umumiy document bor yani shu loyihadagi umumiy document bor bu key uchun va ichidagi idilarni olish uchun bu holatda faqat title olindi yani documentni titeli va titledan keyin 2 ta icon qo'yildi
                     ) => (
                         <div
                             key={document._id}
@@ -56,12 +72,17 @@ const TrashBox = () => {
                                     <Undo className="h-4 w-4 text-muted-foreground" />
                                     {/* bu undo iconi ↶ shu icon yani bu trash-boxga items.tsx failidagi  onArchive va ichidagi primise=archive functioni sabab arhivga olingan documentlar tushadi ba bu iconga bosilganda yana arhivdan chiqib asosiy documentlarga qo'shilshi mumkun yani udalit bo'b ketmasligi kerak user hohlasa yana tiklab olishi kerak va pastda trash iconiham bor yani user hohasa docuentni qayta asosiy papkaga olib chiqishi yoki buunlay udalit qilishixam mumkun shu uchun ikkala icon yonmayon qo'yildi */}
                                 </div>
-                                <div
-                                    role="button"
-                                    className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+
+                                <ConfirmModal
+                                    onConfirm={() => onRemove(document._id)} //umumiy documentdagi idini olib remove qiladi
                                 >
-                                    <Trash className="h-4 w-4 text-muted-foreground" />
-                                </div>
+                                    <div
+                                        role="button"
+                                        className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                                    >
+                                        <Trash className="h-4 w-4 text-muted-foreground" />
+                                    </div>
+                                </ConfirmModal>
                             </div>
                         </div>
                     )
