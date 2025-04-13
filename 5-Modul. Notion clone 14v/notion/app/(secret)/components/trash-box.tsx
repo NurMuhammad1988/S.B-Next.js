@@ -54,7 +54,7 @@ const TrashBox = () => {
                     className="h-7 px-2 focus-visible:ring-transparent bg-secondary"
                     placeholder="Filter by page title ..."
                     value={search} //bu serach statedan keladigan massiv yani filtredDocumentsda datalar filter qilinib shu bo'sh searchga solingan va inputga value qilib berilgan va inputga onchange bo'lganda setSearch searchdan kelgan valelarni oladi va input classlari bilan userga beradi
-                    onChange={(e) => setSearch(e.target.value)} //ochange bo'lganda yani massiv ichida o'zgarish sodir bo'lganda setSearchga shu o'zgarishni soladi va shu inputgaberilgan classlar bilan uiga chiqaradi
+                    onChange={(e) => setSearch(e.target.value)} //ochange bo'lganda yani massiv ichida o'zgarish sodir bo'lganda setSearchga shu o'zgarishni soladi va shu inputga berilgan classlar bilan uiga chiqaradi
                 />
             </div>
             {/*  bu page sidebarda chaqirilgan udalit qilingan documentlar saqlanadigan joy  */}
@@ -66,12 +66,13 @@ const TrashBox = () => {
 
                 {filtredDocuments.map(
                     (
-                        document //filtredDocuments bu convex/document.ts/getTrashDocumentsdan keladigan datalar jsni filter metodi bilan filter qilingan holatda parametrda esa umumiy document bor yani shu loyihadagi umumiy document bor bu key uchun va ichidagi idilarni olish uchun bu holatda faqat title olindi yani documentni titeli va titledan keyin 2 ta icon qo'yildi va shu titlega qarab filtredDocuments documentlarni search qiladi
+                        document //filtredDocuments bu convex/document.ts/getTrashDocumentsdan keladigan datalar jsni filter metodi bilan filter qilingan holatda parametrda esa umumiy document bor yani shu loyihadagi umumiy document bor bu key uchun va ichidagi idilarni olish uchun bu holatda faqat title olindi yani documentni titeli va titledan keyin 2 ta icon qo'yildi va shu titlega qarab filtredDocuments documentlarni search qiladi bu document >>>const documents = useQuery(api.document.getTrashDocuments) shu document shu ichun idni taniydi
                     ) => (
                         <div
                             key={document._id}
                             className="text-sm rounded-sm w-full hover:bg-primary/5 flex items-center text-primary justify-between"
                             role="button"
+                            onClick={()=> router.push(`/documents/${document._id}`)}// trashbxga tushgan documentlar titiliga click bo'lganda router bilan aynan shu documentniidisga qarab document ichiga olib push qiladi
                         >
                             <span className="truncate pl-2">
                                 {document.title}
@@ -83,11 +84,11 @@ const TrashBox = () => {
                                     role="button"
                                 >
                                     <Undo className="h-4 w-4 text-muted-foreground" />
-                                    {/* bu undo iconi ↶ shu icon yani bu trash-boxga items.tsx failidagi  onArchive va ichidagi primise=archive functioni sabab arhivga olingan documentlar tushadi ba bu iconga bosilganda yana arhivdan chiqib asosiy documentlarga qo'shilshi mumkun yani udalit bo'b ketmasligi kerak user hohlasa yana tiklab olishi kerak va pastda trash iconiham bor yani user hohasa docuentni qayta asosiy papkaga olib chiqishi yoki buunlay udalit qilishixam mumkun shu uchun ikkala icon yonmayon qo'yildi */}
+                                    {/* bu undo iconi ↶ shu icon yani bu trash-boxga items.tsx failidagi  onArchive va ichidagi primise archive functioni sabab arhivga olingan documentlar tushadi ba bu iconga bosilganda yana arhivdan chiqib asosiy documentlarga qo'shilshi mumkun yani udalit bo'b ketmasligi kerak user hohlasa yana tiklab olishi kerak va pastda trash iconiham bor yani user hohasa docuentni qayta asosiy papkaga olib chiqishi yoki buunlay udalit qilishixam mumkun shu uchun ikkala icon yonmayon qo'yildi */}
                                 </div>
 
                                 <ConfirmModal
-                                    onConfirm={() => onRemove(document._id)} //umumiy documentdagi idini olib remove qiladi
+                                    onConfirm={() => onRemove(document._id)} //umumiy documentdagi idini olib remove qiladi bu document >>>const documents = useQuery(api.document.getTrashDocuments) shu document
                                 >
                                     <div
                                         role="button"
@@ -107,4 +108,3 @@ const TrashBox = () => {
 
 export default TrashBox;
 
-// 6. Document manage 30:41 da qoldi
