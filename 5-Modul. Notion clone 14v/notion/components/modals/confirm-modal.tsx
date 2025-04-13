@@ -25,7 +25,7 @@ const ConfirmModal = ({ children, onConfirm }: ConfirmModalProps) => {
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>//yani mishka bilan event sodir bo'lganda
     ) => {
         e.stopPropagation();
-        onConfirm();//onConfirm bo'sh function bu holatda shunday bo'shligicha trash-box.tsc failiga export qilinadi u yerda esa ichiga function chaqiriladi va pastda Confirim textiga click bo'lganda bu handleConfirm function ishlaydi yani ichidagi bu bosh onConfirimham trash-box.tsx failida ichida chaqirilgan function bilan ishlaydi
+        onConfirm();//onConfirm bo'sh function bu holatda shunday bo'shligicha trash-box.tsc failiga export qilinadi u yerda esa ichiga function chaqiriladi va pastda Confirim textiga click bo'lganda bu handleConfirm function ishlaydi yani ichidagi bu bosh onConfirimham trash-box.tsx failida ichida chaqirilgan onRemove function bilan ishlaydi
     };
 
     return (

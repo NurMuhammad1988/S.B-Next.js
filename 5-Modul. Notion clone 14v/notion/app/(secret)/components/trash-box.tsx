@@ -5,12 +5,13 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { Search, Trash, Undo } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 const TrashBox = () => {
     const router = useRouter();
+    const params = useParams();
 
     const documents = useQuery(api.document.getTrashDocuments); //convex/document.ts/getTrashDocuments functionni convexda chaqirilishi
     const remove = useMutation(api.document.remove); //convex/document.ts/remove functioni
@@ -44,6 +45,11 @@ const TrashBox = () => {
             success: "Removed document!",
             error: "Failed to remove document",
         });
+
+        if (params.documentId === documentId) {
+            //yani remove qilinganda yani trash papkaga tushgan documentlarni pastdagi  ConfirmModaldagi trash iconga click qilinib onremove function ishlagadan keyin yuqoridagi toastdagi promise if elslar succesed bo'lsa userni router bilan asosiy documents papka ichiga yani app/(secret)/documents/page.tsx failiga push qiladi///bu holatda paramsda useParams functioni bor yani useparams bu holatda documentIdda onRemove function parametridagi  documentIddagi :Idga qarab documentIdga idlarni sovoladi va shu documentId rostdan documentIdga yani o'ziga teng bo'lsa yani true bo'lsa yani rostdan trash iconga bosilganda hammasi to'g'ri ishlasa userni app/(secret)/documents/page.tsx failiga push qiladi
+            router.push("/documents");
+        }
     };
 
     return (
@@ -72,7 +78,9 @@ const TrashBox = () => {
                             key={document._id}
                             className="text-sm rounded-sm w-full hover:bg-primary/5 flex items-center text-primary justify-between"
                             role="button"
-                            onClick={()=> router.push(`/documents/${document._id}`)}// trashbxga tushgan documentlar titiliga click bo'lganda router bilan aynan shu documentniidisga qarab document ichiga olib push qiladi
+                            onClick={() =>
+                                router.push(`/documents/${document._id}`)
+                            } // trashbxga tushgan documentlar titiliga click bo'lganda router bilan aynan shu documentni idisga qarab document ichiga push qiladi yani ona divga click bo'lganda aslida buni pstdagi document.title bor spangaham bersa bo'lardi
                         >
                             <span className="truncate pl-2">
                                 {document.title}
@@ -88,7 +96,7 @@ const TrashBox = () => {
                                 </div>
 
                                 <ConfirmModal
-                                    onConfirm={() => onRemove(document._id)} //umumiy documentdagi idini olib remove qiladi bu document >>>const documents = useQuery(api.document.getTrashDocuments) shu document
+                                    onConfirm={() => onRemove(document._id)} //umumiy documentdagi idini olib remove qiladi bu document >>>const documents = useQuery(api.document.getTrashDocuments) shu document.... alohida ConfirmModal componentda ishlatilgani sababi esa ConfirmModal componentda modal bor yan userdan remove qlishni tasdiqlashni so'raydi user tsdiqlasa butunlay udalit qiladi
                                 >
                                     <div
                                         role="button"
@@ -107,4 +115,3 @@ const TrashBox = () => {
 };
 
 export default TrashBox;
-
