@@ -199,9 +199,7 @@ export const getDocumentById = query({
         if (!document) {
             throw new Error("Not found");
         }
-
         // bu holatda identitiy o'zgaruvchida keladigan userni idisi yo'q bo'lib qolishixam mumkun masalan published bo'lib publishid papkada yoki archived bo'lib archived papkada bo'lishi mumkun shu uchun pastdagi if else qilindi yani agar user getDocumentById functionni sihlatetgada so'rovi document published bo'lgan bo'lsa va yoki archived qilinmagan bo'lsagina document o'zgaruvchini qaytaradi yokida hech qanrsa qaytarmeydi shuda document qaytamagani uchun yuqoridagi if ishlab "Not found" texti ishlaydi
-
         if (document.isPublished && !document.isArchived) {
             //yani agar document isPublished bo'lsa yani document yaratilgan bo'lsa va document isArchived bo'lmagan bo'lsagina document o'zgaruvchini return qiladi
             return document;
@@ -211,5 +209,13 @@ export const getDocumentById = query({
             //va agar identitiy false bo'lsa yani user id umuman yo'q bo'lsa shu if ishlaydi
             throw new Error("Not authenticated");
         }
+
+        const userId = identitiy.subject;
+
+        if (document.userId !== userId) {
+            throw new Error("Unauthorized");
+        }
+
+        return document;
     },
 });
