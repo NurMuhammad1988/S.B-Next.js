@@ -80,7 +80,7 @@ const TrashBox = () => {
                             role="button"
                             onClick={() =>
                                 router.push(`/documents/${document._id}`)
-                            } // trashbxga tushgan documentlar titiliga click bo'lganda router bilan aynan shu documentni idisga qarab document ichiga push qiladi yani ona divga click bo'lganda aslida buni pstdagi document.title bor spangaham bersa bo'lardi
+                            } // trashbxga tushgan documentlar titiliga click bo'lganda router bilan aynan shu documentni idisga qarab document ichiga push qiladi yani ona divga click bo'lganda aslida buni pastidagi document.title bor spangaham bersa bo'lardi
                         >
                             <span className="truncate pl-2">
                                 {document.title}

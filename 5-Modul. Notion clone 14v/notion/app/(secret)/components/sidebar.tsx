@@ -24,13 +24,17 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import TrashBox from "./trash-box";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Navbar } from "./navbar";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
     const router = useRouter();
+
+    const params = useParams();
+
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
     const sidebarRef = useRef<ElementRef<"div">>(null);
@@ -222,15 +226,22 @@ export const Sidebar = () => {
                 )}
                 ref={navbarRef}
             >
-                <nav className={cn("bg-transparent px-3 py-2 w-full")}>
-                    {isCollapsed && ( //agar boshida false qilingan isCollapsed statesi true bo'lsa shu icon ishlaydi va ustiga onclick qilinsa reset functionda berilgan stylelarga o'zgaradi yani qaytadan sidebar qismi chap tomondan chiqib keladi
-                        <MenuIcon
-                            className="h-6 w-6 text-muted-foreground"
-                            role="button"
-                            onClick={reset} //menuiconga click bo'lganda ichida elementref bo'lgan reset function ishlab calc bilan 100% holatda turgan  windowdan 240px joyni -minus qilib tashlaydi shunda yuqoridagi collapse functioni berilgan divga joy ochiladi
-                        />
-                    )}
-                </nav>
+                {!!params.documentId ? (
+
+                    <Navbar />
+                    // bu navbar userni sidebar.tsx failini navbari yani asosiy saytdagi navbarmas faqat account create qilgan user uchun chiqadiga toolslar bor navbar yani agar paramsda kelgan documentId trrue bo'lsa yani idlar bor bo'lsa shu navbar component chiqadi agar yo'q bo'lsa yani false bo'lsa pastdagi umumiy nav component chiqadi
+
+                ) : (
+                    <nav className={cn("bg-transparent px-3 py-2 w-full")}>
+                        {isCollapsed && ( //agar boshida false qilingan isCollapsed statesi true bo'lsa shu icon ishlaydi va ustiga onclick qilinsa reset functionda berilgan stylelarga o'zgaradi yani qaytadan sidebar qismi chap tomondan chiqib keladi
+                            <MenuIcon
+                                className="h-6 w-6 text-muted-foreground"
+                                role="button"
+                                onClick={reset} //menuiconga click bo'lganda ichida elementref bo'lgan reset function ishlab calc bilan 100% holatda turgan  windowdan 240px joyni -minus qilib tashlaydi shunda yuqoridagi collapse functioni berilgan divga joy ochiladi
+                            />
+                        )}
+                    </nav>
+                )}
             </div>
         </>
     );
