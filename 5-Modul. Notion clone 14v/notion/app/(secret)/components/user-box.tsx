@@ -33,7 +33,7 @@ export const UserBox = () => {
                         </span>
                     </div>
 
-                    <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-t w-4" />
+                    <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4" />
                 </div>
             </DropdownMenuTrigger>
 

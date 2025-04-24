@@ -6,7 +6,6 @@ import {
     Plus,
     Rocket,
     Search,
-    SearchIcon,
     Settings,
     Trash,
 } from "lucide-react";
@@ -228,8 +227,8 @@ export const Sidebar = () => {
             >
                 {!!params.documentId ? (
 
-                    <Navbar />
-                    // bu navbar userni sidebar.tsx failini navbari yani asosiy saytdagi navbarmas faqat account create qilgan user uchun chiqadiga toolslar bor navbar yani agar paramsda kelgan documentId trrue bo'lsa yani idlar bor bo'lsa shu navbar component chiqadi agar yo'q bo'lsa yani false bo'lsa pastdagi umumiy nav component chiqadi
+                    <Navbar isCollapsed={isCollapsed} reset={reset} />
+                    // bu navbar userni sidebar.tsx failini navbari yani asosiy saytdagi navbarmas faqat account create qilgan user uchun chiqadigan toolslar bor navbar yani agar paramsda kelgan documentId true bo'lsa yani idlar bor bo'lsa shu navbar component chiqadi agar yo'q bo'lsa yani false bo'lsa pastdagi umumiy nav component chiqadi
 
                 ) : (
                     <nav className={cn("bg-transparent px-3 py-2 w-full")}>

@@ -1,4 +1,3 @@
-import { error } from "console";
 import { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
@@ -217,5 +216,30 @@ export const getDocumentById = query({
         }
 
         return document;
+    },
+});
+
+export const updateFields = mutation({
+    //updateFields function real user documentlarni crreate qilgandan keyin titlini coverimagesini yoki boshqa har qanday quyidagi datalarini o'zgartirmoqchi bo'lsa ishlaydiga function v.optional qilingani esa user har doimham datalarni o'zgartirmaydi shunda hato chiqmasligi uchun
+    args: {
+        id: v.id("documents"),
+        title: v.optional(v.string()),
+        content: v.optional(v.string()),
+        coverImage: v.optional(v.string()),
+        icon: v.optional(v.string()),
+        isPublished: v.optional(v.boolean()),
+    },
+
+    handler: async (ctx, args) => {
+        // user yuqoridagi args dan foydalana olishi uchun aniq real user va documentlarni aniq yaratgan aynan shu user bo'lishi kerak shu uchun bu holatda userni tekshirib olish kerak yani shu documentni create qilgan user aynan shu user ekanligini  identitiy bilan tkshirib olindi
+        const identitiy = await ctx.auth.getUserIdentity();
+
+        if (!identitiy) {
+            throw new Error("Not authenticated");
+        }
+
+        const userId = identitiy.subject;
+
+        const { id, ...rest } = args;
     },
 });

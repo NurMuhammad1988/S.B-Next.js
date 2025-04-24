@@ -41,10 +41,10 @@ export const Heroes = () => {
                     )}
 
                 {!isAuthenticated &&
-                    !isLoading && ( //isAuthenticated false bo'lsa  va isloadingham false bo'lsa yani so'rovham jo'natilmagan bo'sa yani shunchaki user hali hech narsa qilmagan bo'lsa SignInButton coponenti ichida "Get Notion Free" texti chiqadi
+                    !isLoading && ( //isAuthenticated false bo'lsa  va isloadingham false bo'lsa yani so'rovham jo'natilmagan bo'sa yani shunchaki user hali hech narsa qilmagan bo'lsa yani user account create qilmagan bo'lsa SignInButton coponenti ichida "Get Notion Free" texti chiqadi
                         <>
                             <SignInButton mode="modal">
-                                {/* "Get Notion Free" textiga bosilganda SignInButton qiymati bo'lgan modal ishlaydi aslid abu modal SignInButtonda chaqirilsa SignInButton componentida qayerdadur onclick functioni ishga tushadi yani userni modalga olib chiqadi bularni bari clerkda yozib qo'yilgan shusabab aftorizatsa uchun clerk qulay ko'p kodlari stylelari yozib qo'yilgan  */}
+                                {/* "Get Notion Free" textiga bosilganda SignInButton qiymati bo'lgan modal ishlaydi aslida bu modal SignInButtonda chaqirilsa SignInButton componentida qayerdadur onclick functioni ishga tushadi yani userni modalga olib chiqadi bularni bari clerkda yozib qo'yilgan shu sabab aftorizatsa uchun clerk qulay ko'p kodlari stylelari yozib qo'yilgan  */}
                                 <Button>
                                     Get Notion Free
                                     <ArrowRight className=" h-4 w-4 ml-2" />
