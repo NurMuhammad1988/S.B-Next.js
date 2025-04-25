@@ -75,9 +75,9 @@ export const Sidebar = () => {
             /////// sidebarRef.current.style.width = "240px"; //MenuIcon iconiga bosilganda 240px joy ochadi
             sidebarRef.current.style.width = isMobile ? "100%" : "240px"; // agar isMobile true bo'lsa sidebarref bor divni widthni 100 foiz yokida 240px qil
             /////// navbarRef.current.style.width = "calc(100% - 240)"; //MenuIcon bosilganda calc bilan navbarref uchun 100% widthdan 240px joy ochadi yani ayirib tashaydi
-            navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 240)"; //agar ismobile true bo'lsa navbarref bor divni widthni 0 qil yokida???????????
+            navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 240px)"; //agar ismobile true bo'lsa navbarref bor divni widthni 0 qil yokida???????????
             /////// navbarRef.current.style.left = "240"; //MenuIcon bosilganda joyni chap tomondan ochadi
-            navbarRef.current.style.left = isMobile ? "100%" : "240"; //agar ismobile true bo'lsa navbarref bor divni  lefti 100 foiz bo'lsin yani chap tomonga butunlay kirib ketsin yani userni windovi 770pxdan kichkina bo'lsa sidebarni boshidan ko'rinmasligi uchun lekin 770pxdan ortiq bo'lganda sidebar ko'rinib turardi endi esa boshidan  faqat menuicon iconi ko'rinadi holos yani mobiledan kiradigan user uchun qulaylik
+            navbarRef.current.style.left = isMobile ? "100%" : "240px"; //agar ismobile true bo'lsa navbarref bor divni  lefti 100 foiz bo'lsin yani chap tomonga butunlay kirib ketsin yani userni windovi 770pxdan kichkina bo'lsa sidebarni boshidan ko'rinmasligi uchun lekin 770pxdan ortiq bo'lganda sidebar ko'rinib turardi endi esa boshidan  faqat menuicon iconi ko'rinadi holos yani mobiledan kiradigan user uchun qulaylik
             setTimeout(() => setIsResetting(false), 300);
         }
     };
@@ -151,15 +151,17 @@ export const Sidebar = () => {
                     onClick={collapse} //bu div ichidagi ChevronsLeft iconiga click bo'lganda shu function ishlaydi
                 >
                     {/* opacity-0 group-hover/sidebar:opacity-100 transition shu classlar sabab cursor faqat sidebarga yani shu ona divga o'tgandagina pastdagi yetim divga o'hshab bu iconham ko'rinadi cursor shu ona div ichida bo'lmaganda bu iconham pastdagi yetimdivday ko'rinmay qoladi yani faqat hover bo'lganda ishlaydi role="button" atributini berilishi sababi bu huddi button rolida vazifasi buttun masalan bu iconga click bo'lganda hodisa sodir qilish uchun */}
-                    <ChevronsLeft className="h-6 w-6" />{" "}
+                    <ChevronsLeft className="h-6 w-6" />
                 </div>
 
-                <div>
+                <div >
                     <UserBox />
                     {/* usebox.tsx failda userni avatari va boshqa narsalari bor sidebar.tsxda shularham ko'rinishi kerak bu userbox eng birinchi chaqirilgani uchun userni avatari sahifada eng tepada turipti */}
-                    <Item label="Search" icon={Search} />
+                    <Item label="Search"
+                     icon={Search} />
                     {/* item.tsxda bu labelga iconga onclickga nima ekanligi aytib qo'yilgan shu sabab hatosiz ishlaydi */}
-                    <Item label="Settings" icon={Settings} />
+                    <Item label="Settings" 
+                    icon={Settings} />
                     <Item
                         label="New document"
                         icon={Plus}
@@ -226,11 +228,10 @@ export const Sidebar = () => {
                 ref={navbarRef}
             >
                 {!!params.documentId ? (
-
                     <Navbar isCollapsed={isCollapsed} reset={reset} />
+                ) : (
                     // bu navbar userni sidebar.tsx failini navbari yani asosiy saytdagi navbarmas faqat account create qilgan user uchun chiqadigan toolslar bor navbar yani agar paramsda kelgan documentId true bo'lsa yani idlar bor bo'lsa shu navbar component chiqadi agar yo'q bo'lsa yani false bo'lsa pastdagi umumiy nav component chiqadi
 
-                ) : (
                     <nav className={cn("bg-transparent px-3 py-2 w-full")}>
                         {isCollapsed && ( //agar boshida false qilingan isCollapsed statesi true bo'lsa shu icon ishlaydi va ustiga onclick qilinsa reset functionda berilgan stylelarga o'zgaradi yani qaytadan sidebar qismi chap tomondan chiqib keladi
                             <MenuIcon

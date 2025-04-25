@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
+import { useMutation } from "convex/react";
 import React, { useRef, useState } from "react";
+
+// user create qilgan documentni titlesini o'zgartirish uchun yaratilgan component document create qilinganda aftamatik tarzda "Untitle" texti bilan document create qilinadi shuni o'zgartirish uchun shu title.tsx fail yozildi
 
 interface TitleProps {
     document: Doc<"documents">; //bu Doc convexdan keladigan documentni generated qiladigan ts function shunda endi bu title.tsx failida real user uchun yaratilgan navbar.tsx failidan keladigan document bor yani real user uchun qilingan navbar.tsx failida document shu >>> function bor const document = useQuery(api.document.getDocumentById, {  id: params.documentId as Id<"documents">, }); yani query bilan conex/document/document.ts failida yozilgan function bor yani bu getDocumentById function props bilan faildan failga o'tib kelepti
@@ -10,6 +15,8 @@ interface TitleProps {
 export const Title = ({ document }: TitleProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const updateFields = useMutation(api.document.updateFields);
+
     const [title, setTitle] = useState(document.title || "Untitiled");
 
     const [isEditing, setIsEditing] = useState(false);
@@ -17,7 +24,13 @@ export const Title = ({ document }: TitleProps) => {
     const enableInput = () => {
         setTitle(document.title);
         setIsEditing(true);
-        setTimeout(() => inputRef.current?.focus(), 0);
+        setTimeout(() => {
+            inputRef.current?.focus();
+            inputRef.current?.setSelectionRange(
+                0,
+                inputRef.current.value.length
+            ); //input ichidagi qiymatni to'liq belgilab yani select qilib olish uchun yani input ichidagi qiymatni o'zgartirayotganda hariflarni bittalab o'zgartirmay bittada belgilab udalit qilish uchun masalan "Untitle" textini bittada belgilab udalit qilib yangi title yozish uchun kerak chunki document create bo'lganda default holatda titlesi "Untitle" string bo'ladi shuni user o'zi hohlagan titlega o'zgartirishi uchun kerak
+        }, 0);
     };
 
     const disableInput = () => {
@@ -26,6 +39,10 @@ export const Title = ({ document }: TitleProps) => {
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
+        updateFields({
+            id: document._id,
+            title: event.target.value || "Untitled", //yani agar input ichidagi qiymat yani documentni titlesini user o'zi nomlamasa shu "Untitled" ishlaydi
+        });
     };
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -64,3 +81,8 @@ export const Title = ({ document }: TitleProps) => {
         </div>
     );
 };
+
+Title.Skeleton = function TitleSkeleton() {
+    return <Skeleton className="h-9 w-20  rounded-md" />; //Skeleton bu Title loading bo'letganda chiqadigan loader component
+};
+

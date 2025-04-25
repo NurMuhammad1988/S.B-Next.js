@@ -24,7 +24,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
     if (document === undefined) {
         return (
             <nav className="bg-background px-3 py-2 w-full flex items-center justify-between">
-                <Loader />
+                <Title.Skeleton />
                 <div className=" flex items-center gap-x-2">
                     <Loader />
                 </div>
@@ -38,7 +38,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
 
     return (
         <>
-            <nav className="bg-background  px-3 py-0 w-full flex items-center gap-x-4">
+            <nav className="bg-background  px-3 py-2 w-full flex items-center gap-x-4">
                 {isCollapsed && ( //agar boshida false qilingan isCollapsed statesi true bo'lsa shu icon ishlaydi va ustiga onclick qilinsa reset functionda berilgan stylelarga o'zgaradi yani qaytadan sidebar qismi chap tomondan chiqib keladi
                     <MenuIcon
                         className="h-6 w-6 text-muted-foreground"
@@ -50,7 +50,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
 
                 <div className="flex items-center justify-between w-full">
                     <Title document={document} />
-                    {/* props bilan jo'natilayotgan documentda aynan qaysi document bilan ishlanayotgani haqida idlarga qarab biladigan document bor (getDocumentById)*/}
+                    {/* props bilan jo'natilayotgan documentda aynan qaysi document bilan ishlanayotgani haqida idlarga qarab biladigan document bor ()*/}
 
                     <div className="flex items-center gap-x-2"></div>
                 </div>
