@@ -13,15 +13,15 @@ interface TitleProps {
 }
 
 export const Title = ({ document }: TitleProps) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);//useref reactdan keladi vazifasi inputga tushgan datalarni qabul qilish va qabul qilganda saytni yoki functionni qayta renderlamaslik yani user inoutga har safar bosganda saytni renderlamaydi Ref - bu DOM elementiga va komponentlarda yaratilgan React elementlariga kirish uchun React tomonidan taqdim etilgan funksiya . Ular rekvizit va holatni ishlatmasdan, biz bolalar komponentining qiymatini o'zgartirmoqchi bo'lgan holatlarda qo'llanilad
 
-    const updateFields = useMutation(api.document.updateFields);
+    const updateFields = useMutation(api.document.updateFields);//convex/document.ts/updateFields function
 
-    const [title, setTitle] = useState(document.title || "Untitiled");
+    const [title, setTitle] = useState(document.title || "Untitiled");//stateda default holat agar documentni titlesi bor bo'lsa titleni oladi agar yo'q bo'lsa "Untitiled" texti aftamatik tarzda qo'yiladi
 
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);//yani title edid qilinayotganda ishlaydigan state boshida fasle bo'ladi chunki o'zidan o'zi o'zgarmaydi ///////////bu holatda bu state shunchaki if elslarni bajartirish uchun yartildi yani masalan boshlang'ich qiymatni fasle qilib agar false bo'lganda bu ishni true bo'lganda bu ishni bajar deyish uchun masalan bu holatda isEditing false va enableInput functionda bu bo'sh setIsEditing ichida true qilindi chunki enableInput functionda documentni titlesini edit qilish bor shu ishlashi uchun enableInputda false truega o'zgartirildi
 
-    const enableInput = () => {
+    const enableInput = () => {//bu holatda enableInput functionda setTitle statedagi birinchi qiymat ovolindi yani documenti titlesi olindi 
         setTitle(document.title);
         setIsEditing(true);
         setTimeout(() => {
@@ -57,10 +57,11 @@ export const Title = ({ document }: TitleProps) => {
             {document.title} */}
 
             {!!document.icon && <p> {document.icon}</p>}
+            {/* agar convex serverdan keladigan documentni icon qiymati bor bo'lsa icon chiqadi yo'q bo'lsa hech narsa chiqmaydi chunki bu operator bitta mantiqqa asoslangan yani "va" yokida esa yo'q yani else yo'q bitta qiymatga bitta holatga ishlaydigan operator */}
 
-            {isEditing ? (
+            {isEditing ? (//yani agar isEditing true bo'lsa yani inputga bosib titleni o'zgartirishga user harakat qilsa shu input ichidagi functionlar ishlaydi yokida pastdagi button ishlab asl holatida serverdan kelgan holatida  turadi yani "Untitled" texti chiqib turadi
                 <Input
-                    ref={inputRef}
+                    ref={inputRef}//
                     onClick={enableInput}
                     onBlur={disableInput}
                     onChange={onChange}
@@ -70,7 +71,7 @@ export const Title = ({ document }: TitleProps) => {
                 />
             ) : (
                 <Button
-                    className="font-normal h-auto p-1"
+                    className="font-normal h-auto p-1 bg-red-900"
                     variant={"ghost"}
                     size={"sm"}
                     onClick={enableInput}
@@ -86,3 +87,5 @@ Title.Skeleton = function TitleSkeleton() {
     return <Skeleton className="h-9 w-20  rounded-md" />; //Skeleton bu Title loading bo'letganda chiqadigan loader component
 };
 
+
+// 7. Restoring darsi 21:17 da qoldi va shu joydan boshlashdan oldin yuqorida yozilgan hamma kodni tushunib keyin 21:17 dan boshlash kerak

@@ -230,7 +230,7 @@ export const Sidebar = () => {
                 {!!params.documentId ? (
                     <Navbar isCollapsed={isCollapsed} reset={reset} />
                 ) : (
-                    // bu navbar userni sidebar.tsx failini navbari yani asosiy saytdagi navbarmas faqat account create qilgan user uchun chiqadigan toolslar bor navbar yani agar paramsda kelgan documentId true bo'lsa yani idlar bor bo'lsa shu navbar component chiqadi agar yo'q bo'lsa yani false bo'lsa pastdagi umumiy nav component chiqadi
+                    // bu navbar userni sidebar.tsx failini navbari yani asosiy saytdagi navbarmas faqat account create qilgan user uchun chiqadigan toolslar bor navbar yani agar paramsda kelgan documentId true bo'lsa yani idlar bor bo'lsa shu navbar component chiqadi agar yo'q bo'lsa yani false bo'lsa pastdagi umumiy nav component chiqadi//yani bu holatda Navbar.tsxdagi documentId qiymati ishlaydi//agar false bo'lsa pastdagi nav ishlaydi
 
                     <nav className={cn("bg-transparent px-3 py-2 w-full")}>
                         {isCollapsed && ( //agar boshida false qilingan isCollapsed statesi true bo'lsa shu icon ishlaydi va ustiga onclick qilinsa reset functionda berilgan stylelarga o'zgaradi yani qaytadan sidebar qismi chap tomondan chiqib keladi
