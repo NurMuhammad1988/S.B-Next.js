@@ -220,7 +220,7 @@ export const getDocumentById = query({
 });
 
 export const updateFields = mutation({
-    //updateFields function real user documentlarni crreate qilgandan keyin titlini coverimagesini yoki boshqa har qanday quyidagi datalarini o'zgartirmoqchi bo'lsa ishlaydiga function v.optional qilingani esa user har doimham datalarni o'zgartirmaydi shunda hato chiqmasligi uchun
+    //updateFields function real user documentlarni create qilgandan keyin titlini coverimagesini yoki boshqa har qanday quyidagi datalarini o'zgartirmoqchi bo'lsa ishlaydiga function v.optional qilingani esa user har doimham datalarni o'zgartirmaydi shunda hato chiqmasligi uchun
     args: {
         id: v.id("documents"),
         title: v.optional(v.string()),
