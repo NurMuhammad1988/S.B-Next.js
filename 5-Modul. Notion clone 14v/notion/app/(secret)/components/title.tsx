@@ -45,6 +45,7 @@ export const Title = ({ document }: TitleProps) => {
         updateFields({
             ////convex/document.ts/dan kelgan updateFields nomli function vazifasi userni real user ekanliginiidilarigaqarab tekshirish va rostdan shu inputda ishlayotgan eventdai documentni real egasi ekanligini tekshirish va shu documentlarni datalarini o'zgartirish uchun yaratilgan function
             //bu holatda agar onChange functionchaqirilgan inputda onchange ishlab hodisa sodir bo'lganda updateFields functionda aytilgan id qiymatida documentni idisni bo'sa yoki titleni valuesinitarget bilan oladi yoki default holatdahi "Untitled" textini ishlatadi
+            //bu updateFields asl documentni hamma qiymatlari bor bu holatda faqat id bilan tekshirilib faqat title qiymatiga ishlov berildi bu functionda yana   content: v.optional(v.string()),coverImage: v.optional(v.string()),icon: v.optional(v.string()),isPublished: v.optional(v.boolean()), qiymatlariham bor kerak bo'lganda bu qiymatlarham alohida chaqirilib o'zgartish uchun functionlar yozsa bo'ladi
             id: document._id,
             title: event.target.value || "Untitled", //yani agar input ichidagi qiymat yani documentni titlesini user o'zi nomlamasa shu "Untitled" ishlaydi
         });
@@ -77,10 +78,10 @@ export const Title = ({ document }: TitleProps) => {
                 />
             ) : (
                 <Button
-                    className="font-normal h-auto p-1 bg-red-900"
+                    className="font-normal h-auto p-1"
                     variant={"ghost"}
                     size={"sm"}
-                    onClick={enableInput}
+                    onClick={enableInput} //isEditing false bo'lgandaham bu buttonga enableInput functionini click qilinganda berilishini sababi shuku aslida user inputga click qilib hodisani boshqaradi lekin input ochilishi uchunham yani hodisani boshlash uchunham aslida birinchi bu buttonga click bo'ladi yani  title aslida shu buttonda yani agar bu buttondagi enableInput functionga click qilingandagina yuqoridagi isEditing true bo'ladi
                 >
                     <span className="truncate">{document.title}</span>
                 </Button>

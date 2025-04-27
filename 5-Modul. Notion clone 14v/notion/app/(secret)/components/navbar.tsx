@@ -6,11 +6,12 @@ import { MenuIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import React from "react";
 import { Title } from "./title";
+import { Publish } from "./publish";
 
-// agar user document create qilgan bo'lsa va documentlari idilar bor bo'lsa ishlaydigan navbar yani faqat regester qilgan user uchun chiqadigan navbar component
+// agar user document create qilgan bo'lsa va documentlari idilar bor bo'lsa ishlaydigan navbar yani faqat regester qilgan user uchun chiqadigan navbar component home pagedagi asosiy navbarmas 
 
 interface NavbarProps {
-    isCollapsed: boolean;
+    isCollapsed: boolean;//isCollapsed va reset sdebar.tsxdan props bilan chaqirldi
     reset: () => void;
 }
 
@@ -49,10 +50,14 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
                 )}
 
                 <div className="flex items-center justify-between w-full">
+                    {/* bu navbar.tsx faili sidebar.tsxda chaqirilgan va chaqirilgan joyida o'ng tomonga qo'yilgan yani  sidebar.tsx faqat chap tomondan 240px joyni egallagan qolgani shu navbar.tsx joylashtirilgan va bu navbar.tsxham ikkiga bo'lingan ona divdagi flex items-center justify-between w-full classlariga qara va chap flex sabab chap tomonga Title.tsx  o'ng tomongayaniflex sabab davomigaesa Publish.tsx joylashtirildi va aslida bu faillarni hammasini ona divi sidebar.tsx faili hissoblanadi */}
                     <Title document={document} />
                     {/* props bilan jo'natilayotgan documentda aynan qaysi document bilan ishlanayotgani haqida idlarga qarab biladigan document bor ()*/}
 
-                    <div className="flex items-center gap-x-2"></div>
+                    <div className="flex items-center gap-x-2">
+
+                        <Publish document={document}/>
+                    </div>
                 </div>
             </nav>
         </>
