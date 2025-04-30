@@ -50,13 +50,15 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
                 )}
 
                 <div className="flex items-center justify-between w-full">
-                    {/* bu navbar.tsx faili sidebar.tsxda chaqirilgan va chaqirilgan joyida o'ng tomonga qo'yilgan yani  sidebar.tsx faqat chap tomondan 240px joyni egallagan qolgani shu navbar.tsx joylashtirilgan va bu navbar.tsxham ikkiga bo'lingan ona divdagi flex items-center justify-between w-full classlariga qara va chap flex sabab chap tomonga Title.tsx  o'ng tomongayaniflex sabab davomigaesa Publish.tsx joylashtirildi va aslida bu faillarni hammasini ona divi sidebar.tsx faili hissoblanadi */}
+                    {/* bu navbar.tsx faili sidebar.tsxda chaqirilgan va chaqirilgan joyida o'ng tomonga qo'yilgan yani  sidebar.tsx faqat chap tomondan 240px joyni egallagan qolgani shu navbar.tsx joylashtirilgan va bu navbar.tsxham ikkiga bo'lingan ona divdagi flex items-center justify-between w-full classlariga qara va chap flex sabab chap tomonga Title.tsx  o'ng tomonga yani flex sabab davomiga esa Publish.tsx joylashtirildi va aslida bu faillarni hammasini ona divi sidebar.tsx faili hissoblanadi yani bu faillar ha joyda allohoda yozilib bitta sidebar.tsxga chaqirib ishlatilgan */}
                     <Title document={document} />
+                    {/* title screnni chap tomonini egallaydi */}
                     {/* props bilan jo'natilayotgan documentda aynan qaysi document bilan ishlanayotgani haqida idlarga qarab biladigan document bor ()*/}
 
                     <div className="flex items-center gap-x-2">
 
                         <Publish document={document}/>
+                        {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi */}
                     </div>
                 </div>
             </nav>
