@@ -59,7 +59,7 @@ export const Publish = ({ document }: PublishProps) => {
         navigator.clipboard.writeText(url); //bu navigator jsda ts bilan yozilgan lcal functionyani jsniki vazifasi clipboard va writetext qiymati va metodi bilan parametriga tishgan url functionda kelgan string typli textlarni copy qilish
         setCopied(true); //copied state boshida fasle edi oncopy function ishlaganda true bo'ladiyani oncopyga ruhsat beradi bu state shunchaki if else uchun qilingan endi setCopied true yanu copied state  chaqirilgan joda endi true qiymati bo'ladi shu uchun Check iconi ishlaydi yani copy qilib bo'lgandan keyin Check iconi ishlaydi
 
-        setTimeout(() => setCopied(false), 2000);//fu function ichida true qilingan setCopied endi 2 millisundddan keyin yana qaytadan false qilinadi
+        setTimeout(() => setCopied(false), 2000); //fu function ichida true qilingan setCopied endi 2 millisundddan keyin yana qaytadan false qilinadi
     };
 
     return (
@@ -89,7 +89,7 @@ export const Publish = ({ document }: PublishProps) => {
                             size={"sm"}
                             className="w-full text-sm"
                             onClick={onPublish}
-                            disabled={isLoading} //publish buttonoga click bo'lganda isloading disablet qilinadi yani qotiriladi chunki onPublish function ishlab so'rov ketishi kerak
+                            disabled={isLoading} //publish buttoniga click bo'lganda isloading disabled qilinadi yani qotiriladi chunki onPublish function ishlab so'rov ketishi kerak
                         >
                             Publish
                         </Button>
@@ -113,13 +113,13 @@ export const Publish = ({ document }: PublishProps) => {
                             {/*  share texriga bosganda chiqadigan Publish textlibuttonga click qilinagandan keyin chiqadigan bu divga input ichida url o'zgaruvchi chaqirldi  yani endi document.isPublished har safar true bo'lganda shu input chiqadi */}
 
                             <Button
-                                disabled={copied}//bu holatda copied state disabled qilib qo'yildi yani inout ichidakelganurlni shunchaki mishka bilan belgilab cipy qilib bo'lmasligini taminlashuchun masalanusr qo'lda shunday copy qilganda urlni birirta harfi yoki belgisi copy qilinmasdan qolib ketishi mumkun shu uchun copy qilish uchunham alohida function yozildi
+                                disabled={copied} //bu holatda copied state disabled qilib qo'yildi yani input ichida kelgan urlni shunchaki mishka bilan belgilab copy qilib bo'lmasligini taminlash uchun masalan user qo'lda shunday copy qilganda urlni birorta harfi yoki belgisi copy qilinmasdan qolib ketishi mumkun shu uchun copy qilish uchunham alohida function yozildi
                                 onClick={onCopy}
                                 className="h-8 rounded-1-none"
                             >
                                 {/*  share texriga bosganda chiqadigan Publish textlibuttonga click qilinagandan keyin chiqadigan bu divga input ichida url o'zgaruvchi chaqirldi  yani endi document.isPublished har safar true bo'lgadna inputdan keyin shu button chiqadi agar copied true bo'lsa Check icon chiqadi agar false bo'lsa Copy iconi chiqadi copy iconiga click qilinganda documentni urli copy qilinishikerak masalan user o'z documentini yoki boshqa userni documentini ssilkasni copy qilib boshqalarga jo'natish uchun kerak*/}
 
-                                {copied ? (//bu buttonga click bo'lganda agar ichida onCopy functionda yozilgan copied true bo'lsa yani setCopieddan true kelib tushgan bo'lsa yani onCopy function ishlab url copy qilingan bo'lsa chek icon bo'lmasa copy icon ishlab turadi// yani user kirganda birinchi fasle bo'lib turadi  buttonga onclick bo'lgandan keyin copy icon ishlab turadi copy iconga click bo'lgadnan keyin copied state falsega aylanadi va check icon ishga tushadi
+                                {copied ? ( //bu buttonga click bo'lganda agar ichida onCopy functionda yozilgan copied true bo'lsa yani setCopieddan true kelib tushgan bo'lsa yani onCopy function ishlab url copy qilingan bo'lsa chek icon bo'lmasa copy icon ishlab turadi// yani user kirganda birinchi fasle bo'lib turadi  buttonga onclick bo'lgandan keyin copy icon ishlab turadi copy iconga click bo'lgadnan keyin copied state falsega aylanadi va check icon ishga tushadi
                                     <Check className="h-4 w-4" />
                                 ) : (
                                     <Copy className="h-4 w-4" />
@@ -127,7 +127,15 @@ export const Publish = ({ document }: PublishProps) => {
                             </Button>
                         </div>
 
-
+                        <Button
+                            size={"sm"}
+                            className="w-full text-sm"
+                            onClick={onUnPublish}
+                            disabled={isLoading} //Unpublish buttonoga click bo'lganda isloading disablet qilinadi yani qotiriladi chunki onUnPublish function ishlab so'rov ketishi kerak
+                            // yani bu holatda onUnPublish functioni vazifasi convexda yaratilgan boolean qiymatli isPublished qiymatini document idisiga qarab false qilish yani document puplish qilinmasdan unpublish qilinadi yokida publish qilish buttoni chiqib turadi///yani copy qilish if eselaridan keyin qilindi chunki user hohlasa yoki copy qiladai yoki unpublish qiladi///bu publish yoki unpublishlar Onpublish va onUnPublish functionlarida promise bilan qilingan
+                        >
+                            Unpublish
+                        </Button>
                     </div>
                 )}
             </PopoverContent>
