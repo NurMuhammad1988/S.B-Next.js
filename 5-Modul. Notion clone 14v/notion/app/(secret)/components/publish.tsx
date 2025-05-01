@@ -27,6 +27,7 @@ export const Publish = ({ document }: PublishProps) => {
 
     const onPublish = () => {
         setIsLoading(true);
+        //convex/document.ts/updateFields functioni bu publish.tsx failiga mutatsiya qilib chaqirilidi va onPublish function ichida promise nomli o'zgaruvchi bilan birlashtirib chaqirildi  va  updateFields functionda tekshirilgan documentni idsiga qarab tekshirdik va isPublishedni  true qivoldik updateFields functionda chaqirilgan isPublished boshida /convex/document.ts/ createDocument functionda false qilingan shu sabab endi so'rov jo'natilayotgan paytda buni true qilish kerak bo'masa documentCreate function hato ishlab documewnt create qilinmay qoladi va updateFields functionda convexni shaxsan o'zini jsda qilingan patch metodi bor o'sha patch metodi bu onPublish function ishlaganda yani bu onPublish function chaqirilgan buttonga click qilinganda yani dynamic holda convex documentda false bo'lib turgan isPublishedni true qiladi yani endi documentni publish qilsa bo'ladi (o'zgaruvchini promise deb nomlaganimiz sababi aslida jsni promise objecti bilan so'rov jo'natdik)
 
         const promise = updateFields({
             id: document._id,
@@ -45,7 +46,7 @@ export const Publish = ({ document }: PublishProps) => {
 
         const promise = updateFields({
             id: document._id,
-            isPublished: false, //bu document.tsda  boolean qiymat qilib berilgan shu sabab faqat true yoki false qabul qiladi
+            isPublished: false, //bu document.tsda  boolean qiymat qilib berilgan shu sabab faqat true yoki false qabul qiladi va onUnPublish functioni chaqirilgan buttonga click qilinganda onUnPublish function ishlab isPublishedni false qiladi yani document pulic qilinmaydi
         }).finally(() => setIsLoading(false)); //bu holada promise global objecti chaqirilmasaham promiseni finally metodi ishlatildi bu js loyiha shu uchun ishlayveradi//promise yani serverdan so'rov bajarilib bo'lgandan keyin setIsloading false qilindi chinku loader bor yani finallayda oader to'htashi kerak
 
         toast.promise(promise, {
@@ -142,3 +143,8 @@ export const Publish = ({ document }: PublishProps) => {
         </Popover>
     );
 };
+
+// 7. Restoring darsi 32:13 da qoldi
+// 7. Restoring darsi 32:13 da qoldi
+
+// shu failni va convex/document.ts/updateFields functionini va patch metodini yanaham 100 foiz yahshilab tushunib keyin darsno qolgan joydan davom ettir

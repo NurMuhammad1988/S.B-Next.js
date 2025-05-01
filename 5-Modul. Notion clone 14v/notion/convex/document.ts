@@ -248,12 +248,15 @@ export const updateFields = mutation({
             throw new Error("Not found");
         }
 
-        if(existingDocument.userId !== userId){//existingDocument ichida kelgan documentni userini idisni teng bo'masa useId o'zgaruvchida kelgan userga error "Unauthorized"
-            throw new Error("Unauthorized")
+        if (existingDocument.userId !== userId) {
+            //existingDocument ichida kelgan documentni userini idisni teng bo'masa useId o'zgaruvchida kelgan userga error "Unauthorized"
+            throw new Error("Unauthorized");
         }
 
-        const document = await ctx.db.patch(id, rest)//patch metodi convexdagi functionlarga Yangi maydonlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi// yani bu holatda document nomli o'zgaruvchiga patch metodi bilan id va rest qo'shildi restda bu functiondagi args o'zgaruvchida kelgan optional qiymatlar bor idda esa args o'zgaruvchida kelgan documentni umumiy idis bor yani bu holatda endi o'zgargan documentlarni idilari patch metodi bilan document bomli o'zgaruvchiga sovolindi
-        
-        return document
+        const document = await ctx.db.patch(id, rest); //patch metodi convexdagi functionlarga yani objectlarga  Yangi maydonlar yani qiymatlar qo'shadi. Mavjud maydonlar ustiga yangilarini yozadi va o'zgartiradi. Aniqlanmagan maydonlarni olib tashlaydi// yani bu holatda document nomli o'zgaruvchiga patch metodi bilan id va rest qo'shildi restda bu functiondagi args o'zgaruvchida kelgan optional qiymatlar bor idda esa args o'zgaruvchida kelgan documentni umumiy idis bor yani bu holatda endi o'zgargan documentlarni idilari patch metodi bilan document bomli o'zgaruvchiga sovolindi
+
+        ///VA SHU PATCH METODI SABAB BU updateFields FUNCTIONI CHAQIRILIB ISHLATILGAN publish.tsx faiidagi onPublish va onUnPublish functionlari convexdagi document papkaga document qo'shish yokida qo'shmaslik ishlayapti
+
+        return document;
     },
 });

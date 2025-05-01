@@ -8,10 +8,10 @@ import React from "react";
 import { Title } from "./title";
 import { Publish } from "./publish";
 
-// agar user document create qilgan bo'lsa va documentlari idilar bor bo'lsa ishlaydigan navbar yani faqat regester qilgan user uchun chiqadigan navbar component home pagedagi asosiy navbarmas 
+// agar user document create qilgan bo'lsa va documentlari idilar bor bo'lsa ishlaydigan navbar yani faqat regester qilgan user uchun chiqadigan navbar component home pagedagi asosiy navbarmas
 
 interface NavbarProps {
-    isCollapsed: boolean;//isCollapsed va reset sdebar.tsxdan props bilan chaqirldi
+    isCollapsed: boolean; //isCollapsed va reset sdebar.tsxdan props bilan chaqirldi
     reset: () => void;
 }
 
@@ -23,6 +23,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
     });
 
     if (document === undefined) {
+        //agar convexdan keladigan document va idilari topilmasa shu if operator ishlab pastdagi navni return qiladi
         return (
             <nav className="bg-background px-3 py-2 w-full flex items-center justify-between">
                 <Title.Skeleton />
@@ -56,9 +57,8 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
                     {/* props bilan jo'natilayotgan documentda aynan qaysi document bilan ishlanayotgani haqida idlarga qarab biladigan document bor ()*/}
 
                     <div className="flex items-center gap-x-2">
-
-                        <Publish document={document}/>
-                        {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi */}
+                        <Publish document={document} />
+                        {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi popoverdagi share textiga click qilinganda ichida yana functionlar ishllaydi puplish unpublish copy va hakozo functionlar bor*/}
                     </div>
                 </div>
             </nav>
