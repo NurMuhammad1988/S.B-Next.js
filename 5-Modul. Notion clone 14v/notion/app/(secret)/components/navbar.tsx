@@ -1,4 +1,3 @@
-import { Loader } from "@/components/ui/loader";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
@@ -20,7 +19,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
     const params = useParams();
 
     const document = useQuery(api.document.getDocumentById, {
-        id: params.documentId as Id<"documents">,
+        id: params.documentId as Id<"documents">,//yani bu documentId endi huddiki /convex/_generated/dataModel yani bu documentIdda endi convexni Id generete qiladigan componenti bor va parametridagi "documents" esa qaysi faildagi documentni idlarini generet qilishyani convex/documents.ts failiga link endi convexni Id generete qiladigan server componentni convex/documents.ts failidagi functionlarda yaratilgan idlarni hammasini convex serverda turgan functionlar bilan generete qilibtanib oladi shunda convexdagi obshi documentlar orasidan yoki shu loyiha ozida agar har hil boshqa odlar bo'lsaham adashmasdan aynan kerakli papkaga borib aynan osha papkadagi idlarni generet qiladi bu as Id shu uchun juda muhum buni to'g'ri yo'natirish uchun nextni useParams functioni kerak chunki useParams documentId nomli o'zgaruvchi ichiga shu convex Idni solib beradi
     });
 
     if (document === undefined) {
@@ -28,8 +27,9 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
         return (
             <nav className="bg-background px-3 py-2 w-full flex items-center justify-between">
                 <Title.Skeleton />
+                {/* yani menu.tsx server so'rovlari bilan kelgancha agar kech qolsa shu menu.tsxdagi Skeleton function va ichidagi loader uchun qo'yilgan animatsya icon ishlaydi */}
                 <div className=" flex items-center gap-x-2">
-                    <Loader />
+                    <Menu.Skeleton />
                 </div>
             </nav>
         );
@@ -54,7 +54,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
                 <div className="flex items-center justify-between w-full">
                     {/* bu navbar.tsx faili sidebar.tsxda chaqirilgan va chaqirilgan joyida o'ng tomonga qo'yilgan yani  sidebar.tsx faqat chap tomondan 240px joyni egallagan qolgani shu navbar.tsx joylashtirilgan va bu navbar.tsxham ikkiga bo'lingan ona divdagi flex items-center justify-between w-full classlariga qara va chap flex sabab chap tomonga Title.tsx  o'ng tomonga yani flex sabab davomiga esa Publish.tsx joylashtirildi va aslida bu faillarni hammasini ona divi sidebar.tsx faili hissoblanadi yani bu faillar ha joyda allohoda yozilib bitta sidebar.tsxga chaqirib ishlatilgan */}
                     <Title document={document} />
-                    {/* title screnni chap tomonini egallaydi */}
+                    {/* title screnni chap tomonini egallaydi bu navbar real userni sidebar.tsxda chaqirilgan va chap tomondan 240px dan keyin chiqadi yani navbar faqat tepada chiqadi birinchi shu title,tsx navbar ohirida esa publish va menu tsxlar chiqadi*/}
                     {/* props bilan jo'natilayotgan documentda aynan qaysi document bilan ishlanayotgani haqida idlarga qarab biladigan document bor ()*/}
 
                     <div className="flex items-center gap-x-2">
@@ -62,9 +62,12 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
                         {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi popoverdagi "Share' textiga click qilinganda ichida yana functionlar ishllaydi puplish unpublish copy va hakozo functionlar bor*/}
 
                         <Menu documentId={document._id}/>
+                        {/* menu.tsx bu sidebar.tsxda chiqadigan asosiy real userni navbarida o'ng tomon ohoroda MoreHorizontal iconi bilan chiqadi MoreHorizontal iconiga bosilganda shu menu.tsx failidagi functionlar eventlar ishga tushadi */}
                     </div>
                 </div>
             </nav>
+
+            {document.isArchived && <Banner documentId={document._id}/>}
         </>
     );
 };

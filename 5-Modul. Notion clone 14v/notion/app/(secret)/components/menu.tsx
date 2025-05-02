@@ -6,6 +6,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@clerk/clerk-react";
@@ -31,15 +32,15 @@ export const Menu = ({ documentId }: MenuProps) => {
         event.stopPropagation();
         if (!documentId) return; //agar documentId yo'q bo'lsa shunchaki shu sahifani o'zini return qiladi
 
-        const promise = archive({ id: documentId }).then(() =>
-            router.push("/documents")
-        ); //document archive qilingandan keyin userni asosiy "/documents" papkasiga push qiladi yani app/(secret)/documents/page.tsx failiga router bilan jo'natadi yani document archived qilingandan keyin userni dynamic yaratilgan sahifadan  chiqarib qo'yadi// bu holatda promise o'zgaruvchini nomi = archive esa convex/document.tsdan keletgan archive functioni
+        const promise = archive({ id: documentId }) //document archive qilingandan keyin userni asosiy "/documents" papkasiga push qiladi yani app/(secret)/documents/page.tsx failiga router bilan jo'natadi yani document archived qilingandan keyin userni dynamic yaratilgan sahifadan  chiqarib qo'yadi// bu holatda promise o'zgaruvchini nomi = archive esa convex/document.tsdan keletgan archive functioni
 
         toast.promise(promise, {
             loading: "Archiving document...",
             success: "Archived document!",
             error: "Failed to archive document.",
         });
+
+        router.push("/documents")//onArchive ishlab document archivega tushgabdan keyin router userni asosiy sahifaga yani real userga tegishli asosiy sidebar.tsx sahifasiga otvoradi
     };
 
     return (
@@ -58,8 +59,8 @@ export const Menu = ({ documentId }: MenuProps) => {
 
             <DropdownMenuContent
                 className="w-60"
-                align="start"
-                side="right"
+                align="end"
+                alignOffset={8}
                 forceMount
             >
                 <DropdownMenuItem onClick={onArchive}>
@@ -80,3 +81,9 @@ export const Menu = ({ documentId }: MenuProps) => {
         </DropdownMenu>
     );
 };
+
+
+Menu.Skeleton = function MenuSkeleton() {//yani bu componentda server so'rov functionlar bor shu sabab bu so'rovlar bajarulgancha shu loader ishlashi kerak
+    return <Skeleton className="h-10 w-10" />; 
+
+}
