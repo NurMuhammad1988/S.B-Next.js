@@ -68,7 +68,11 @@ export const Publish = ({ document }: PublishProps) => {
             <PopoverTrigger>
                 <Button size={"sm"} variant={"ghost"}>
                     Share
-                    {/* Share buttonga clickqilinganda yoki onPublish function ishlaydi yoki !document.isPublished && (divi ishlaydi) */}
+                    {/* Share buttonga click qilinganda yoki onPublish function ishlaydi yoki !document.isPublished && (divi ishlaydi) */}
+                    {document.isPublished && (
+                        <Globe className="text-sky-500 w-4 h-4 ml-2"/>
+                        // agar ispub;ished true bo'lsa "Share" texti yonida shu globe icon turadi// yani user documentini publish qilgan bo'lsa yokida user unpublished qilsa globe icon yo'qoladi
+                    )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -77,7 +81,7 @@ export const Publish = ({ document }: PublishProps) => {
                 alignOffset={8}
                 forceMount
             >
-                {!document.isPublished ? ( //agar document: Doc<"documents">; bilan convexdagi umumiy yaratilgan docmentda isPublished qiymati yo'q bo'lsa yani userni yaratgan documentlari yo'q bo'lsa yani publish qilinmagan bo'lsa yani fasle bo'lsa shu div ishlaydi qachin ishlaydi yuqoridagi buttondagi "Share" buttonini bosganda ishlaydi
+                {!document.isPublished ? ( //agar document: Doc<"documents">; bilan convexdagi umumiy yaratilgan docmentda isPublished qiymati yo'q bo'lsa yani userni yaratgan documentlari yo'q bo'lsa yani publish qilinmagan bo'lsa yani false bo'lsa shu div ishlaydi qachon ishlaydi yuqoridagi buttondagi "Share" buttonini bosganda ishlaydi
                     <div className="flex flex-col items-center justify-center">
                         <Globe className="h-8 w-8 text-muted-foreground mb-2" />
                         <p className="text-sm font-medium mb-2">
@@ -118,9 +122,9 @@ export const Publish = ({ document }: PublishProps) => {
                                 onClick={onCopy}
                                 className="h-8 rounded-1-none"
                             >
-                                {/*  share texriga bosganda chiqadigan Publish textlibuttonga click qilinagandan keyin chiqadigan bu divga input ichida url o'zgaruvchi chaqirldi  yani endi document.isPublished har safar true bo'lgadna inputdan keyin shu button chiqadi agar copied true bo'lsa Check icon chiqadi agar false bo'lsa Copy iconi chiqadi copy iconiga click qilinganda documentni urli copy qilinishikerak masalan user o'z documentini yoki boshqa userni documentini ssilkasni copy qilib boshqalarga jo'natish uchun kerak*/}
+                                {/*  share textiga bosganda chiqadigan Publish textli buttonga click qilinagandan keyin chiqadigan bu divga input ichida url o'zgaruvchi chaqirldi  yani endi document.isPublished har safar true bo'lgadna inputdan keyin shu button chiqadi agar copied true bo'lsa Check icon chiqadi agar false bo'lsa Copy iconi chiqadi copy iconiga click qilinganda documentni urli copy qilinishikerak masalan user o'z documentini yoki boshqa userni documentini ssilkasni copy qilib boshqalarga jo'natish uchun kerak*/}
 
-                                {copied ? ( //bu buttonga click bo'lganda agar ichida onCopy functionda yozilgan copied true bo'lsa yani setCopieddan true kelib tushgan bo'lsa yani onCopy function ishlab url copy qilingan bo'lsa chek icon bo'lmasa copy icon ishlab turadi// yani user kirganda birinchi fasle bo'lib turadi  buttonga onclick bo'lgandan keyin copy icon ishlab turadi copy iconga click bo'lgadnan keyin copied state falsega aylanadi va check icon ishga tushadi
+                                {copied ? ( //bu buttonga click bo'lganda agar ichida onCopy functionda yozilgan copied true bo'lsa yani setCopieddan true kelib tushgan bo'lsa yani onCopy function ishlab url copy qilingan bo'lsa va chek icon bo'lmasa copy icon ishlab turadi// yani user kirganda birinchi false bo'lib turadi  buttonga onclick bo'lgandan keyin copy icon ishlab turadi copy iconga click bo'lgadnan keyin copied state falsega aylanadi va check icon ishga tushadi
                                     <Check className="h-4 w-4" />
                                 ) : (
                                     <Copy className="h-4 w-4" />
