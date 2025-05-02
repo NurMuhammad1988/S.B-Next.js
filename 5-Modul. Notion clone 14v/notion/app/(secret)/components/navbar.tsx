@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { Title } from "./title";
 import { Publish } from "./publish";
+import { Menu } from "./menu";
 
 // agar user document create qilgan bo'lsa va documentlari idilar bor bo'lsa ishlaydigan navbar yani faqat regester qilgan user uchun chiqadigan navbar component home pagedagi asosiy navbarmas
 
@@ -58,7 +59,9 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
 
                     <div className="flex items-center gap-x-2">
                         <Publish document={document} />
-                        {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi popoverdagi share textiga click qilinganda ichida yana functionlar ishllaydi puplish unpublish copy va hakozo functionlar bor*/}
+                        {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi popoverdagi "Share' textiga click qilinganda ichida yana functionlar ishllaydi puplish unpublish copy va hakozo functionlar bor*/}
+
+                        <Menu documentId={document._id}/>
                     </div>
                 </div>
             </nav>
