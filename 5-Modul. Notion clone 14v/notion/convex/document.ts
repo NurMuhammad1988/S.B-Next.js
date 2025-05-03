@@ -1,4 +1,4 @@
-import { Id } from "./_generated/dataModel";
+import { Doc, Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 //Mutatsiyalar ma'lumotlar bazasiga ma'lumotlarni kiritadi, yangilaydi va o'chiradi, autentifikatsiyani tekshiradi yoki boshqa biznes mantiqini bajaradi va ixtiyoriy ravishda mijoz ilovasiga javob qaytaradi.
@@ -261,56 +261,60 @@ export const updateFields = mutation({
     },
 });
 
-// export const restore = mutation({
-//     args: { id: v.id("documents") },
-//     handler: async (ctx, args) => {
-//       const identity = await ctx.auth.getUserIdentity();
-  
-//       if (!identity) {
-//         throw new Error("Not authenticated");
-//       }
-  
-//       const userId = identity.subject;
-  
-//       const existingDocument = await ctx.db.get(args.id);
-  
-//       if (!existingDocument) {
-//         throw new Error("Not found");
-//       }
-  
-//       if (existingDocument.userId !== userId) {
-//         throw new Error("Unauthorized");
-//       }
-  
-//       const unarchivedChildren = async (documentId: Id<"documents">) => {
-//         const childrens = await ctx.db
-//           .query("documents")
-//           .withIndex("by_user_parent", (q) =>
-//             q.eq("userId", userId).eq("parentDocument", documentId)
-//           )
-//           .collect();
-  
-//         for (const child of childrens) {
-//           await ctx.db.patch(child._id, {
-//             isArchived: false,
-//           });
-  
-//           unarchivedChildren(child._id);
-//         }
-//       };
-  
-//       const options: Partial<Doc<"documents">> = {
-//         isArchived: false,
-//       };
-  
-//       if (existingDocument.parentDocument) {
-//         options.parentDocument = undefined;
-//       }
-  
-//       const document = await ctx.db.patch(args.id, options);
-  
-//       unarchivedChildren(args.id);
-  
-//       return document;
-//     },
-//   });
+export const restore = mutation({
+    //restore qilish yani documentni trashbox faildanham butunlay udalit qilish bu restore function app/(secret)/components/banner.tsx failida va trash-box.tsx failidaham chaqirib ishlatildi  trash-box.tsxda chaqirib ishlatilganini sababi tarshboxdagi trash iconga click qilingada undo iconi chiqadi shu iconga bosgandaham shu restore ishlab documentni qayta tiklaydi yani bu functio ikila joydaham ishlaydi yani navbarda chaqirilgan banner.tsxdaham trash-box.tsxdaham bir hil ishlaydi
+    args: { id: v.id("documents") },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        if (!identity) {
+            throw new Error("Not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        const existingDocument = await ctx.db.get(args.id);
+
+        if (!existingDocument) {
+            throw new Error("Not found");
+        }
+
+        if (existingDocument.userId !== userId) {
+            throw new Error("Unauthorized");
+        }
+
+        //documentmi onasi udalit qilinsa va bolasini qayta tiklash kerak bo'lganda ishleydigan function yani user documentni onasini udalit qilsaham bolasi qoladi va ona documentni tiklaganda bola documentlarham ichida birga tiklanadi 
+        const unarchivedChildren = async (documentId: Id<"documents">) => {
+            const childrens = await ctx.db
+                .query("documents")
+                .withIndex("by_user_parent", (q) =>
+                    q.eq("userId", userId).eq("parentDocument", documentId)
+                )
+                .collect();
+
+            for (const child of childrens) {
+                await ctx.db.patch(child._id, {
+                    isArchived: false,
+                });
+
+                unarchivedChildren(child._id);
+            }
+        };
+
+        const options: Partial<Doc<"documents">> = {
+            ////types tipizatsa//Partial typescriptdan keladigan type vazifasi convex serverdagi "documents" papka ichidagi isArchivedni typini boshqarish
+            isArchived: false,
+        };
+
+        if (existingDocument.parentDocument) {
+            //agar children documentni parent documenti bor bo'lsa undefined qilib qo'yadi existingDocumentda hamma documentlar bor va shu existingDocumentda keladigan documentlarni parentini undefined qilib qo'yadi
+            options.parentDocument = undefined;
+        }
+
+        const document = await ctx.db.patch(args.id, options); ////
+
+        unarchivedChildren(args.id);
+
+        return document;
+    },
+});

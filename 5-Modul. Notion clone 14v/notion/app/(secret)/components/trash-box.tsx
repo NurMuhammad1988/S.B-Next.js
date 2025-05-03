@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { restore } from "@/convex/document";
 import { useMutation, useQuery } from "convex/react";
 import { Search, Trash, Undo } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -15,6 +16,9 @@ const TrashBox = () => {
 
     const documents = useQuery(api.document.getTrashDocuments); //convex/document.ts/getTrashDocuments functionni convexda chaqirilishi
     const remove = useMutation(api.document.remove); //convex/document.ts/remove functioni
+
+    const restore = useMutation(api.document.restore);
+
     const [search, setSearch] = useState("");
 
     if (documents === undefined) {
@@ -50,6 +54,16 @@ const TrashBox = () => {
             //yani remove qilinganda yani trash papkaga tushgan documentlarni pastdagi  ConfirmModaldagi trash iconga click qilinib onremove function ishlagadan keyin yuqoridagi toastdagi promise if elslar succesed bo'lsa userni router bilan asosiy documents papka ichiga yani app/(secret)/documents/page.tsx failiga push qiladi///bu holatda paramsda useParams functioni bor yani useparams bu holatda documentIdda onRemove function parametridagi  documentIddagi :Idga qarab documentIdga idlarni sovoladi va shu documentId rostdan documentIdga yani o'ziga teng bo'lsa yani true bo'lsa yani rostdan trash iconga bosilganda hammasi to'g'ri ishlasa userni app/(secret)/documents/page.tsx failiga push qiladi
             router.push("/documents");
         }
+    };
+
+    const onRestore = (documentId: Id<"documents">) => {
+        const promise = restore({ id: documentId });
+
+        toast.promise(promise, {
+            loading: "Restoring document...",
+            success: "Restored document!",
+            error: "Failed to restore document",
+        });
     };
 
     return (
@@ -90,6 +104,7 @@ const TrashBox = () => {
                                 <div
                                     className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
                                     role="button"
+                                    onClick={() => onRestore(document._id)}
                                 >
                                     <Undo className="h-4 w-4 text-muted-foreground" />
                                     {/* bu undo iconi ↶ shu icon yani bu trash-boxga items.tsx failidagi  onArchive va ichidagi primise archive functioni sabab arhivga olingan documentlar tushadi ba bu iconga bosilganda yana arhivdan chiqib asosiy documentlarga qo'shilshi mumkun yani udalit bo'b ketmasligi kerak user hohlasa yana tiklab olishi kerak va pastda trash iconiham bor yani user hohasa documentni qayta asosiy papkaga olib chiqishi yoki butunlay udalit qilishixam mumkun shu uchun ikkala icon yonmayon qo'yildi */}

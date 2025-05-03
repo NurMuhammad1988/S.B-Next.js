@@ -1,3 +1,5 @@
+import ConfirmModal from "@/components/modals/confirm-modal";
+import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
@@ -20,6 +22,8 @@ export const Banner = ({ documentId }: BannerProps) => {
     const router = useRouter();
 
     const remove = useMutation(api.document.remove);
+    const restore = useMutation(api.document.restore);
+
 
     const onRemove = () => {
         const promise = remove({ id: documentId }); ////convex/document.ts/remove functonni promise nomli o'zgaruvchida chaqirilishi
@@ -33,12 +37,38 @@ export const Banner = ({ documentId }: BannerProps) => {
         router.push("/documents");
     };
 
+    const onRestore = () => {
+        const promise = restore({ id: documentId });
+
+        toast.promise(promise, {
+            loading: "Restoring document...",
+            success: "Restored document!",
+            error: "Failed to restore document",
+        });
+    };
+
     return (
         <div className="w-full bg-red-500 text-center text-sm p-2 text-white flex items-center gap-x-2 justify-center">
             <p>This page is in the Trash</p>
+            <Button
+                className="border-white bg-transparent hover:bg-primary/5 text-white hover:text-white p-1 px-2 h-auto font-normal"
+                size={"sm"}
+                variant={"outline"}
+                onClick={onRestore}
+            >
+                Restore document
+            </Button>
+
+            <ConfirmModal onConfirm={() => onRemove()}>
+                {/*ConfirmModal componentda  onConfirm props bilan void function qilingan shu sabab ichiga qanday function yozilsaham ishlayveradi bu holatda yuqoridagi convex/document.tsda promise bilan chaqirilgan remove function ishlatildi ///////yani endi bu buttonga click qilinganda confirmmodal component ishlab ichida chaqirilgan onRemove functionini ishlatadi va Delete forever qiladi*/}
+                <Button
+                    className="border-white bg-transparent hover:bg-primary/5 text-white hover:text-white p-1 px-2 h-auto font-normal"
+                    size={"sm"}
+                    variant={"outline"}
+                >
+                    Delete forever
+                </Button>
+            </ConfirmModal>
         </div>
     );
 };
-
-
-7. Restoring 40:19 da qoldi

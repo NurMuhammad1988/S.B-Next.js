@@ -12,8 +12,8 @@ export default defineSchema({
         title: v.string(),
         userId: v.string(),
         isArchived: v.boolean(),
-        parentDocument: v.optional(v.string()),
-        // optional deganda yani muhummas huddi serverdan datalarn1i fetch qilgada so'roq ??? qo'yilishiga o'hshaydi yani serverdan fetch qilganda / belgisi qo'yilgan datalar kelmay qolsaham hato chiqmay ishlaydi huddi shunday bu holatdaham optional shundey agar optionalda kelgan datalar kelmay qolsaham haotisz ishlayevradi yani muhummas
+        parentDocument: v.optional(v.id("documents")),
+        // optional deganda yani muhummas huddi serverdan datalarnni fetch qilgada so'roq ??? qo'yilishiga o'hshaydi yani serverdan fetch qilganda ? belgisi qo'yilgan datalar kelmay qolsaham hato chiqmay ishlaydi huddi shunday bu holatdaham optional shundey agar optionalda kelgan datalar kelmay qolsaham hatosiz ishlayevradi yani muhummas//yani bitta narsa uchun butin loyiha qulab tushmasligi kerak
         content: v.optional(v.string()),
         coverImage: v.optional(v.string()),
         icon: v.optional(v.string()),
