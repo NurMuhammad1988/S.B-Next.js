@@ -9,8 +9,12 @@ interface BannerProps {
     documentId: Id<"documents">; //bu banner.tsx fail chaqirilga real user uchun yaratilgan secret papka ichidagi navbar.tsx failida chaqirilgan va propsiga documentIdda obshi {document._id} bilan jo'natilgan  va bu idlarni qaysi idilar ekanligini bilish uchun convex/_generated/dataModel dan keladigan idlarni generet qiladigan convexni server componenti chaqirilgan va qaysi papkadan olishini <"documents"> deb papkani ssilkasi berib qo'yilgan yani covex/document.tsx falidagi idlarni generet qiladi
 }
 
-          
 //// bu banner.tsx faili faqat trash-box.tsx  ichida ishlaydi chunki components/)(secret)/navbar.tsxda   {document.isArchived && <Banner documentId={document._id}/>}<<<shunday qilib vazifa berilgan yani bu banner.tsx faqat umumiy documentni isArchuved qiymati true bo'lsagina ishga tushadi yani sidebardagi trash iconga click qilinganda  agar ichuda isArchived qilingan documentlar bor bo'lsa shu documentlarni chiqaradi isArchivedni false yoku true bo'lishi trash-box.tsx failida yozigan va u trash-box.tsx failiham real user uchun asosiy sidebar.tsxda trash icon bilan popoverlar ichida chaqirilgan
+////convex/document.ts da yaratilgan documentni isArchived qiymati tog'ri bo'lsagina bu banner.tsx ishlaydi yokida ishlamaydi isArchived qiymatini false yokida true bo'lishi holati esa trash-box.tsx failida  yozilgan yani trash-box.tsx failidagi holatga qarab isArchived true yokida false qaytaradi shu true yoki falsega qarab bu banner.tsx ishga tushadi yokida tushmaydi
+
+////agar documentni yani  convexni useQuery functioni chaqirilgan document o'zgarunchida kelgan query yani user yaratgan documentni isArchived qiymati yani convex/document.ts da yaratilgan documentni isArchived qiymati tog'ri bo'lsagina bu banner.tsx ishlaydi yokida ishlamaydi isArchived qiymatini false yokida true bo'lishi holati esa trash-box.tsx failida  yozilgan yani trash-box.tsx failidagi holatga qarab isArchived true yokida false qaytaradi shu true yoki falsega qarab bu banner.tsx ishga tushadi yokida tushmaydi agar true qaytarsa sidebar.tsx faildagi trash iconga click qilinsa banner ishga tushadi yokida yo'q bu holat shu joyda yani aynan real user uchun yaratilgan navbar.tsxda chaqirildi yani if else holati aynan real user navbarida qilindi chunki user shu joyda turganda va trash iconga bosganda userni isArchived qilgan faillari ko'ringanda titlesiga bosilganda ishlashi uchun
+
+/////////////yani user trash iconga click qilganda isArchivedga tushgan documentlar chiqadi va shu documentlarga click qilinganda isArchived holati true bo'lgani uchun bu bannar.tsx navbar real user navbarida chiqadi
 
 export const Banner = ({ documentId }: BannerProps) => {
     const router = useRouter();
@@ -36,3 +40,5 @@ export const Banner = ({ documentId }: BannerProps) => {
     );
 };
 
+
+7. Restoring 40:19 da qoldi

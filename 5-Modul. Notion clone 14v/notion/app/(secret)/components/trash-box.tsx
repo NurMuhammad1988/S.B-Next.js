@@ -92,7 +92,7 @@ const TrashBox = () => {
                                     role="button"
                                 >
                                     <Undo className="h-4 w-4 text-muted-foreground" />
-                                    {/* bu undo iconi ↶ shu icon yani bu trash-boxga items.tsx failidagi  onArchive va ichidagi primise archive functioni sabab arhivga olingan documentlar tushadi ba bu iconga bosilganda yana arhivdan chiqib asosiy documentlarga qo'shilshi mumkun yani udalit bo'b ketmasligi kerak user hohlasa yana tiklab olishi kerak va pastda trash iconiham bor yani user hohasa docuentni qayta asosiy papkaga olib chiqishi yoki buunlay udalit qilishixam mumkun shu uchun ikkala icon yonmayon qo'yildi */}
+                                    {/* bu undo iconi ↶ shu icon yani bu trash-boxga items.tsx failidagi  onArchive va ichidagi primise archive functioni sabab arhivga olingan documentlar tushadi ba bu iconga bosilganda yana arhivdan chiqib asosiy documentlarga qo'shilshi mumkun yani udalit bo'b ketmasligi kerak user hohlasa yana tiklab olishi kerak va pastda trash iconiham bor yani user hohasa documentni qayta asosiy papkaga olib chiqishi yoki butunlay udalit qilishixam mumkun shu uchun ikkala icon yonmayon qo'yildi */}
                                 </div>
 
                                 <ConfirmModal
