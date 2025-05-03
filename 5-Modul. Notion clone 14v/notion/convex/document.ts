@@ -162,7 +162,7 @@ export const getTrashDocuments = query({
 });
 
 export const remove = mutation({
-    //getTrashDocuments functionda trashboxga tashlangan documentlarni trashboxdan to'liq udali qilish uchun yozilgan function
+    //getTrashDocuments functionda trashboxga tashlangan documentlarni trashboxdan to'liq udalit qilish uchun yozilgan function
     args: { id: v.id("documents") }, //ssilka!!! yani id nomli o'zgaruvchiga documentni idisi convexdagi "documents" papkadan olinadi
 
     handler: async (ctx, args) => {
@@ -260,3 +260,57 @@ export const updateFields = mutation({
         return document;
     },
 });
+
+// export const restore = mutation({
+//     args: { id: v.id("documents") },
+//     handler: async (ctx, args) => {
+//       const identity = await ctx.auth.getUserIdentity();
+  
+//       if (!identity) {
+//         throw new Error("Not authenticated");
+//       }
+  
+//       const userId = identity.subject;
+  
+//       const existingDocument = await ctx.db.get(args.id);
+  
+//       if (!existingDocument) {
+//         throw new Error("Not found");
+//       }
+  
+//       if (existingDocument.userId !== userId) {
+//         throw new Error("Unauthorized");
+//       }
+  
+//       const unarchivedChildren = async (documentId: Id<"documents">) => {
+//         const childrens = await ctx.db
+//           .query("documents")
+//           .withIndex("by_user_parent", (q) =>
+//             q.eq("userId", userId).eq("parentDocument", documentId)
+//           )
+//           .collect();
+  
+//         for (const child of childrens) {
+//           await ctx.db.patch(child._id, {
+//             isArchived: false,
+//           });
+  
+//           unarchivedChildren(child._id);
+//         }
+//       };
+  
+//       const options: Partial<Doc<"documents">> = {
+//         isArchived: false,
+//       };
+  
+//       if (existingDocument.parentDocument) {
+//         options.parentDocument = undefined;
+//       }
+  
+//       const document = await ctx.db.patch(args.id, options);
+  
+//       unarchivedChildren(args.id);
+  
+//       return document;
+//     },
+//   });

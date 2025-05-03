@@ -7,6 +7,7 @@ import React from "react";
 import { Title } from "./title";
 import { Publish } from "./publish";
 import { Menu } from "./menu";
+import { Banner } from "./banner";
 
 // agar user document create qilgan bo'lsa va documentlari idilar bor bo'lsa ishlaydigan navbar yani faqat regester qilgan user uchun chiqadigan navbar component home pagedagi asosiy navbarmas
 
@@ -19,7 +20,7 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
     const params = useParams();
 
     const document = useQuery(api.document.getDocumentById, {
-        id: params.documentId as Id<"documents">,//yani bu documentId endi huddiki /convex/_generated/dataModel yani bu documentIdda endi convexni Id generete qiladigan componenti bor va parametridagi "documents" esa qaysi faildagi documentni idlarini generet qilishyani convex/documents.ts failiga link endi convexni Id generete qiladigan server componentni convex/documents.ts failidagi functionlarda yaratilgan idlarni hammasini convex serverda turgan functionlar bilan generete qilibtanib oladi shunda convexdagi obshi documentlar orasidan yoki shu loyiha ozida agar har hil boshqa odlar bo'lsaham adashmasdan aynan kerakli papkaga borib aynan osha papkadagi idlarni generet qiladi bu as Id shu uchun juda muhum buni to'g'ri yo'natirish uchun nextni useParams functioni kerak chunki useParams documentId nomli o'zgaruvchi ichiga shu convex Idni solib beradi
+        id: params.documentId as Id<"documents">, //yani bu documentId endi huddiki /convex/_generated/dataModel yani bu documentIdda endi convexni Id generete qiladigan componenti bor va parametridagi "documents" esa qaysi faildagi documentni idlarini generet qilishyani convex/documents.ts failiga link endi convexni Id generete qiladigan server componentni convex/documents.ts failidagi functionlarda yaratilgan idlarni hammasini convex serverda turgan functionlar bilan generete qilib tanib oladi yani bu holatda asosan convex/document.tsx failidagi getDocumentById functionida chaqirilgan idlarni generet qiladi  shunda convexdagi obshi documentlar orasidan yoki shu loyiha ozida agar har hil boshqa idlar bo'lsaham adashmasdan aynan kerakli papkaga borib aynan o'sha papkadagi idlarni generet qiladi bu as Id shu uchun juda muhum buni to'g'ri yo'natirish uchun nextni useParams functioni kerak chunki useParams documentId nomli o'zgaruvchi ichiga shu convex Idni solib beradi
     });
 
     if (document === undefined) {
@@ -61,13 +62,15 @@ export const Navbar = ({ isCollapsed, reset }: NavbarProps) => {
                         <Publish document={document} />
                         {/* publish.tsx screnni chap tominida kinchkina joy egallaydi yani faqat popover uchun joy oladi popoverdagi "Share' textiga click qilinganda ichida yana functionlar ishllaydi puplish unpublish copy va hakozo functionlar bor*/}
 
-                        <Menu documentId={document._id}/>
-                        {/* menu.tsx bu sidebar.tsxda chiqadigan asosiy real userni navbarida o'ng tomon ohoroda MoreHorizontal iconi bilan chiqadi MoreHorizontal iconiga bosilganda shu menu.tsx failidagi functionlar eventlar ishga tushadi */}
+                        <Menu documentId={document._id} />
+                        {/* menu.tsx bu sidebar.tsxda chiqadigan asosiy real userni navbarida o'ng tomon ohirda MoreHorizontal iconi bilan chiqadi MoreHorizontal iconiga bosilganda shu menu.tsx failidagi functionlar eventlar ishga tushadi */}
                     </div>
                 </div>
             </nav>
 
-            {document.isArchived && <Banner documentId={document._id}/>}
+            {document.isArchived && <Banner documentId={document._id} />}
+            {/* paramsda kelgan bu documentIdda hamma idlar bor shu idlarni document nomli yuqoridagi o'zgaruvchi bilan birga props bilan banner.tsxga jo'natdik  /////////////yani documentId idlarni generet qiladi qaysi idlarni generet qiladi document o'zgaruvchida query bilan chaqirilgan idlarni yani convex/document.tsx failidagi getDocumentById functionida kelgan idilarni generet qilgan holda banner.tsxga jo'natadi */}
+            {/* agar documentni yani  convexni useQuery functioni chaqirilgan document o'zgarunchida kelgan query yani user yaratgan documentni isAechived qiymati yani convex/document.ts da yaratilgan documentni isArchived qiymati tog'ri bo'lsagina bu banner.tsx ishlaydi yokida ishlamaydi isArchived qiymatini false yokida true bo'lishi holati esa trash-box.tsx failida  yozilgan yani trash-box.tsx failidagi hoatga qarab isArchived true yokida false qaytaradi shu true yoki falsaega qarab bu banner.tsx isga tushadi yokida tushmaydi */}
         </>
     );
 };

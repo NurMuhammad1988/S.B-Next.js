@@ -186,6 +186,7 @@ export const Sidebar = () => {
                     <Popover>
                         <PopoverTrigger className="w-full mt-4">
                             <Item label="Trash" icon={Trash} />
+                            {/* real user uchun chiqadigan sidebardagi trash icon va texti */}
                         </PopoverTrigger>
                         <PopoverContent
                             className="p-0 w-72"
