@@ -37,7 +37,7 @@ export const Banner = ({ documentId }: BannerProps) => {
         router.push("/documents");
     };
 
-    const onRestore = () => {
+    const onRestore = () => {//documentni qayta tiklash uchun
         const promise = restore({ id: documentId });
 
         toast.promise(promise, {

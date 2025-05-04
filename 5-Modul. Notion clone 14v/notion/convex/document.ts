@@ -262,7 +262,7 @@ export const updateFields = mutation({
 });
 
 export const restore = mutation({
-    //restore qilish yani documentni trashbox faildanham butunlay udalit qilish bu restore function app/(secret)/components/banner.tsx failida va trash-box.tsx failidaham chaqirib ishlatildi  trash-box.tsxda chaqirib ishlatilganini sababi tarshboxdagi trash iconga click qilingada undo iconi chiqadi shu iconga bosgandaham shu restore ishlab documentni qayta tiklaydi yani bu functio ikila joydaham ishlaydi yani navbarda chaqirilgan banner.tsxdaham trash-box.tsxdaham bir hil ishlaydi
+    //restore qilish yani documentni trashbox faildanham butunlay udalit qilish bu restore function app/(secret)/components/banner.tsx failida va trash-box.tsx failidaham chaqirib ishlatildi  trash-box.tsxda chaqirib ishlatilganini sababi tarshboxdagi trash iconga click qilingada undo iconi chiqadi shu iconga bosgandaham shu restore ishlab documentni qayta tiklaydi yani bu functiob ikkala joydaham ishlaydi yani navbarda chaqirilgan banner.tsxdaham trash-box.tsxdaham bir hil ishlaydi trashbox.tsxda ishlatilganda real user uchun yaratilgan navbardaham ishga tushadi
     args: { id: v.id("documents") },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
@@ -283,7 +283,7 @@ export const restore = mutation({
             throw new Error("Unauthorized");
         }
 
-        //documentmi onasi udalit qilinsa va bolasini qayta tiklash kerak bo'lganda ishleydigan function yani user documentni onasini udalit qilsaham bolasi qoladi va ona documentni tiklaganda bola documentlarham ichida birga tiklanadi 
+        //documentmi onasi udalit qilinsa va bolasini qayta tiklash kerak bo'lganda ishleydigan function yani user documentni onasini udalit qilsaham bolasi qoladi va ona documentni tiklaganda bola documentlarham ichida birga tiklanadi lekin agar ona documentdan oldin ichidagi bola document restore qilnsa va keyin ona document restore qilinda ona restore qilinganona documentni bolasi ichida bo'lmaydi yani tashqarida alohida tiklanadi uida  alohida turadi
         const unarchivedChildren = async (documentId: Id<"documents">) => {
             const childrens = await ctx.db
                 .query("documents")
