@@ -1,4 +1,4 @@
-import { create } from "zustand"; //state menejment qilib beadigan kutubhona
+import { create } from "zustand"; //state menejment qilib beradigan kutubhona
 
 interface SearchStore {
     isOpen: boolean;

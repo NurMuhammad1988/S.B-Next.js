@@ -26,13 +26,14 @@ import TrashBox from "./trash-box";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Navbar } from "./navbar";
+import { useSearch } from "@/hooks/use-search";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
     const router = useRouter();
-
     const params = useParams();
+    const search = useSearch();
 
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
@@ -75,7 +76,9 @@ export const Sidebar = () => {
             /////// sidebarRef.current.style.width = "240px"; //MenuIcon iconiga bosilganda 240px joy ochadi
             sidebarRef.current.style.width = isMobile ? "100%" : "240px"; // agar isMobile true bo'lsa sidebarref bor divni widthni 100 foiz yokida 240px qil
             /////// navbarRef.current.style.width = "calc(100% - 240)"; //MenuIcon bosilganda calc bilan navbarref uchun 100% widthdan 240px joy ochadi yani ayirib tashaydi
-            navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 240px)"; //agar ismobile true bo'lsa navbarref bor divni widthni 0 qil yokida???????????
+            navbarRef.current.style.width = isMobile
+                ? "0"
+                : "calc(100% - 240px)"; //agar ismobile true bo'lsa navbarref bor divni widthni 0 qil yokida???????????
             /////// navbarRef.current.style.left = "240"; //MenuIcon bosilganda joyni chap tomondan ochadi
             navbarRef.current.style.left = isMobile ? "100%" : "240px"; //agar ismobile true bo'lsa navbarref bor divni  lefti 100 foiz bo'lsin yani chap tomonga butunlay kirib ketsin yani userni windovi 770pxdan kichkina bo'lsa sidebarni boshidan ko'rinmasligi uchun lekin 770pxdan ortiq bo'lganda sidebar ko'rinib turardi endi esa boshidan  faqat menuicon iconi ko'rinadi holos yani mobiledan kiradigan user uchun qulaylik
             setTimeout(() => setIsResetting(false), 300);
@@ -154,14 +157,32 @@ export const Sidebar = () => {
                     <ChevronsLeft className="h-6 w-6" />
                 </div>
 
-                <div >
+                <div>
                     <UserBox />
                     {/* usebox.tsx failda userni avatari va boshqa narsalari bor sidebar.tsxda shularham ko'rinishi kerak bu userbox eng birinchi chaqirilgani uchun userni avatari sahifada eng tepada turipti */}
-                    <Item label="Search"
-                     icon={Search} />
+
+
+
+
+
+                    
+                    <Item
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                        onClick={() => search.onOpen()}
+                    />
+
+
+
+
+
+
+
+
+
                     {/* item.tsxda bu labelga iconga onclickga nima ekanligi aytib qo'yilgan shu sabab hatosiz ishlaydi */}
-                    <Item label="Settings" 
-                    icon={Settings} />
+                    <Item label="Settings" icon={Settings} />
                     <Item
                         label="New document"
                         icon={Plus}

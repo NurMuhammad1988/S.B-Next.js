@@ -34,6 +34,7 @@ interface ItemProps {
     active?: boolean; //dynamic keladigan document pagelarga active class berish uchun
     documentIcon?: string;
     icon?: LucideIcon;
+    isSearch?: boolean
 }
 
 //bu Item.tsx functionnalari bilan ishlashi uchun sidebar.tsx failida chaiqilib qiymatlariga kerakli typlar berilib ishlatilishi kerak
@@ -48,6 +49,7 @@ export const Item = ({
     active,
     documentIcon,
     icon: Icon,
+    isSearch
 }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
     const router = useRouter();
@@ -131,6 +133,13 @@ export const Item = ({
             )}
 
             <span className="truncate">{label}</span>
+
+
+             {isSearch && (
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">⌘</span>K
+                </kbd>
+             )}
 
             {!!id && ( //agar document id qattiyan bo'lmasa yani user hali document create qilmagan bo'lsa
                 <div className="ml-auto flex items-center gap-x-2">
