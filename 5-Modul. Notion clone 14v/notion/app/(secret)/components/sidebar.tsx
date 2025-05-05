@@ -33,7 +33,7 @@ export const Sidebar = () => {
     // console.log(isMobile);
     const router = useRouter();
     const params = useParams();
-    const search = useSearch();
+    const search = useSearch();//qo'la yozilgan hook use-search.tsx
 
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
@@ -134,6 +134,8 @@ export const Sidebar = () => {
 
     return (
         <>
+
+        
             <div
                 className={cn(
                     "group/sidebar  h-screen bg-secondary overflow-y-auto relative flex w-60 flex-col z-50",
@@ -169,8 +171,8 @@ export const Sidebar = () => {
                     <Item
                         label="Search"
                         icon={Search}
-                        isSearch
-                        onClick={() => search.onOpen()}
+                        isSearch//item.tsxga isSearch nomli qiymat props bilan jo'natildi 
+                        onClick={() => search.onOpen()}//props bilan jo'natildi yani  item.tsxda endi ichida use-search.tsda yozilgan hook bor search o'zgaruvchi yani hookni onOpen qiymati bor yani onOpen ishlaganda boshida false bo'lgan isOpenni true qiladi
                     />
 
 

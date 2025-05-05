@@ -32,6 +32,7 @@ const SecretLayout = ({ children }: ChildProps) => {
             {/* (secret)/components/sidebar.tsx shu (secret) papkani asosiy sahifasi shu uchun sidebar.stx be yerga chaqiriladi shunda intrigatsa bo'ladi yani bu asosiy sahifa ishlagan vaqtda sidebar.tsxham hamma functionallari bilan kelib turadi retur qilishda birinci sidebar.tsx qo'yilganini sababi sidebar chap tomonda va bundan keyin (secret)/documents/page.tsx pastdagi main tegi ichidagi childrenda kelepti yani shunda saytni asosiy sahifasidan enter notion textiga click bo'lganda bittada ikkita sahifa chiqadi birinchi sidebar.tsx keyin children hissoblangan page.tsx chiqadi */}
             <main className="flex-1 h-full overflow-y-auto ">
                 <SearchCommand/>
+                {/* SearchCommand componentda search functionlar bor layoutda chaqirilishini sababi  ildiz fail lekin real user uchun qilingan sidebar.tsxda chaqirilsaham ishlayverardi */}
                 {children}
                 </main>
         </div>

@@ -72,7 +72,7 @@ export const getDocuments = query({
 
             .filter((q) => q.eq(q.field("isArchived"), false)) //yani query "documents" ga borib userni datalarini oladi filter esa userni isArchived qiymatlarini olmaslik kerey masalan eski documentlarini olmaslik kerey shu uchu isArchived false qilib qo'yildi
             .order("desc") //userni hamma yangi documentlarni chiqarib beradi
-            .collect(); //yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi
+            .collect(); //yuqoridagi query va filter metodlarda kelgan datalarni collect qilib chiqarib beradi yani birlashtirib bitta objectda yaratadi
 
         return documents;
     },
@@ -320,9 +320,6 @@ export const restore = mutation({
     },
 });
 
-
-
-
 export const getSearch = query({
     handler: async (ctx) => {
         const identity = await ctx.auth.getUserIdentity();
@@ -336,10 +333,10 @@ export const getSearch = query({
         const documents = await ctx.db
             .query("documents")
             .withIndex("by_user", (q) => q.eq("userId", userId))
-            .filter((q)=> q.eq(q.field("isArchived"), false))
+            .filter((q) => q.eq(q.field("isArchived"), false))
             .order("desc")
-            .collect()
+            .collect();
 
-            return documents
+        return documents;
     },
 });
