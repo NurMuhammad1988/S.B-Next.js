@@ -24,7 +24,7 @@ export default function RootLayout({
         <html lang="uz" suppressHydrationWarning>
             <body className={inter.className}>
                 <ConvexClientProvider>
-                    {/* convex ishlashi uchun saytni ildiz yani asosiy faili convex.provider.tsxdan kelgan ConvexClientProvider componentiga o'ralishi kerak shunda butun loyia convexgaulanadi  */}
+                    {/* convex ishlashi uchun saytni ildiz yani asosiy faili convex-provider.tsxdan kelgan ConvexClientProvider componentiga o'ralishi kerak shunda butun loyia convexga ulanadi  */}
                     <ThemeProvider
                         // //ui.shadcndan kelgan next js uchun moslashtirilgan dark light mode qilish uchun kerak bo'ladigan functionlarni ishlatish uchun provider
                         attribute="class"
@@ -34,10 +34,9 @@ export default function RootLayout({
                         storageKey="notion-theme"
                     >
                         <Toaster position="bottom-center" />
-
+                        {/* document create bo'lganda chiqadigan kutubhonadan kelgan component bu component (secret)/documents/page.tsxda ishlatilgan lekin osha joyda ishlashi uchun bu toaster asosiy sahifada chaqirilishi kerak top-senter o'rniga boshqa holatlarniham o'rnatsa bo'ladi */}
                         <ModalProvider />
 
-                        {/* document create bo'lganda chiqadigan kutubhonadan kelgan component bu component (secret)/documents/page.tsxda ishlatilgan lekin osha joyda ishlashi uchun bu toaster asosiy sahifada chaqirilishi kerak top-senter o'rniga boshqa holatlarniham o'rnatsa bo'ladi */}
                         {children}
                     </ThemeProvider>
                 </ConvexClientProvider>

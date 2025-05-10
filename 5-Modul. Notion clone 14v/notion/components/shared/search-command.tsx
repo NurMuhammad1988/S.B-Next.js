@@ -52,7 +52,7 @@ export const SearchCommand = () => {
 
     // bu  <SearchCommand/> componenti real user uchun qilingan (secret) papkaichidagi layout.tsxda chaqirilgan shu sabab item.tsxda isSearch qiymatibor bo'lsa yani true bo'lsagina bu  <SearchCommand/> ishga tushadi item.tsxda esa faqat "Search" labelli itemda bu isSearch qiymati bor shu sabab shu Search textli itemga click qilingandagini bu  <SearchCommand/> coponent ishga tushadi va  const documents = useQuery(api.document.getSearch); sabab documentlar ichidan search qiladi
 
-    if (!mounted) return null; //agar boshida false qilingan va useeffect ishlaganda true qilingan setMounted false bo'b qosa bu coponent nullni qaytaradi shunda pastdagi "No results found." texti ishga tushadi
+    if (!mounted) return null;////mountedda boshida false bor //agar boshida false qilingan va useeffect ishlaganda true qilingan setMounted false bo'b qosa bu component nullni qaytaradi shunda pastdagi "No results found." texti ishga tushadi
 
     return (
         <CommandDialog open={isOpen} onOpenChange={onClose}>

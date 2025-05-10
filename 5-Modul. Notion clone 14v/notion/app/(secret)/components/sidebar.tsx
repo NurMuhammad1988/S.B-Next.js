@@ -27,13 +27,15 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Navbar } from "./navbar";
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-setting";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
     // console.log(isMobile);
     const router = useRouter();
     const params = useParams();
-    const search = useSearch();//qo'la yozilgan hook use-search.tsx
+    const search = useSearch(); //qo'la yozilgan hook use-search.tsx
+    const settings = useSettings();
 
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
@@ -134,8 +136,6 @@ export const Sidebar = () => {
 
     return (
         <>
-
-        
             <div
                 className={cn(
                     "group/sidebar  h-screen bg-secondary overflow-y-auto relative flex w-60 flex-col z-50",
@@ -163,28 +163,20 @@ export const Sidebar = () => {
                     <UserBox />
                     {/* usebox.tsx failda userni avatari va boshqa narsalari bor sidebar.tsxda shularham ko'rinishi kerak bu userbox eng birinchi chaqirilgani uchun userni avatari sahifada eng tepada turipti */}
 
-
-
-
-
-                    
                     <Item
                         label="Search"
                         icon={Search}
-                        isSearch//item.tsxga isSearch nomli qiymat props bilan jo'natildi 
-                        onClick={() => search.onOpen()}//props bilan jo'natildi yani  item.tsxda endi ichida use-search.tsda yozilgan hook bor search o'zgaruvchi yani hookni onOpen qiymati bor yani onOpen ishlaganda boshida false bo'lgan isOpenni true qiladi
+                        isSearch //item.tsxga isSearch nomli qiymat props bilan jo'natildi
+                        onClick={() => search.onOpen()} //props bilan jo'natildi yani  item.tsxda endi ichida use-search.tsda yozilgan hook bor search o'zgaruvchi yani hookni onOpen qiymati bor yani onOpen ishlaganda boshida false bo'lgan isOpenni true qiladi
+                    />
+                    {/* item.tsxda bu labelga iconga onclickga nima ekanligi aytib qo'yilgan shu sabab hatosiz ishlaydi */}
+
+                    <Item
+                        label="Settings"
+                        icon={Settings}
+                        onClick={() => settings.onOpen()}
                     />
 
-
-
-
-
-
-
-
-
-                    {/* item.tsxda bu labelga iconga onclickga nima ekanligi aytib qo'yilgan shu sabab hatosiz ishlaydi */}
-                    <Item label="Settings" icon={Settings} />
                     <Item
                         label="New document"
                         icon={Plus}
