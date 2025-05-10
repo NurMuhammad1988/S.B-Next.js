@@ -139,12 +139,12 @@ export const Item = ({
             {/* sidebar.tsxda qayta qayta chaqirilgan item.tsxga berilgan labellar yani ichida string qiymatla bor */}
 
 
-             {isSearch && (//agar isSearch yani boolean qiymatli isSearch agar true bo'lsa yani sidebar.tsx faildan props qilib jo'natilgan qaysidur itemda shu isSearch qiymati bor bo'lsa span ihidagi narsalar ishlaydi yani aynanisSearch boolean qoymati bor bo'lsa va shu isSearch qiymati bor item yani hozirda labeli "Search" textli search iconli itemga click qilinagda use-search.tsdan sidebar.tsxga chaqirilgan hookni onOpen qiymati ishlab search-command.tsx failidagi compnentlarni yani search modaln ishga tushuradi yani user documentlarini search qilishi mumkun bo'ladi
+             {isSearch && (//agar isSearch yani boolean qiymatli isSearch agar true bo'lsa yani sidebar.tsx faildan props qilib jo'natilgan qaysidur itemda shu isSearch qiymati bor bo'lsa span ichidagi narsalar ishlaydi yani aynan isSearch boolean qoymati bor bo'lsa va shu isSearch qiymati bor item yani hozirda labeli "Search" textli search iconli itemga click qilinagda use-search.tsdan sidebar.tsxga chaqirilgan hookni onOpen qiymati ishlab search-command.tsx failidagi compnentlarni yani search modaln ishga tushuradi yani user documentlarini search qilishi mumkun bo'ladi
                
        
                 //seach-command.tsxni bu joyda chaqirilmasaham ishlashini sababi (secret) papka ichidagi layout.tsxda  <SearchCommand/> qilib chaqirib qo'yilgan shunga yahshilab etibor ber bu yerda   <SearchCommand/> chaqirilmaganini sababi bu umumiy item fail yani hamm aitemlar datalari bu joyda  dynamic berilgan
                 <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                    <span className="text-xs">⌘</span>K
+                    <span className="text-xs">⌘ Ctrl</span>K
                 </kbd>
              )}
 

@@ -1,5 +1,7 @@
 import { create } from "zustand"; //state menejment qilib beradigan kutubhona
 
+//bu state real user uchun qilingan sidebar.tsx va search-command.tsx faillarida ishlatilgan bu store yani holatnlarni boshlang'ich qiymatlarini belgilab olish
+
 interface SearchStore {
     isOpen: boolean;
     onOpen: () => void;

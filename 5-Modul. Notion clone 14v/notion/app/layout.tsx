@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
-import { Toaster } from 'sonner';//npm i sonner
+import { Toaster } from "sonner"; //npm i sonner
+import ModalProvider from "@/components/providers/modal-provider";
 
 //bu asosiy app papka ichidagi layout fail  yani root fail
 const inter = Inter({ subsets: ["latin"] });
@@ -32,7 +33,10 @@ export default function RootLayout({
                         disableTransitionOnChange
                         storageKey="notion-theme"
                     >
-                        <Toaster position="bottom-center"/>
+                        <Toaster position="bottom-center" />
+
+                        <ModalProvider />
+
                         {/* document create bo'lganda chiqadigan kutubhonadan kelgan component bu component (secret)/documents/page.tsxda ishlatilgan lekin osha joyda ishlashi uchun bu toaster asosiy sahifada chaqirilishi kerak top-senter o'rniga boshqa holatlarniham o'rnatsa bo'ladi */}
                         {children}
                     </ThemeProvider>
