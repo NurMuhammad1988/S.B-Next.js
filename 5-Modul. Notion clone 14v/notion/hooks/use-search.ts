@@ -13,5 +13,5 @@ export const useSearch = create<SearchStore>((set, get) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),//onOpen ishlaganda  boshida false bo'lgan isOpenni true qiladi
     onClose: () => set({ isOpen: false }),//onClose ishlaganda onOpenda true qilingan isOpenni yana qaytadan false qiladi
-    onToggle: () => set({ isOpen: !get().isOpen }), //teskarisiga o'girvolish yani onToggle ishlaganda isOpenni get qilishni false qiladi yani isOpenni to'htatadi qachin to'htatadi get ishlaganda getni falsega aylantirib to'htatadi 
+    onToggle: () => set({ isOpen: !get().isOpen }), //teskarisiga o'girvolish yani onToggle ishlaganda isOpenni get qilishni false qiladi yani isOpenni to'htatadi qachon to'htatadi get ishlaganda getni falsega aylantirib to'htatadi 
 }));
