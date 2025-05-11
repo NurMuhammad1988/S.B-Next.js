@@ -1,5 +1,6 @@
 "use client";
 import Cover from "@/components/shared/cover";
+import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
@@ -21,7 +22,20 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     if (document === undefined) {
         //yani agar document undefined bo'lsa Cover.tsx ichidagi Skeleton functionni ishlat bu cover.tsxda yoziligan skeleton function yani loader agar cover.tsx yokida ichidagi cover imagega qilingan so'rov malum vaqt kech qolsa yokida ishlamasa so'rov tugaguncha shu skeletondagi loader ishlab turadi chunki serverdan datalar kelgancha baribir malum vaqt o'tadi
-        return <div>{Cover.Skeleton()}</div>;
+        return (
+            <div>
+                <Cover.Skeleton />
+                <div className="md:max-w-3xl lg:max-w-4xl mx-auto mt-10">
+                    {/* yani cover.tsx va ichidagi imagelar serverdan kelgancha shu skeleton yani alohida component/ui/skeloton.tsx failidan chaqirilgan shu sekelton loaderlar ishlab turadi yani serverdan so'rovlar kelgancha chiroyli holatda yuklanib turadi yoki net yahshi ishlamasaham shunday yuklanib kutib turadi  */}
+                    <div className="space-y-4 pl-8 pt-4">
+                        <Skeleton className="h-14 w-[50%]" />
+                        <Skeleton className="h-4 w-[80%]" />
+                        <Skeleton className="h-4 w-[40%]" />
+                        <Skeleton className="h-4 w-[60%]" />
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     if (document === null) return null;
