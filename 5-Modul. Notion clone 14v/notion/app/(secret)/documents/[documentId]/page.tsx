@@ -14,13 +14,17 @@ interface DocumentIdPageProps {
     };
 }
 
-
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     const document = useQuery(api.document.getDocumentById, {
         id: params.documentId as Id<"documents">,
     }); //  // bu paramsda kelgan documentId document dynamic yaratilganda yaratiladi yani (secret) papkani ichida bo'lgani uchun bu [documents] shu (secret) papkani assosiy sahifasi (secret)/documents/page.tsxda yaratilgan dynamic sahifalarni qabul qiladi yani ona papkasini asossiy page.tsx sahifasida yaratilgan dynamic sahifalarni qabul qiladi ona papka esa bu holatda (secret) papkasi va params bilan documentni idsini oladi
 
-    if (document === undefined) return null;
+    if (document === undefined) {
+        //yani agar document undefined bo'lsa Cover.tsx ichidagi Skeleton functionni ishlat bu cover.tsxda yoziligan skeleton function yani loader agar cover.tsx yokida ichidagi cover imagega qilingan so'rov malum vaqt kech qolsa yokida ishlamasa so'rov tugaguncha shu skeletondagi loader ishlab turadi chunki serverdan datalar kelgancha baribir malum vaqt o'tadi
+        return <div>{Cover.Skeleton()}</div>;
+    }
+
+    if (document === null) return null;
 
     return (
         <div className="pb-40">

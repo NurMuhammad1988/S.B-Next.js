@@ -2,7 +2,10 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, X } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
+
+// bu cover.tsx user document crreate qilganda agar documentni cover imagesi bor bo'lsa ishlaydi va bu  component (secret)/documents/[documentId]/page.tsx failida chaqirilgan yani real user uchun qilingan secret papkani asosiy sahifasida chaqirilgan
 
 interface CoverProps {
     url?: string; //url string qabul qiladi va  (secret)/documents/[documentId]/page.tsx failida ichida faqat string qabul qiladi (hozircha!!) yani coverni user hohlasa netdan url orqaliham olib kelib qo'yishi mumkun yani faqat devicedanmas ssilka bilanham olib kelib qo'yishi mumkun
@@ -20,6 +23,7 @@ const Cover = ({ preview, url }: CoverProps) => {
                 url && "bg-muted"
             )}
         >
+            {/* relative va absalute classlari sabab div ustiga div yozilib bola divga mishka borganda ichidagi buttonlar group classlari sabab chiqadigan qilindi */}
             {!!url && (
                 <Image
                     fill
@@ -42,6 +46,15 @@ const Cover = ({ preview, url }: CoverProps) => {
                             <ImageIcon />
                             <span>Change cover</span>
                         </Button>
+
+                        <Button
+                            size={"sm"}
+                            variant={"outline"}
+                            className="text-muted-foreground text-xs"
+                        >
+                            <X />
+                            <span>remove</span>
+                        </Button>
                     </div>
                 )}
         </div>
@@ -49,3 +62,11 @@ const Cover = ({ preview, url }: CoverProps) => {
 };
 
 export default Cover;
+
+Cover.Skeleton = function CoverSkeleton() {
+    //yani bu cover.tsx chaqirilgan (secret)/documents/[documentId]/page.tsx faili ishlaganda bu cover.tsx yokida ichida chaqirilgan so'rov malum vaqt bajarilmay tursa shu skeleton loader ishga tushadi
+
+    //bu uchun (secret)/documents/[documentId]/page.tsx failida bu logical operator yozib qo'yilgan>>>>if(document === undefined){return ( <div>{Cover.Skeleton()} </div>)} yani agar document undefined bo'lsa Cover.tsx ichidagi Skeleton functionni ishlat
+
+    return <Skeleton className="w-full h-[12vh] bg-sky-950 " />;
+};
