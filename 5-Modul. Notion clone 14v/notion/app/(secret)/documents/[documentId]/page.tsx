@@ -19,17 +19,18 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
         id: params.documentId as Id<"documents">,
     }); //  // bu paramsda kelgan documentId document dynamic yaratilganda yaratiladi yani (secret) papkani ichida bo'lgani uchun bu [documents] shu (secret) papkani assosiy sahifasi (secret)/documents/page.tsxda yaratilgan dynamic sahifalarni qabul qiladi yani ona papkasini asossiy page.tsx sahifasida yaratilgan dynamic sahifalarni qabul qiladi ona papka esa bu holatda (secret) papkasi va params bilan documentni idsini oladi
 
-    if(document === undefined) return null
+    if (document === undefined) return null;
 
     return (
         <div className="pb-40">
-          {/* {<Cover url={document.coverImage}/>} */}
-
-          {<Cover url={"https://marketplace.canva.com/EAECJXaRRew/3/0/1600w/canva-do-what-is-right-starry-sky-facebook-cover-4SpKW5MtQl4.jpg"}/>}
-
-
+            {
+                <Cover
+                    url={
+                        "https://marketplace.canva.com/EAECJXaRRew/3/0/1600w/canva-do-what-is-right-starry-sky-facebook-cover-4SpKW5MtQl4.jpg"
+                    }
+                />
+            }
         </div>
-        
     );
 };
 

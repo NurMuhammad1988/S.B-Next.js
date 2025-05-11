@@ -32,3 +32,4 @@ const Cover = ({ preview, url }: CoverProps) => {
 };
 
 export default Cover;
+
