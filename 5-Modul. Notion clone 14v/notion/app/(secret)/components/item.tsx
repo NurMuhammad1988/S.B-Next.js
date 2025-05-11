@@ -35,7 +35,8 @@ interface ItemProps {
     active?: boolean; //dynamic keladigan document pagelarga active class berish uchun
     documentIcon?: string;
     icon?: LucideIcon;
-    isSearch?: boolean
+    isSearch?: boolean;
+    isSettings?: boolean;
 }
 
 //bu Item.tsx functionnalari bilan ishlashi uchun sidebar.tsx failida chaiqilib qiymatlariga kerakli typlar berilib ishlatilishi kerak
@@ -50,7 +51,8 @@ export const Item = ({
     active,
     documentIcon,
     icon: Icon,
-    isSearch
+    isSearch,
+    isSettings,
 }: ItemProps) => {
     const { user } = useUser(); //clerkni usesuer hooki bilan user objecti chaqirildi yani bu loyihada clerk bilan user crete qilib convexga joylashtirib ishlatilepti
     const router = useRouter();
@@ -103,8 +105,6 @@ export const Item = ({
 
     const ChevronIcon = expanded ? ChevronDown : ChevronRight; //o'zgaruvchi bu holatda icon yani Chevron iconlarga ga mantiqiy hodisa ilish yani agar expanded true bo'lsa yani objectni avvalgi holatida datalar saqlangan bo'lsa yani bola documentlar bor bo'lsaa ChevronDown ishlaydi agar yo'q bo'lsa ChevronRight ishlaydi yani aslida ChevronRight doim ishlab turadi  chunki ChevronDownga click bo'lmagancha expanded falseday turadi qachonki click bo'lganda boolean ishlab javob aytadi
     return (
-
-
         <div
             style={{ paddingLeft: level ? `${level * 12 + 12}px` : "12px" }} //yani agar ota documentni bolasi bor bo'lsa yani level true bo'lsa yani document-item.tsxda kelgan level + 1 yani true bo'lsa left tomondan paddingni 12 ga ko'paytirib 12px qo'shadi yani
             className={
@@ -138,15 +138,18 @@ export const Item = ({
             <span className="truncate">{label}</span>
             {/* sidebar.tsxda qayta qayta chaqirilgan item.tsxga berilgan labellar yani ichida string qiymatla bor */}
 
-
-             {isSearch && (//agar isSearch yani boolean qiymatli isSearch agar true bo'lsa yani sidebar.tsx faildan props qilib jo'natilgan qaysidur itemda shu isSearch qiymati bor bo'lsa span ichidagi narsalar ishlaydi yani aynan isSearch boolean qoymati bor bo'lsa va shu isSearch qiymati bor item yani hozirda labeli "Search" textli search iconli itemga click qilinagda use-search.tsdan sidebar.tsxga chaqirilgan hookni onOpen qiymati ishlab search-command.tsx failidagi compnentlarni yani search modaln ishga tushuradi yani user documentlarini search qilishi mumkun bo'ladi
-               
-       
+            {isSearch && ( //agar isSearch yani boolean qiymatli isSearch agar true bo'lsa yani sidebar.tsx faildan props qilib jo'natilgan qaysidur itemda shu isSearch qiymati bor bo'lsa span ichidagi narsalar ishlaydi yani aynan isSearch boolean qoymati bor bo'lsa va shu isSearch qiymati bor item yani hozirda labeli "Search" textli search iconli itemga click qilinagda use-search.tsdan sidebar.tsxga chaqirilgan hookni onOpen qiymati ishlab search-command.tsx failidagi compnentlarni yani search modaln ishga tushuradi yani user documentlarini search qilishi mumkun bo'ladi
                 //seach-command.tsxni bu joyda chaqirilmasaham ishlashini sababi (secret) papka ichidagi layout.tsxda  <SearchCommand/> qilib chaqirib qo'yilgan shunga yahshilab etibor ber bu yerda   <SearchCommand/> chaqirilmaganini sababi bu umumiy item fail yani hamm aitemlar datalari bu joyda  dynamic berilgan
                 <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                     <span className="text-xs">⌘ Ctrl</span>K
                 </kbd>
-             )}
+            )}
+
+            {isSettings && ( 
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">⌘ Ctrl</span>J
+                </kbd>
+            )}
 
             {!!id && ( //agar document id qattiyan bo'lmasa yani user hali document create qilmagan bo'lsa
                 <div className="ml-auto flex items-center gap-x-2">

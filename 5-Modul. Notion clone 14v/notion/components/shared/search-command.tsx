@@ -34,15 +34,15 @@ export const SearchCommand = () => {
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
             if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-                //citrl bilan k keyboardlar bosilganda shu search component ishga tushadi
+                //citrl bilan k keyboardlar bosilganda shu search component ishga tushadi yani bu holatda down nomli function ichida KeyboardEventni chaqirib agar eventda key qattiy "k" bo'lsa va yokida metakey yokida ctlr key yani metakey hamma klaviyaturlar uchun ctrlkey esa windows klavyaturalar uchun yani key qattiy "k" bo'lsa va faqat metakey yokida ctrlkey bo'lsa bu down function ishga tushadi
                 e.preventDefault();
-                onToggle();
+                onToggle();//yani yopilishi uchun
             }
         };
 
         document.addEventListener("keydown", down);
         return () => document.removeEventListener("keydown", down);
-    }, [onToggle]); ////bu useeffect qachonki onToggle ishlaganda ishga tushadi onToggle esa use-search tsx hookida isOpenni yani shu modalni open qilishni false qiladi tani teskarisi yani bittabosganda false qiladi bitta bosganda true qiladi shunday qilib search component ishlaydi
+    }, [onToggle]); ////bu useeffect qachonki onToggle ishlaganda ishga tushadi onToggle esa use-search tsx hookida isOpenni yani shu modalni open qilishni false qiladi tani teskarisi yani bitta bosganda false qiladi bitta bosganda true qiladi shunday qilib search component ishlaydi (zustand)
 
     const onSelect = (id: string) => {
         //yani onSelect function chaqirilgan CommandItem componentda search qilib chaqirilgan idli documentga bosilganda router userni shu document ichiga olib kiradi va onClose ishlaydi yani search component close qilinadi bu onClose use-search.ts componentda zustand bilan qilingan storeda turipti

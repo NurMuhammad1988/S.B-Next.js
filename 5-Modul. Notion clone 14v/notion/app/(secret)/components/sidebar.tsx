@@ -174,6 +174,7 @@ export const Sidebar = () => {
                     <Item
                         label="Settings"
                         icon={Settings}
+                        isSettings
                         onClick={() => settings.onOpen()}
                     />
 

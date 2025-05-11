@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
     Dialog,
@@ -16,12 +16,26 @@ import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Settings } from "lucide-react";
 
-//bu setting-modal.tsx component realuser uchun yaratilgan sidebar.tsxda dynamic yaratilgan item.tsxlarni settings labellesida chaqirilgan yani real user o'z sidebarida settings labelda kelgan settings textiga click qilganda shu settings-modal.tsx component ishga tushadi bu modal modal-provider.tsx bilan asosiy layout.tsx failida chaqirilgan chunki ildizpapka hissoblangan layout.tsxda chaqirilganda dasturni istalgan joyida ishlatish mumkun yani masalan bu settings-modalni real user uchun qilingan sidebar.tsxda chaqirib chalkashtirib ishlatmasdan alohida joyda alohida papkalar ichida ishlatish mumkun degani settings-modal.tsxni  modal-provider.tsxda chaqirvolib keyin modal-provider.tsxni layout.tsxda chaqirilishini sababi yani o'rab o'rab chaqirilishi sababi modal-provider.tsxda if else bilan useeffect ishlatilgan qilingan yani agar useEffect ishlaganda yani user kirganda mounted qiymati true bo'lsa bu component ishga tushadi yokida nullni yani hech narsani qaytaradi shunda sayt aynan shu settings-modal component uchun qayta qayta update bo'lmasdan faqat kerak bo'lgan payti ishlaydi bu reactni asosiy qoidalaridan biri hissoblanadi
+//bu setting-modal.tsx component real user uchun yaratilgan sidebar.tsxda dynamic yaratilgan item.tsxlarni settings labellesida chaqirilgan yani real user o'z sidebarida settings labelda kelgan settings textiga click qilganda shu settings-modal.tsx component ishga tushadi bu modal modal-provider.tsx bilan asosiy layout.tsx failida chaqirilgan chunki ildizpapka hissoblangan layout.tsxda chaqirilganda dasturni istalgan joyida ishlatish mumkun yani masalan bu settings-modalni real user uchun qilingan sidebar.tsxda chaqirib chalkashtirib ishlatmasdan alohida joyda alohida papkalar ichida ishlatish mumkun degani settings-modal.tsxni  modal-provider.tsxda chaqirvolib keyin modal-provider.tsxni layout.tsxda chaqirilishini sababi yani o'rab o'rab chaqirilishi sababi modal-provider.tsxda if else bilan useeffect ishlatilgan qilingan yani agar useEffect ishlaganda yani user kirganda mounted qiymati true bo'lsa bu component ishga tushadi yokida nullni yani hech narsani qaytaradi shunda sayt aynan shu settings-modal component uchun qayta qayta update bo'lmasdan faqat kerak bo'lgan payti ishlaydi bu reactni asosiy qoidalaridan biri hissoblanadi
 
 const SettingsModal = () => {
     const settings = useSettings();
 
-    const { isOpen, onClose, onOpen } = settings;
+    const { isOpen, onClose, onToggle } = settings;
+
+    useEffect(() => {
+        const down = (e: KeyboardEvent) => {
+            if (e.key === "j" && (e.metaKey || e.ctrlKey)) {//bu m
+                //citrl bilan j keyboardlar bosilganda shu settings-modal component ishga tushadi yani bu holatda down nomli function ichida KeyboardEventni chaqirib agar eventda key qattiy "k" bo'lsa va yokida metakey yokida ctlr key yani metakey hamma klaviyaturlar uchun ctrlkey esa windows klavyaturalar uchun yani key qattiy "k" bo'lsa va faqat metakey yokida ctrlkey bo'lsa bu down function ishga tushadi
+                e.preventDefault();
+                onToggle();//yani yopilishi uchun
+            }
+        };
+
+        document.addEventListener("keydown", down);
+        return () => document.removeEventListener("keydown", down);
+    }, [onToggle]);////bu useeffect qachonki onToggle ishlaganda ishga tushadi onToggle esa use-settings tsx hookida isOpenni yani shu modalni open qilishni false qiladi yani teskarisi yani bitta bosganda false qiladi bitta bosganda true qiladi shunday qilib search component ishlaydi (zustand)
+
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
