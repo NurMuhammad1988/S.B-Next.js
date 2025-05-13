@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { ImageIcon, X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
-// bu cover.tsx user document crreate qilganda agar documentni cover imagesi bor bo'lsa ishlaydi va bu  component (secret)/documents/[documentId]/page.tsx failida chaqirilgan yani real user uchun qilingan secret papkani asosiy sahifasida chaqirilgan
+// bu cover.tsx user document create qilganda agar documentni cover imagesi bor bo'lsa ishlaydi va bu  component (secret)/documents/[documentId]/page.tsx failida chaqirilgan yani real user uchun qilingan secret papkani asosiy sahifasida chaqirilgan
 
 interface CoverProps {
     url?: string; //url string qabul qiladi va  (secret)/documents/[documentId]/page.tsx failida ichida faqat string qabul qiladi (hozircha!!) yani coverni user hohlasa netdan url orqaliham olib kelib qo'yishi mumkun yani faqat devicedanmas ssilka bilanham olib kelib qo'yishi mumkun

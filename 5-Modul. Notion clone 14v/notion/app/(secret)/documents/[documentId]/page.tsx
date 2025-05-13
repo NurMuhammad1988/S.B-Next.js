@@ -1,5 +1,6 @@
 "use client";
 import Cover from "@/components/shared/cover";
+import Toolbar from "@/components/shared/toolbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -42,15 +43,17 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     return (
         <div className="pb-40">
-            {
-                <Cover
-                    url={
-                        "https://marketplace.canva.com/EAECJXaRRew/3/0/1600w/canva-do-what-is-right-starry-sky-facebook-cover-4SpKW5MtQl4.jpg"
-                    }
-                />
-            }
+            <Cover
+                url={
+                    "https://marketplace.canva.com/EAECJXaRRew/3/0/1600w/canva-do-what-is-right-starry-sky-facebook-cover-4SpKW5MtQl4.jpg"
+                }
+            />
+            <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
+                <Toolbar document={document}/>
+            </div>
         </div>
     );
 };
 
 export default DocumentIdPage;
+
