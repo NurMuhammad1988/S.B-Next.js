@@ -91,7 +91,7 @@ export const Title = ({ document }: TitleProps) => {
 };
 
 Title.Skeleton = function TitleSkeleton() {
-    return <Skeleton className="h-9 w-20  rounded-md" />; //Skeleton bu Title loading bo'letganda chiqadigan loader component
+    return <Skeleton className="h-9 w-20  rounded-md" />; //Skeleton bu Title loading bo'letganda chiqadigan loader component bunday holatda yozilishini sababi shu title.tsx component chaqirilgan joyda agar kerak bo'lsa loaderni alohida chaqirish uchun
 };
 
-// 7. Restoring darsi 21:17 da qoldi va shu joydan boshlashdan oldin yuqorida yozilgan hamma kodni tushunib keyin 21:17 dan boshlash kerak
+
