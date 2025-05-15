@@ -36,4 +36,4 @@ const IconPicker = ({ children, onChange, asChild }: IconPickerProps) => {
 export default IconPicker;
 
 
-editordarsni 11 chi minutdan boshlab 24 chi minutgacha yahshi tushunib comment yozib keyin darsni davom ettir
+editor darsni 11 chi minutdan boshlab 24 chi minutgacha yahshi tushunib comment yozib keyin darsni davom ettir!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
