@@ -13,14 +13,16 @@ interface IconPickerProps {
 }
 
 const IconPicker = ({ children, onChange, asChild }: IconPickerProps) => {
+    // themani dark light qilishuchun yani "emoji-picker-react" kutubhoanadan keladigan EmojiPicker componentni next thema bilanshadcn uidan kelgan kodlardai dark lightga moslashtirish
     const { resolvedTheme } = useTheme();
     const currenThem = (resolvedTheme || "light") as keyof typeof themeMap;
     const themeMap = {
         dark: Theme.DARK,
         light: Theme.LIGHT,
     };
-
     const theme = themeMap[currenThem];
+    // themani dark light qilishuchun yani "emoji-picker-react" kutubhoanadan keladigan EmojiPicker componentni next thema bilanshadcn uidan kelgan kodlardai dark lightga moslashtirish
+
     return (
         <Popover>
             <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
@@ -28,8 +30,8 @@ const IconPicker = ({ children, onChange, asChild }: IconPickerProps) => {
             <PopoverContent className="p-0 w-full border-none shadow-none">
                 <EmojiPicker
                     height={350}
-                    theme={theme}//themani gark yokida light ekanligiga qarab bu emojilar componentiham dark lightga o'zgaradi
-                    onEmojiClick={(data) => onChange(data.emoji)}//onChange string typli icon qabul qiladi yani IconPicker chaqirilib ishlatilgan joyda emojilarga click qilingadan shu onEmojiClick qiymati sabab (yani bu onEmojiClick "emoji-picker-react" kutubhonadan keladigan function) onChangeda endi emoji datalari bilan bor bo'ladi yani "emoji-picker-react" kutubhonasidan keladi har safar bu componentga click qilinganda ungacha esa kemey turadi yani har safar bosilganda so'rov ketadi//yani data nomli local o'zgaruvchiga onEmojiClick ichida yozilgan emojilarni sovoldik
+                    theme={theme} //themani gark yokida light ekanligiga qarab bu emojilar componentiham dark lightga o'zgaradi
+                    onEmojiClick={(data) => onChange(data.emoji)} //onChange string typli icon qabul qiladi yani IconPicker chaqirilib ishlatilgan joyda emojilarga click qilingadan shu onEmojiClick qiymati sabab (yani bu onEmojiClick "emoji-picker-react" kutubhonadan keladigan function) onChangeda endi emoji datalari bilan bor bo'ladi yani "emoji-picker-react" kutubhonasidan keladi har safar bu componentga click qilinganda ungacha esa kemey turadi yani har safar bosilganda so'rov ketadi//yani data nomli local o'zgaruvchiga onEmojiClick ichida yozilgan emojilarni sovoldik
                 />
             </PopoverContent>
         </Popover>
@@ -38,4 +40,4 @@ const IconPicker = ({ children, onChange, asChild }: IconPickerProps) => {
 
 export default IconPicker;
 
-// editor darsni 11 chi minutdan boshlab 24 chi minutgacha yahshi tushunib comment yozib keyin darsni davom ettir!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
