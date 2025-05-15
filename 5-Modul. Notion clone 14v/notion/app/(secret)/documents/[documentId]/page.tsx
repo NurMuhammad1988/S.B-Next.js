@@ -50,6 +50,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
             />
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
                 <Toolbar document={document}/>
+                {/* bu toolbar component getDocumentById ishlab yserni documentlari sererdan kelganda ishleydi va bu dynamic yaratilgan document pageda hover bo'lsa ishlaydi yokida yo'q yani toolbar.tsxda shunday classlar yozilgan va add iconga click qilinganda IconPicker comonent ishga tushib "emoji-picker-react"kutubhonasidan chaqirilgan emojilar componenti ishga tushadi va user hohlasa documentga emoji add qiladi */}
             </div>
         </div>
     );
