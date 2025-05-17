@@ -43,7 +43,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
 
     return (
         <div className="pl-[54px] group relative">
-            {!!document.icon && !preview && (
+            {!!document.icon && !preview && (nima bu a nima bu???????????????????????
 
                 //o'zgaruvchi oldidagi ikkita undov belgisi "yo'q" degan ma'noni anglatadi . Bu operator mantiqiy ifoda qiymatini inkor etadi????????????????????
                 
