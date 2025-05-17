@@ -13,7 +13,8 @@ interface ToolbarProps {
 }
 
 function Toolbar({ document, preview }: ToolbarProps) {
-    const textareaRef = useRef<ElementRef<"textarea">>(null);
+    const textareaRef = useRef<ElementRef<"textarea">>(null);//textarea IconPicker componentni chiqarish uchun kerak lekin boshida null qaytaradi chunki textareani joyi ko'rinmasligi kerak yani hidden bo'lib turishi kerak va qachonki qaysidur jsx elemtga click qilinganda masalan "Add icon" textli jsx elementga click qilingandagina onIconChange ishlashi kerak bo'lgan ture holatidagina ishga tushib "Add icon" textiga click bo'lganda IconPicker copmonent uchun joy ochadi va IconPicker componentda kelgan iconlar ishga tushadi
+
 
     const [value, setValue] = useState("");
 
@@ -43,13 +44,21 @@ function Toolbar({ document, preview }: ToolbarProps) {
     return (
         <div className="pl-[54px] group relative">
             {!!document.icon && !preview && (
+
+                //o'zgaruvchi oldidagi ikkita undov belgisi "yo'q" degan ma'noni anglatadi . Bu operator mantiqiy ifoda qiymatini inkor etadi????????????????????
+                
+                //  (!!) null, undefined, "", 0 ni tekshirish yani bu malummotlardan istalganini boolean qiymatga o'tkazib olish uchun yani document.icon bu malumot turlaridan qaysini qaytarsaham shuni booleanga o'girvoladi yani endi document.iconda true yokida false bor?????????????????????????
+
+                //yani bu holatda ikkita undov (!!) bilan document.iconni nima qaytarishini yani true yokida false qaytarishini belgilab oldik va bu holatda document.icon nima qaytarishini bileymiz lekin nima qaytarsaham yani har qanday malumot turini qaytarsaham uni boolean qivoldik yani faqat true yokida false qaytaradi agar???????????????????????????????????????????
+                
+                //masalan document.icon nullnimi, undefinednimi, "bo'sh stringnimi", 0yokida 0numbernimi nimani qaytarepti shuni bilish yani !!document.icon null, undefined, "", 0 lardan qaysinidur qaytarsa yani hech qaysi malumot turiga oid hech narsani qaytarmasa boshida boolean qiymatli yani false yoki true qiymatidan birinigina qabul qila oladigan previewni false qildik bu holatda preview nimaga kerak yani bu mantiq if else operatorlar false yoki true qabul qiladi masalan bu holatda !!document.icon nima qaytretganini tekshirish uchungina ikkita undov qo'yildi va !previewni false qivolib agar document.icon shulardan>>>null, undefined, "", 0 hech qaysini qaytarmetgan bo'lsa va !preview false bo'lsa shu contentni yani onIconChange function bilan icon qo'yib document.iconni true qilish aytildi bu holatda preview faqat va (&&) operatorni davom ettirish uchun qo'yildi??? yani bu operator kamida ikkita misol bilan ishlaydi yani ko'plikda yani va yani bittamas?????????????????????????????????????
+
                 ///// let a = true;
                 ///// let b = !!a;
                 ///// console.log(b); =>>> true
 
-                //Yuqoridagi kod misolida birinchi let ibora ning qiymatini o'rnatadi true. Keyin, oldidagi ikkita undov belgisi a qiymatni inkor qiladi va b sifatida o'rnatiladi true.>>>>>>https://www.shecodes.io/athena/1080-what-do-two-exclamation-marks-mean-in-javascript#:~:text=In%20JavaScript%20and%20some%20programming,value%20of%20a%20boolean%20expression.
+                //Yuqoridagi kod misolida birinchi let ibora a ning qiymatini o'rnatadi true. Keyin, oldidagi ikkita undov belgisi a qiymatni inkor qiladi va b sifatida o'rnatiladi ===true.>>>>>>https://www.shecodes.io/athena/1080-what-do-two-exclamation-marks-mean-in-javascript#:~:text=In%20JavaScript%20and%20some%20programming,value%20of%20a%20boolean%20expression.
 
-                //yani bu holatda !!>>ikkita undov bilan document.iconni
 
                 // tailwindda group classlarga nom bersaham bo'ladi bu holatda group classimizni nomi icon>>> "group/icon"// agar documentda icon true bo'lsa va preview false bo'lsa bu holatda preview boshlang'ich holati oddiy boolean yani faqat true yoi false qabul qialdi shuni false qilib document.iconni true qilindi sabab bu logical operator false va true qiymatga qarab ishlaydi shu sabab  document.iconni tur qilish uchun prewievni false qivoldik va agar document.icon true bo'lsa pastdagi div ishlab unga click qilinganda IconPicker component ishlab ichidagi onIconChange function ishlaydi onIconChange functionda convex/document/updateFields functiondan kelgan documentni idisi  va iconi bor agar shu icon bor bo'lsa shu div ichidagi p tegi ishga tushadi qachonki hover bo'lsa va button ichidagi onRemoveIcon functionga click qilinsa serverdan kelgan icon remove bo'ladi yani>>> ""
                 //yani serverdan kelgan document.iconga hover bo'lganda X iconham ishga tushaid yani agar kerak bo'lsa remove qilish uchun shu uchun onRemoveIcon chaqirilgan buttonga group-hover/icon:opacity-100 classi berilgan yani onIconChange bor yani icon bor va shu iconga  hover qilingada X iconham bor yani hover qilinganda chiqadi va click qilinsa onRemoveIconham bor ishga tushadi va yana iconni udalit qilib document.iconniham previewniham false qiladi yani onRemoveIcon qilingandan keyin document.icon false bo'lib qoladi shunda bu>>>!document.icon && !preview &&  logical operator ishga tushib documentga icon qo'yish ishlaydi
@@ -67,7 +76,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                         onClick={onRemoveIcon}
                     >
                         <X className="h-4 w-4" />
-                        {/* document.iscon true bo'lsa bu X icon ishga tushadi yani user create qilgan documentni iconi avvaldan bor bo'lsa  yani iconni remove qilish uchun */}
+                        {/* document.icon true bo'lsa bu X icon ishga tushadi yani user create qilgan documentni iconi avvaldan bor bo'lsa  yani iconni remove qilish uchun */}
                     </Button>
                 </div>
             )}
@@ -93,7 +102,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
 
                 {!document.coverImage &&
-                    !preview && ( //document coverimage va preview  false bo'lsa
+                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa "Add cover" textli shu button chiqadi image icon bilan
                         <Button
                             size={"sm"}
                             variant={"outline"}
@@ -105,8 +114,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
             </div>
 
-            {!isEditing && !preview ? (
-                // shu koddan boshlab darsni qaytadan qil 9. Editor darsi 24 chi minutdan boshlashu koddan boshlab darsni qaytadan qil 9. Editor darsi 24 chi minutdan boshlashu koddan boshlab darsni qaytadan qil 9. Editor darsi 24 chi minutdan boshlashu koddan boshlab darsni qaytadan qil 9. Editor darsi 24 chi minutdan boshla
+            {!isEditing && !preview ? ( //boshida false qilingan isEditing haliham false bo'lsa va previewham false bo'lsa
                 <TextareaAutosize
                     ref={textareaRef}
                     onBlur={disableInput}
@@ -123,3 +131,4 @@ function Toolbar({ document, preview }: ToolbarProps) {
 }
 
 export default Toolbar;
+
