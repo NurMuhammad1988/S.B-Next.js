@@ -43,6 +43,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
     return (
         <div className="pl-[54px] group relative">
             {!!document.icon &&
+            //Bu yerda !!document.icon qiymatini aniq Boolean ga aylantirib, tekshiradi. masalan document.iconga bu sahifada type berilmagan yani ts bilan bu document.iconni nima ekanligini bu sahifani hech qayerida qattiy aytib qo'ymaganmiz shu sabab endi document.iconni booleanga o'tkazib olish kerak ikkita undov operatori shu ishni bajaradi yani document.icondan nomakelsaham uni booleanga aylantirib shunga qarab ishlatadi
                 !preview && ( 
                     //o'zgaruvchi oldidagi ikkita undov belgisi "yo'q" degan ma'noni anglatadi . Bu operator mantiqiy ifoda qiymatini inkor etadi????????????????????
 
@@ -130,4 +131,4 @@ function Toolbar({ document, preview }: ToolbarProps) {
 
 export default Toolbar;
 
-// 9. Editor darsida 25:20 da qotib qoldim shu joyidan boshlab !! operatorni yahshilab tushun o'qi izlan va bu ikkita undovni qayerda yozgan bo'lsang o'sha joydagi yozgan commentlaringni qaytadan tekshirib hato commentlarni to'g'irla keyin shu 25:20 dan boshlab darsni davom ettir ungacha darsni davom ettirma (bu sahifadagi  ikkita undov haqidagi commentlarniham to'g'irla yani tushunib qaytadan yoz)
+9. Editor darsida 25:20 da qotib qoldim shu joyidan boshlab !! operatorni yahshilab tushun o'qi izlan va bu ikkita undovni qayerda yozgan bo'lsang o'sha joydagi yozgan commentlaringni qaytadan tekshirib hato commentlarni to'g'irla keyin shu 25:20 dan boshlab darsni davom ettir ungacha darsni davom ettirma (bu sahifadagi  ikkita undov haqidagi commentlarniham to'g'irla yani tushunib qaytadan yoz)
