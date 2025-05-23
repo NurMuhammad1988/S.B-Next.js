@@ -6,6 +6,7 @@ import IconPicker from "./icon-picker"; //bu IconPicker componentda "emoji-picke
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutosize from "react-textarea-autosize"; //kutubhona
+import { title } from "process";
 
 interface ToolbarProps {
     document: Doc<"documents">; //shu sabab onIconChange va onRemoveIcon functionlarda chaqirilgan id: document._id,ga type berilmasaham ts urushib bermepti yani hato qaytarmepti chunki bu convexni Doc  functionida umumiy yaratilgan documentni hamma typlari tipizatsa qilingan yani convex o'zi qilgan
@@ -15,7 +16,7 @@ interface ToolbarProps {
 function Toolbar({ document, preview }: ToolbarProps) {
     const textareaRef = useRef<ElementRef<"textarea">>(null); //textarea  lekin boshida null qaytaradi chunki textareani joyi ko'rinmasligi kerak yani hidden bo'lib turishi kerak va qachonki qaysidur jsx elementga click qilinganda masalan "Add icon" textli jsx elementga click qilingandagina onIconChange ishlashi kerak bo'lgan ture holatidagina ishga tushib "Add icon" textiga click bo'lganda IconPicker copmonent uchun joy ochadi va IconPicker componentda kelgan iconlar ishga tushadi yani iconpicker uchun joy input holatida va hidden holatida qachonki ref sabab inputda event bo'lganda joy ochiladi
 
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(document.title);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -37,16 +38,34 @@ function Toolbar({ document, preview }: ToolbarProps) {
     };
 
     const disableInput = () => {
-        setIsEditing(false)
+        setIsEditing(false);
     };
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if(event.key === "Enter"){
-            event.preventDefault()
-            disableInput()
+        if (event.key === "Enter") {
+            event.preventDefault();
+            disableInput();
         }
     };
 
+    const onInput = (value: string) => {
+        setValue(value);
+        updateFields({
+            id: document._id,
+            title: value || "Untitled",
+        });
+    };
+
+    const enableInput = () => {
+        if (preview) return;
+
+        setIsEditing(true);
+
+        setTimeout(() => {
+            setValue(document.title);
+            textareaRef.current?.focus();
+        }, 0);
+    };
     return (
         <div className="pl-[54px] group relative">
             {/* va operatori && Shart: Har ikki operand ham true bo‘lishi kerak.
@@ -127,7 +146,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
 
                 {!document.coverImage &&
-                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa "Add cover" textli shu button chiqadi 
+                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa "Add cover" textli shu button chiqadi
                         <Button
                             size={"sm"}
                             variant={"outline"}
@@ -139,24 +158,27 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
             </div>
 
-            {!isEditing && !preview ? ( //boshida false qilingan isEditing haliham false bo'lsa va previewham false bo'lsa bu jsx truga aylanadi
-
-            // hammasi false bo'lsa yani real holatda majburan false qilganmiz yani isEditingham boshlang'ich holatda false previewham ! sabab false holatda bu holatda event uchun ikkala qiymatham qasddan false qilib olindi ///agar shu ikkala qiymat false bo'lsa "react-textarea-autosize" kutubhonasidan keladigan TextareaAutosize componentdi ishga tushadi va disabletinput ishlab seIsEditingni false qiladi
+            {!isEditing && !preview ? ( //boshida false qilingan isEditingni ! operator bilab teskarisiga aylantirvoldik yani endi isEditing truega aylandi
+                // hammasi false bo'lsa yani real holatda majburan false qilganmiz yani isEditingham boshlang'ich holatda false previewham ! sabab false holatda bu holatda event uchun ikkala qiymatham qasddan false qilib olindi ///agar shu ikkala qiymat false bo'lsa "react-textarea-autosize" kutubhonasidan keladigan TextareaAutosize componentdi ishga tushadi va disabletinput ishlab seIsEditingni false qiladi
                 <TextareaAutosize
                     ref={textareaRef}
                     onBlur={disableInput}
                     onKeyDown={onKeyDown}
                     value={value}
-                    onChange={(event) => setValue(event.target.value)}//setValue boshida bo'sh edi endi textareani inoutidagi eventni oladi 
+                    onChange={(event) => onInput(event.target.value)}
                     className="text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none"
                 />
             ) : (
-                <></>
+                <div
+                    onClick={enableInput}
+                    className="pb-[11.5px] text-5xl font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF]"
+                >
+                    {document.title}
+                </div>
             )}
         </div>
     );
 }
 
 export default Toolbar;
-
 
