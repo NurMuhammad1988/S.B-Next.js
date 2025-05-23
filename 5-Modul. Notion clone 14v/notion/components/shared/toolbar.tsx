@@ -49,6 +49,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
     };
 
     const onInput = (value: string) => {
+        //onInput functionda value string qiymat qabul qiladi va usestatedan kelgan setValue ichidagi document.titleni oladi va agar shu title bor bo'lsa titleni chiqaradi yokida "Untitled" textini chiqaradi
         setValue(value);
         updateFields({
             id: document._id,
@@ -158,8 +159,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
             </div>
 
-            {!isEditing && !preview ? ( //boshida false qilingan isEditingni ! operator bilab teskarisiga aylantirvoldik yani endi isEditing truega aylandi
-                // hammasi false bo'lsa yani real holatda majburan false qilganmiz yani isEditingham boshlang'ich holatda false previewham ! sabab false holatda bu holatda event uchun ikkala qiymatham qasddan false qilib olindi ///agar shu ikkala qiymat false bo'lsa "react-textarea-autosize" kutubhonasidan keladigan TextareaAutosize componentdi ishga tushadi va disabletinput ishlab seIsEditingni false qiladi
+            {!isEditing && !preview ? (
                 <TextareaAutosize
                     ref={textareaRef}
                     onBlur={disableInput}
@@ -182,3 +182,4 @@ function Toolbar({ document, preview }: ToolbarProps) {
 
 export default Toolbar;
 
+// 9. Editor darsi 33:18da qilindi va buni !isEditing && !preview ?, enableInput, disableInput, onKeyDown, onInput shu functionlarni yahshi tushunib komment yozib keyin editor darsini 33:18dan boshlab davom ettir

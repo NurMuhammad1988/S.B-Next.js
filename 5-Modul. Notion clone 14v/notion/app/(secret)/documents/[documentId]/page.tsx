@@ -4,8 +4,12 @@ import Toolbar from "@/components/shared/toolbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { useQuery } from "convex/react";
-import React from "react";
+
+import { useMutation, useQuery } from "convex/react";
+import dynamic from "next/dynamic";
+import React, { useMemo } from "react";
+import "@blocknote/mantine/style.css";
+import Editor from "@/components/shared/editor";
 
 interface DocumentIdPageProps {
     params: {
@@ -20,6 +24,13 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     const document = useQuery(api.document.getDocumentById, {
         id: params.documentId as Id<"documents">,
     }); //  // bu paramsda kelgan documentId document dynamic yaratilganda yaratiladi yani (secret) papkani ichida bo'lgani uchun bu [documents] shu (secret) papkani assosiy sahifasi (secret)/documents/page.tsxda yaratilgan dynamic sahifalarni qabul qiladi yani ona papkasini asossiy page.tsx sahifasida yaratilgan dynamic sahifalarni qabul qiladi ona papka esa bu holatda (secret) papkasi va params bilan documentni idsini oladi
+    const updateFields = useMutation(api.document.updateFields);
+
+    const Editor = useMemo(
+        () =>
+            dynamic(() => import("@/components/shared/editor"), { ssr: false }), //dynamik holatda "use client" ishlatilmagan sahifani ssrini o'chirib qo'yadi yani bu holatda @/components/shared/editor componentini ssr holatini false qilib qo'ydi yani user tomondan qayta qayta render qilmaslik uchun
+        [] //bu ssr false endi kerak emas edi lekin mayli turavorsin
+    );
 
     if (document === undefined) {
         //yani agar document undefined bo'lsa Cover.tsx ichidagi Skeleton functionni ishlat bu cover.tsxda yoziligan skeleton function yani loader agar cover.tsx yokida ichidagi cover imagega qilingan so'rov malum vaqt kech qolsa yokida ishlamasa so'rov tugaguncha shu skeletondagi loader ishlab turadi chunki serverdan datalar kelgancha baribir malum vaqt o'tadi
@@ -41,6 +52,13 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     if (document === null) return null;
 
+    const onChange = (value: string) => {
+        updateFields({
+            id: document._id,
+            content: value,
+        });
+    };
+
     return (
         <div className="pb-40">
             <Cover
@@ -49,12 +67,12 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                 }
             />
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-                <Toolbar document={document}/>
+                <Toolbar document={document} />
                 {/* bu toolbar component getDocumentById ishlab yserni documentlari sererdan kelganda ishleydi va bu dynamic yaratilgan document pageda hover bo'lsa ishlaydi yokida yo'q yani toolbar.tsxda shunday classlar yozilgan va add iconga click qilinganda IconPicker comonent ishga tushib "emoji-picker-react"kutubhonasidan chaqirilgan emojilar componenti ishga tushadi va user hohlasa documentga emoji add qiladi */}
+                <Editor initialContent={document.content} onChange={onChange} />
             </div>
         </div>
     );
 };
 
 export default DocumentIdPage;
-
