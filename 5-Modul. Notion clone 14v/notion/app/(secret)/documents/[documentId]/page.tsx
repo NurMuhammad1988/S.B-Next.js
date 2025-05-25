@@ -9,7 +9,7 @@ import { useMutation, useQuery } from "convex/react";
 import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 import "@blocknote/mantine/style.css";
-import Editor from "@/components/shared/editor";
+
 
 interface DocumentIdPageProps {
     params: {
@@ -28,7 +28,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     const Editor = useMemo(
         () =>
-            dynamic(() => import("@/components/shared/editor"), { ssr: false }), //dynamik holatda "use client" ishlatilmagan sahifani ssrini o'chirib qo'yadi yani bu holatda @/components/shared/editor componentini ssr holatini false qilib qo'ydi yani user tomondan qayta qayta render qilmaslik uchun
+            dynamic(() => import("@/components/shared/editor"), { ssr: false }), 
         [] //bu ssr false endi kerak emas edi lekin mayli turavorsin
     );
 
@@ -63,7 +63,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
         <div className="pb-40">
             <Cover
                 url={
-                    "https://marketplace.canva.com/EAECJXaRRew/3/0/1600w/canva-do-what-is-right-starry-sky-facebook-cover-4SpKW5MtQl4.jpg"
+                   document.coverImage
                 }
             />
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
@@ -76,3 +76,5 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 };
 
 export default DocumentIdPage;
+
+// BITTAGINA HATO BOR YANI DOCUMENT CREATE QILINGANDAN KEYIN UNPUBLISHED QILINSAHAM SHARED QILINGAN LINKDA UNPUBLISHED QILINGAN DOCUMENT UDALIT BO'LMAYAPTI FAQAT QACHONKI TRASH PAPKADAN UDALIT QILINSAGINA LINKDAGI DOCUMENT KEYIN HATO BEREPTI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
