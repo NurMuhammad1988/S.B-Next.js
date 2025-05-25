@@ -52,14 +52,14 @@ const Cover = ({ preview, url }: CoverProps) => {
             )}
         >
             {/* relative va absalute classlari sabab div ustiga div yozilib bola divga mishka borganda ichidagi buttonlar group classlari sabab chiqadigan qilindi */}
-            {!!url && (
+            {!!url && 
                 <Image
                     fill
                     src={url} //url string qabul qiladi va  (secret)/documents/[documentId]/page.tsx failida ichida faqat string qabul qiladi (hozircha!!) yani coverni user hohlasa netdan url orqaliham olib kelib qo'yishi mumkun yani faqat devicedanmas ssilka bilanham olib kelib qo'yishi mumkun
                     alt="cover rasmi "
                     className="object-cover "
                 />
-            )}
+            }
             {/* agar ona divda relative classi bor bo'lsa bu image aftamat tarzda absalute bo'lib hamma joyni egallab oladi yani ona divdagi hamma joyni masalan bu holatda cover imageni faqat shu>> w-full h-[35vh] joyga sig'diradi yani fill sabab! */}
 
             {url &&

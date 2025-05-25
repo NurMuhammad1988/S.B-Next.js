@@ -43,7 +43,7 @@ export default function RootLayout({
                             {children}
                         </ThemeProvider>
                     </EdgeStoreProvider>
-                    ?
+                    
                 </ConvexClientProvider>
             </body>
         </html>

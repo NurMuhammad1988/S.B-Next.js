@@ -11,7 +11,6 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import dynamic from "next/dynamic";
-import Editor from "@/components/shared/editor";
 import React, { useMemo } from "react";
 
 interface DocumentIdPageProps {
@@ -25,7 +24,7 @@ const Page = ({ params }: DocumentIdPageProps) => {
         id: params.documentId as Id<"documents">,
     });
 
-    const editor = useMemo(
+    const Editor = useMemo(
         () =>
             dynamic(() => import("@/components/shared/editor"), { ssr: false }),
         []
@@ -52,7 +51,9 @@ const Page = ({ params }: DocumentIdPageProps) => {
     return (
         <div className="pb-40">
             <Cover url={document.coverImage} preview />
+            
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
+
                 <Toolbar document={document} preview />
 
                 <Editor
@@ -67,4 +68,4 @@ const Page = ({ params }: DocumentIdPageProps) => {
 
 export default Page;
 
-// BITTAGINA HATO BOR YANI DOCUMENT CREATE QILINGANDAN KEYIN UNPUBLISHED QILINSAHAM SHARED QILINGAN LINKDA UNPUBLISHED QILINGAN DOCUMENT UDALIT BO'LMAYAPTI FAQAT QACHONKI TRASH PAPKADAN UDALIT QILINSAGINA LINKDAGI DOCUMENT KEYIN HATO BEREPTI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//bittagina hato borga o'hshaydi lekin hato yo'q yani yani agar user documentni crete qilib uni publish qilib publish qilingan documentni urlini copy qilib shu bu urlga alohida sahifada kirsa o'zi yaratgan documentni hech narsani change qilaolmayapti yani preview sabab va keyn user documenni unPublished qilsaham alohid sahifada ochilgan shu unpublished qilingan document baribir yo'qolib qolmayapti bu esa hatomas chunki user bitta browserdan foydalanayapti browser esa userni datalarini yani idilarini browserni Application sahifasida  Cookieslarda saqlab qolepti shu sabab user bitta browserdan kirganda unpublished qilinsaham documentni boshqa sahifadaham ko'ra olayapti lekin shu documentni unpublisheddan keyin boshqa borowserdan kirib ko'rilganda sahifa hato qaytarayapti chunki boshqa browserda userni cookilari yo'q va preview sabab boshqa userga bu document ko'rinmaydi
