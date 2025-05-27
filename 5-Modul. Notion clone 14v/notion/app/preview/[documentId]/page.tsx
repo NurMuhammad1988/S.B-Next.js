@@ -46,7 +46,6 @@ const Page = ({ params }: DocumentIdPageProps) => {
         );
     }
 
-   
 
     if (document === null) return null;
 
@@ -54,16 +53,15 @@ const Page = ({ params }: DocumentIdPageProps) => {
         <div className="pb-40">
             <Cover url={document.coverImage} preview />
             {/* preview sabab endi cover imageni faqat documentni create qilgan user o'zgartira oladi */}
-            
-            <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
 
+            <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
                 <Toolbar document={document} preview />
                 {/* bu holatdaham preview sabab faqat real user toolbardan foydalana oladi */}
 
                 <Editor
                     initialContent={document.content}
                     onChange={() => {}}
-                    editable={false}//false bo'lgani uchun boshqa userlarga ishlamaydi faqat shu document egasi bo'lgan usergina ishlata oladi
+                    editable={false} //false bo'lgani uchun boshqa userlarga ishlamaydi faqat shu document egasi bo'lgan usergina ishlata oladi
                 />
             </div>
         </div>

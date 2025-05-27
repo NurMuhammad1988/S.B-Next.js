@@ -17,7 +17,7 @@ import { Id } from "@/convex/_generated/dataModel";
 
 interface CoverProps {
     url?: string; //url string qabul qiladi va  (secret)/documents/[documentId]/page.tsx failida ichida faqat string qabul qiladi  yani coverni user hohlasa netdan url orqaliham olib kelib qo'yishi mumkun yani faqat devicedanmas ssilka bilanham olib kelib qo'yishi mumkun
-    preview?: boolean; // shaxsiy yani bu
+    preview?: boolean; // shaxsiy 
 }
 
 const Cover = ({ preview, url }: CoverProps) => {
@@ -63,7 +63,8 @@ const Cover = ({ preview, url }: CoverProps) => {
             {/* agar ona divda relative classi bor bo'lsa bu image aftamat tarzda absalute bo'lib hamma joyni egallab oladi yani ona divdagi hamma joyni masalan bu holatda cover imageni faqat shu>> w-full h-[35vh] joyga sig'diradi yani fill sabab! */}
 
             {url &&
-                !preview && ( // urlda //agar url bor bo'lsa va preview false bo'lsa bu holat ishlasin bu holatda esa preview yo'q  bo'lsa yani documenti yaratgan userdan boshqa user bo'lmasa yani bu preview  app/preview/[documentId]/page.tsx failida shu cover.tsx bilan chaqirilgan o'sha joyda agar cover.tsx componentga shu preview berilsa falsae bo'b boradi va user coverimageni o'zgartira oladi yani onReplase function ishlaydi yani preview false bo'lsa bu holatda previewga boolean qiymat berib ateylab !yani false qivolindi aks holda documentni create qilgan userham cover image bilan ishlayolmagan bo'lardi
+    
+                !preview && ( // urlda //agar url bor bo'lsa va preview false bo'lsa bu holat ishlasin bu holatda esa preview yo'q  bo'lsa yani documenti yaratgan userdan boshqa user bo'lmasa yani bu preview  app/preview/[documentId]/page.tsx failida shu cover.tsx bilan chaqirilgan o'sha joyda agar cover.tsx componentga shu preview berilsa true yani qo'yilagnini o'zi truga aylantiradi qo'yilmagan joyda esa false yani (secret)/documents/[documentId]/page.tsxda cover chaqirilganda preview berilmagan yani u joyda preview false hissoblanadi bu preview faqat app/preview/[documntId]/page.tsx failida berilgan yani faqat o'sha joyda chaqirilgani uchun o'sha joyda true bo'ladi lekin preview qiymati cover.tsx chaqirilgan joyda berilmasa preview false bo'ladi chaqirilsa true bo'ladi  yani loyihada preview papkadan foydalanadigan userdan boshqa user uchun bu false loyihada biror bir failda cover.tsx chaqirilib preview berilsa bu true va user coverimageni o'zgartira oladi yani onReplase function ishlaydi 
                     <div className="opacity-0 group-hover:opacity-100 absolute bottom-5 right-20 flex items-center gap-x-2">
                         {/* bu bola div ona divda esa relative classi va group classi bor yani endi bu divlar bir biriga bo'gliq holatga qarab ishlaydi masalan bu bola div boshida opacitysi 0 yani hech narsa ko'rinmeydi va group sabab  urlda kelgan imagega hover bo'lganda group-hover:opacity-100 ishleydi va pastdagi button uiga ko'rinadi yani mishkani cover imagega olib kelganda bu button ko'rinadi */}
                         <Button

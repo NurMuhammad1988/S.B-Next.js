@@ -62,7 +62,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     return (
         <div className="pb-40">
-            
+
             <Cover
                 url={
                    document.coverImage
@@ -71,7 +71,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
                 <Toolbar document={document} />
-                {/* bu toolbar component getDocumentById ishlab yserni documentlari sererdan kelganda ishleydi va bu dynamic yaratilgan document pageda hover bo'lsa ishlaydi yokida yo'q yani toolbar.tsxda shunday classlar yozilgan va add iconga click qilinganda IconPicker comonent ishga tushib "emoji-picker-react"kutubhonasidan chaqirilgan emojilar componenti ishga tushadi va user hohlasa documentga emoji add qiladi */}
+                {/* bu toolbar component getDocumentById ishlab userni documentlari serverdan kelganda ishleydi va bu dynamic yaratilgan document pageda hover bo'lsa ishlaydi yokida yo'q yani toolbar.tsxda shunday classlar yozilgan va add iconga click qilinganda IconPicker comonent ishga tushib "emoji-picker-react"kutubhonasidan chaqirilgan emojilar componenti ishga tushadi va user hohlasa documentga emoji add qiladi */}
                 <Editor initialContent={document.content} onChange={onChange} />
                 {/* yani bu dynamic documentlar sahifasiga editor.tsx chaqirilgan editor.tsxda esa jsda reactda qilingan blocknode component bor bu component blocknotejs.org saytidan chaqiriladigan component yani hooklar bilanchaqirilib ishlatiladigan component yani jsda qilingan text editor tayyor component notion loyihamizda yaratiladigan postlarni chiroyli qilish masalan textlar har hil razmerda rangli rasm videolar qo'yish va yana ko'plab ishlarni qilish mumkun bu blocknotejs bilan shu blocknote editor shu user documentni dynamic yaratib rendering qiladigan sahifada chaqirildi chunki shu sahifada ishlatilishi kerak  va convex/document.ts failidan chaqirilgan updateFields document nomli o'zgaruvchiga olingan shu document o'zgaruvchiga editor.tsxdan keladigan initialContent string qiymatiga contentni qo'ydik yani content faqat string bo'lsagina qabul qiladi*/}
             </div>
