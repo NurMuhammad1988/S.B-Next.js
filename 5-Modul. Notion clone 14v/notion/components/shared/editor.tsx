@@ -12,6 +12,8 @@ interface EditorProps {
     editable?: boolean;
 }
 
+//bloknotejs.org dan keladigan tex va mediya faillar editorini ishlatadigan fail shu!!!
+
 const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     const { resolvedTheme } = useTheme();
 

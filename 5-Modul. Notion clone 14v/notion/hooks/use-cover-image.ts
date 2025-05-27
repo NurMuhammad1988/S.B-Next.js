@@ -6,7 +6,7 @@ interface CoverImageStore {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
-    onReplase: (url: string) => void;
+    onReplase: (url: string) => void;//cover imageni yangilash uchun
 }
 
 export const UseCoverImage = create<CoverImageStore>((set) => ({
@@ -14,5 +14,5 @@ export const UseCoverImage = create<CoverImageStore>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true, url: undefined }),
     onClose: () => set({ isOpen: false, url: undefined }),
-    onReplase: (url) => set({ isOpen: true, url }),
+    onReplase: (url) => set({ isOpen: true, url }),//yani faqat onreplase ishlagandagina url yani coverga imageni url bilan olib kelib qo'yish ishlaydi
 }));

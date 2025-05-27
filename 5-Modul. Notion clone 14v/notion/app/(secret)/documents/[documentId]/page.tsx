@@ -21,15 +21,16 @@ interface DocumentIdPageProps {
 }
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
+
     const document = useQuery(api.document.getDocumentById, {
         id: params.documentId as Id<"documents">,
-    }); //  // bu paramsda kelgan documentId document dynamic yaratilganda yaratiladi yani (secret) papkani ichida bo'lgani uchun bu [documents] shu (secret) papkani assosiy sahifasi (secret)/documents/page.tsxda yaratilgan dynamic sahifalarni qabul qiladi yani ona papkasini asossiy page.tsx sahifasida yaratilgan dynamic sahifalarni qabul qiladi ona papka esa bu holatda (secret) papkasi va params bilan documentni idsini oladi
+    }); //  // bu paramsda kelgan documentId document dynamic yaratilganda yaratiladi yani (secret) papkani ichida bo'lgani uchun bu [documents] shu (secret) papkani assosiy sahifasi (secret)/documents/page.tsxda yaratilgan dynamic sahifalarni qabul qiladi yani ona papkasini asossiy page.tsx sahifasida yaratilgan dynamic sahifalarni qabul qiladi ona papka esa bu holatda (secret) papkasi va params bilan documentni idsini oladi yani params bu holatda convexdan keladigan functionni qiymati
     const updateFields = useMutation(api.document.updateFields);
 
     const Editor = useMemo(
         () =>
             dynamic(() => import("@/components/shared/editor"), { ssr: false }), 
-        [] //bu ssr false endi kerak emas edi lekin mayli turavorsin
+        [] //bu usememo react function bu bilan server site rendiringni o'chirib qo'ydik yani komponentni bir marta yuklaydi va xotirada saqlaydi qaysi componentni>>>/components/shared/editor editor.tsx ni va serverda qayta qayta yukalmaydi komponenti faqat kerak bo'lganda yuklaydi (lazy loading) server-side rendering'da bu komponentni yuklamaydi, faqat browser'da ishlaydi va faqat bir martta serverda rendring qiladi saqlab olish uchun memoni dynamic functionini vazifasi shu...useMemo - bu React'ning performance optimization uchun ishlatiladigan hooki. U qimmat (expensive) hisob-kitoblarni cache qiladi va faqat dependency'lar o'zgarganda qaytadan hisoblaydi. yani o'ziga kiritilgan componentni faqat o'zgargan joyini render qilib qolganiga teginmaydi buni hotirasida saqlab qoladi
     );
 
     if (document === undefined) {
@@ -55,21 +56,24 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     const onChange = (value: string) => {
         updateFields({
             id: document._id,
-            content: value,
+            content: value,//content updateFields function qiymati yani string yani contentni faqat string formatda bo'lsa qabul qiladi yani editor componentda onchange function ishlaganda blocnotedan useCreateBlockNote hooki keladi hookda esa inputlar bor shu inputlarga stringdan boshqa malumot turini qo'shish kerak emas masalanbad user birorta zararli faillar tashlamasligi uchun
         });
     };
 
     return (
         <div className="pb-40">
+            
             <Cover
                 url={
                    document.coverImage
                 }
             />
+
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
                 <Toolbar document={document} />
                 {/* bu toolbar component getDocumentById ishlab yserni documentlari sererdan kelganda ishleydi va bu dynamic yaratilgan document pageda hover bo'lsa ishlaydi yokida yo'q yani toolbar.tsxda shunday classlar yozilgan va add iconga click qilinganda IconPicker comonent ishga tushib "emoji-picker-react"kutubhonasidan chaqirilgan emojilar componenti ishga tushadi va user hohlasa documentga emoji add qiladi */}
                 <Editor initialContent={document.content} onChange={onChange} />
+                {/* yani bu dynamic documentlar sahifasiga editor.tsx chaqirilgan editor.tsxda esa jsda reactda qilingan blocknode component bor bu component blocknotejs.org saytidan chaqiriladigan component yani hooklar bilanchaqirilib ishlatiladigan component yani jsda qilingan text editor tayyor component notion loyihamizda yaratiladigan postlarni chiroyli qilish masalan textlar har hil razmerda rangli rasm videolar qo'yish va yana ko'plab ishlarni qilish mumkun bu blocknotejs bilan shu blocknote editor shu user documentni dynamic yaratib rendering qiladigan sahifada chaqirildi chunki shu sahifada ishlatilishi kerak  va convex/document.ts failidan chaqirilgan updateFields document nomli o'zgaruvchiga olingan shu document o'zgaruvchiga editor.tsxdan keladigan initialContent string qiymatiga contentni qo'ydik yani content faqat string bo'lsagina qabul qiladi*/}
             </div>
         </div>
     );
