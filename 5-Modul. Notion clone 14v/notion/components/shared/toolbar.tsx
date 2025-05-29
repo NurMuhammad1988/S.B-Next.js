@@ -10,26 +10,20 @@ import { UseCoverImage } from "@/hooks/use-cover-image";
 
 interface ToolbarProps {
     document: Doc<"documents">; //shu sabab onIconChange va onRemoveIcon functionlarda chaqirilgan id: document._id,ga type berilmasaham ts urushib bermepti yani hato qaytarmepti chunki bu convexni Doc  functionida umumiy yaratilgan documentni hamma typlari tipizatsa qilingan yani convex o'zi qilgan
-    preview?: boolean;//bu agar documentni yaratgan userdan boshqa user kirganda false qilib qo'yiladi yani toolbardan faqat real user foydalanishi mumkun holos masalan user yaratgan documentini linkini boshqa odamlarga jo'natsa yoki boshqalar notionga kirib postni ko'rsa toolbardan foydalanib documentni o'zgartiraolmasligi kerak shu uchun boolean qilindi va chaqirib ishlatilganda preview false qilib berib qo'yiladi
+    preview?: boolean; //bu agar documentni yaratgan userdan boshqa user kirganda false qilib qo'yiladi yani toolbardan faqat real user foydalanishi mumkun holos masalan user yaratgan documentini linkini boshqa odamlarga jo'natsa yoki boshqalar notionga kirib postni ko'rsa toolbardan foydalanib documentni o'zgartiraolmasligi kerak shu uchun boolean qilindi va chaqirib ishlatilganda preview false qilib berib qo'yiladi
 }
 
 function Toolbar({ document, preview }: ToolbarProps) {
+    const coverImage = UseCoverImage();
 
-    const coverImage  = UseCoverImage()
-
-
-    const textareaRef = useRef<ElementRef<"textarea">>(null); //textarea  lekin boshida null qaytaradi chunki textareani joyi ko'rinmasligi kerak yani hidden bo'lib turishi kerak va qachonki qaysidur jsx elementga click qilinganda masalan "Add icon" textli jsx elementga click qilingandagina onIconChange ishlashi kerak bo'lgan ture holatidagina ishga tushib "Add icon" textiga click bo'lganda IconPicker copmonent uchun joy ochadi va IconPicker componentda kelgan iconlar ishga tushadi yani iconpicker uchun joy input holatida va hidden holatida qachonki ref sabab inputda event bo'lganda joy ochiladi
-
-
-
-    const [value, setValue] = useState(document.title);
-
+    const textareaRef = useRef<ElementRef<"textarea">>(null); //useRef — bu React Hook, u  biror DOM elementga yoki oddiy qiymatga murojaat qilish imkonini beradi ///DOM elementga murojaat qilish uchun ishlatiladi.///ElementRef<"textarea"> — bu TypeScript tipi bo‘lib, textarea elementining aniq tipini oladi.///textareaRef.current.focus — bizning textarea elementimizga bog'lanadi va unga to‘g‘ridan-to‘g‘ri kirish imkonini beradi.//useRef - React'ning hook'i bo'lib, DOM elementlariga murojaat qilish yoki qiymatlarni komponent qayta render bo'lishida saqlab qolish uchun ishlatiladi.///Qiymat o'zgarganda qayta render bo'lmaydi //bu textareaRef user document create qilgadna toolbar.tsx failida documenti titlesini o'zgartrish uchun
+    const [value, setValue] = useState(document.title); //value stateda boshlang'izch qiymat yani agar user toolbar.tsxda documentni o'zgartirmoqchi bo'lganda documentni convex serverdagi titilesi agar bor bo'lsa boshlang'ich qiymatda shu turadi
     const [isEditing, setIsEditing] = useState(false);
 
     const updateFields = useMutation(api.document.updateFields); //bu updateFields functionda convexni patch metodi bor yani convexdagi objectga yangi objectlar va hakozolar qo;shadi bu holatda esa documentga icon qo'shadi yani qabul qiladi
 
     const onIconChange = (icon: string) => {
-        //onIconChange nomli calback functon ichida convex/document.tsxdan kelgan ichida patch metodi bor updateFields functionni  chaqrish va updateFields function ichidan document._id va icon qiymatlarini olish yani id: nmli local o'zgaruvchi ichiga olish
+        //onIconChange nomli calback functon ichida convex/document.tsxdan kelgan ichida patch metodi bor updateFields functionni  chaqrish va updateFields function ichidan document._id va icon qiymatlarini olish yani id: nomli local o'zgaruvchi ichiga olish bu updatefieldsda convexni patch metodi ishlatilgan yani serverdagi objectga change bo'gandatalarni qo'shadi bu holatda documentga "add icon" buttoniga bosilib icon qo'yilganda shu iconni convex serverdagi userni document objectiga patch metodi sabab yangi field ochib realtime holatda qo'shib qo'yadi
         updateFields({
             id: document._id,
             icon,
@@ -39,15 +33,16 @@ function Toolbar({ document, preview }: ToolbarProps) {
     const onRemoveIcon = () => {
         updateFields({
             id: document._id,
-            icon: "", //icon bu holatda hech narsa qaytarmeydi yani bo'sh string bu mantiqiy operator bilan tekshirilganda false qaytaradi
+            icon: "", //icon bu holatda hech narsa qaytarmeydi yani bo'sh string bu mantiqiy operator bilan tekshirilganda false qaytaradi yani onRemoveIcon jsxda X icon bor buttunda ishlatildi yani updatefields papkada agar icon bor bo'lsa shuni ""<<yani false qiladi false yani convex serverdan remove qiladi remove bo'lganda esa X icon ishga tushadi ""yani updatefieldsda icon string qabul qiladi "" bo'sh stringesa false hossoblanadi
         });
     };
 
     const disableInput = () => {
-        setIsEditing(false);
+        setIsEditing(false); //disableInput function setIsEditingni false qiladi chunki onblur bo'lganda ishlamay turishi kerak onBlur react DOM atributi yani ishlatilmaganda false bo'lishi kerak
     };
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        //KeyboardEvent reactni klavushlar bilan ishlaydigan objecti typida esa HTMLTextAreaElement bor yani agar  shu onKeyDown function ishlatiletgan TextareaAutosize texareasida "Enter" klavushi ishlatilsa event sodir bo'ladi yani disableInput functionishga tushadi yani setIsEditing yana qaytadan yani "Enter" bosilgandaham false qilinadi yani hodisa to'htatiladi
         if (event.key === "Enter") {
             event.preventDefault();
             disableInput();
@@ -56,24 +51,25 @@ function Toolbar({ document, preview }: ToolbarProps) {
 
     const onInput = (value: string) => {
         //onInput functionda value string qiymat qabul qiladi va usestatedan kelgan setValue ichidagi document.titleni oladi va agar shu title bor bo'lsa titleni chiqaradi yokida "Untitled" textini chiqaradi
-        setValue(value);
+        setValue(value); //yani valustatedagi document.title bor
         updateFields({
+            //convex serverga titileni qo'shish uchun
             id: document._id,
-            title: value || "Untitled",
+            title: value || "Untitled", //agar value statedagi document.title true bo'lsa yani valueda kelgan data true bo'lsa yokida "untitled" texti chiqadi
         });
     };
 
     const enableInput = () => {
-        if (preview) return;
+        if (preview) return; //agar user documentni publish qilsa hech narsa qaytarmeydi
 
-        setIsEditing(true);
+        setIsEditing(true); //setisediting shunchaki bitta state boshida false qilingan endi true qilindi bu jsxda if else berish uchun kerak
 
         setTimeout(() => {
             setValue(document.title);
-            textareaRef.current?.focus();
+            textareaRef.current?.focus(); //bu focus method useRef hookini metodi input ichiga focus beradi yani input ichida bo'letgan hodisani agar string bo'lsagina saqlaydi
         }, 0);
     };
-    
+
     return (
         <div className="pl-[54px] group relative">
             {/* va operatori && Shart: Har ikki operand ham true bo‘lishi kerak.
@@ -81,7 +77,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                      Natija: Birinchi falsy qiymat yoki oxirgi operand.
                      yani chapdan tekshiradi va false bo'lsa ishlashdan to'htaydi agar true bo'lsa jsxni ko'rsatadi yani falseni ko'rgandan to'htaydi yani va va va deb faqat trueni hissobga olib va va deydi va yokida demeydi
 
-                     bu va operatorida bu holatda  agar document.icon false bo'lsa tekshirish to'htaydi yani false yani va operatori falseni ko'rganda to'htaydi
+                     bu va operatorida bu holatda  agar document.icon false bo'lsa tekshirish to'htaydi yani false yani va operatori falseni ko'rganda to'htaydi shu uchun !! ikkita not operatori bilan tekshirilidi yani !! 2 ta undov keladigan javobni booleanga o'tkizvoladi agar false bno'lsa && va operatori to'htaydi agar javob true bo'lsa va operatori davom etadi yani agar document.icon true bo'lsa va preview false bo'lsa bu holatda va operator document icon true bo'lgandan to'htaydi
 
                
             */}
@@ -112,6 +108,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     //yani serverdan kelgan document.iconga hover bo'lganda X iconham ishga tushadi yani agar kerak bo'lsa remove qilish uchun shu uchun onRemoveIcon chaqirilgan buttonga group-hover/icon:opacity-100 classi berilgan yani onIconChange bor yani icon bor va shu iconga  hover qilingada X iconham bor yani hover qilinganda chiqadi va click qilinsa onRemoveIconham bor ishga tushadi va yana iconni udalit qilib document.iconni false qiladi yani onRemoveIcon qilingandan keyin document.icon false bo'lib qoladi shunda bu>>>!document.icon && !preview &&  logical operator ishga tushib documentga icon qo'yish yana qaytadan ishlaydi
                     <div className="flex items-center gap-x-2 group/icon pt-6">
                         <IconPicker onChange={onIconChange}>
+                            {/* agar va operatorida bu holat sodir bo'lsa convex serverdan documentni  iconi agar avval qo'yilgan bo'lsa keladi yani umuman oganda va operatorni bu holati ishlaganda onIconChange function ishlamaydi lekin IconPickerdan propsbilan kelgan onchange typi sabab onchangeni parametrga berish shart shu uchun onIconChange bu joyga shunchaki ts urushib bermasligi uchun type sifatida chaqirildi*/}
                             {/* bu iconpicker kutubhonadan yuklangan emojilar convexdaham real timeda o'zgarayapti va cserverda saqlanayapti har qanday js loyihada bu kutubhonani olib kelib ishlatish mumkun masalan messenger dasturlar bo'lsa bittada olib kelib o'rantish mumkun tekin qulay oson!! */}
                             <p className="text-6xl hover:opacity-75  transition">
                                 {document.icon}
@@ -131,7 +128,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                 )}
 
             {!!document.icon &&
-                preview && ( //va yana agar  document.icon true bo'lsa va prewievham true bo'lsa yani avvalda serverda bor bo'lsa yani agar user documentga boshidan icon qo'ygan bo'lsa yokida yuqoridagi !!document.icon && holati ishlatilib yani icon qo'yilib true bo'lsa yani  onIconChange function ishlagan bo'lsa yani user iconni qo'ygan bo'lsa  shuni udalit qilish uchun yani icon bor bo'lsa shu preview berilsa true yani qo'yilagnini o'zi truga aylantiradi qo'yilmagan joyda esa false yani (secret)/documents/[documentId]/page.tsxda toolbar chaqirilganda preview berilmagan yani u joyda preview false hissoblanadi bu preview faqat app/preview/[documntId]/page.tsx failida berilgan yani faqat o'sha joyda chaqirilgani uchun o'sha joyda true bo'ladi sababi app/preview/[documntId]/page.tsx da documentni idisga qarab get qilish bor yani endi document dynamic yaratilgan edni shu documentni ssikasini boshqa userlarga tashalsa boshqa userlar foydalana olamsiligi uchun yani preview false bo'lgan joyda documentni edit qilib bo'lmaydi lekin preview qiymati toolbar.tsx chaqirilgan joyda berilmasa preview false bo'ladi chaqirilsa true bo'ladi  yani loyihada preview papkadan foydalanadigan userdan boshqa user uchun bu false loyihada biror bir failda toolbar.tsx chaqirilib preview berilsa bu true va user toolbar.tsxni o'zgartira oladi  
+                preview && ( //va yana agar  document.icon true bo'lsa va prewievham true bo'lsa yani avvalda serverda bor bo'lsa yani agar user documentga boshidan icon qo'ygan bo'lsa yokida yuqoridagi !!document.icon && holati ishlatilib yani icon qo'yilib true bo'lsa yani  onIconChange function ishlagan bo'lsa yani user iconni qo'ygan bo'lsa  shuni udalit qilish uchun yani icon bor bo'lsa shu preview berilsa true yani qo'yilagnini o'zi truga aylantiradi qo'yilmagan joyda esa false yani (secret)/documents/[documentId]/page.tsxda toolbar chaqirilganda preview berilmagan yani u joyda preview false hissoblanadi bu preview faqat app/preview/[documntId]/page.tsx failida berilgan yani faqat o'sha joyda chaqirilgani uchun o'sha joyda true bo'ladi sababi app/preview/[documntId]/page.tsx da documentni idisga qarab get qilish bor yani endi document dynamic yaratilgan edni shu documentni ssikasini boshqa userlarga tashalsa boshqa userlar foydalana olamsiligi uchun yani preview false bo'lgan joyda documentni edit qilib bo'lmaydi lekin preview qiymati toolbar.tsx chaqirilgan joyda berilmasa preview false bo'ladi chaqirilsa true bo'ladi  yani loyihada preview papkadan foydalanadigan userdan boshqa user uchun bu false loyihada biror bir failda toolbar.tsx chaqirilib preview berilsa bu true va user toolbar.tsxni o'zgartira oladi
                     <p className="text-6xl pt-6">{document.icon}</p>
                 )}
 
@@ -151,23 +148,19 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
 
                 {!document.coverImage &&
-                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa va preview yani bu toolbar.tsx chaqirilgan joyda toolbar.tsxga preview qiymati berilmagan bo'lsa "Add cover" textli shu button chiqadi !preview false bo'lsa lekin preview pakada chaqirilganda bu toolbarga preview qiymati beriladi shunda bu false true bo'ladi yani bu toolbar.tsx qayergadur shu loyihada chaqirilib ishlatilsa va preview berilmasa unda bu false agar chaqirilsa true yani preview chaqirilsa true bo'ladi chaqirilmasa false bo'ladi yani    BU TOOLBAR TSX  CHAQIRILGAN JOYDA PREVIEW BERILSA SHU JSX ISHGA TUSHADI YANI ENDI TRUE BO'LADI BOSHIDA ESA FALSE EDI yani endi add cover textiga bosilganda onOpenishga tushib event sodir bo'ladi 
-
-                    
-
+                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa va preview yani bu toolbar.tsx chaqirilgan joyda toolbar.tsxga preview qiymati berilmagan bo'lsa "Add cover" textli shu button chiqadi !preview false bo'lsa lekin preview papkada chaqirilganda bu toolbarga preview qiymati beriladi shunda bu false true bo'ladi yani bu toolbar.tsx qayergadur shu loyihada chaqirilib ishlatilsa va preview berilmasa unda bu false agar chaqirilsa true yani preview chaqirilsa true bo'ladi chaqirilmasa false bo'ladi yani    BU TOOLBAR TSX  CHAQIRILGAN JOYDA PREVIEW BERILSA SHU JSX ISHGA TUSHADI YANI ENDI TRUE BO'LADI BOSHIDA ESA FALSE EDI yani endi add cover textiga bosilganda onOpenishga tushib event sodir bo'ladi
                         <Button
                             size={"sm"}
                             variant={"outline"}
                             className="text-muted-foreground text-xs"
                             onClick={coverImage.onOpen}
+                            //coverImage o'zgaruvchida kelgan onOpen bu usecoverimage hookida yaratilgan store yani   buttonga click bo'lganda event uchun yani buttonni ochadi yanu button ichidagi imageiconga click qilinganda open qiladi nimani open qiladi cover.tsx failini open qiladi cover.tsx failida usecoverimage hooki asosan ishlatilgan yani onOpen ishlaganda edgestore kutubhonadan keladigan component ishlab documentga cover image qo'yish ochiladi yani alohida component bo'lib faqat imageni qurulma hotirasidan olib yuklash uchun kerakli ui ishga tushadi bu joydaham bu cover imageni ishlatilish sababiesa add icon va add cover textlari yonmayon turipti add cover textiga bosilganda esa cover.tsx fail ishga tushadi (onOpen sabab!!!)
                         >
                             <ImageIcon className="h-4 w-4 mr-2" />
                             <span>Add cover</span>
                         </Button>
                     )}
             </div>
-
-            
 
             {!isEditing && !preview ? (
                 <TextareaAutosize
@@ -191,5 +184,3 @@ function Toolbar({ document, preview }: ToolbarProps) {
 }
 
 export default Toolbar;
-
-// 9. Editor darsi 16:25 da qolgan

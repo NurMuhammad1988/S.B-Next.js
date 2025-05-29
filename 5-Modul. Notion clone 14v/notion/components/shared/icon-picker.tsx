@@ -26,6 +26,7 @@ const IconPicker = ({ children, onChange, asChild }: IconPickerProps) => {
     return (
         <Popover>
             <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
+            {/* {children} bu holatda iconpicker chaqirib ishlatilgan joyda ichidagi jsx elemtlar yani react node qabul qiladi masalan button va ichida <span>Add icon</span> texti bor span */}
             {/* yani bu IconPicker component toolbar.tsxda chaqirib ishlatilganda shu popoverlar ichida boradi va asChild qiymati agar toolbar.tsxda IconPicker ichida chaqirilsa va ichida nima bo'lsa shunga type beradi yani ichida react node chaqirilgan children ishga tushadi yani hamma emojilarga type bervoldik  */}
             <PopoverContent className="p-0 w-full border-none shadow-none">
                 <EmojiPicker
