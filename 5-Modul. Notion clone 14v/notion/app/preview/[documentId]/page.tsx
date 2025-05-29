@@ -56,7 +56,7 @@ const Page = ({ params }: DocumentIdPageProps) => {
 
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
                 <Toolbar document={document} preview />
-                {/* bu holatdaham preview sabab faqat real user toolbardan foydalana oladi */}
+                {/* bu holatdaham preview sabab faqat real user toolbardan foydalana oladi/// toolbar bu bu pageda ishlatilganda "use client" berilgan chunki toolbarda server componentlar bor ssr talab qilinadi*/}
 
                 <Editor
                     initialContent={document.content}

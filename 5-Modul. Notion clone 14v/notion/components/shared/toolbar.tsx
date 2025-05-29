@@ -73,6 +73,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
             textareaRef.current?.focus();
         }, 0);
     };
+    
     return (
         <div className="pl-[54px] group relative">
             {/* va operatori && Shart: Har ikki operand ham true bo‘lishi kerak.
@@ -107,10 +108,11 @@ function Toolbar({ document, preview }: ToolbarProps) {
                 //Yuqoridagi kod misolida birinchi let ibora a ning qiymatini o'rnatadi true. Keyin, oldidagi ikkita undov belgisi a qiymatni inkor qiladi va b sifatida o'rnatiladi ===true.>>>>>>https://www.shecodes.io/athena/1080-what-do-two-exclamation-marks-mean-in-javascript#:~:text=In%20JavaScript%20and%20some%20programming,value%20of%20a%20boolean%20expression.
 
                 !preview && (
-                    // tailwindda group classlarga nom bersaham bo'ladi bu holatda group classimizni nomi icon>>> "group/icon"// agar documentda icon true bo'lsa va preview false bo'lsa bu holatda preview boshlang'ich holati oddiy boolean yani faqat true yoki false qabul qiladi shuni false qilib document.iconni true qilindi sabab bu logical operator false va true qiymatga qarab ishlaydi va agar document.icon true bo'lsa pastdagi div ishlab unga click qilinganda IconPicker component ishlab ichidagi onIconChange function ishlaydi onIconChange functionda convex/document/updateFields functiondan kelgan documentni idisi  va iconi bor agar shu icon bor bo'lsa shu div ichidagi p tegi ishga tushadi qachonki hover bo'lsa va button ichidagi onRemoveIcon functionga click qilinsa serverdan kelgan icon remove bo'ladi yani>>> ""
+                    // tailwindda group classlarga nom bersaham bo'ladi bu holatda group classimizni nomi icon>>> "group/icon"// agar documentda icon true bo'lsa va preview false bo'lsa bu holatda preview boshlang'ich holati oddiy boolean yani faqat true yoki false qabul qiladi shu false bo'lganda document.iconni true qilindi sabab bu logical operator false va true qiymatga qarab ishlaydi va agar document.icon true bo'lsa va preview false bo'lsa pastdagi div ishlab unga click qilinganda IconPicker component ishlab ichidagi onIconChange function ishlaydi onIconChange functionda convex/document/updateFields functiondan kelgan documentni idisi  va iconi bor agar shu icon bor bo'lsa shu div ichidagi p tegi ishga tushadi qachonki hover bo'lsa va button ichidagi onRemoveIcon functionga click qilinsa serverdan kelgan icon remove bo'ladi yani>>> ""
                     //yani serverdan kelgan document.iconga hover bo'lganda X iconham ishga tushadi yani agar kerak bo'lsa remove qilish uchun shu uchun onRemoveIcon chaqirilgan buttonga group-hover/icon:opacity-100 classi berilgan yani onIconChange bor yani icon bor va shu iconga  hover qilingada X iconham bor yani hover qilinganda chiqadi va click qilinsa onRemoveIconham bor ishga tushadi va yana iconni udalit qilib document.iconni false qiladi yani onRemoveIcon qilingandan keyin document.icon false bo'lib qoladi shunda bu>>>!document.icon && !preview &&  logical operator ishga tushib documentga icon qo'yish yana qaytadan ishlaydi
                     <div className="flex items-center gap-x-2 group/icon pt-6">
                         <IconPicker onChange={onIconChange}>
+                            {/* bu iconpicker kutubhonadan yuklangan emojilar convexdaham real timeda o'zgarayapti va cserverda saqlanayapti har qanday js loyihada bu kutubhonani olib kelib ishlatish mumkun masalan messenger dasturlar bo'lsa bittada olib kelib o'rantish mumkun tekin qulay oson!! */}
                             <p className="text-6xl hover:opacity-75  transition">
                                 {document.icon}
                             </p>
@@ -129,7 +131,7 @@ function Toolbar({ document, preview }: ToolbarProps) {
                 )}
 
             {!!document.icon &&
-                preview && ( //va yana agar  document.icon true bo'lsa va prewievham true bo'lsa yani avvalda serverda bor bo'lsa yani agar user documentga boshidan icon qo'ygan bo'lsa yokida yuqoridagi !!document.icon && holati ishlatilib yani icon qo'yilib true bo'lsa yani  onIconChange function ishlagan bo'lsa yani user iconni qo'ygan bo'lsa  shuni udalit qilish uchun yani icon bor bo'lsa shu preview berilsa true yani qo'yilagnini o'zi truga aylantiradi qo'yilmagan joyda esa false yani (secret)/documents/[documentId]/page.tsxda toolbar chaqirilganda preview berilmagan yani u joyda preview false hissoblanadi bu preview faqat app/preview/[documntId]/page.tsx failida berilgan yani faqat o'sha joyda chaqirilgani uchun o'sha joyda true bo'ladi lekin preview qiymati toolbar.tsx chaqirilgan joyda berilmasa preview false bo'ladi chaqirilsa true bo'ladi  yani loyihada preview papkadan foydalanadigan userdan boshqa user uchun bu false loyihada biror bir failda toolbar.tsx chaqirilib preview berilsa bu true va user toolbar.tsxni o'zgartira oladi  
+                preview && ( //va yana agar  document.icon true bo'lsa va prewievham true bo'lsa yani avvalda serverda bor bo'lsa yani agar user documentga boshidan icon qo'ygan bo'lsa yokida yuqoridagi !!document.icon && holati ishlatilib yani icon qo'yilib true bo'lsa yani  onIconChange function ishlagan bo'lsa yani user iconni qo'ygan bo'lsa  shuni udalit qilish uchun yani icon bor bo'lsa shu preview berilsa true yani qo'yilagnini o'zi truga aylantiradi qo'yilmagan joyda esa false yani (secret)/documents/[documentId]/page.tsxda toolbar chaqirilganda preview berilmagan yani u joyda preview false hissoblanadi bu preview faqat app/preview/[documntId]/page.tsx failida berilgan yani faqat o'sha joyda chaqirilgani uchun o'sha joyda true bo'ladi sababi app/preview/[documntId]/page.tsx da documentni idisga qarab get qilish bor yani endi document dynamic yaratilgan edni shu documentni ssikasini boshqa userlarga tashalsa boshqa userlar foydalana olamsiligi uchun yani preview false bo'lgan joyda documentni edit qilib bo'lmaydi lekin preview qiymati toolbar.tsx chaqirilgan joyda berilmasa preview false bo'ladi chaqirilsa true bo'ladi  yani loyihada preview papkadan foydalanadigan userdan boshqa user uchun bu false loyihada biror bir failda toolbar.tsx chaqirilib preview berilsa bu true va user toolbar.tsxni o'zgartira oladi  
                     <p className="text-6xl pt-6">{document.icon}</p>
                 )}
 
@@ -149,8 +151,9 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
 
                 {!document.coverImage &&
-                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa va preview yani bu toolbar.tsx chaqirilgan joyda toolbar.tsxga preview qiymati berilmagan bo'lsa "Add cover" textli shu button chiqadi !preview false bo'lsa lekin preview pakada chaqirilganda bu toolbarga preview qiymati beriladi shunda bu false true bo'ladi yani bu toolbar.tsx qayergadur shu loyihada chaqirilib ishlatilsa va preview berilmasa unda bu false agar chaqirilsa true yani preview chaqirilsa true bo'ladi chaqirilmasa false bo'ladi yani    BU TOOLBAR TSX  CHAQIRILGAN JOYDA PREVIEW BERILSA SHU JSX ISHGA TUSHADI YANI ENDI TRUE BO'LADI BOSHIDA ESA FALSE EDI yani endi add cover textiga bosilganda onOpenishga tushib event sodir bo'ladi va onOpen
+                    !preview && ( //document.coverimage va preview  false bo'lsa yani  convex serverdan keladigan documentni coverimage qiymati false bo'lsa va preview yani bu toolbar.tsx chaqirilgan joyda toolbar.tsxga preview qiymati berilmagan bo'lsa "Add cover" textli shu button chiqadi !preview false bo'lsa lekin preview pakada chaqirilganda bu toolbarga preview qiymati beriladi shunda bu false true bo'ladi yani bu toolbar.tsx qayergadur shu loyihada chaqirilib ishlatilsa va preview berilmasa unda bu false agar chaqirilsa true yani preview chaqirilsa true bo'ladi chaqirilmasa false bo'ladi yani    BU TOOLBAR TSX  CHAQIRILGAN JOYDA PREVIEW BERILSA SHU JSX ISHGA TUSHADI YANI ENDI TRUE BO'LADI BOSHIDA ESA FALSE EDI yani endi add cover textiga bosilganda onOpenishga tushib event sodir bo'ladi 
 
+                    
 
                         <Button
                             size={"sm"}
@@ -189,3 +192,4 @@ function Toolbar({ document, preview }: ToolbarProps) {
 
 export default Toolbar;
 
+// 9. Editor darsi 16:25 da qolgan
