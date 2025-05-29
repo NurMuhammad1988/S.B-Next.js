@@ -6,18 +6,19 @@ import "@blocknote/shadcn/style.css";
 import { BlockNoteView } from "@blocknote/shadcn";
 import { useTheme } from "next-themes";
 import { useEdgeStore } from "@/lib/edgestore";
+
 interface EditorProps {
     onChange?: (value: string) => void;
     initialContent?: string;
     editable?: boolean;
 }
 
-//bloknotejs.org dan keladigan tex va mediya faillar editorini ishlatadigan fail shu!!!
+//bloknotejs.org dan keladigan text va mediya faillar editorini ishlatadigan fail shu!!!
 
 const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     const { resolvedTheme } = useTheme();
 
-    const { edgestore } = useEdgeStore();
+    const { edgestore } = useEdgeStore(); //blocknotega image upload qilish uchun kerak bo'ladigan kutubhona komponenti va shu componentni ishlatish yani ochish yopish uchun kerak bo'ladigan hook
 
     const handleUpload = async (file: File) => {
         const res = await edgestore.publicFiles.upload({ file });

@@ -10,7 +10,6 @@ import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 import "@blocknote/mantine/style.css";
 
-
 interface DocumentIdPageProps {
     params: {
         documentId: Id<"documents">; //convexda convex/schema.tsda schema bilan nastroyka qilingan convex/document.tsda yozilgan createDocument functionida adress (ssilka) sifatida berib qo'yilgan "documents" ga convexda genereted qilib kelingan userni va documentlarni idsi global convex Id
@@ -21,7 +20,6 @@ interface DocumentIdPageProps {
 }
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
-
     const document = useQuery(api.document.getDocumentById, {
         id: params.documentId as Id<"documents">,
     }); //  // bu paramsda kelgan documentId document dynamic yaratilganda yaratiladi yani (secret) papkani ichida bo'lgani uchun bu [documents] shu (secret) papkani assosiy sahifasi (secret)/documents/page.tsxda yaratilgan dynamic sahifalarni qabul qiladi yani ona papkasini asossiy page.tsx sahifasida yaratilgan dynamic sahifalarni qabul qiladi ona papka esa bu holatda (secret) papkasi va params bilan documentni idsini oladi yani params bu holatda convexdan keladigan functionni qiymati
@@ -29,7 +27,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     const Editor = useMemo(
         () =>
-            dynamic(() => import("@/components/shared/editor"), { ssr: false }), 
+            dynamic(() => import("@/components/shared/editor"), { ssr: false }),
         [] //bu usememo react function bu bilan server site rendiringni o'chirib qo'ydik yani komponentni bir marta yuklaydi va xotirada saqlaydi qaysi componentni>>>/components/shared/editor editor.tsx ni va serverda qayta qayta yukalmaydi komponenti faqat kerak bo'lganda yuklaydi (lazy loading) server-side rendering'da bu komponentni yuklamaydi, faqat browser'da ishlaydi va faqat bir martta serverda rendring qiladi saqlab olish uchun memoni dynamic functionini vazifasi shu...useMemo - bu React'ning performance optimization uchun ishlatiladigan hooki. U qimmat (expensive) hisob-kitoblarni cache qiladi va faqat dependency'lar o'zgarganda qaytadan hisoblaydi. yani o'ziga kiritilgan componentni faqat o'zgargan joyini render qilib qolganiga teginmaydi buni hotirasida saqlab qoladi
     );
 
@@ -56,18 +54,13 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     const onChange = (value: string) => {
         updateFields({
             id: document._id,
-            content: value,//content updateFields function qiymati yani string yani contentni faqat string formatda bo'lsa qabul qiladi yani editor componentda onchange function ishlaganda blocnotedan useCreateBlockNote hooki keladi hookda esa inputlar bor shu inputlarga stringdan boshqa malumot turini qo'shish kerak emas masalanbad user birorta zararli faillar tashlamasligi uchun
+            content: value, //content updateFields function qiymati yani string yani contentni faqat string formatda bo'lsa qabul qiladi yani editor componentda onchange function ishlaganda blocnotedan useCreateBlockNote hooki keladi hookda esa inputlar bor shu inputlarga stringdan boshqa malumot turini qo'shish kerak emas masalanbad user birorta zararli faillar tashlamasligi uchun
         });
     };
 
     return (
         <div className="pb-40">
-
-            <Cover
-                url={
-                   document.coverImage
-                }
-            />
+            <Cover url={document.coverImage} />
 
             <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
                 <Toolbar document={document} />

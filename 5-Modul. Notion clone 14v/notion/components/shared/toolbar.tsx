@@ -162,13 +162,13 @@ function Toolbar({ document, preview }: ToolbarProps) {
                     )}
             </div>
 
-            {!isEditing && !preview ? (
+            {!isEditing && !preview ? ( //yani react-textarea-autosize kutubhonasidan kelgan  TextareaAutosize ishlaydi qachonki isEditing false bo'lsa va previewham false bo'lsa yani preview qiymati berilmagan joyda yani dynamic yaratiladigan linklarda emas yani faqat shu documenti yaratgan user uchun ishlaydi
                 <TextareaAutosize
                     ref={textareaRef}
                     onBlur={disableInput}
                     onKeyDown={onKeyDown}
                     value={value}
-                    onChange={(event) => onInput(event.target.value)}
+                    onChange={(event) => onInput(event.target.value)} //inputga onInput functionda yozilgan eventni saqlab va updateFieldsga joylashtiradi
                     className="text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none"
                 />
             ) : (
