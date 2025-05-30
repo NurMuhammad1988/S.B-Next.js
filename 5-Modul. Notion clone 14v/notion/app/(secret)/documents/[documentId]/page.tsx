@@ -8,7 +8,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
-import "@blocknote/mantine/style.css";
+// import "@blocknote/mantine/style.css";
 
 interface DocumentIdPageProps {
     params: {
@@ -27,7 +27,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
 
     const Editor = useMemo(
         () =>
-            dynamic(() => import("@/components/shared/editor"), { ssr: false }),
+            dynamic(() => import("@/components/shared/editor"), { ssr: false }), //editor.tsx faili bu pageda import bilan chaqirilmagan Memo hookni dynamic functioni bilan shu "@/components/shared/editor" holatda import qilingan
         [] //bu usememo react function bu bilan server site rendiringni o'chirib qo'ydik yani komponentni bir marta yuklaydi va xotirada saqlaydi qaysi componentni>>>/components/shared/editor editor.tsx ni va serverda qayta qayta yukalmaydi komponenti faqat kerak bo'lganda yuklaydi (lazy loading) server-side rendering'da bu komponentni yuklamaydi, faqat browser'da ishlaydi va faqat bir martta serverda rendring qiladi saqlab olish uchun memoni dynamic functionini vazifasi shu...useMemo - bu React'ning performance optimization uchun ishlatiladigan hooki. U qimmat (expensive) hisob-kitoblarni cache qiladi va faqat dependency'lar o'zgarganda qaytadan hisoblaydi. yani o'ziga kiritilgan componentni faqat o'zgargan joyini render qilib qolganiga teginmaydi buni hotirasida saqlab qoladi
     );
 
@@ -52,9 +52,10 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     if (document === null) return null;
 
     const onChange = (value: string) => {
+        //bu onChange function  pastda editor.tsx memo bilan chaqirilgan joyda editordan props bilan keladigan onChange qiymatigaberilgan shunda editor.tsxdan keladigan onchange functioni ichida bu page tsxdagi onchange function ishlatiladi shunda editor.tsxdan keladigan onchange function callback orqali valueni yani contentni tashqi (ota) komponentga yani blocnoteni asosiy ota functioniga uzatadi yani bu faildagi o'zgarishni uzatadi
         updateFields({
             id: document._id,
-            content: value, //content updateFields function qiymati yani string yani contentni faqat string formatda bo'lsa qabul qiladi yani editor componentda onchange function ishlaganda blocnotedan useCreateBlockNote hooki keladi hookda esa inputlar bor shu inputlarga stringdan boshqa malumot turini qo'shish kerak emas masalanbad user birorta zararli faillar tashlamasligi uchun
+            content: value, //content updateFields function qiymati yani string yani contentni faqat string formatda bo'lsa qabul qiladi yani editor componentda onchange function ishlaganda blocnotedan useCreateBlockNote hooki keladi hookda esa inputlar
         });
     };
 
@@ -66,7 +67,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                 <Toolbar document={document} />
                 {/* bu toolbar component getDocumentById ishlab userni documentlari serverdan kelganda ishleydi va bu dynamic yaratilgan document pageda hover bo'lsa ishlaydi yokida yo'q yani toolbar.tsxda shunday classlar yozilgan va add iconga click qilinganda IconPicker comonent ishga tushib "emoji-picker-react"kutubhonasidan chaqirilgan emojilar componenti ishga tushadi va user hohlasa documentga emoji add qiladi */}
                 <Editor initialContent={document.content} onChange={onChange} />
-                {/* yani bu dynamic documentlar sahifasiga editor.tsx chaqirilgan editor.tsxda esa jsda reactda qilingan blocknode component bor bu component blocknotejs.org saytidan chaqiriladigan component yani hooklar bilanchaqirilib ishlatiladigan component yani jsda qilingan text editor tayyor component notion loyihamizda yaratiladigan postlarni chiroyli qilish masalan textlar har hil razmerda rangli rasm videolar qo'yish va yana ko'plab ishlarni qilish mumkun bu blocknotejs bilan shu blocknote editor shu user documentni dynamic yaratib rendering qiladigan sahifada chaqirildi chunki shu sahifada ishlatilishi kerak  va convex/document.ts failidan chaqirilgan updateFields document nomli o'zgaruvchiga olingan shu document o'zgaruvchiga editor.tsxdan keladigan initialContent string qiymatiga contentni qo'ydik yani content faqat string bo'lsagina qabul qiladi*/}
+                {/* yani bu dynamic documentlar sahifasiga editor.tsx chaqirilgan editor.tsxda esa jsda reactda qilingan blocknode component bor bu component blocknotejs.org saytidan chaqiriladigan component yani hooklar bilan chaqirilib ishlatiladigan component yani jsda qilingan text editor tayyor component notion loyihamizda yaratiladigan postlarni chiroyli qilish masalan textlar har hil razmerda rangli rasm videolar qo'yish va yana ko'plab ishlarni qilish mumkun bu blocknotejs bilan shu blocknote editor shu user documentni dynamic yaratib rendering qiladigan sahifada chaqirildi chunki shu sahifada ishlatilishi kerak  va convex/document.ts failidan chaqirilgan getDocumentById document nomli o'zgaruvchiga olingan shu document o'zgaruvchiga editor.tsxdan keladigan initialContent string qiymatiga documentni  content qiymatni qo'ydik yani content faqat string bo'lsagina qabul qiladi initialContentda chaqirilganini sababi esa blocknote jsdagi initialContent qiymatida documentni boshlang'ich yani initialContent holati bo'lishi kerak yani documentni blockonte bilan o'zgartirishdan oldin serverdan kelgan asl holati initialContentda bo'ladi */}
             </div>
         </div>
     );
