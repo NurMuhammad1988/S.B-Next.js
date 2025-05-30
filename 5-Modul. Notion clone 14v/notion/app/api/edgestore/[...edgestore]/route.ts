@@ -1,6 +1,10 @@
 import { initEdgeStore } from "@edgestore/server";
 import { createEdgeStoreNextHandler } from "@edgestore/server/adapters/next/app";
 
+//hullas ishlash prinsipi: edgestoreni yuklaymiz serverda ishlaydigan kodlarni yuklaymiz va edgestore.tsx failida chaqirib ishlatamiz ishlashi uchun  usecoverimage nomli hook yani modal uchun store yaratamiz va u storeni  cover-image-modal.tsxda chaqiramiz  eng asosiy layoutda edgestore.tsxda yaratilgan providerni eng asosiy layout.tsx chaqirib provider qilib layoutni o'rab olamiz va real user uchun kerak bo'ladigan failga chaqirib ishlatamiz 
+
+//edgestore server uchun nastroyka va papkalar faillar nomlari aynan shunday bo'lishi kerak yani next.jsda shunaqa qoidalar bor papkalar nomi juda juda muhum bo'masa loyiha buzulib ketadi
+
 const es = initEdgeStore.create();
 
 /**
@@ -21,4 +25,4 @@ export { handler as GET, handler as POST };
 /**
  * This type is used to create the type-safe client for the frontend.
  */
-export type EdgeStoreRouter = typeof edgeStoreRouter;
+export type EdgeStoreRouter = typeof edgeStoreRouter;//shu type sabab ts bilan upload qilinadigan faillar himoyalanadi yani inputiga qo'yiladigan faillarni typiga qarab yoki qabul qiladi yoki yo'q

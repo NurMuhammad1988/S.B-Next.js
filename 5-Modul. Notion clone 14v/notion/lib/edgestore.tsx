@@ -13,6 +13,8 @@
 
 //buni .env.localda keyi bo'ladi shu key bilan edgestore.dev saytidan faqat bitta loyihaga tekin key olib ishlatish mumkun
 
+//asosiy server nastroyka app/api/edgestore/[...edgestore]/route.ts failida shu nastroykani bu provider componentga ulab bu componentni provider sifatida eng asosiy ildiz layout tsx falni childrenlarni o'rab olish kerak shunda edgestore to'g'ri ishlaydi
+
 import { type EdgeStoreRouter } from "../app/api/edgestore/[...edgestore]/route";
 import { createEdgeStoreProvider } from "@edgestore/react";
 

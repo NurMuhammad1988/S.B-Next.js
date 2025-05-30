@@ -11,13 +11,13 @@ import { Id } from "@/convex/_generated/dataModel";
 const CoverImageModal = () => {
     const params = useParams(); //idni ovolish uchun
 
-    const UpdateFields = useMutation(api.document.updateFields);
+    const UpdateFields = useMutation(api.document.updateFields); //agar cover image qo'yilsa shu updateFieldsga patchga borib tushadi
 
-    const coverImage = UseCoverImage();
+    const coverImage = UseCoverImage(); //cover imageni upload qilish uchun ochilib yopilishi kerak bo'lgan hook
 
-    const { edgestore } = useEdgeStore();
+    const { edgestore } = useEdgeStore();//edgestoreni ishlatadigan provider file
 
-    const [file, setFile] = useState<File>(); //File nima?????????????????????????????????????????????????????
+    const [file, setFile] = useState<File>(); //File nima File bu tsni typlari shu Fail ichida yo'q typlar edgestore tomonidan qabul qilinmeydi yani faqat ts tekshirividan o'tadigan fallarni yuklashga ruhsat beradi
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -32,11 +32,9 @@ const CoverImageModal = () => {
             setIsSubmitting(true);
             setFile(file);
 
-            const res = await edgestore.publicFiles.upload({ 
-
+            const res = await edgestore.publicFiles.upload({
                 file,
-                options:{replaceTargetUrl: coverImage.url} 
-
+                options: { replaceTargetUrl: coverImage.url },
             });
 
             await UpdateFields({
@@ -67,5 +65,3 @@ const CoverImageModal = () => {
 };
 
 export default CoverImageModal;
-
-// 10. Image upload & Preview 07:47 da qoldi lekin shu 10 va oldingi  9chi darslarga deyarli comment yozilmagan va yahshi tushunilmagan shularni 10 chi dars tugagandan keyin 100 foiz commentlarni yozib qo'y yani 9 va 10 chi darslarni boshidan qaytadan ko'rib commentlar yozib chiq shunda tushunarli bo'ladi

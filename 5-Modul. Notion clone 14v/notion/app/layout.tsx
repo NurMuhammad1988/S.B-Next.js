@@ -39,11 +39,11 @@ export default function RootLayout({
                             <Toaster position="bottom-center" />
                             {/* document create bo'lganda chiqadigan kutubhonadan kelgan component bu component (secret)/documents/page.tsxda ishlatilgan lekin osha joyda ishlashi uchun bu toaster asosiy sahifada chaqirilishi kerak top-senter o'rniga boshqa holatlarniham o'rnatsa bo'ladi */}
                             <ModalProvider />
+                            {/* modalproviderda <SettingsModal /> <CoverImageModal/> providerlar bor yani bu providerlarga ulangan modal oynalar bor shu modal oynalar ishlashi uchunham eng asosiy layout failda chaqirilishi kerak shunda next.js providerlarni providerlardagi modallarni modallardagi functionlarni ishlataoladi  */}
 
                             {children}
                         </ThemeProvider>
                     </EdgeStoreProvider>
-                    
                 </ConvexClientProvider>
             </body>
         </html>
