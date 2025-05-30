@@ -47,6 +47,7 @@ const CoverImageModal = () => {
 
     return (
         <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>
+            {/* coverImage.onClose yani o'zgargandan keyin yopilishi kerak */}
             <DialogContent>
                 <DialogHeader>
                     <h2 className="text-center text-lg  font-semibold">
@@ -65,3 +66,5 @@ const CoverImageModal = () => {
 };
 
 export default CoverImageModal;
+
+//hullas ishlash prinsipi: edgestoreni yuklaymiz serverda ishlaydigan kodlarni yuklaymiz va edgestore.tsx failida chaqirib ishlatamiz ishlashi uchun  usecoverimage nomli hook yani modal uchun store yaratamiz va u storeni  cover-image-modal.tsxda chaqiramiz  eng asosiy layoutda edgestore.tsxda yaratilgan providerni eng asosiy layout.tsx chaqirib provider qilib layoutni o'rab olamiz va real user uchun kerak bo'ladigan failga yani cover.tsx failida chaqirib ishlatamiz 
