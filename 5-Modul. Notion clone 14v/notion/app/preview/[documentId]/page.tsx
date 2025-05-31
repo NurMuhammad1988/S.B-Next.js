@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import React, { useMemo } from "react";
 
 //bu sahifada chaqirilgan toolbar va cover tsxlar prewiew qiymati true qilingan  yani preview qiymatlari berilganini sababi bu sahifada document dynamic yaratiladi yaratilgan sahifaga esa convex unique link beradi shu linkni yani documentni puplish qilib linkni boshqa userlarga jo'natganda linkdagi yangi sahifadagi postni boshqa userlar o'zgartiraolmaydi shu uchun preview qiymatlariga toolbar va cover tsx faillarida va operatori bilan mantiqiy vazifalar berilgan bu ikkala componentga  preview qiymati  berilmagan joylarda documentni create qilganuser hamma ishni qilaoladi lekin preview berilgan yani preview true qilinganbu sahifada yaratilgan documentda hech kim toolbar va cover tsxdan foydalanib documentni change qilaolmaydi
+//bu sahifaga o'hshash yana [documentId] sahifa bor unda preview qiymati yo'q u documenti create qiladigan edit qiladigan user uchun bu esa preview qiymati bor shunda dastur biladi kim real user kim begona.... yani shu preview mantig'i orqali tanib oladi
 interface DocumentIdPageProps {
     params: {
         documentId: Id<"documents">;
@@ -67,4 +68,3 @@ const Page = ({ params }: DocumentIdPageProps) => {
 export default Page;
 
 //bittagina hato borga o'hshaydi lekin hato yo'q yani yani agar user documentni crete qilib uni publish qilib publish qilingan documentni urlini copy qilib shu bu urlga alohida sahifada kirsa o'zi yaratgan documentni hech narsani change qilaolmayapti yani preview sabab va keyn user documenni unPublished qilsaham alohid sahifada ochilgan shu unpublished qilingan document baribir yo'qolib qolmayapti bu esa hatomas chunki user bitta browserdan foydalanayapti browser esa userni datalarini yani idilarini browserni Application sahifasida  Cookieslarda saqlab qolepti shu sabab user bitta browserdan kirganda unpublished qilinsaham documentni boshqa sahifadaham ko'ra olayapti lekin shu documentni unpublisheddan keyin boshqa borowserdan kirib ko'rilganda sahifa hato qaytarayapti chunki boshqa browserda userni cookilari yo'q va preview sabab boshqa userga bu document ko'rinmaydi
-
