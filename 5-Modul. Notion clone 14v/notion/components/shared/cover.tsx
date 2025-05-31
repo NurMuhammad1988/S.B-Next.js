@@ -28,9 +28,9 @@ const Cover = ({ preview, url }: CoverProps) => {
     const updateFields = useMutation(api.document.updateFields);
 
     const onRemove = async () => {
-        if (url) {
+        if (url) {//agar ueecoverimage storedan keladigan url bor bo'lsa yani edgestoreda imageni urli bor bo'lsa
             await edgestore.publicFiles.delete({
-                //edghistoreni delete functioni vazifasi o'ziga tegishli component ichidagi failni delete qilish yani bu function ishlatilganda faqat imageni udalit qiladi bu function chaqirilgan buttonga click qilinganda awaitdan keyin kelgan edgestoreda public qilingan failni delete qiladi va updatefieldsdanham yani convex serverdaham ""<<<bo'sh string yani false qilib qo'yadi
+                //edgestoreni delete functioni vazifasi o'ziga tegishli component ichidagi failni delete qilish yani bu function ishlatilganda faqat imageni udalit qiladi bu function chaqirilgan buttonga click qilinganda awaitdan keyin kelgan edgestoreda public qilingan failni delete qiladi va updatefieldsdanham yani convex serverdaham ""<<<bo'sh string yani false qilib qo'yadi
                 url,
             });
         }

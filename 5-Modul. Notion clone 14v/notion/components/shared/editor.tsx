@@ -5,7 +5,7 @@ import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/shadcn/style.css";
 import { BlockNoteView } from "@blocknote/shadcn";
 import { useTheme } from "next-themes";
-import { useEdgeStore } from "@/lib/edgestore";//EdgeStore kontekstini chaqirish uchun kerak. Bu hook yordamida edgestore obyekti olinib, fayllarni yuklash (upload) funksiyasiga murojaat qilinadi
+import { useEdgeStore } from "@/lib/edgestore"; //EdgeStore kontekstini chaqirish uchun kerak. Bu hook yordamida edgestore obyekti olinib, fayllarni yuklash (upload) funksiyasiga murojaat qilinadi
 interface EditorProps {
     onChange?: (value: string) => void;
     initialContent?: string;
@@ -13,19 +13,22 @@ interface EditorProps {
 }
 
 //bloknotejs.org dan keladigan text va mediya faillar editorini ishlatadigan fail shu!!!
+//edgestore bilan coverimageham postda toolbarda ishlatiladigan postga image qo'yishxam edgestore bilan qilindi va hamma qo'yiladigan imagelar edgestore serverda saqlanadi convexda esa faqatimageni urli saqlanadi yani agar imagelar local qo'yilsaham edgestore ularga url beradi va shu urlni convexda saqlaydi imageni o'zini esa edgestore serverda saqlaydi edjestore dashboarda imagelarni ko'rib turishxam mumkun
 
 const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     const { resolvedTheme } = useTheme();
 
     const { edgestore } = useEdgeStore();
 
-    const handleUpload = async (file: File) => {/// Faylni EdgeStore’ga yuklash funksiyasi yani async await yani serverga jo'natadi url bilan yukalagandaham urlni serverga jo'natadi
-        const res = await edgestore.publicFiles.upload({ file });// fayl upload qilish funksiyasiga
+    const handleUpload = async (file: File) => {
+        /// Faylni EdgeStore’ga yuklash funksiyasi yani async await yani serverga jo'natadi url bilan yukalagandaham urlni serverga jo'natadi
+        const res = await edgestore.publicFiles.upload({ file }); // fayl upload qilish funksiyasiga
 
         return res.url;
     };
 
-    const editor: BlockNoteEditor = useCreateBlockNote({//// Editorni yaratish (boshlang‘ich matn va fayl yuklashni belgilash)
+    const editor: BlockNoteEditor = useCreateBlockNote({
+        //// Editorni yaratish (boshlang‘ich matn va fayl yuklashni belgilash)
         initialContent: initialContent
             ? (JSON.parse(initialContent) as PartialBlock[])
             : undefined,
@@ -33,7 +36,8 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
         uploadFile: handleUpload, //handleUpload funksiyasi (EdgeStorega yuklash)
     });
 
-    const uploadToDatabase = () => {// // Matn o‘zgarganda chaqiriladigan funksiya///uploadToDatabase – bu funksiya har safar editor ichidagi matn o‘zgarganda chaqiriladi. U editor.document (hujjatning hozirgi blokli ko‘rinishi) ni JSON ko‘rinishida ajratib olib, onChange callback orqali tashqi (ota) komponentga uzatadi
+    const uploadToDatabase = () => {
+        // // Matn o‘zgarganda chaqiriladigan funksiya///uploadToDatabase – bu funksiya har safar editor ichidagi matn o‘zgarganda chaqiriladi. U editor.document (hujjatning hozirgi blokli ko‘rinishi) ni JSON ko‘rinishida ajratib olib, onChange callback orqali tashqi (ota) komponentga uzatadi
         if (onChange) {
             onChange(JSON.stringify(editor.document, null, 2));
         }
