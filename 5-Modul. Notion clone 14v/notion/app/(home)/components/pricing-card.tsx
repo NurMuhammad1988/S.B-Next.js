@@ -1,16 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
-import { SignInButton } from "@clerk/clerk-react";
+import { SignInButton, useUser } from "@clerk/clerk-react";
 import { useConvexAuth } from "convex/react";
 import { Check } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface PricingCradProps {
     title: string;
     subtitle: string;
     options: string;
     price: string;
+    priceId?: string;
 }
 //bu component pricing.tsx failiga chaqirilgan va o'sha faildagi cards massividagi qiymatlar map qilinib shu failga jo'natilgan va bu failda u qiymatlarni taypi propsda berilib dynamic tarzda jsx ichida uiga berilgan
 export const PricingCard = ({
@@ -18,8 +22,37 @@ export const PricingCard = ({
     subtitle,
     options,
     price,
+    priceId,
 }: PricingCradProps) => {
     const { isAuthenticated, isLoading } = useConvexAuth(); //bu pricing-card pagedeham user aftorizatsa qilishi uchun sharoit qilindi
+
+    const { user } = useUser();
+    const router = useRouter();
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const onSubmit = async () => {
+        if (price === "Free") {
+            //agar price qiymati berilgan joyda free stringgbi bosa userni free holatda yaratgan documentlari bor secret papka ichidagi documentsga jo'natadi
+            router.push("/documents");
+            return;
+        }
+        setIsSubmitting(true);
+
+        try {
+            const { data } = await axios.post("/api/stripe/subscription", {
+                priceId,
+                email: user?.emailAddresses[0].emailAddress,
+                userId: user?.id,
+            });
+
+            window.open(data, "_self");
+            setIsSubmitting(false);
+        } catch (error) {
+            setIsSubmitting(false);
+            toast.error("Something went wrong. Please try again ");
+        }
+    };
 
     return (
         <div
@@ -48,7 +81,18 @@ export const PricingCard = ({
                 </div>
             )}
 
-            {isAuthenticated && !isLoading && <Button>Get Started</Button>}
+            {isAuthenticated && !isLoading && (
+                <Button onClick={onSubmit} disabled={isSubmitting}>
+                    {isSubmitting ? (
+                        <>
+                            <Loader />
+                            <span className="ml-2">Submitting</span>
+                        </>
+                    ) : (
+                        "Get Started"
+                    )}
+                </Button>
+            )}
             {/* isAuthenticated true bo'lib lekin Iloading false bo'lsa yani user kirgan bo'lsa get started texi ishlaydi */}
 
             {!isAuthenticated &&
@@ -56,7 +100,7 @@ export const PricingCard = ({
                     <SignInButton mode="modal">
                         <Button>
                             Log In
-                            {/* user dasturga kirmasa shu log in texti turadi agar kirgan bo'lsa yuqoridagi get started texti turadi */}
+                            {/* user dasturga kirmasa shu log in texti turadi agar kirgan bo'lsa yuqoridagi get started texti turadi  bu SignInButton clrekni coponenti bu component faqat user login qilmaganda ishlaydi va shu login textini chiqaradi click bo'lganda esa clrekga oboradi */}
                         </Button>
                     </SignInButton>
                 )}
