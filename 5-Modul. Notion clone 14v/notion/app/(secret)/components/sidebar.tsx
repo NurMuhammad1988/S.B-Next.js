@@ -28,6 +28,8 @@ import { toast } from "sonner";
 import { Navbar } from "./navbar";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-setting";
+import { useUser } from "@clerk/clerk-react";
+import useSubscription from "@/hooks/use-subscription";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -36,6 +38,7 @@ export const Sidebar = () => {
     const params = useParams();
     const search = useSearch(); //qo'la yozilgan hook use-search.tsx
     const settings = useSettings();
+    const { user } = useUser();
 
     const createDocument = useMutation(api.document.createDocument); //convex serverda document yaratadigan function/// /convex/document.ts
 
@@ -45,6 +48,15 @@ export const Sidebar = () => {
 
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
     const [isResetting, setIsResetting] = useState(false);
+
+    const { isLoading, plan } = useSubscription(
+        user?.emailAddresses[0]?.emailAddress!
+    );
+
+    console.log(plan);
+    console.log(isLoading);
+    
+    
 
     useEffect(() => {
         if (isMobile) {
@@ -224,15 +236,18 @@ export const Sidebar = () => {
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-1 text-[13px]">
                             <Rocket />
-                            <p className="opacity-70 font-bold">Free plan</p>
+                            <p className="opacity-70 font-bold">{plan} plan</p>
                         </div>
 
                         <p className="text-[13px] opacity-70">{arr.length}/3</p>
                     </div>
-                    <Progress
+                    {plan === "Free" && (
+                        <Progress
                         value={arr.length >= 3 ? 100 : arr.length * 33.33}
                         className="mt-2"
                     />
+                    )}
+                    
                 </div>
             </div>
 

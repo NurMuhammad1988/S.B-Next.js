@@ -46,6 +46,7 @@ export async function POST(req: Request) {
             return NextResponse.json(subscription.url);
         } else {
             //yokida yani agar user uchun yuqoridagi subscription yani ayni damda falase bo'lsa yani oldin qaysidur tarifga to'lov qilgan va o'sha to'lov sabab subscription true holatda turgan  bo'lsa stripe constructordagi billingPortal.sessions.create metodi bilan url qaytaradi yani userni stripeni user uchun mahsus yani to'lov qilgan obunalai ro'yhati turgan sahifaga otvoradi shunda user hohlasa obunasini bekor qilib boshqatda yana o'zi hohlagan obunaga yani tarifga qaytadan o'tishi yani to'lov qilishiu mumkun bo'ladi
+            //stripe nastroykasida agar user birorta tarifni atmen qilsaham to'lov qilgan kunigacha yani bir oy davomida active holati saqlanadi agar user atmenni srazi qilishni hohlasaham stripe nastroykasida bu holatdalar bor yani user obunasini srazi 100 foiz atmen qilib yana qaytadan boshqa tarifga o'tib to'lov qilishiham mumkun bu uchun stripe nastroykasidan dasturchi holatni to'g'irlashi kerak
             const portal = await stripe.billingPortal.sessions.create({
                 customer: customer.id,
                 return_url: `${public_domain}/documents`,
@@ -60,5 +61,32 @@ export async function POST(req: Request) {
                 status: 500,
             }
         );
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////
+export async function GET(req: Request) {
+    try {
+        const {searchParams} = new URL(req.url)
+        const email = searchParams.get("email")
+
+        const customer = await stripe.customers.list({email: email!})
+
+        if(!customer.data.length) return NextResponse.json("Free")
+
+        const subscriptions: any = await stripe.subscriptions.list({
+            customer:customer.data[0].id,
+            expand: ["data.plan.product"]
+        })
+
+        if(!subscriptions.data.length) return NextResponse.json("Free")
+
+        return NextResponse.json(subscriptions.data[0].plan.product.name)
+
+
+
+    } catch (error) {
+        return NextResponse.json("Something went wrong. Please try again", {
+            status: 500,
+        });
     }
 }
