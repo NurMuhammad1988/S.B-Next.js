@@ -19,20 +19,32 @@ export async function POST(req: Request) {
             //yani agar isExistingCustomerda listda kelgan data lengthda kelgan datalarni o'ziga yuklab oleydigan customer o'zgaruvchi false bo'lsa yani ichida hech narsa bo'lmasa stripeni create metodi bilan  emailini va metadatda kelgan userId ga qarab useridni olib yangi create qiladi bu holatda userId req:Request bilan kelgan
             customer = await stripe.customers.create({
                 email,
-                metadata: { userId }, //Bu yerda  Stripedagi customer ID orqali userIdni qayta olamiz. Bu bizga Stripeda ro'yhatdan o'tgan foydalanuvchini ilovadagi foydalanuvchi bilan bog'lashga yordam beradi.
+                metadata: { userId }, //Bu yerda  Stripedagi customer ID orqali userIdni qayta olamiz. Bu bizga Stripeda ro'yhatdan o'tgan foydalanuvchini ilovadagi foydalanuvchi bilan bog'lashga yordam beradi.//yani bu holatda customerni metadata qiymatida stripeda userni idsi saqlanadi bu uchun bu customer subscription functionbilan serverga try catch bilan so'rov jo'natadi price-cards.tsx failida!!!!
             });
         }
 
-        const subscription = await stripe.checkout.sessions.create({
-            mode: "subscription",
-            payment_method_types: ["card"],
-            line_items: [{ price: priceId, quantity: 1 }],
+        const subscriptions = await stripe.subscriptions.list({
+            //user bitta tarifdan foydalanaolishi kerak masalan loyihada 2 ta tarif bor 8 va 15 dollorlik user esa shulardan faqat bittasiga to'lov qila olishi kerak 2 ta tarifga bir vaqtda to'lov qilish kerakmas
             customer: customer.id,
-            success_url: `${public_domain}/documents?`, //yani checkout qilinagndan keyin agar user to'lov qilgan bo'lsa userni (secret) papka ichidagi documents papkaga jo'natadi yani user uchun dostup ochiladi
-            cancel_url: `${public_domain}`,
         });
 
-        return NextResponse.json(subscription.url);
+        const isSubscribed = subscriptions.data.find(
+            (sub) => sub.status === "active"
+        ); //isSubscribed o'zgaruvchida keladigan subscriptions functiondagi list yani userni stripeni find metodi bilan tekshirib agar qaysidur tarifga "active" bo'lsa
+
+        if (!isSubscribed) {
+            //yani isSubscribed find bilan tekshirgada isSubscribed false qaytarsa yani userni "active" holatdagi tarifi bo'lmasa shu subscription function ishlab card bilan to'lov qilib va to'lovdan keyin secret papka ichidagi documentga o'tib ketadi yani real user uchun qilingan sahifalarga o'tib ketadi
+            const subscription = await stripe.checkout.sessions.create({
+                mode: "subscription",
+                payment_method_types: ["card"],
+                line_items: [{ price: priceId, quantity: 1 }],
+                customer: customer.id,
+                success_url: `${public_domain}/documents?`, //yani checkout qilinagndan keyin agar user to'lov qilgan bo'lsa userni (secret) papka ichidagi documents papkaga jo'natadi yani user uchun dostup ochiladi
+                cancel_url: `${public_domain}`,
+            });
+
+            return NextResponse.json(subscription.url);
+        }
     } catch (error) {
         return NextResponse.json(
             `Something went wrong. Please try again - ${error} `,
