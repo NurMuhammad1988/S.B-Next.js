@@ -57,7 +57,8 @@ const teams = [
 ];
 
 const cards = [
-    {//bu title subtitle options va price qiymatlari bu fail chaqirilib ishlatigan failda propsda typlari berilishi kerak  chunki bu ts 
+    {
+        //bu title subtitle options va price qiymatlari bu fail chaqirilib ishlatigan failda propsda typlari berilishi kerak  chunki bu ts
         title: "Free",
         subtitle: "For organizing very corner fo your work & life.",
         options:
@@ -71,7 +72,7 @@ const cards = [
         options:
             "Unlimited blocks for teams, Unlimited file uploads, 30 day page history, Invite 100 guests",
         price: "8",
-        priceId: "price_1RUtJ3P7E3esMDczytmyoK51"//stripe uchun!!!!
+        priceId: "price_1RUtJ3P7E3esMDczytmyoK51", //stripe uchun!!!!
     },
 
     {
@@ -81,6 +82,6 @@ const cards = [
         options:
             "SAML SSO, Private teapspaces, Bulk PDF export, Advanced page analytics, 90 day page history, Invite 250 guests",
         price: "15",
-        priceId: "price_1RUtDPP7E3esMDczpQkpFERc"//stripe uchun!!!!
+        priceId: "price_1RUtDPP7E3esMDczpQkpFERc", //stripe uchun!!!!
     },
 ];

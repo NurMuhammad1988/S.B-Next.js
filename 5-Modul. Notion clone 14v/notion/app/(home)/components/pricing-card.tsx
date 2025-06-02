@@ -40,14 +40,14 @@ export const PricingCard = ({
         setIsSubmitting(true);
 
         try {
-        
-            const { data } = await axios.post("/api/stripe/subscription", {//bu holatda /app/api/stripe/routr.tsx/subscription functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilanclerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
+            const { data } = await axios.post("/api/stripe/subscription", {
+                //bu holatda /app/api/stripe/routr.tsx/subscription functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilanclerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
                 priceId,
                 email: user?.emailAddresses[0].emailAddress,
                 userId: user?.id,
             });
 
-            window.open(data, "_self");//onSubmit ishlasa va true qaytarsa shu window sabab stripeni to'lov tizimi sahifasiga aftamatik tarza o'tib ketadi
+            window.open(data, "_self"); //onSubmit ishlasa va true qaytarsa shu window sabab stripeni to'lov tizimi sahifasiga aftamatik tarza o'tib ketadi
             setIsSubmitting(false);
         } catch (error) {
             setIsSubmitting(false);
@@ -127,4 +127,3 @@ export const PricingCard = ({
         </div>
     );
 };
-
