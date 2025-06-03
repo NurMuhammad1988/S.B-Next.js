@@ -1,4 +1,3 @@
-
 import { Doc, Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
@@ -326,6 +325,27 @@ export const getSearch = query({
 
         if (!identity) {
             throw new Error("Not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        const documents = await ctx.db
+            .query("documents")
+            .withIndex("by_user", (q) => q.eq("userId", userId))
+            .filter((q) => q.eq(q.field("isArchived"), false))
+            .order("desc")
+            .collect();
+
+        return documents;
+    },
+});
+
+export const getAllDocuments = query({
+    handler: async (ctx) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        if (!identity) {
+            throw Error("Not authenticated");
         }
 
         const userId = identity.subject;

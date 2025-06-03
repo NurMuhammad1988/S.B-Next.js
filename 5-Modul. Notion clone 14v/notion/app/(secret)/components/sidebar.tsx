@@ -30,7 +30,7 @@ import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-setting";
 import { useUser } from "@clerk/clerk-react";
 import useSubscription from "@/hooks/use-subscription";
-import { Id } from "@/convex/_generated/dataModel";
+import { Loader } from "@/components/ui/loader";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -53,20 +53,11 @@ export const Sidebar = () => {
     const { isLoading, plan } = useSubscription(
         user?.emailAddresses[0]?.emailAddress!
     );
+    // console.log(plan);
+    // console.log(isLoading);
 
-    console.log(plan);
-    console.log(isLoading);
-
-    const documents = useQuery(api.document.getDocuments, {
-      
-        parentDocument: params.documentId as Id<"documents">
-    });
-
-
-    console.log(documents);
-    
-    
-    
+    const documents = useQuery(api.document.getAllDocuments);
+    // console.log(documents);
 
     useEffect(() => {
         if (isMobile) {
@@ -143,6 +134,14 @@ export const Sidebar = () => {
 
     const onCreateDocument = () => {
         //bu holatda onCreateDocument functionda convexda document create qilish uchun yozilgan createDocument functioni chaqirilib qiymatlaridagi typi v.string berilgan title parametriga stringda  "Untitled" texti berib qo'yildi va bu onCreateDocument functioni "Create a blank" texti bor buttonga onclick bilanberib qo'yildi yani endi shu buttonga click bo'lganda shu onCreateDocument functioni ishlab  createDocument functionda yozilgan convexda dacument cretae qilish ishlaydi yani document create bo'ladi
+
+        if (documents?.length && documents.length >= 3 && plan === "Free") {
+            toast.error(
+                "You can only create 3 documents in the free plan. (sidebar.tsx onCreateDocument function reaction)"
+            );
+            return;
+        } //user 3 tadan ortiq document yarataolmasligi uchun
+
         const promise = createDocument({
             title: "Untitled",
         }).then((docId) => router.push(`/documents/${docId}`)); //createDocument convexda ishlab document create bo'lsa shu router sabab userni /documents/ papkaga olib boradi
@@ -243,21 +242,46 @@ export const Sidebar = () => {
                 {/* bu yetim div yani sidebar qismini qolgan asosiy qisimdan ajratish uchun yani tepadan pastga to'g'ri chiziq tortish uchun cursor-ew-resize classi esa shu chiziqga kelganda cursorni chap o'ng tarafgaham strelkali cursor chiqaradi>>> ↔ ↔ ↔ ↔ ↔ <<< yani ekrandagi sidebar va qolgan qismlarni o'lchamini o'zgartirish uchun   */}
 
                 <div className="absolute bottom-0 px-2 bg-white/50 dark:bg-black/50 py-4 w-full">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-1 text-[13px]">
-                            <Rocket />
-                            <p className="opacity-70 font-bold">{plan} plan</p>
+                    {isLoading ? (
+                        <div className="w-full flex justify-center items-center">
+                            <Loader />
                         </div>
+                    ) : (
+                        <>
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center gap-1 text-[13px]">
+                                    <Rocket />
+                                    <p className="opacity-70 font-bold">
+                                        {plan} plan
+                                    </p>
+                                </div>
 
-                        <p className="text-[13px] opacity-70">{arr.length}/3</p>
-                    </div>
-                    {plan === "Free" && (
-                        <Progress
-                        value={arr.length >= 3 ? 100 : arr.length * 33.33}
-                        className="mt-2"
-                    />
+                                {plan === "Free" ? (
+                                    <p className="text-[13px] opacity-70">
+                                        {documents?.length}/3
+                                    </p>
+                                ) : (
+                                    <p className="text-[13px] opacity-70">
+                                        {documents?.length} notes
+                                    </p>
+                                )}
+
+                                {/* <p className="text-[13px] opacity-70">{arr.length}/3</p>////stripe ulanmasdan oldin shu kod ishlagan edi */}
+                            </div>
+                            {plan === "Free" && (
+                                <Progress
+                                    // value={arr.length >= 3 ? 100 : arr.length * 33.33}//stripe ulanmasdan oldin shu kod ishlagan edi
+                                    value={
+                                        documents?.length &&
+                                        documents?.length >= 3
+                                            ? 100
+                                            : (documents?.length || 0) * 33.33
+                                    }
+                                    className="mt-2"
+                                />
+                            )}
+                        </>
                     )}
-                    
                 </div>
             </div>
 
