@@ -13,7 +13,7 @@ import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"; //npm i usehooks-ts commandi bilanchaqirilgan kutubhona vazifasi user dasturga kirganda mobile qurilmadanmi yoki compdan kireptimi shuni aniqlashda kerak bo'ladigan functioni bor
 import { DocumentList } from "./document-list";
 import { Item } from "./item";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { UserBox } from "./user-box";
 import { Progress } from "@/components/ui/progress";
@@ -30,6 +30,7 @@ import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-setting";
 import { useUser } from "@clerk/clerk-react";
 import useSubscription from "@/hooks/use-subscription";
+import { Id } from "@/convex/_generated/dataModel";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -55,6 +56,15 @@ export const Sidebar = () => {
 
     console.log(plan);
     console.log(isLoading);
+
+    const documents = useQuery(api.document.getDocuments, {
+      
+        parentDocument: params.documentId as Id<"documents">
+    });
+
+
+    console.log(documents);
+    
     
     
 
@@ -278,3 +288,5 @@ export const Sidebar = () => {
         </>
     );
 };
+
+// 11. Stripe integration darsi 37:36 da qoldi aynan shu soniyadan boshlab davom ettir
