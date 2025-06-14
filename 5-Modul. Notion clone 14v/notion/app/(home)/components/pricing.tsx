@@ -69,19 +69,19 @@ const cards = [
     {
         title: "Plus",
         subtitle: "A place for small groups to plan & get organized ",
-        options:
+        options://bu optionslar stripe bilan instigatsa qilinganda kerak bo'ladi yani stripe uchun obunani optionslari kerak
             "Unlimited blocks for teams, Unlimited file uploads, 30 day page history, Invite 100 guests",
         price: "8",
-        priceId: "price_1RUtJ3P7E3esMDczytmyoK51", //stripe uchun!!!!
+        priceId: "price_1RUtJ3P7E3esMDczytmyoK51", //stripe uchun yani shu optionsli obunaga user to'lov qilganda shu is orqali stripe userni qaysi obunga to'lov qilganini aniqlab oladi chunki bu joyda ikkita narh ikkita obuna yani ikkita options bor
     },
 
     {
         title: "Business",
         subtitle:
             "For companies using Notion to connect several teams & tools.",
-        options:
+        options://bu optionslar stripe bilan instigatsa qilinganda kerak bo'ladi yani stripe uchun obunani optionslari kerak
             "SAML SSO, Private teapspaces, Bulk PDF export, Advanced page analytics, 90 day page history, Invite 250 guests",
         price: "15",
-        priceId: "price_1RUtDPP7E3esMDczpQkpFERc", //stripe uchun!!!!
+        priceId: "price_1RUtDPP7E3esMDczpQkpFERc", //stripe uchun yani shu optionsli obunaga user to'lov qilganda shu is orqali stripe userni qaysi obunga to'lov qilganini aniqlab oladi chunki bu joyda ikkita narh ikkita obuna yani ikkita options bor
     },
 ];
