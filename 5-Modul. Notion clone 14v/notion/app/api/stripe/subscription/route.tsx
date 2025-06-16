@@ -75,7 +75,7 @@ export async function GET(req: Request) {
 
         const customer = await stripe.customers.list({email: email!})
 
-        if(!customer.data.length) return NextResponse.json("Free")
+        if(!customer.data.length) return NextResponse.json("Free")//agar customer false bo'lsa  faqat free  ishga tushadi
 
         const subscriptions: any = await stripe.subscriptions.list({
             customer:customer.data[0].id,
@@ -94,3 +94,4 @@ export async function GET(req: Request) {
         });
     }
 }
+
