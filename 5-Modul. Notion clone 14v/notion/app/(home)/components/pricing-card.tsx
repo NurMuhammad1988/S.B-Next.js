@@ -29,19 +29,20 @@ export const PricingCard = ({
     const { user } = useUser();
     const router = useRouter();
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);//loader uchun qilingan setIsSubmitting fasle qilingan joylarda loader ishga tushmaydi qachinki axios bilanso'rov ketganda loader ishga tushib setIsSubmitting true qilinadi
 
     const onSubmit = async () => {
+        //stripe uchun
         if (price === "Free") {
             //agar price qiymati berilgan joyda free stringgi bor bosa userni free holatda yaratgan documentlari bor secret papka ichidagi documentsga jo'natadi
             router.push("/documents");
             return;
         }
-        setIsSubmitting(true);
+        setIsSubmitting(true);//yani router push qilgandan keyin so'rov bajarilguncha loader true qilinadi
 
         try {
             const { data } = await axios.post("/api/stripe/subscription", {
-                //bu holatda /app/api/stripe/routr.tsx/subscription functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilanclerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
+                //bu holatda /app/api/stripe/route.tsx/subscription functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilan clerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
                 priceId,
                 email: user?.emailAddresses[0].emailAddress,
                 userId: user?.id,
@@ -84,7 +85,7 @@ export const PricingCard = ({
 
             {isAuthenticated && !isLoading && (
                 <Button onClick={onSubmit} disabled={isSubmitting}>
-                    {isSubmitting ? (
+                    {isSubmitting ? (//isSubmitting true bo'lsa loader ishlab turadi yani get so'rov bajarilguncha
                         <>
                             <Loader />
                             <span className="ml-2">Submitting</span>

@@ -95,3 +95,4 @@ export async function GET(req: Request) {
     }
 }
 
+// 11. Stripe integration darsi 10:47da qoldi   
