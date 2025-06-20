@@ -33,7 +33,7 @@ export const PricingCard = ({
 
     const onSubmit = async () => {
         //stripe uchun
-        if (price === "Free") {
+        if (price === "Free") {//agarda pricing.tsx failidagi cards massividan kelgan price teng bo'lsa "Free" textiga yani stringgiga teng bo'lsa router bilan push qilib documents papkaga jo'natiladi u yerda free plandagi userham 3 faqat ta tekin document create qilishi mumkun
             //agar price qiymati berilgan joyda free stringgi bor bosa userni free holatda yaratgan documentlari bor secret papka ichidagi documentsga jo'natadi
             router.push("/documents");
             return;
@@ -42,16 +42,16 @@ export const PricingCard = ({
 
         try {
             const { data } = await axios.post("/api/stripe/subscription", {
-                //bu holatda /app/api/stripe/route.tsx/subscription functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilan clerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
+                //bu holatda /app/api/stripe/route.tsx/subscription functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId} ga useUser bilan clerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
                 priceId,
                 email: user?.emailAddresses[0].emailAddress,
                 userId: user?.id,
             });
 
             window.open(data, "_self"); //onSubmit ishlasa va true qaytarsa shu window sabab stripeni to'lov tizimi sahifasiga aftamatik tarza o'tib ketadi
-            setIsSubmitting(false);
+            setIsSubmitting(false);//window open bo'lgandan keyin loader false qilinadi
         } catch (error) {
-            setIsSubmitting(false);
+            setIsSubmitting(false);//error qaytargandan keyinham loader false qilinadi
             toast.error("Something went wrong. Please try again ");
         }
     };
@@ -85,12 +85,14 @@ export const PricingCard = ({
 
             {isAuthenticated && !isLoading && (
                 <Button onClick={onSubmit} disabled={isSubmitting}>
+                    {/* yani button disablet yani qotib turganda isSubmitting ishga tushadi yani loader ishlab turadi lekin button qotib turadi */}
                     {isSubmitting ? (//isSubmitting true bo'lsa loader ishlab turadi yani get so'rov bajarilguncha
                         <>
                             <Loader />
                             <span className="ml-2">Submitting</span>
+                            {/* loader ishlagan vaqtda sumbitting textiham ishga tushadi yani so'rov bajarulgancha */}
                         </>
-                    ) : (
+                    ) : (//yokida "Get started texti aftamatik tarzda turadi"
                         "Get Started"
                     )}
                 </Button>
