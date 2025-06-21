@@ -29,16 +29,16 @@ export async function POST(req: Request) {
         const subscriptions = await stripe.subscriptions.list({
             //user bitta tarifdan foydalana olishi kerak masalan loyihada 2 ta tarif bor 8 va 15 dollorlik user esa shulardan faqat bittasiga to'lov qila olishi kerak 2 ta tarifga bir vaqtda to'lov qilish kerakmas yani isExistingCustomer oz'garuvchida email bilan tekshirilgan agar email bor bo'lsa customer o'zgaruvchiga solingan customer.id
 
-            //yani bu holatda stripeni list metodi bilan subscriptionlarni yani ko'plikda yani stripe serverdan subscriptionslarni tekshirvolish yani avvaldan subscriptions bor bo'sa shuni customer o;zgaruvcgiga sovolish yani shunda masalan user 8 dollorlik plus tarifiga ulangan bo'lsa va yana 15 dollorlik tarifgaham ulanmoqchi bo'lsa bu subscriptions o'zgaruvchi list metodi bilan stripedagi listdan ko'rib keladi yani tekshiradi va agar userni subscriptionslarida 8 dollorlik tarif ulangan yani puli to'langan va muddati o'tmagan bo'lsa shu customerni yanu userni idisni oladi va qaytaradi shunda bu subscriptions true bo'ladi agar subscriptionsda shu idli user yo'q bo'lsa subscriptions false qaytaradi bu true yokida false qaytareptimi buni bilish uchun yani ichidagi datani topish uchun isSubscribed o'zgaruvchida aytildiki agar subscriptions.datada find metodi bilan izlanganda statuse === qattiy "active" ga teng bo'lsa yani true qaytarsa yani user subscriptionsda bor bo'lsa masalan bu holatda 8 dollorlik tarifga avval ulangan bo'lsa hech narsa return qilinmadi (chunki else ichida portal nomli o'zgaruvchida agar bu subscriptions true qaytarganda ishlaydigan holat bor) yani userni qaytadan 15 dollorlik tarifga ulanish so'rovi bajarilmaydi qachonki bu subscriptions isSubscribed o'zgaruvchida buyurilgan amalda false qaytarsa yani find metodi bilan subscriptionslarni izlaganda false qaytarsagina pastdagi subscription o'zgaruvchi ishga tushib userni tarifga ulab to'lovni qabul qiladi 
+            //yani bu holatda stripeni list metodi bilan subscriptionlarni yani ko'plikda yani stripe serverdan subscriptionslarni tekshirvolish yani avvaldan subscriptions bor bo'sa shuni customer o;zgaruvcgiga sovolish yani shunda masalan user 8 dollorlik plus tarifiga ulangan bo'lsa va yana 15 dollorlik tarifgaham ulanmoqchi bo'lsa bu subscriptions o'zgaruvchi list metodi bilan stripedagi listdan ko'rib keladi yani tekshiradi va agar userni subscriptionslarida 8 dollorlik tarif ulangan yani puli to'langan va muddati o'tmagan bo'lsa shu customerni yanu userni idisni oladi va qaytaradi shunda bu subscriptions true bo'ladi agar subscriptionsda shu idli user yo'q bo'lsa subscriptions false qaytaradi bu true yokida false qaytareptimi buni bilish uchun yani ichidagi datani topish uchun isSubscribed o'zgaruvchida aytildiki agar subscriptions.datada find metodi bilan izlanganda statuse === qattiy "active" ga teng bo'lsa yani true qaytarsa yani user subscriptionsda bor bo'lsa masalan bu holatda 8 dollorlik tarifga avval ulangan bo'lsa hech narsa return qilinmadi (chunki else ichida portal nomli o'zgaruvchida agar bu subscriptions true qaytarganda ishlaydigan holat bor) yani userni qaytadan 15 dollorlik tarifga ulanish so'rovi bajarilmaydi qachonki bu subscriptions isSubscribed o'zgaruvchida buyurilgan amalda false qaytarsa yani find metodi bilan subscriptionslarni izlaganda false qaytarsagina pastdagi subscription o'zgaruvchi ishga tushib userni tarifga ulab to'lovni qabul qiladi
             customer: customer.id,
         });
 
         const isSubscribed = subscriptions.data.find(
             (sub) => sub.status === "active"
-        ); //isSubscribed o'zgaruvchida keladigan subscriptions o'zgaruvchidagi list yani userni stripeni find metodi bilan tekshirib agar qaysidur tarifga "active" bo'lsa yani isSubscribed true yoki false bo'lishini aniqlash uchun 
+        ); //isSubscribed o'zgaruvchida keladigan subscriptions o'zgaruvchidagi list yani userni stripeni find metodi bilan tekshirib agar qaysidur tarifga "active" bo'lsa yani isSubscribed true yoki false bo'lishini aniqlash uchun
 
         if (!isSubscribed) {
-            //yani isSubscribed find bilan tekshirgada isSubscribed false qaytarsa yani userni "active" holatdagi tarifi bo'lmasa shu subscription function ishlab card bilan to'lov qilib va to'lovdan keyin secret papka ichidagi documentga o'tib ketadi yani real user uchun qilingan sahifalarga o'tib ketadi bu subscription function get so'rov bilan axios bilan pricing-card.tsx failida onsubmit  functionda get qilib chaqirilgan va onsubmit buttonga onclikga berilgan shunda klik qilinganda yani pricing-card.tsxdagi "Get started" buttonga click qilinganda onSubmit function ishlab agar isSubscribed false bo'lsa bu subscription function ishlab axiosni get metodi bilan stripeda account create qiladi  
+            //yani isSubscribed find bilan tekshirgada isSubscribed false qaytarsa yani userni "active" holatdagi tarifi bo'lmasa shu subscription function ishlab card bilan to'lov qilib va to'lovdan keyin secret papka ichidagi documentga o'tib ketadi yani real user uchun qilingan sahifalarga o'tib ketadi bu subscription function get so'rov bilan axios bilan pricing-card.tsx failida onsubmit  functionda get qilib chaqirilgan va onsubmit buttonga onclikga berilgan shunda klik qilinganda yani pricing-card.tsxdagi "Get started" buttonga click qilinganda onSubmit function ishlab agar isSubscribed false bo'lsa bu subscription function ishlab axiosni get metodi bilan stripeda account create qiladi
             const subscription = await stripe.checkout.sessions.create({
                 mode: "subscription",
                 payment_method_types: ["card"], //faqat carta orqali to'lov qabul qilinadi
@@ -52,11 +52,12 @@ export async function POST(req: Request) {
         } else {
             //yokida yani agar user uchun yuqoridagi subscription yani ayni damda falase bo'lsa yani oldin qaysidur tarifga to'lov qilgan va o'sha to'lov sabab subscription true holatda turgan  bo'lsa stripe constructordagi billingPortal.sessions.create metodi bilan url qaytaradi yani userni stripeni user uchun mahsus yani to'lov qilgan obunalai ro'yhati turgan sahifaga otvoradi shunda user hohlasa obunasini bekor qilib boshqatda yana o'zi hohlagan obunaga yani tarifga qaytadan o'tishi yani to'lov qilishiu mumkun bo'ladi
             //stripe nastroykasida agar user birorta tarifni atmen qilsaham to'lov qilgan kunigacha yani bir oy davomida active holati saqlanadi agar user atmenni srazi qilishni hohlasaham stripe nastroykasida bu holatdalar bor yani user obunasini srazi 100 foiz atmen qilib yana qaytadan boshqa tarifga o'tib to'lov qilishiham mumkun bu uchun stripe nastroykasidan dasturchi holatni to'g'irlashi kerak
-            const portal = await stripe.billingPortal.sessions.create({//subscriptions true qaytarganda yani user 15 dollorlik tarifga ulanmoqchi bo'lganda lekin avval 8 dollorlik tarifga ulangan bo'lsa yani subscriptions true qaytarganda bu holat ishga tushadi yani pricing-card.tsx failidagi get so'rov bajarilganda yokida subscription ishga tushib user birirta tarifga ulanadi yokida eski ulangan yani to'lov muddati tugamagan tarifga o'tib ketadi yani shu ikkala holatdan biri sodir bo'ladi chunki if yokida else!!!
+            const portal = await stripe.billingPortal.sessions.create({
+                //subscriptions true qaytarganda yani user 15 dollorlik tarifga ulanmoqchi bo'lganda lekin avval 8 dollorlik tarifga ulangan bo'lsa yani subscriptions true qaytarganda bu holat ishga tushadi yani pricing-card.tsx failidagi get so'rov bajarilganda yokida subscription ishga tushib user birirta tarifga ulanadi yokida eski ulangan yani to'lov muddati tugamagan tarifga o'tib ketadi yani shu ikkala holatdan biri sodir bo'ladi chunki if yokida else!!!
                 customer: customer.id,
-                return_url: `${public_domain}/documents`,//yani agar user avval qaysudur tarifga ulangan bo'lsa va muddati tugamagan bo'lsa userni real user uchun qilingan documents (private) papkaga olib boradi
+                return_url: `${public_domain}/documents`, //yani agar user avval qaysudur tarifga ulangan bo'lsa va muddati tugamagan bo'lsa userni real user uchun qilingan documents (private) papkaga olib boradi
 
-                //va bu codda user hohlasa 8 dollorlik tarifini bekor qilib hohlasa 15 dollorlik tarifga o'tib oladi faqat avval 8 dollorlik tarifni bekor qilish shart yani stripe nastroykasidan tarifni "cancel immediately" qilish yoqilgan bo'lsa user 8 dollorlik tarifni o'sha zahoti bekor qilib 15 dollorlik tarifga o'tishi mumkun shu  uchun bu portal o'zgaruvchi  ishlaganda userni stripeda nastroyka qilingan sahifaga olib boradi va user hohlasa tariflarni bekor qilish va yana qaytadan hohlagan tarifiga o'tish holati ishga tushadi
+                //va bu codda user hohlasa 8 dollorlik tarifini bekor qilib hohlasa 15 dollorlik tarifga o'tib oladi faqat avval 8 dollorlik tarifni bekor qilish shart yani stripe nastroykasidan tarifni "cancel immediately" qilish yoqilgan bo'lsa yani dasturchi bu nastroykani stripedan yoqib qo'yishi shart user 8 dollorlik tarifni o'sha zahoti bekor qilib 15 dollorlik tarifga o'tishi mumkun shu  uchun bu portal o'zgaruvchi  ishlaganda userni stripeda nastroyka qilingan sahifaga olib boradi va user hohlasa tariflarni bekor qilish va yana qaytadan hohlagan tarifiga o'tish holati ishga tushadi
             });
 
             return NextResponse.json(portal.url);
@@ -73,12 +74,17 @@ export async function POST(req: Request) {
 ///////////////////////////////////////////////////////////////////////////////////////////
 export async function GET(req: Request) {
     try {
-        const { searchParams } = new URL(req.url);
-        const email = searchParams.get("email");
+        const { searchParams } = new URL(req.url); //searchParams — bu URL query qismini kalit-qiymat (key-value) ko‘rinishida o‘qish va boshqarish uchun JavaScript obyekti. //urlni topish uchun yani free plan uchun faqat uchta document create qilish   uchun userni emaili orqali tanib olish uchun yani bu endi stripe uchun emas bu shu notion loyiha ichidagi holat yani loyiha ichida ishlaydi stripega aloqasi yo'q faqat stripedan malumot ovoladi yani stripedan kelayotgan listda email yo'q bo'lsa yani email! null qaytarsa free planga o'tkazvoradi yani stripeda userni emaili yo'q bo'lsa yani plan sotib olmagan bo'lsa
+        const email = searchParams.get("email"); //bu qiymatni URL query string ichidan oladi yani url ichidan oladi yani bu dars holatida localhost/?email.......
+        //// searchParams bu URLSearchParams degan klass (obyekt) jsniki
+        //// U get, set, has, append, delete kabi metodlarga ega
+        //// searchParams.get("key") bilan qiymat olinadi yani bu holatda "email"
 
-        const customer = await stripe.customers.list({ email: email! });
+        const customer = await stripe.customers.list({ email: email! });//email! !>>non-null assertion operator ts operatori yani ! sabab string yokida null qaytadi null qaytib turganda hech qanday hodisa sodir bo'lmaydi agar string qaytsa demak userni emaili bor ekanligi tekshirilib keyingi holat yani free holati ishga tushadi
 
-        if (!customer.data.length) return NextResponse.json("Free"); //agar customer false bo'lsa  faqat free  ishga tushadi
+        if (!customer.data.length) return NextResponse.json("Free"); // Agar Stripe listdan email orqali qidirilgan customer ro'yxati bo'sh bo'lsa (yani .data.length === 0),
+        // bu shuni bildiradi: bu email bilan bog'langan hech qanday Stripe customer yo'q.
+        // Bu holatda demak foydalanuvchi hali pulli plan sotib olmagan va  "Free" tarifida bo'ladi.
 
         const subscriptions: any = await stripe.subscriptions.list({
             customer: customer.data[0].id,
@@ -94,5 +100,3 @@ export async function GET(req: Request) {
         });
     }
 }
-
-
