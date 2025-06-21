@@ -31,6 +31,7 @@ import { useSettings } from "@/hooks/use-setting";
 import { useUser } from "@clerk/clerk-react";
 import useSubscription from "@/hooks/use-subscription";
 import { Loader } from "@/components/ui/loader";
+import { log } from "console";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -134,11 +135,11 @@ export const Sidebar = () => {
     };
 
     const onCreateDocument = () => {
-        //bu holatda onCreateDocument functionda convexda document create qilish uchun yozilgan createDocument functioni chaqirilib qiymatlaridagi typi v.string berilgan title parametriga stringda  "Untitled" texti berib qo'yildi va bu onCreateDocument functioni "Create a blank" texti bor buttonga onclick bilanberib qo'yildi yani endi shu buttonga click bo'lganda shu onCreateDocument functioni ishlab  createDocument functionda yozilgan convexda dacument cretae qilish ishlaydi yani document create bo'ladi
+        //bu holatda onCreateDocument functionda convexda document create qilish uchun yozilgan createDocument functioni chaqirilib qiymatlaridagi typi v.string berilgan title parametriga stringda  "Untitled" texti berib qo'yildi va bu onCreateDocument functioni "Create a blank" texti bor buttonga onclick bilan berib qo'yildi yani endi shu buttonga click bo'lganda shu onCreateDocument functioni ishlab  createDocument functionda yozilgan convexda dacument create qilish ishlaydi yani document create bo'ladi
 
-        if (documents?.length && documents.length >= 3 && plan === "Free") {
+        if (documents?.length && documents.length >= 3 && plan === "Free") {//agar document bor bo'lsa va uzunligi 3 yokida 3 da ko'p bo'lsa va strioedan qaytgan data bor plan qattiy teng bo'lsa "Free" planiga bu soats ishga tushadi yani user agar 3 tadan ortiq document create qilgan bo'lsa undan ortiq create qilaolmaydi o'shanda bu toast ishga tushibfree plandagi userga info beradi
             toast.error(
-                "You can only create 3 documents in the free plan. (sidebar.tsx onCreateDocument function reaction)"
+                "You can only create 3 documents in the free plan. (sidebar.tsx onCreateDocument function reaction for)"
             );
             return;
         } //user 3 tadan ortiq document yarataolmasligi uchun
@@ -155,6 +156,8 @@ export const Sidebar = () => {
     };
 
     const arr = [1];
+
+    
 
     return (
         <>
@@ -258,7 +261,7 @@ export const Sidebar = () => {
                                     </p>
                                 </div>
 
-                                {plan === "Free" ? (//bu holatda esa userni plani yani useSubscription hooki bilan stripega so'rov jo'natilgandan keyin kelgan plan:data dagi plan agar "Free" bo'lsa yani stripe free planda degan javob qaytarsa p ichida documentslar sonini maksimal ro'yhati chiqadi masalan bu holatda 3 ta yani documenti uzunli 3 ta yani free user faqat 3 dona document create qilishi mumkun holos yokida :::: agar userni plani plus yokida buizness bo'lsa notes texti chiqadi va create qilgan dpocumentlari soni raqamda chiqadi chunki length ishlatildi
+                                {plan === "Free" ? ( //bu holatda esa userni plani yani useSubscription hooki bilan stripega so'rov jo'natilgandan keyin kelgan plan:data dagi plan agar "Free" bo'lsa yani stripe free planda degan javob qaytarsa p ichida documentslar sonini maksimal ro'yhati chiqadi masalan bu holatda 3 ta yani documenti uzunli 3 ta yani free user faqat 3 dona document create qilishi mumkun holos yokida :::: agar userni plani plus yokida buizness bo'lsa notes texti chiqadi va create qilgan dpocumentlari soni raqamda chiqadi chunki length ishlatildi
                                     <p className="text-[13px] opacity-70">
                                         {/* bu documentda alldocuments bor yani default holatda alldocumentsdan kelgan hamma document bor bo'ladi agar free planda bo'lsa faqat 3 taga dostup bo'ladi agar 2 ta document bo'lsa shuxam aniq ko'rinib turadi */}
                                         {documents?.length}/3
@@ -272,14 +275,14 @@ export const Sidebar = () => {
 
                                 {/* <p className="text-[13px] opacity-70">{arr.length}/3</p>////stripe ulanmasdan oldin shu kod ishlagan edi */}
                             </div>
-                            {plan === "Free" && (
+                            {plan === "Free" && (//agar plan free bo'lsa faqat 3 ta document yaratish mumkun
                                 <Progress
-                                // bu Progress icon yani har safar valuesiga tushgan datani 33 foiz qilib progress qiladi yani 3 ta document tushganda progres to'ladi yani bu holatda agar planda free plani kelsagina bu mantiq ishga tushadi
+                                    // bu Progress icon yani har safar valuesiga tushgan datani 33 foiz qilib progress qiladi yani 3 ta document tushganda progres to'ladi yani bu holatda agar planda free plani kelsagina bu mantiq ishga tushadi
                                     // value={arr.length >= 3 ? 100 : arr.length * 33.33}//stripe ulanmasdan oldin shu kod ishlagan edi
                                     value={
                                         documents?.length &&
                                         documents?.length >= 3
-                                            ? 100//yani agar document va uzunligi 3 tadan ko'p bo'lsa progress 100 foiz to'ladi yokida document uzunligi har biriga 33.33 foizdan beriladi shunda 3 ta documentda progress to'ladi
+                                            ? 100 //yani agar document va uzunligi 3 ta yoki 3 tadan ko'p bo'lsa progress 100 foiz to'ladi yokida document uzunligi har biriga 33.33 foizdan beriladi shunda 3 ta documentda progress to'ladi
                                             : (documents?.length || 0) * 33.33
                                     }
                                     className="mt-2"
