@@ -80,20 +80,21 @@ export async function GET(req: Request) {
         //// U get, set, has, append, delete kabi metodlarga ega
         //// searchParams.get("key") bilan qiymat olinadi yani bu holatda "email"
 
-        const customer = await stripe.customers.list({ email: email! });//email! !>>non-null assertion operator ts operatori yani ! sabab string yokida null qaytadi null qaytib turganda hech qanday hodisa sodir bo'lmaydi agar string qaytsa demak userni emaili bor ekanligi tekshirilib keyingi holat yani free holati ishga tushadi
+        const customer = await stripe.customers.list({ email: email! }); //email! !>>non-null assertion operator ts operatori yani ! sabab string yokida null qaytadi null qaytib turganda hech qanday hodisa sodir bo'lmaydi agar string qaytsa demak userni emaili bor ekanligi tekshirilib keyingi holat yani free holati ishga tushadi//array qaytaradi
 
         if (!customer.data.length) return NextResponse.json("Free"); // Agar Stripe listdan email orqali qidirilgan customer ro'yxati bo'sh bo'lsa (yani .data.length === 0),
         // bu shuni bildiradi: bu email bilan bog'langan hech qanday Stripe customer yo'q.
         // Bu holatda demak foydalanuvchi hali pulli plan sotib olmagan va  "Free" tarifida bo'ladi.
 
         const subscriptions: any = await stripe.subscriptions.list({
-            customer: customer.data[0].id,
-            expand: ["data.plan.product"],
+            //stripedagi aynan shu sayt domeniga aloqador obunalar ro'yxatini yani  subscriptionsni beradi (public_domain)
+            customer: customer.data[0].id, //array ichida 0 dan boshlab beradi
+            expand: ["data.plan.product"], //Bu Stripega Manga plan va product haqida to'liq malumotni ber   degan buyruq yani stripeni expand qiymatini vazifasi shu
         });
 
-        if (!subscriptions.data.length) return NextResponse.json("Free");
+        if (!subscriptions.data.length) return NextResponse.json("Free"); //agar subscriptions o'zgaruvchida list metodi ishlaganda qaytgan data uzunligi 0 bo'lsa yani  emaili orqali customer oz'garuvchida kelgan email customer: customer.data[0].id da bu 0 emas bo'sh array>>>"data": [] bo'sa yani hech narsa qaytamasa userni "Free" planga o'tkazadi yani bu holatda (!subscriptions.data.length) yani Bu holatda to'g'ri ishlaydi chunki data.length 0 bo'ladi  va !0 === true yani !>> bu bilan true qivoldik yani teskari aylantirvoldik chunki jsda 0 false qiymat bu holatda !>>BU BILAN FALSEni true qilib agar shu 0 qaytsa free planga o'tkiz degan buyruq berildi
 
-        return NextResponse.json(subscriptions.data[0].plan.product.name);
+        return NextResponse.json(subscriptions.data[0].plan.product.name); //stripedagi user agar ulangan plan bo'lsa shu planni nomini oladi bu holatda bo'sh array qaytadi shunda hato chiqmasdan ishlaydi yani nimadur qaytadi>>>"data": []
     } catch (error) {
         return NextResponse.json("Something went wrong. Please try again", {
             status: 500,
