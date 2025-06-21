@@ -57,7 +57,7 @@ export const Sidebar = () => {
     // console.log(plan);//user qaysi planda bo'lsa user uchun o'sha planni logda ko'rish
     // console.log(isLoading);
 
-    const documents = useQuery(api.document.getAllDocuments); //agar useSubscription to'g'ri ishlasa bu useQuery bilan userni avval yaratgan documentlari get qilinadi shu sabab alldocument function documentsdan chaqirildi chunki hammasi kerak chunki bu user har qanday user bo'lishi mumkun
+    const documents = useQuery(api.document.getAllDocuments); //agar useSubscription to'g'ri ishlasa bu useQuery bilan userni avval yaratgan documentlari get qilinadi shu sabab alldocument function documentsdan chaqirildi chunki hammasi kerak chunki bu user har qanday user bo'lishi mumkun shu uchun covexdagi hamma documentlar kerak
     // console.log(documents);
 
     useEffect(() => {
@@ -260,10 +260,12 @@ export const Sidebar = () => {
 
                                 {plan === "Free" ? (//bu holatda esa userni plani yani useSubscription hooki bilan stripega so'rov jo'natilgandan keyin kelgan plan:data dagi plan agar "Free" bo'lsa yani stripe free planda degan javob qaytarsa p ichida documentslar sonini maksimal ro'yhati chiqadi masalan bu holatda 3 ta yani documenti uzunli 3 ta yani free user faqat 3 dona document create qilishi mumkun holos yokida :::: agar userni plani plus yokida buizness bo'lsa notes texti chiqadi va create qilgan dpocumentlari soni raqamda chiqadi chunki length ishlatildi
                                     <p className="text-[13px] opacity-70">
+                                        {/* bu documentda alldocuments bor yani default holatda alldocumentsdan kelgan hamma document bor bo'ladi agar free planda bo'lsa faqat 3 taga dostup bo'ladi agar 2 ta document bo'lsa shuxam aniq ko'rinib turadi */}
                                         {documents?.length}/3
                                     </p>
                                 ) : (
                                     <p className="text-[13px] opacity-70">
+                                        {/* agar user plus yokida biznes planda bo'lsa planlar soni va notes texti chiqib turadiyani qoralamalar degan manoda */}
                                         {documents?.length} notes
                                     </p>
                                 )}
@@ -272,11 +274,12 @@ export const Sidebar = () => {
                             </div>
                             {plan === "Free" && (
                                 <Progress
+                                // bu Progress icon yani har safar valuesiga tushgan datani 33 foiz qilib progress qiladi yani 3 ta document tushganda progres to'ladi yani bu holatda agar planda free plani kelsagina bu mantiq ishga tushadi
                                     // value={arr.length >= 3 ? 100 : arr.length * 33.33}//stripe ulanmasdan oldin shu kod ishlagan edi
                                     value={
                                         documents?.length &&
                                         documents?.length >= 3
-                                            ? 100
+                                            ? 100//yani agar document va uzunligi 3 tadan ko'p bo'lsa progress 100 foiz to'ladi yokida document uzunligi har biriga 33.33 foizdan beriladi shunda 3 ta documentda progress to'ladi
                                             : (documents?.length || 0) * 33.33
                                     }
                                     className="mt-2"
