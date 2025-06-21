@@ -51,12 +51,13 @@ export const Sidebar = () => {
     const [isResetting, setIsResetting] = useState(false);
 
     const { isLoading, plan } = useSubscription(
-        user?.emailAddresses[0]?.emailAddress!
+        //useSubscription bu hook hooks papka ichida chaqirilgan vazifasi stripega so'rov jo'natib userni qaysi planga obuna bo'lganini tekshirib faqat o'sha obunaga tegishli imtiyozlarni beradi yokida agar user "Free" planida bo'lsa faqat 3 ta document crete qilishga ruhsat berish// isloading esa loader uchun planda esa userni qaysi planda ekanligi keladi user esa clerkdan keladigan user yani aynan qaysi user ekanligini bilish uchun userham email adress bilan tekshiriladi bu holatda emailAddresses bor yani ko'plida yani bitta user uchun emas hamma user uchunham bu kod ishlaydi shu uchun ko'plikdagi qiymat yani bu emailAddresses va emailAddress clerkni qiymatlari
+        user?.emailAddresses[0]?.emailAddress! //Bu kod barcha userlar uchun universal, lekin aynan birinchi email orqali so'rov yuborilmoqda yani aynan hozirgi real userni tekshirish
     );
-    // console.log(plan);
+    // console.log(plan);//user qaysi planda bo'lsa user uchun o'sha planni logda ko'rish
     // console.log(isLoading);
 
-    const documents = useQuery(api.document.getAllDocuments);
+    const documents = useQuery(api.document.getAllDocuments); //agar useSubscription to'g'ri ishlasa bu useQuery bilan userni avval yaratgan documentlari get qilinadi
     // console.log(documents);
 
     useEffect(() => {
@@ -312,5 +313,3 @@ export const Sidebar = () => {
         </>
     );
 };
-
-// 11. Stripe integration darsi 37:36 da qoldi aynan shu soniyadan boshlab davom ettir
