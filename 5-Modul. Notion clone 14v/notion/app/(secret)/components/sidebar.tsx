@@ -57,7 +57,7 @@ export const Sidebar = () => {
     // console.log(plan);//user qaysi planda bo'lsa user uchun o'sha planni logda ko'rish
     // console.log(isLoading);
 
-    const documents = useQuery(api.document.getAllDocuments); //agar useSubscription to'g'ri ishlasa bu useQuery bilan userni avval yaratgan documentlari get qilinadi
+    const documents = useQuery(api.document.getAllDocuments); //agar useSubscription to'g'ri ishlasa bu useQuery bilan userni avval yaratgan documentlari get qilinadi shu sabab alldocument function documentsdan chaqirildi chunki hammasi kerak chunki bu user har qanday user bo'lishi mumkun
     // console.log(documents);
 
     useEffect(() => {
@@ -252,12 +252,13 @@ export const Sidebar = () => {
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-1 text-[13px]">
                                     <Rocket />
+                                    {/* shu sidebar.tsx failida windowda eng pastda turadigan raketa iconi Rocket// bunda p ichida plan yani useSubscription hookidan kelgan plan yani usernbi qaysi planda ekanligini aytib turadi masalan user free planda bo'lsa icondan keyin fee plan texti chiqib turadi agar user plus planda bo'lsa icondan keyin plus texti chiqib turadi va hakozo */}
                                     <p className="opacity-70 font-bold">
                                         {plan} plan
                                     </p>
                                 </div>
 
-                                {plan === "Free" ? (
+                                {plan === "Free" ? (//bu holatda esa userni plani yani useSubscription hooki bilan stripega so'rov jo'natilgandan keyin kelgan plan:data dagi plan agar "Free" bo'lsa yani stripe free planda degan javob qaytarsa p ichida documentslar sonini maksimal ro'yhati chiqadi masalan bu holatda 3 ta yani documenti uzunli 3 ta yani free user faqat 3 dona document create qilishi mumkun holos yokida :::: agar userni plani plus yokida buizness bo'lsa notes texti chiqadi va create qilgan dpocumentlari soni raqamda chiqadi chunki length ishlatildi
                                     <p className="text-[13px] opacity-70">
                                         {documents?.length}/3
                                     </p>

@@ -341,6 +341,7 @@ export const getSearch = query({
 });
 
 export const getAllDocuments = query({
+    //useSubscription hokkini sidebar.tsx failida ishlatish uchun yani agar qaysidur user tizimga kirsa aynan o'sha userni crete qilgan documentlarni tekshirish va sidebarsa uiga yani userga ko'rinadigan qilib berish uchun yani bu convex serverdagi umumiy document papkasi buni ichida hamma documentlar bor va collect qilingan agar identity tekshirilsa va real user va documentlari kelsa shu documentlar uiga sidebar.tsx failida uzatiladi
     handler: async (ctx) => {
         const identity = await ctx.auth.getUserIdentity();
 
@@ -353,9 +354,9 @@ export const getAllDocuments = query({
         const documents = await ctx.db
             .query("documents")
             .withIndex("by_user", (q) => q.eq("userId", userId))
-            .filter((q) => q.eq(q.field("isArchived"), false))
-            .order("desc")
-            .collect();
+            .filter((q) => q.eq(q.field("isArchived"), false))//false bo'lgan yani lekin o'chirilmagan yani trashbox papka ichidagi documentlarham tanlanadi bu user free planda 3 tadan ortiq document crete qilaolmasligi uchun masalan 3 ta create qilib bittasini trashboxsga sovolib qaytadan 4 chi documentni create qilaolmasligi uchun kerak bo'ladi
+            .order("desc")//	Eng so'nggi yaratilgan documentlar oxiridan boshlab tartiblanadi
+            .collect();//collect yuqoridagilarni hammasini bitta qilib massivga soladi yani oop
 
         return documents;
     },
