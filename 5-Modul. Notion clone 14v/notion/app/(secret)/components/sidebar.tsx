@@ -31,7 +31,6 @@ import { useSettings } from "@/hooks/use-setting";
 import { useUser } from "@clerk/clerk-react";
 import useSubscription from "@/hooks/use-subscription";
 import { Loader } from "@/components/ui/loader";
-import { log } from "console";
 
 export const Sidebar = () => {
     const isMobile = useMediaQuery("(max-width: 770px)"); //agar user kirgan qurulmasi 770pxdan kam bo'lganda true qaytaradi ko'p bo'lganda false qaytaradi va shu false truga qarab userga har hil style berish kerak yani mobiledan kiretgan userga mobilega moslangan sidebar compdan kirgan userga compga moslangan sidebar ko'rsatish kerak
@@ -137,7 +136,7 @@ export const Sidebar = () => {
     const onCreateDocument = () => {
         //bu holatda onCreateDocument functionda convexda document create qilish uchun yozilgan createDocument functioni chaqirilib qiymatlaridagi typi v.string berilgan title parametriga stringda  "Untitled" texti berib qo'yildi va bu onCreateDocument functioni "Create a blank" texti bor buttonga onclick bilan berib qo'yildi yani endi shu buttonga click bo'lganda shu onCreateDocument functioni ishlab  createDocument functionda yozilgan convexda dacument create qilish ishlaydi yani document create bo'ladi
 
-        if (documents?.length && documents.length >= 3 && plan === "Free") {//agar document bor bo'lsa va uzunligi 3 yokida 3 da ko'p bo'lsa va strioedan qaytgan data bor plan qattiy teng bo'lsa "Free" planiga bu soats ishga tushadi yani user agar 3 tadan ortiq document create qilgan bo'lsa undan ortiq create qilaolmaydi o'shanda bu toast ishga tushibfree plandagi userga info beradi
+        if (documents?.length && documents.length >= 3 && plan === "Free") {//agar document bor bo'lsa va uzunligi 3 yokida 3 dan ko'p bo'lsa va stripedan qaytgan data bor plan qattiy teng bo'lsa "Free" planiga bu toats ishga tushadi yani user agar 3 tadan ortiq document create qilgan bo'lsa undan ortiq create qilaolmaydi o'shanda bu toast ishga tushib free plandagi userga text info beradi bu onCreateDocument document chaqiriligan Itemlar yani  label="New document" va label="Add a page" lar bor shu sidebardagi item componentlarga klik qilinganda ishlaydi yani bu onCreateDocument function ishlaydi va documentlar create qiladi va lekin agar document bor bo'lsa va uzunligi 3 yokida 3 dan ko'p bo'lsa yani allaqachon 3 ta document create qilib bo'lgan bo'lsa va stripedan qaytgan ichida data bor plan qattiy teng bo'lsa "Free" planiga bu toats ishga tushadi yani user agar 3 tadan ortiq document create qilgan bo'lsa undan ortiq create qilaolmaydi o'shanda bu toast ishga tushib free plandagi userga text info beradi agar user free planda bo'lmasa onCreateDocument functionni qolgan funskyanalliklari ishlayveradi max document create qilish 4 ta >>>>>>>>>> = 3
             toast.error(
                 "You can only create 3 documents in the free plan. (sidebar.tsx onCreateDocument function reaction for)"
             );

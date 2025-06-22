@@ -21,14 +21,14 @@ const DocumentPage = () => {
 
     const { isLoading, plan } = useSubscription(
         user?.emailAddresses[0]?.emailAddress!
-    );
+    );//if(documents?.length && documents.length >= 3 && plan === "Free") shu if ishlashi uchun hamma documentslar documents nomli o'zgaruvchi cihdia chaqirildi sidebar.tsxda to'liq tushuntirilgan 
 
 
     const onCreateDocument = () => {
         //bu holatda onCreateDocument functionda convexda document create qilish uchun yozilgan createDocument functioni chaqirilib qiymatlaridagi typi v.string berilgan title parametriga stringda  "Untitled" texti berib qo'yildi va bu onCreateDocument functioni "Create a blank" texti bor buttonga onclick bilanberib qo'yildi yani endi shu buttonga click bo'lganda shu onCreateDocument functioni ishlab  createDocument functionda yozilgan convexda dacument cretae qilish ishlaydi yani document create bo'ladi
 
         if(documents?.length && documents.length >= 3 && plan === "Free"){
-            toast.error("You can only create 3 documents in the free plan ( (secret)/documents/page.tsx onCreateDocument function reaction )")
+            toast.error("You can only create 3 documents in the free plan ( (secret)/documents/page.tsx onCreateDocument function reaction for )")////agar document bor bo'lsa va uzunligi 3 yokida 3 dan ko'p bo'lsa va stripedan qaytgan data bor plan qattiy teng bo'lsa "Free" planiga bu toats ishga tushadi yani user agar 3 tadan ortiq document create qilgan bo'lsa undan ortiq create qilaolmaydi o'shanda bu toast ishga tushib free plandagi userga text info beradi bu onCreateDocument document chaqiriligan  shu pagede yani secret pageda ichida "create a blank" texti bor buttonga klik qilinganda ishlaydi yani bu onCreateDocument function ishlaydi va documentlar create qiladi va lekin agar document bor bo'lsa va uzunligi 3 yokida 3 dan ko'p bo'lsa yani allaqachon 3 ta document create qilib bo'lgan bo'lsa va stripedan qaytgan ichida data bor plan qattiy teng bo'lsa "Free" planiga bu toats ishga tushadi yani user agar 3 tadan ortiq document create qilgan bo'lsa undan ortiq create qilaolmaydi o'shanda bu toast ishga tushib free plandagi userga text info beradi agar user free planda bo'lmasa onCreateDocument functionni qolgan funskyanalliklari ishlayveradi max document create qilish 4 ta>>>>>>>>>> = 3
             return
         }//user 3 tadan ortiq document yarataolmasligi uchun kerak
 

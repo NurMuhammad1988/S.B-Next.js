@@ -22,10 +22,10 @@ const TrashBox = () => {
 
     const restore = useMutation(api.document.restore);
 
-    const allDocuments = useQuery(api.document.getAllDocuments);
+    const allDocuments = useQuery(api.document.getAllDocuments);//"Free" user 3 tadan ortiq document create qilaolamsligi uchun masalan 1 ta documentni udalit qilib trashboxga archived qilib keyin yana qaytada 3 chi documentni create qilib va yana archiveddan archived qilingan documentni qayta tiklab yani restore qilib documentlar sonini 4 ta qilib olmaslik uchun (avval shu alldocuments chaqiriladi)
 
-    const { isLoading, plan } = useSubscription(
-        user?.emailAddresses[0]?.emailAddress!
+    const { isLoading, plan } = useSubscription(// //useSubscription bu hook hooks papka ichida chaqirilgan vazifasi stripega so'rov jo'natib userni qaysi planga obuna bo'lganini tekshirib faqat o'sha obunaga tegishli imtiyozlarni beradi yokida agar user "Free" planida bo'lsa faqat 3 ta document crete qilishga ruhsat berish//planda esa userni qaysi planda ekanligi keladi user esa clerkdan keladigan user yani aynan qaysi user ekanligini bilish uchun userham email adress bilan tekshiriladi bu holatda emailAddresses bor yani ko'plida yani bitta user uchun emas hamma user uchunham bu kod ishlaydi shu uchun ko'plikdagi qiymat yani bu emailAddresses va emailAddress clerkni qiymatlari
+        user?.emailAddresses[0]?.emailAddress!////Bu kod barcha userlar uchun universal, lekin aynan birinchi email orqali so'rov yuborilmoqda yani aynan hozirgi real userni tekshirish
     );
 
     const [search, setSearch] = useState("");
@@ -67,12 +67,12 @@ const TrashBox = () => {
 
     const onRestore = (documentId: Id<"documents">) => {
         if (
-            allDocuments?.length &&
-            allDocuments.length >= 3 &&
+            allDocuments?.length &&//agar alldocumentsdan documentlar kelsa
+            allDocuments.length >= 3 &&//va agar all documentsda kelgan documentlar soni 3 yoki 3 dan ko'p bo'lsa va useSubscription hookida stripedan kelgan plandagi javob yani userni pani "Free" bo'lsa shu toast ishga tushadi yani archived qilingan documentlarni restore qilayotganda mashkalaik qilaolmaydi 3 tadan ortiq document create qilaolmaydi 
             plan === "Free"
         ) {
             toast.error(
-                "You already have 3 documents notes. Please delete one to restore this note. (trashbox.tsx onRestore function reaction)"
+                "You already have 3 documents notes. Please delete one to restore this note. (trashbox.tsx onRestore function reaction for)"
             );
             return
         }
@@ -137,6 +137,7 @@ const TrashBox = () => {
                                         className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
                                     >
                                         <Trash className="h-4 w-4 text-muted-foreground" />
+                                        {/*bu umuman sidebar tomondan chiqib turadigan trash textiga click qilinganda ochiladigan page bu trash icon esa shu pagedagi trash icon*/}
                                     </div>
                                 </ConfirmModal>
                             </div>
