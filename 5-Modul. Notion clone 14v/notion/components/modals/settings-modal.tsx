@@ -20,48 +20,49 @@ import { useUser } from "@clerk/clerk-react";
 import { toast } from "sonner";
 import { Loader } from "../ui/loader";
 
-//bu setting-modal.tsx component real user uchun yaratilgan sidebar.tsxda dynamic yaratilgan item.tsxlarni settings labellesida chaqirilgan yani real user o'z sidebarida settings labelda kelgan settings textiga click qilganda shu settings-modal.tsx component ishga tushadi bu modal modal-provider.tsx bilan asosiy layout.tsx failida chaqirilgan chunki ildizpapka hissoblangan layout.tsxda chaqirilganda dasturni istalgan joyida ishlatish mumkun yani masalan bu settings-modalni real user uchun qilingan sidebar.tsxda chaqirib chalkashtirib ishlatmasdan alohida joyda alohida papkalar ichida ishlatish mumkun degani settings-modal.tsxni  modal-provider.tsxda chaqirvolib keyin modal-provider.tsxni layout.tsxda chaqirilishini sababi yani o'rab o'rab chaqirilishi sababi modal-provider.tsxda if else bilan useeffect ishlatilgan qilingan yani agar useEffect ishlaganda yani user kirganda mounted qiymati true bo'lsa bu component ishga tushadi yokida nullni yani hech narsani qaytaradi shunda sayt aynan shu settings-modal component uchun qayta qayta update bo'lmasdan faqat kerak bo'lgan payti ishlaydi bu reactni asosiy qoidalaridan biri hissoblanadi
+//sidebar.tsxda chiqadiga Setting Item componentga click qilganda ishlaydigan component
+
+//bu setting-modal.tsx component real user uchun yaratilgan sidebar.tsxda dynamic yaratilgan item.tsxlarni settings labellesida chaqirilgan yani real user o'z sidebarida settings labelda kelgan settings textiga click qilganda shu settings-modal.tsx component ishga tushadi bu modal modal-provider.tsx bilan asosiy layout.tsx failida chaqirilgan chunki ildiz papka hissoblangan layout.tsxda chaqirilganda dasturni istalgan joyida ishlatish mumkun yani masalan bu settings-modalni real user uchun qilingan sidebar.tsxda chaqirib chalkashtirib ishlatmasdan alohida joyda alohida papkalar ichida ishlatish mumkun degani settings-modal.tsxni  modal-provider.tsxda chaqirvolib keyin modal-provider.tsxni layout.tsxda chaqirilishini sababi yani o'rab o'rab chaqirilishi sababi modal-provider.tsxda if else bilan useeffect ishlatilgan qilingan yani agar useEffect ishlaganda yani user kirganda mounted qiymati true bo'lsa bu component ishga tushadi yokida nullni yani hech narsani qaytaradi shunda sayt aynan shu settings-modal component uchun qayta qayta update bo'lmasdan faqat kerak bo'lgan payti ishlaydi bu reactni asosiy qoidalaridan biri hissoblanadi
 
 const SettingsModal = () => {
     const settings = useSettings();
 
-    const {user} = useUser()
+    const { user } = useUser();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-
-
 
     const { isOpen, onClose, onToggle } = settings;
 
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
-            if (e.key === "j" && (e.metaKey || e.ctrlKey)) {//bu m
-                //citrl bilan j keyboardlar bosilganda shu settings-modal component ishga tushadi yani bu holatda down nomli function ichida KeyboardEventni chaqirib agar eventda key qattiy "k" bo'lsa va yokida metakey yokida ctlr key yani metakey hamma klaviyaturlar uchun ctrlkey esa windows klavyaturalar uchun yani key qattiy "k" bo'lsa va faqat metakey yokida ctrlkey bo'lsa bu down function ishga tushadi
+            if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+                //bu j
+                //citrl bilan j keyboardlar bosilganda shu settings-modal component ishga tushadi yani bu holatda down nomli function ichida KeyboardEventni chaqirib agar eventda key qattiy "j" bo'lsa va yokida metakey yokida ctlr key yani metakey hamma klaviyaturlar uchun ctrlkey esa windows klavyaturalar uchun yani key qattiy "j" bo'lsa va faqat metakey yokida ctrlkey bo'lsa bu down function ishga tushadi
                 e.preventDefault();
-                onToggle();//yani yopilishi uchun
+                onToggle(); //yani yopilishi uchun
             }
         };
 
         document.addEventListener("keydown", down);
         return () => document.removeEventListener("keydown", down);
-    }, [onToggle]);////bu useeffect qachonki onToggle ishlaganda ishga tushadi onToggle esa use-settings tsx hookida isOpenni yani shu modalni open qilishni false qiladi yani teskarisi yani bitta bosganda false qiladi bitta bosganda true qiladi shunday qilib search component ishlaydi (zustand)
+    }, [onToggle]); ////bu useeffect qachonki onToggle ishlaganda ishga tushadi onToggle esa use-settings tsx hookida isOpenni yani shu modalni open qilishni false qiladi yani teskarisi yani bitta bosganda false qiladi bitta bosganda true qiladi shunday qilib search component ishlaydi (zustand)
 
-    const onSubmit = async() => {
-
+    const onSubmit = async () => {
+        //bu holatda onsubmit function nimaga kerak??? yani user settingga kirib o'zi ulangan planni ko'rishi yani qaysi planda ekanligini ko'rishi  va hohlasa yhemani o'zgartirishiham mumkun yani real userni nastroyka paneli deham bo'ladi stripe shu uchun yani user planini tekshirishi uchun kerak
         setIsSubmitting(true);
 
         try {
             const { data } = await axios.post("/api/stripe/manage", {
-                //bu holatda /app/api/stripe/routr.tsx/manage functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilanclerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
-              
+                //bu holatda /app/api/stripe/routr.tsx/manage functionga so'rov ketadi u subscription functionda  customer: customer.id, qiymat o'zgaruvchi bor shu customer o'zgaruvchida metadata: { userId }, bor shu {userId}ga useUser bilan clerkdan chaqirilgan user sovolindi yani endi stripe userni idsini biladi shu idiga qarab tekshiradi
+
                 email: user?.emailAddresses[0].emailAddress,
-               
             });
-            if(!data.status){
-                 setIsSubmitting(false)
-                toast.error("You are not subscribed to any plan")
-                return
+            if (!data.status) {
+                //yani "/api/stripe/manage dagi data false qaytarsa yani tekshirilayotgan user stripeda umuman plan sotib olmagan bo'lsa
+                setIsSubmitting(false);
+                toast.error("You are not subscribed to any plan");
+                ////yani "/api/stripe/manage dagi data false qaytarsa agar user stripedan umuman ro'yhatdan o'tmagan va avvalham hech qanday plan sotib olmagan bo'lsa "You are not subscribed to any plan" texti ishga tushadi va  agar user stripe orqali plan sotib olgan bo'lsa stripeni planlar ro'yhatiga olib boradi yani pastdagi (data.url, "_self") sabab
+                return;
             }
             window.open(data.url, "_self"); //onSubmit ishlasa va true qaytarsa shu window sabab stripeni to'lov tizimi sahifasiga aftamatik tarza o'tib ketadi
             setIsSubmitting(false);
@@ -69,9 +70,7 @@ const SettingsModal = () => {
             setIsSubmitting(false);
             toast.error("Something went wrong. Please try again ");
         }
-
-    }
-
+    };
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
@@ -99,12 +98,7 @@ const SettingsModal = () => {
                         </span>
                     </div>
                     <Button size={"sm"} onClick={onSubmit}>
-                        {isSubmitting ? (
-                            <Loader/>
-                        ): (
-                           <Settings size={16} /> 
-                        )}
-                        
+                        {isSubmitting ? <Loader /> : <Settings size={16} />}
                     </Button>
                 </div>
             </DialogContent>
@@ -113,4 +107,3 @@ const SettingsModal = () => {
 };
 
 export default SettingsModal;
-

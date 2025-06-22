@@ -11,7 +11,7 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Next js bilan qilingan Notion syati cloni",
+    title: "Next js bilan qilingan Notion sayti cloni",
     description: "Convex va Clerk bilan aftoziatsa qilingan",
     icons:{
         icon: "/logo.svg"

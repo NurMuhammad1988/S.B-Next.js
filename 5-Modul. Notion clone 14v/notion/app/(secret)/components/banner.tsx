@@ -48,7 +48,8 @@ export const Banner = ({ documentId }: BannerProps) => {
     const onRestore = () => {
         //documentni qayta tiklash uchun
 
-        if (//banner.tsxdaham free plandagi user 3 tadan ortiq document yarataolmasligi yani bu holatda trashboxda archived qilib 3 tadan ortiq documentni qaytada restore qilaolmasligi uchun
+        if (
+            //banner.tsxdaham free plandagi user 3 tadan ortiq document yarataolmasligi yani bu holatda trashboxda archived qilib 3 tadan ortiq documentni qaytada restore qilaolmasligi uchun
             allDocuments?.length &&
             allDocuments.length >= 3 &&
             plan === "Free"
@@ -81,7 +82,7 @@ export const Banner = ({ documentId }: BannerProps) => {
                 {/* shu restore documentga click qilinganda  onRestore functionham ishlab agar  
                 allDocuments?.length &&
                 allDocuments.length >= 3 &&
-                plan === "Free"     bo'lsa  bundaham ohirgi yani3 chidan ortqi documentni restore qilaolmaydi  hullas onRestore function ichidagi yuqoridagi mantiq ishga tushadi va user 3 ta bilan cheklanishga majbur bo'ladi yani restore qiladigan function agar userni docuemntlari 3 ta bo'lsa 4 chini restore qilmaydi oddiy qilib aytganda shu  */}
+                plan === "Free"     bo'lsa  bundaham ohirgi yani3 chidan ortqi documentni restore qilaolmaydi  hullas onRestore function ichidagi yuqoridagi mantiq ishga tushadi va user 3 ta bilan cheklanishga majbur bo'ladi yani restore qiladigan function agar userni docuemntlari 3 ta bo'lsa 4 chini restore qilmaydi oddiy qilib aytganda shu yani 3 tadan ortiq document bo'lsa toastdagi text info chiqadi shunda user "delete forever"ga majbur bo'ladi  */}
             </Button>
 
             <ConfirmModal onConfirm={() => onRemove()}>

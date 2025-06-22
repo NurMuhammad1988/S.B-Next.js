@@ -245,7 +245,7 @@ export const Sidebar = () => {
                 {/* bu yetim div yani sidebar qismini qolgan asosiy qisimdan ajratish uchun yani tepadan pastga to'g'ri chiziq tortish uchun cursor-ew-resize classi esa shu chiziqga kelganda cursorni chap o'ng tarafgaham strelkali cursor chiqaradi>>> ↔ ↔ ↔ ↔ ↔ <<< yani ekrandagi sidebar va qolgan qismlarni o'lchamini o'zgartirish uchun   */}
 
                 <div className="absolute bottom-0 px-2 bg-white/50 dark:bg-black/50 py-4 w-full">
-                    {isLoading ? (
+                    {isLoading ? (//yani agar isloading true bo'lsa bu loader ishga tushadi isloading esa useSubscriptionda kelgan shunchaki loader icon uchun yani useSubscription so'rov jo'natayotganda shu isloading true bo'ladi va so'rovbajarulgyncha bu loader ishlab kutib turadi so'rov bajarib bo'lingandan keyin yani yokida pastdagi jsxlar ishga tushadi rocket icon plat va hakozo
                         <div className="w-full flex justify-center items-center">
                             <Loader />
                         </div>
@@ -267,7 +267,7 @@ export const Sidebar = () => {
                                     </p>
                                 ) : (
                                     <p className="text-[13px] opacity-70">
-                                        {/* agar user plus yokida biznes planda bo'lsa planlar soni va notes texti chiqib turadiyani qoralamalar degan manoda */}
+                                        {/* agar user plus yokida biznes planda bo'lsa planlar soni va notes texti chiqib turadi yani qoralamalar degan manoda */}
                                         {documents?.length} notes
                                     </p>
                                 )}

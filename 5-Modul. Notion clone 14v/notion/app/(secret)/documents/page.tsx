@@ -68,6 +68,7 @@ const DocumentPage = () => {
                 Welcome to {user?.firstName}`s document page!
             </h2>
             <Button onClick={onCreateDocument} disabled={isLoading}>
+                {/* isLoading useSubscriptiondan keladigan useSubscription so'rov jo'natgacha ishlab turishi kerak bo'lgan qiymat shu qiymatga loader icon sovolindi so'rov bajarilib bo'lgandan keyin bu loader ishlashdan to'htaydi */}
                 {isLoading  && <>
                 <Loader/>
                 <span className="ml-2">Loading...</span>
@@ -85,3 +86,4 @@ const DocumentPage = () => {
     );
 };
 export default DocumentPage;
+
