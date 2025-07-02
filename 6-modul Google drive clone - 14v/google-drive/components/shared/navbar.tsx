@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { ModeToggle } from "./mode-toggle";
+import { HelpCircle, Settings } from "lucide-react";
+import UserBox from "./user-box";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 const Navbar = () => {
     const { userId } = auth();
@@ -27,7 +30,33 @@ const Navbar = () => {
                 </Link>
 
                 <div className="flex items-center space-x-2">
-                    <ModeToggle/>
+                    <ModeToggle />
+                    <div
+                        className="p-2 hover:bg-secondary rounded-full transition"
+                        role="button"
+                    >
+                        <HelpCircle className="w-5 h-5"/>
+                    </div>
+
+                    <div
+                        className="p-2 hover:bg-secondary rounded-full transition"
+                        role="button"
+                    >
+                        <Settings className="w-5 h-5"/>
+                    </div>
+
+                    {userId ? (
+
+                        <UserBox/>
+
+                    ): (
+
+                        <Avatar className="cursor-pointer">
+                            <AvatarFallback>NY</AvatarFallback>
+                        </Avatar>
+
+                    )}
+                    
                 </div>
             </div>
         </div>
@@ -35,3 +64,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

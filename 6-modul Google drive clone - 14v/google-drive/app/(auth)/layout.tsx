@@ -1,13 +1,17 @@
 import Navbar from "@/components/shared/navbar";
+import Sidebar from "@/components/shared/sidebar";
 import { ChildProps } from "@/types";
 import React from "react";
 
 const AuthLayout = ({ children }: ChildProps) => {
     return (
         <div className="relative">
-            <Navbar/>
-            <div>Sidebar</div>
-            {children}
+            <Navbar />
+            <Sidebar/>
+
+            <main className="flex items-center justify-center w-full h-[90vh] z-50  relative ">
+                {children}
+            </main>
         </div>
     );
 };
@@ -15,4 +19,3 @@ const AuthLayout = ({ children }: ChildProps) => {
 export default AuthLayout;
 
 
-// 1. Auth layout darsi 22:20 da qoldi shu darsni tugatib hatoliklar nima uchun chiqganini o'rgan va shu dars tugagandan hamma kodlarga comment yoz yani qaytadan juda juda yahshilab tushunib qaytadan qil
