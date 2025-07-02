@@ -8,6 +8,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         <div>
             <Navbar />
 
+            
+
             {/* bu navbar faqat accounti bor loyihada ro'yhatdan o'tgan user uchun ishlaydi shu uchun alohida (root) papka ichida alohida layout qilingan.... navbar app(auth)/layout.tsx chaqirilgan holatida esa ro'yhatdan o'tmagan user uchun ishlaydi yani app(auth)/layout.tsx holatida user navbardan foydalana olamaydi */}
             {children}
         </div>
