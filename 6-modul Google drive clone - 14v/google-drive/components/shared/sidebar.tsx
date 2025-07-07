@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Clock5, Cloud, Plus, Star, Tablet, Trash } from "lucide-react";
 import Link from "next/link";
+import Item from "./item";
+import { Progress } from "../ui/progress";
 
 const Sidebar = () => {
     return (
@@ -14,9 +16,17 @@ const Sidebar = () => {
                 <div className="flex flex-col space-y-6 mt-8">
                     {sidebarLinks.map((link) => (
                         <Link href={link.path} key={link.path}>
-
+                            <Item icon={link.icon} label={link.label} />
                         </Link>
                     ))}
+                    <div className="flex flex-col space-y-2 mx-4 ">
+                        {/* progress shadcn uidan kelgan value ichida size qabul qiladi yani default size */}
+                        <Progress className="h-2" value={30} />
+                        <span>20 MB of 1.5 GB used</span>
+                        <Button className="rounded-full " variant={"outline"}>
+                            Get more storage
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

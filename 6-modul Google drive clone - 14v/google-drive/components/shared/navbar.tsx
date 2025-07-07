@@ -1,4 +1,5 @@
-import { auth } from "@clerk/nextjs/server";
+"use client";
+// import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -6,13 +7,13 @@ import { ModeToggle } from "./mode-toggle";
 import { HelpCircle, Settings } from "lucide-react";
 import UserBox from "./user-box";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-// import { useAuth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 
 const Navbar = () => {
-    const { userId } = auth();
-    // const { userId } = useAuth()
+    // const { userId } = auth();
+    const { userId } = useAuth();
 
-    console.log(userId);
+    console.log(userId); //clerkdan keladiga userni idsi
 
     return (
         <div className="h-[10vh] fixed left-0  top-0 right-0 z-30 bg-[#F6F9FC] dark:bg-[#1F1F1F] border-b ">
