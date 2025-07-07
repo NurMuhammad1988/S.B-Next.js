@@ -31,7 +31,7 @@ const isPublicRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]); //cr
 export default clerkMiddleware(async (auth, request) => {
     //bu async function chunki hech narsani kutub turmasligi kerak//Har bir HTTP so'rovda ishga tushadi yaniuserlar har safar saytga kirmoqchi bo'lganda ishga tushadi
     if (!isPublicRoute(request)) {
-        await auth.protect(); //  foydalanuvchini verifikatsiya qiladi: agar login qilmagan bo'lsa, uni avtomatik /sign-in sahifasiga yo'naltiradi. yani isPublicRoutedan datalarni oladi agar false qaytarsa shu holat ishlaydi agar true qaytarsa user  aftamatik tarzda sayga kirib ketadi
+        await auth.protect(); //  foydalanuvchini verifikatsiya qiladi: agar login qilmagan bo'lsa, uni avtomatik /sign-in sahifasiga yo'naltiradi. yani isPublicRoutedan datalarni oladi agar false qaytarsa shu holat ishlaydi agar true qaytarsa user  aftamatik tarzda sayga kirib ketadi yani bosh sahifaga kirib ketadi
     }
 });
 
@@ -40,7 +40,7 @@ export const config = {
     matcher: [
         // Skip Next.js internals and all static files, unless found in search params
         // faqat quyidagi yo'llar uchun middleware ishlasin
-        "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)", //Bu ikki pattern or (yoki) mantigi bilan ishlaydi
+        "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)", //Bu ikki pattern or (yoki) mantig'i bilan ishlaydi
         //Birinchi pattern:Barcha sahifalar middleware orqali o'tadi FAQAT Next.js ichki fayllari ( /((?!_next|[^?]* ) va statik fayllar CHIQARIB TASHLANADI
         // Always run for API routes
         "/(api|trpc)(.*)", //Backend API'larni himoya qilish uchun yaani "/(api|trpc)(.*)" pattern middlewareni API va TRPC routelari uchun YOQADI,  Bu API'larni ham himoya qilish uchun kerak yani bu holatda yuqoridago or yani \\  operatori ishlatilmagan yani aniq shu holatda so'rov kelganda doim ishlab turadi

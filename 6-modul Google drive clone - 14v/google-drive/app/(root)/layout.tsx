@@ -9,9 +9,12 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         <div>
             <Navbar />
             <Sidebar />
-
             {/* bu navbar va sidebar faqat accounti bor loyihada ro'yhatdan o'tgan user uchun ishlaydi shu uchun alohida (root) papka ichida alohida layout qilingan.... navbar app(auth)/layout.tsx chaqirilgan holatida esa ro'yhatdan o'tmagan user uchun ishlaydi yani app(auth)/layout.tsx holatida user navbardan foydalana olamaydi yani agar user register qilsa shu navbar isga tushadi yokida (auth) papka ichidagi navbar shunchaki uiga ko'rinib turadi (z-50 sabab!!!) */}
-            {children}
+            <main className="w-full min-h-[90vh] relative top-[10vh] pl-72 bg-white p-4">
+                <div className="h-[90vh] rounded-md bg-black ml-4">
+                    {children}
+                </div>
+            </main>
         </div>
     );
 };
