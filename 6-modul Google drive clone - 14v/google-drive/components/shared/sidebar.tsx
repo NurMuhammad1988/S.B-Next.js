@@ -23,7 +23,7 @@ const Sidebar = () => {
     );
 };
 
-
+// 2. Firebase integration 03:20 chi daqiqada qoldi
 
 export default Sidebar;
 
