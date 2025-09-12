@@ -67,3 +67,4 @@ const UserBox = () => {
 };
 
 export default UserBox;
+// 2. Firebase integration 20:31 da qoldi

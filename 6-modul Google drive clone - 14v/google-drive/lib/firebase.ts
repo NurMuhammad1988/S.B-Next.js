@@ -22,3 +22,5 @@ const firebaseConfig = {
 const db = getFirestore()
 
 export {db}
+
+// 2. Firebase integration 20:31 da qoldi

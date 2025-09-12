@@ -5,7 +5,7 @@ import Link from "next/link";
 import Item from "./item";
 import { Progress } from "../ui/progress";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import PopoverActions from "./popover-actions"
+import PopoverActions from "./popover-actions";
 
 const Sidebar = () => {
     return (
@@ -19,7 +19,7 @@ const Sidebar = () => {
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="p-0 py-2 ">
-                        <PopoverActions/>
+                        <PopoverActions />
                     </PopoverContent>
                 </Popover>
 
@@ -42,8 +42,6 @@ const Sidebar = () => {
         </div>
     );
 };
-
-// 2. Firebase integration 03:20 chi daqiqada qoldi
 
 export default Sidebar;
 

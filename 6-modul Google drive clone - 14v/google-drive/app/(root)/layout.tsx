@@ -21,4 +21,4 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
 
 export default RootLayout;
 
-// 2. Firebase integration 20:31 da qoldi
+

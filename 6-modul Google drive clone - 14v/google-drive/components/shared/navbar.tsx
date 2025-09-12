@@ -63,3 +63,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// 2. Firebase integration 20:31 da qoldi
