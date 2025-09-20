@@ -1,5 +1,5 @@
 "use client";
-//tailwindda biz yozadigan dark va light classlarni holatiga qarab dark va light qilishni hal qiladigan provider bu asosiy layout.tsxda chaqirilgan chunki bu provider yani hamma joyda ishlashi kerak
+//tailwindda biz yozadigan dark va light classlarni holatiga qarab dark va light qilishni hal qiladigan provider bu asosiy layout.tsxda chaqirilgan chunki bu provider yani hamma joyda ishlashi kerak shu sabab loyihani asosiy root yani layout .tsxda chaqirilib shunga o'ralishi kerak
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
@@ -9,3 +9,4 @@ export function ThemeProvider({
 }: React.ComponentProps<typeof NextThemesProvider>) {
     return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
+

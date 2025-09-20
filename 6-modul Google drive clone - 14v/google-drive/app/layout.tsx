@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";//clerkishlashi uchun loyihani asosiy jsx faili shu proviserga o'ralishi kerak
+import { ClerkProvider } from "@clerk/nextjs"; //clerkishlashi uchun loyihani asosiy jsx faili shu proviserga o'ralishi kerak
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
-//bu shu loyihani eng asosiy root yani ildiz papkasi yani loyiha ishlashi uchun asosiy providerlar ishlatiladigan joy// layout.tsx next jsda asosiy fail hissoblanadi yani app padhodda 
+//bu shu loyihani eng asosiy root yani ildiz papkasi yani loyiha ishlashi uchun asosiy providerlar ishlatiladigan joy// layout.tsx next jsda asosiy fail hissoblanadi yani app padhodda
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,3 +37,4 @@ export default function RootLayout({
         </ClerkProvider>
     );
 }
+

@@ -19,8 +19,12 @@ const firebaseConfig = {
 
 !getApps().length ? initializeApp(firebaseConfig) : getApp()
 
-const db = getFirestore()
+const db = getFirestore()// yuqoridagi kodda initialize bo'lib kelishi kerak bo'lgan firebase appni agar true bo'lsa getFirestore ichida bo'ladi va db o'zgaruvchiga soladi//Yani, getFirestore() o'z ichida getApp()ni chaqiradi yani deafult shunday ishlaydi faqat yuqoridagi firebase keylar ostidagi server appni oladi
 
 export {db}
 
-// 2. Firebase integration 20:31 da qoldi
+
+//getApps()	Firebase ilovalari ro'yxatini qaytaradi (array).
+//!getApps().length	Agar ro'yxat bo'sh bo'lsa (length === 0), demak hali hech qanday ilova initialize qilinmagan.
+//initializeApp(firebaseConfig)	Firebase ilovasini firebaseConfig bilan initialize qiladi.
+//getApp()	Agar ilova allaqachon initialize qilingan bo'lsa, uni qayta chaqirmasdan mavjud ilovani qaytaradi.

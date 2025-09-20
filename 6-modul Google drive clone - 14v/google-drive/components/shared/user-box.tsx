@@ -11,7 +11,7 @@ import {
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Avatar, AvatarImage } from "../ui/avatar";
 
-const UserBox = () => {
+const   UserBox = () => {
     const { user } = useUser(); //bu hook app/layout.tsxdagi ClerkProvider sabab userni bor bo'lsa  topadi
     const { signOut } = useClerk(); //register qilgan userni log out qiladigan clerkni hooki yani ClerkProviderga o'ralgan loyihadan log out qiladi
     const router = useRouter();
@@ -67,4 +67,3 @@ const UserBox = () => {
 };
 
 export default UserBox;
-// 2. Firebase integration 20:31 da qoldi

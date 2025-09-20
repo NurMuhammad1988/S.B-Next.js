@@ -13,7 +13,7 @@ const PopoverActions = () => {
                 <span>New folder</span>
             </div>
             <Separator />
-            {/* Separator oddiy folder va spandan keyingi chiziqcha */}
+            {/* Separator oddiy folder va spandan keyingi chiziqcha yani new folderni alohida tepada ajratib turish uchun */}
 
             <div
                 className="flex items-center hover:bg-secondary transition py-2 px-4 space-x-2 text-sm"
@@ -30,10 +30,8 @@ const PopoverActions = () => {
                 <FolderUp className="w-4 h-4" />
                 <span>Folder upload</span>
             </div>
-
         </>
     );
 };
 
 export default PopoverActions;
-// 2. Firebase integration 20:31 da qoldi

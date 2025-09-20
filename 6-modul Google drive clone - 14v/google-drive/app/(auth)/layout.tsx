@@ -3,7 +3,7 @@ import Sidebar from "@/components/shared/sidebar";
 import { ChildProps } from "@/types";
 import React from "react";
 
-//yani bu (auth) papkasi uchun asosiy layout sahifasi bu loyihada ts bor shu uchun bu component qabul qiladigan hamma narsani typini aytish kerak shu uchun types papka ichida react.Nodelarni childprops nomli interfacega solib bu joyda chaqiirib qoydik endi bu sahifa react.nodega aloqador hamma narsani qabul qiladi va hato qaytarmeydi
+//yani bu (auth) papkasi uchun asosiy layout sahifasi bu loyihada ts bor shu uchun bu component qabul qiladigan hamma narsani typini aytish kerak shu uchun types papkani ichida react.Nodelarni childprops nomli interfacega solib bu joyda chaqiirib qoydik endi bu sahifa react.nodega aloqador hamma narsani qabul qiladi va hato qaytarmeydi
 const AuthLayout = ({ children }: ChildProps) => {
     return (
         <div className="relative">

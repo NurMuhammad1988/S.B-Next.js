@@ -8,4 +8,5 @@ const FolderModal = () => {
 
 export default FolderModal
 
-// 2. Firebase integration 20:31 da qoldi
+#3. File upload darsida qoldi
+

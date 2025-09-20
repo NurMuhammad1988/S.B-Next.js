@@ -45,11 +45,11 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const sidebarLinks = [
+const sidebarLinks = [//sidebar uchun array
     {
         label: "My drive",
         icon: Tablet,
-        path: "/",
+        path: "/",// sidebardagi my drive textiga bosilganda home pageda turadi
     },
     {
         label: "Starred",
